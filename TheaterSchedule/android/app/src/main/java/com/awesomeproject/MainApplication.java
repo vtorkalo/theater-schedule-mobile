@@ -1,4 +1,4 @@
-package com.awesomeproject;
+package com.theaterschedule;
 
 import android.app.Application;
 
