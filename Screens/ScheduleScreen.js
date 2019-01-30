@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export default class ScheduleScreen extends Component {
     static navigationOptions = {
@@ -10,9 +11,9 @@ export default class ScheduleScreen extends Component {
     }
     render() {
         return (
-            <Container>
+            <Container style={{ flex: 1 }}>
                 <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
-                <Content contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Content contentContainerStyle={styles.contentContainer}>
                     <Text>Schedule</Text>
                 </Content>
             </Container>
@@ -20,3 +21,10 @@ export default class ScheduleScreen extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})

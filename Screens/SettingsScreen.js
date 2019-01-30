@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,10 +13,17 @@ export default class SettingsScreen extends Component {
         return (
             <Container>
                 <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
-                <Content contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Content contentContainerStyle={styles.contentContainer}>
                     <Text>Settings</Text>
                 </Content>
             </Container>
         )
     }
 }
+const styles = StyleSheet.create({
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})
