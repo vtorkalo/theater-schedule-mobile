@@ -1,11 +1,11 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class LocalizedComponent extends Component{
-    t(key){
+export default class LocalizedComponent extends Component {
+    t(key) {
         return this.context.t(key);
     }
 }
-LocalizedComponent.contextTypes={
+LocalizedComponent.contextTypes = {
     t: PropTypes.func
 };
