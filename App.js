@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStore,combineReducers  } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import defaultReducer from './Reducers/Reducer';
-import I18n, {i18nState} from "redux-i18n"
-import { translations } from "./Localized/translations";
-
+import navigation from './Reducers/NavigationReducer';
+import { middleware } from './Navigation/Navigator';
+import { translations } from "./Localization/translations";
+import I18n, { i18nState } from "redux-i18n"
+import Navigator from './Navigation/Navigator';
 
 const appReducer = combineReducers({
+  i18nState,
+  navigation,
   defaultReducer,
-  i18nState
-})
+});
 
-const store = createStore(appReducer);
+const store = createStore(
+  appReducer,
+  applyMiddleware(middleware),
+);
 
 
 export default class App extends Component {
@@ -20,27 +25,12 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <I18n translations={translations} initialLang="ua" fallbackLang="en">
-        
-          <View style={styles.container}>
-            <Text style={styles.welcome}>Welcome to Theater Schedule!</Text>
-            
-          </View>
+          <Navigator />
         </I18n>
       </Provider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
+
+

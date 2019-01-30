@@ -12,7 +12,7 @@ For adding text, you can use {this.t('`TEXT`')}.
  <Text>{this.t('TEXT')}</Text>
 ```
 
-Every `TEXT` you can find in "./Localized/translations";
+Every `TEXT` you can find in "./Localization/translations";
 
 ```javascript
 export const translations = {
@@ -40,7 +40,7 @@ Don`t forget connect yor component with store.
 ```javascript
 // import ...
 import { connect } from 'react-redux';
-import LocalizedComponent from "./Localized/LocalizedComponent";
+import LocalizedComponent from "./Localization/LocalizedComponent";
 
 class MyComponent extends LocalizedComponent {
   ...
