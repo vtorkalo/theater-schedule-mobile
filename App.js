@@ -1,33 +1,30 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import defaultReducer from './Reducers/Reducer'; 
+import defaultReducer from './Reducers/Reducer';
+import navigation from './Reducers/NavigationReducer';
+import { middleware } from './Navigation/Navigator';
+import Navigator from './Navigation/Navigator';
 
-const store = createStore(defaultReducer);
+const appReducer = combineReducers({
+  navigation,
+  defaultReducer,
+});
+
+const store = createStore(
+  appReducer,
+  applyMiddleware(middleware),
+);
+
 
 export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-            <Text style={styles.welcome}>Welcome to Theater Schedule!</Text>
-        </View>
+        <Navigator />
       </Provider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
+
