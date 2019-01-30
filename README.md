@@ -6,7 +6,7 @@ Application will be written using React native
 
 ### Adding text
 
-For adding text, you can use {this.t('TEXT')}. 
+For adding text, you can use {this.t('`TEXT`')}. 
 
 ```javascript
  <Text>{this.t('TEXT')}</Text>
@@ -14,7 +14,7 @@ For adding text, you can use {this.t('TEXT')}.
 
 Every `TEXT` you can find in "./Localized/translations";
 
-```
+```javascript
 export const translations = {
     'ua': {
       'TEXT': 'Привіт світ!',
@@ -45,10 +45,40 @@ import LocalizedComponent from "./Localized/LocalizedComponent";
 class MyComponent extends LocalizedComponent {
   ...
 }
-
 ...
 
 export default connect(
 ...
+)(MyComponent)
+```
+
+### Change Localization
+
+If you want to change your language you must import function `setLanguage` from `redux-i18n`
+
+```javascript
+...
+import { setLanguage } from "redux-i18n";
+
+class MyComponent extends LocalizedComponent {
+    render() {
+        return (
+            <View>                     
+                <Button title="ua" onPress={() => this.props.setLanguage("ua")} />
+                <Button title="en" onPress={() => this.props.setLanguage("en")} />
+                <Button title="ru" onPress={() => this.props.setLanguage("ru")} />
+                              
+                <Text>{this.t('TEXT')}</Text>
+            </View>
+        );
+    }
+}
+const mapDispatchToPros = {
+    setLanguage
+    ...
+};
+...
+export default connect(
+    mapDispatchToPros,
 )(MyComponent)
 ```

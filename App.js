@@ -5,8 +5,7 @@ import { Provider } from 'react-redux';
 import defaultReducer from './Reducers/Reducer';
 import I18n, {i18nState} from "redux-i18n"
 import { translations } from "./Localized/translations";
-import MyComponent from "./MyComponent"
-import MyComponent2 from "./MyComponent2"
+
 
 const appReducer = combineReducers({
   defaultReducer,
@@ -24,11 +23,7 @@ export default class App extends Component {
         
           <View style={styles.container}>
             <Text style={styles.welcome}>Welcome to Theater Schedule!</Text>
-            <MyComponent />
-            <Text> 
-          
-            </Text>
-            <MyComponent2 />
+            
           </View>
         </I18n>
       </Provider>
