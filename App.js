@@ -3,6 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import defaultReducer from './Reducers/Reducer';
 import navigation from './Reducers/NavigationReducer';
+import scheduleReducer from './Reducers/ScheduleReducer';
 import { middleware } from './Navigation/Navigator';
 import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n"
@@ -11,6 +12,7 @@ import Navigator from './Navigation/Navigator';
 const appReducer = combineReducers({
   i18nState,
   navigation,
+  scheduleReducer,
   defaultReducer,
 });
 
