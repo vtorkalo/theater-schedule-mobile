@@ -12,7 +12,7 @@ import Navigator from './Navigation/Navigator';
 const appReducer = combineReducers({
   i18nState,
   navigation,
-  scheduleReducer,
+  schedule: scheduleReducer,
   defaultReducer,
 });
 
@@ -20,7 +20,6 @@ const store = createStore(
   appReducer,
   applyMiddleware(middleware),
 );
-
 
 export default class App extends Component {
   render() {
@@ -33,6 +32,3 @@ export default class App extends Component {
     );
   }
 }
-
-
-
