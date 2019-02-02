@@ -9,6 +9,8 @@ const initialState = {
         { id: 5, title: "perf5", mainImage: "uri", startDate: '5', duration: 50, minPrice: 50, maxPrice: 500, },
         { id: 6, title: "perf6", mainImage: "uri", startDate: '6', duration: 60, minPrice: 60, maxPrice: 600, },
     ],
+    startDate: new Date(),
+    endDate: new Date(),
 }
 
 export default function scheduleReducer(state = initialState, action) {

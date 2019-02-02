@@ -12,7 +12,7 @@ import Navigator from './Navigation/Navigator';
 const appReducer = combineReducers({
   i18nState,
   navigation,
-  schedule: scheduleReducer,
+  scheduleReducer: scheduleReducer,
   defaultReducer,
 });
 
