@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity, Dimensions } from 'react-native';
 
 export default PerformanceItem = props => {
+    let base64Image = 'data:image/png;base64,' + props.performance.mainImage;
+
     return (
         <View style={styles.performanceContainer}>
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
                     resizeMode='contain'
-                    source={{ data: props.performance.mainImage }} />
+                    source={{ uri: base64Image }} />
             </View>
             <View style={styles.infoContainer}>
                 <Text style={styles.title}>{props.performance.title}</Text>

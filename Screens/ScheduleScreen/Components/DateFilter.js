@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
-import {filterPerformances} from '../../../Actions/ScheduleActions/ScheduleActionCreators';
+import { filterPerformances } from '../../../Actions/ScheduleActions/ScheduleActionCreators';
 
 import { Ionicons } from '@expo/vector-icons';
 import DateRangePicker from './DateRangePicker'
