@@ -9,6 +9,9 @@ class DateRangePicker extends Component {
         this.state = {
             isStartDatePickerVisible: false,
             isEndDatePickerVisible: false,
+
+            startFilterDate: this.props.startDate,
+            endFilterDate: this.props.endDate,
         }
     }
 
@@ -38,15 +41,16 @@ class DateRangePicker extends Component {
 
     handleStartDatePicked = (date) => {
         this.setState({
-            initialStartDate: date,
+            startFilterDate: date,
         });
         this.hideStartDatePicker();
     }
 
     handleEndDatePicked = (date) => {
         this.setState({
-            initialEndDate: date,
+            endFilterDate: date,
         });
+
         this.hideEndDatePicker();
     }
 
@@ -61,7 +65,7 @@ class DateRangePicker extends Component {
                     mode="date"
                     datePickerModeAndroid="spinner"
                     minimumDate={new Date()}
-                    date={this.props.startDate}
+                    date={this.state.startFilterDate}
                 />
 
                 {/* end date modal picker */}
@@ -72,7 +76,7 @@ class DateRangePicker extends Component {
                     mode="date"
                     datePickerModeAndroid="spinner"
                     minimumDate={new Date()}
-                    date={this.props.endDate}
+                    date={this.state.endFilterDate}
                 />
 
                 {/* buttons for choosing start and end dates */}
@@ -89,8 +93,8 @@ class DateRangePicker extends Component {
 
                 {/* info about currently selected dates */}
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'stretch' }}>
-                    <Text>Start date: {this.props.startDate.toString()}</Text>
-                    <Text>End date: {this.props.endDate.toString()}</Text>
+                    <Text>Start date: {this.state.startFilterDate.toString()}</Text>
+                    <Text>End date: {this.state.endFilterDate.toString()}</Text>
                 </View>
 
                 {/* buttons for saving or canceling new date range */}
@@ -98,7 +102,7 @@ class DateRangePicker extends Component {
                     <TouchableOpacity onPress={this.props.onCancel}>
                         <Text style={{ color: 'red', fontSize: 18 }}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.onConfirm(this.props.startDate, this.props.endDate)}>
+                    <TouchableOpacity onPress={() => this.props.onConfirm(this.state.startFilterDate, this.state.endFilterDate)}>
                         <Text style={{ color: 'blue', fontSize: 18 }}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
