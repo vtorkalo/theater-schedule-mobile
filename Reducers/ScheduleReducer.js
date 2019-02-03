@@ -55,9 +55,10 @@ export default function scheduleReducer(state = initialState, action) {
         }
 
         case FILTER_PERFORMANCES: {
-            // let filteredPerfomances =
-            //     fetch(`api/Schedule/FilterByDate?startDate=${action.payload.startDate}&${action.payload.endDate}`)
-            //         .then(response => response.json());
+            let filteredPerfomances =
+                fetch(`api/Schedule/FilterByDate?startDate=${action.payload.startDate}&${action.payload.endDate}`)
+                    .then(response => response.json())
+                    .catch(error => console.log(error));
 
             // return {
             //     ...state,
@@ -65,6 +66,8 @@ export default function scheduleReducer(state = initialState, action) {
             //     endDate: action.payload.endDate,
             //     performances: filteredPerfomances,
             // };
+
+
             return {
                 ...state,
                 startDate: action.payload.startDate,
