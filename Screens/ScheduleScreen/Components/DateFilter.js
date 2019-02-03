@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { connect } from 'react-redux';
+import {filterPerformances} from '../../../Actions/ScheduleActions/ScheduleActionCreators';
 
 import { Ionicons } from '@expo/vector-icons';
 import DateRangePicker from './DateRangePicker'
@@ -13,33 +15,49 @@ class DateFilter extends Component {
         }
     }
 
-    onPressMenuIcon = () => {
+    convertToReadableFormat = date => {
+        return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+    }
+
+    pressMenuIconHandler = () => {
         this.setState({
             isFilterVisible: true,
         });
     }
 
-    cancelFilter = () => {
+    cancelFilteringHandler = () => {
         this.setState({
             isFilterVisible: false,
         });
     }
 
-    confirmFilter = () => {
+    confirmFilteringHandler = (startDate, endDate) => {
         this.setState({
             isFilterVisible: false,
         });
 
-        
+        this.props.onFilter(startDate, endDate);
     }
 
     render() {
         return (
             <View style={styles.filterContainer} >
-                <DateRangePicker isVisible={this.state.isFilterVisible} onCancel={this.cancelFilter} onConfirm={this.confirmFilter} />
-                <Text style={styles.text}>Current dates: {this.props.startDate} - {this.props.startDate}</Text>
+                <DateRangePicker
+                    isVisible={this.state.isFilterVisible}
+                    onCancel={this.cancelFilteringHandler}
+                    onConfirm={this.confirmFilteringHandler}
+                    startDate={this.props.startDate}
+                    endDate={this.props.endDate} />
+                <Text
+                    style={styles.text}>
+                    Current dates: {this.convertToReadableFormat(this.props.startDate)} - {this.convertToReadableFormat(this.props.endDate)}
+                </Text>
                 <View style={styles.icon}>
-                    <Ionicons name='ios-options' color='#7154b8' size={32} onPress={this.onPressMenuIcon} />
+                    <Ionicons
+                        name='ios-options'
+                        color='#7154b8'
+                        size={32}
+                        onPress={this.pressMenuIconHandler} />
                 </View>
             </View>
         );
@@ -65,4 +83,17 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DateFilter;
+const mapStateToProps = state => {
+    return {
+        startDate: state.scheduleReducer.startDate,
+        endDate: state.scheduleReducer.endDate,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFilter: (startDate, endDate) => dispatch(filterPerformances(startDate, endDate)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DateFilter);

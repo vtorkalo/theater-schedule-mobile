@@ -1,4 +1,12 @@
-import { FILTER_PERFORMANCES } from '../Actions/ScheduleActions/ScheduleActionTypes';
+import {
+    FILTER_PERFORMANCES,
+    LOAD_PERFORMANCES_BEGIN,
+    LOAD_PERFORMANCES_SUCCESS,
+    LOAD_PERFORMANCES_END
+} from '../Actions/ScheduleActions/ScheduleActionTypes';
+
+let currentDate = new Date();
+let dateAfterWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7);
 
 const initialState = {
     performances: [
@@ -9,22 +17,48 @@ const initialState = {
         { id: 5, title: "perf5", mainImage: "uri", startDate: '5', duration: 50, minPrice: 50, maxPrice: 500, },
         { id: 6, title: "perf6", mainImage: "uri", startDate: '6', duration: 60, minPrice: 60, maxPrice: 600, },
     ],
-    startDate: new Date(),
-    endDate: new Date(),
+    data: {},
+    startDate: currentDate,
+    endDate: dateAfterWeek,
+    loading: false,
+    error: null,
 }
 
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
-        case FILTER_PERFORMANCES: {
+        case LOAD_PERFORMANCES_BEGIN: {
             return {
                 ...state,
-                performances: state.performances.filter(performance => {
-                    // return performance.startDate >= action.payload.startDate &&
-                    //     performance.startDate <= action.payload.endDate;
-                    return performance.startDate >= 2 &&
-                        performance.startDate <= 5;
-                }),
-            };
+                loading: true,
+            }
+        }
+
+        case LOAD_PERFORMANCES_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                data: action.payload.data,
+            }
+        }
+
+        case LOAD_PERFORMANCES_END: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error,
+            }
+        }
+
+        case FILTER_PERFORMANCES: {
+            // let filteredPerfomances =
+            //     fetch(`api/Schedule/FilterDate?startDate=${action.payload.startDate}&${action.payload.endDate}`)
+            //         .then(response => response.json());
+
+            // return {
+            //     ...state,
+            //     performances: filteredPerfomances,
+            // };
+            return { ...state }
         }
 
         default: {

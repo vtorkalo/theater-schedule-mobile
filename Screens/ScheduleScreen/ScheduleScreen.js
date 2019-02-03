@@ -6,17 +6,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
 import PerformanceList from './Components/PerformanceList'
-import { filterPerformances } from '../../Actions/ScheduleActions/ScheduleActionCreators'
 
 import DateFilter from './Components/DateFilter';
 
 class ScheduleScreen extends Component {
     static navigationOptions = {
         drawerIcon: <MaterialCommunityIcons name='calendar-clock' size={25} />
-    }
-
-    filterPerformancesHandler = (startDate, endDate) => {
-        this.props.onFilter(startDate, endDate);
     }
 
     render() {
@@ -43,7 +38,7 @@ class ScheduleScreen extends Component {
 const styles = StyleSheet.create({
     contentContainer: {
         alignItems: 'stretch',
-        flex: 1, 
+        flex: 1,
     },
     filterContainer: {
         flex: 1,
@@ -51,7 +46,7 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
         borderWidth: 2,
         margin: 5,
-        borderRadius: 50,  
+        borderRadius: 50,
     },
     performancesContainer: {
         flex: 12,
@@ -59,19 +54,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    strigifyDate = date => (date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear());
-
     return {
         performances: state.scheduleReducer.performances,
-        startDate: strigifyDate(state.scheduleReducer.startDate),
-        endDate: strigifyDate(state.scheduleReducer.endDate),
     };
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onFilter: (startDate, endDate) => dispatch(filterPerformances(startDate, endDate)),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);
+export default connect(mapStateToProps)(ScheduleScreen);

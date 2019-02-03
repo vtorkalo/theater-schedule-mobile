@@ -9,9 +9,6 @@ class DateRangePicker extends Component {
         this.state = {
             isStartDatePickerVisible: false,
             isEndDatePickerVisible: false,
-
-            initialStartDate: new Date(),
-            initialEndDate: new Date(),
         }
     }
 
@@ -64,7 +61,7 @@ class DateRangePicker extends Component {
                     mode="date"
                     datePickerModeAndroid="spinner"
                     minimumDate={new Date()}
-                    date={this.state.initialStartDate}
+                    date={this.props.startDate}
                 />
 
                 {/* end date modal picker */}
@@ -75,7 +72,7 @@ class DateRangePicker extends Component {
                     mode="date"
                     datePickerModeAndroid="spinner"
                     minimumDate={new Date()}
-                    date={this.state.initialEndDate}
+                    date={this.props.endDate}
                 />
 
                 {/* buttons for choosing start and end dates */}
@@ -92,8 +89,8 @@ class DateRangePicker extends Component {
 
                 {/* info about currently selected dates */}
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'stretch' }}>
-                    <Text>Start date: {this.state.initialStartDate.toString()}</Text>
-                    <Text>End date: {this.state.initialEndDate.toString()}</Text>
+                    <Text>Start date: {this.props.startDate.toString()}</Text>
+                    <Text>End date: {this.props.endDate.toString()}</Text>
                 </View>
 
                 {/* buttons for saving or canceling new date range */}
@@ -101,7 +98,7 @@ class DateRangePicker extends Component {
                     <TouchableOpacity onPress={this.props.onCancel}>
                         <Text style={{ color: 'red', fontSize: 18 }}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.props.onConfirm}>
+                    <TouchableOpacity onPress={() => this.props.onConfirm(this.props.startDate, this.props.endDate)}>
                         <Text style={{ color: 'blue', fontSize: 18 }}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
