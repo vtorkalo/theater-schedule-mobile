@@ -7,11 +7,14 @@ import { middleware } from './Navigation/Navigator';
 import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n"
 import Navigator from './Navigation/Navigator';
+import sliderReducer from './Reducers/SliderReducer';
+
 
 const appReducer = combineReducers({
   i18nState,
   navigation,
   defaultReducer,
+  sliderActiveSlide: sliderReducer
 });
 
 const store = createStore(
