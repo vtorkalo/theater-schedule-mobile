@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from 'react-navigation';
-import ScheduleScreen from '../Screens/ScheduleScreen/ScheduleScreen';
+import ScheduleScreen from '../Screens/ScheduleScreen';
 import SettingsScreen from '../Screens/SettingsScreen';
 import CustomDrawerContent from './CustomDrawerContentComponent';
 import { connect } from 'react-redux';

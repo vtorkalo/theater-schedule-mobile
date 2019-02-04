@@ -10,20 +10,20 @@ let dateAfterWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), 
 
 const initialState = {
     performances: [
-        { id: 1, title: "perf1", mainImage: "uri", startDate: '2019/02/9', duration: 10, minPrice: 10, maxPrice: 100, },
-        { id: 2, title: "perf2", mainImage: "uri", startDate: '2019/03/9', duration: 20, minPrice: 20, maxPrice: 200, },
-        { id: 3, title: "perf3", mainImage: "uri", startDate: '2019/04/9', duration: 30, minPrice: 30, maxPrice: 300, },
-        { id: 4, title: "perf4", mainImage: "uri", startDate: '2019/02/5', duration: 40, minPrice: 40, maxPrice: 400, },
-        { id: 5, title: "perf5", mainImage: "uri", startDate: '2019/02/3', duration: 50, minPrice: 50, maxPrice: 500, },
-        { id: 6, title: "perf6", mainImage: "uri", startDate: '2019/02/10', duration: 60, minPrice: 60, maxPrice: 600, },
+        { id: 1, title: "Курочка ряба", mainImage: "uri", startDate: '2019/02/9', beggining: '10:00' },
+        { id: 2, title: "Коза Дереза", mainImage: "uri", startDate: '2019/03/9', beggining: '10:00' },
+        { id: 3, title: "Колобок", mainImage: "uri", startDate: '2019/04/9', beggining: '10:00' },
+        { id: 4, title: "Семеро козенят", mainImage: "uri", startDate: '2019/02/5', beggining: '10:00' },
+        { id: 5, title: "Котигорошко", mainImage: "uri", startDate: '2019/02/3', beggining: '10:00' },
+        { id: 6, title: "Івасик-Телесик", mainImage: "uri", startDate: '2019/02/10', beggining: '10:00' },
     ],
     performancesBackup: [
-        { id: 1, title: "perf1", mainImage: "uri", startDate: '2019/02/9', duration: 10, minPrice: 10, maxPrice: 100, },
-        { id: 2, title: "perf2", mainImage: "uri", startDate: '2019/03/9', duration: 20, minPrice: 20, maxPrice: 200, },
-        { id: 3, title: "perf3", mainImage: "uri", startDate: '2019/04/9', duration: 30, minPrice: 30, maxPrice: 300, },
-        { id: 4, title: "perf4", mainImage: "uri", startDate: '2019/02/5', duration: 40, minPrice: 40, maxPrice: 400, },
-        { id: 5, title: "perf5", mainImage: "uri", startDate: '2019/02/3', duration: 50, minPrice: 50, maxPrice: 500, },
-        { id: 6, title: "perf6", mainImage: "uri", startDate: '2019/02/10', duration: 60, minPrice: 60, maxPrice: 600, },
+        { id: 1, title: "Курочка ряба", mainImage: "uri", startDate: '2019/02/9', beggining: '10:00' },
+        { id: 2, title: "Коза Дереза", mainImage: "uri", startDate: '2019/03/9', beggining: '10:00' },
+        { id: 3, title: "Колобок", mainImage: "uri", startDate: '2019/04/9', beggining: '10:00' },
+        { id: 4, title: "Семеро козенят", mainImage: "uri", startDate: '2019/02/5', beggining: '10:00' },
+        { id: 5, title: "Котигорошко", mainImage: "uri", startDate: '2019/02/3', beggining: '10:00' },
+        { id: 6, title: "Івасик-Телесик", mainImage: "uri", startDate: '2019/02/10', beggining: '10:00' },
     ],
     startDate: currentDate,
     endDate: dateAfterWeek,
@@ -55,19 +55,6 @@ export default function scheduleReducer(state = initialState, action) {
         }
 
         case FILTER_PERFORMANCES: {
-            let filteredPerfomances =
-                fetch(`api/Schedule/FilterByDate?startDate=${action.payload.startDate}&${action.payload.endDate}`)
-                    .then(response => response.json())
-                    .catch(error => console.log(error));
-
-            // return {
-            //     ...state,
-            //     startDate: action.payload.startDate,
-            //     endDate: action.payload.endDate,
-            //     performances: filteredPerfomances,
-            // };
-
-
             return {
                 ...state,
                 startDate: action.payload.startDate,
@@ -76,6 +63,27 @@ export default function scheduleReducer(state = initialState, action) {
                     return new Date(performance.startDate) >= action.payload.startDate && new Date(performance.startDate) <= action.payload.endDate;
                 })
             }
+
+            // let endDate = new Date(
+            //     action.payload.endDate.getFullYear(),
+            //     action.payload.endDate.getMonth(),
+            //     action.payload.endDate.getDate() + 1,
+            //     action.payload.endDate.getMinutes(),
+            //     0, 0, 0
+            // );
+
+            // let filteredPerfomances =
+            //     fetch(`api/Schedule/FilterByDate?startDate=${action.payload.startDate}&${endDate}`)
+            //         .then(response => response.json())
+            //         .catch(error => console.log(error));
+
+            // return {
+            //     ...state,
+            //     startDate: action.payload.startDate,
+            //     endDate: action.payload.endDate,
+            //     performances: filteredPerfomances,
+            // };
+
         }
 
         default: {

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { filterPerformances } from '../../../Actions/ScheduleActions/ScheduleActionCreators';
-
 import { Ionicons } from '@expo/vector-icons';
-import DateRangePicker from './DateRangePicker'
 
-class DateFilter extends Component {
+import { filterPerformances } from '../../Actions/ScheduleActions/ScheduleActionCreators';
+import DateRangePicker from './DateRangePicker';
+import LocalizeComponent from '../../Localization/LocalizedComponent';
+
+class DateFilter extends LocalizeComponent {
     constructor(props) {
         super(props);
 
@@ -19,7 +20,7 @@ class DateFilter extends Component {
         return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
     }
 
-    pressMenuIconHandler = () => {
+    pressFilterIconHandler = () => {
         this.setState({
             isFilterVisible: true,
         });
@@ -42,22 +43,24 @@ class DateFilter extends Component {
     render() {
         return (
             <View style={styles.filterContainer} >
-                <DateRangePicker
-                    isVisible={this.state.isFilterVisible}
-                    onCancel={this.cancelFilteringHandler}
-                    onConfirm={this.confirmFilteringHandler}
-                    startDate={this.props.startDate}
-                    endDate={this.props.endDate} />
+                <View style={styles.filter}>
+                    <DateRangePicker
+                        isVisible={this.state.isFilterVisible}
+                        onCancel={this.cancelFilteringHandler}
+                        onConfirm={this.confirmFilteringHandler}
+                        startDate={this.props.startDate}
+                        endDate={this.props.endDate} />
+                </View>
                 <Text
                     style={styles.text}>
-                    Current dates: {this.convertToReadableFormat(this.props.startDate)} - {this.convertToReadableFormat(this.props.endDate)}
+                    {this.t('Current dates')}: {this.convertToReadableFormat(this.props.startDate)} - {this.convertToReadableFormat(this.props.endDate)}
                 </Text>
                 <View style={styles.icon}>
                     <Ionicons
                         name='ios-options'
                         color='#7154b8'
                         size={32}
-                        onPress={this.pressMenuIconHandler} />
+                        onPress={this.pressFilterIconHandler} />
                 </View>
             </View>
         );
@@ -67,11 +70,15 @@ class DateFilter extends Component {
 const styles = StyleSheet.create({
     filterContainer: {
         flexDirection: 'row',
-        width: '100%',
+        flex: 1,
         justifyContent: 'space-around',
         alignItems: 'center',
     },
+    filter: {
+        width: '0%',
+    },
     text: {
+        textAlign: 'center',
         color: '#7154b8',
         fontSize: 17,
     },
