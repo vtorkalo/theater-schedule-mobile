@@ -7,11 +7,10 @@ import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-n
 import SliderScreen from '../Screens/SliderScreen';
 
 
-
 export const AppNavigator = createDrawerNavigator({
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
-    Slider: { screen: SliderScreen }
+    Repertoire: { screen: SliderScreen }
 },
     {
         initialRouteName: "Schedule",

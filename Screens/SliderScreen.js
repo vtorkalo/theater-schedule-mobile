@@ -9,13 +9,15 @@ import { connect } from 'react-redux';
 import { setSliderActiveSlide } from '../Actions/ActionCreators';
 import SliderEntry from './SliderScreenComponents/SliderEntry';
 import styles from '../Screens/SliderScreenComponents/indexStyles';
+import LocalizedComponent from '../Localization/LocalizedComponent';
 
 let posters = JSON.parse(JSON.stringify(entries));
 
-class SliderScreen extends Component {
+class SliderScreen extends LocalizedComponent {
     static navigationOptions = {
-        drawerIcon: <MaterialCommunityIcons name='calendar-clock' size={25} />
+        drawerIcon: <MaterialCommunityIcons name='theater' size={25} />
     }
+
 
     renderItemWithParallax({ item, index }, parallaxProps) {
         return (
@@ -37,10 +39,10 @@ class SliderScreen extends Component {
                         <View style={styles.container}>
                             <View style={{ flex: 1, justifyContent: 'center' }}>
                                 <PostersSlider
+                                    title={this.t('Зараз у прокаті: ')}
                                     posters={posters}
                                     renderItemWithParallax={this.renderItemWithParallax}
                                     setActiveSlide={(index) => this.props.setSliderActiveSlide(index)}
-                                    postersLength={posters.length}
                                     activeSlide={this.props.sliderActiveSlide}
                                 />
                             </View>
