@@ -8,11 +8,13 @@ import {
   reduxifyNavigator,
   createReactNavigationReduxMiddleware
 } from "react-navigation-redux-helpers";
+import SliderScreen from "../Screens/SliderScreen";
 
 export const AppNavigator = createDrawerNavigator(
   {
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
+    Repertoire: { screen: SliderScreen },
     Message: { screen: MessageScreen }
   },
   {
