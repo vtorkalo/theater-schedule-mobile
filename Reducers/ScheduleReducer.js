@@ -1,9 +1,4 @@
-import {
-    FILTER_PERFORMANCES,
-    LOAD_PERFORMANCES_BEGIN,
-    LOAD_PERFORMANCES_SUCCESS,
-    LOAD_PERFORMANCES_END
-} from '../Actions/ScheduleActions/ScheduleActionTypes';
+import { FILTER_PERFORMANCES } from '../Actions/ScheduleActions/ScheduleActionTypes';
 
 let currentDate = new Date();
 let dateAfterWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7);
@@ -31,29 +26,6 @@ const initialState = {
 
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_PERFORMANCES_BEGIN: {
-            return {
-                ...state,
-                loading: true,
-            }
-        }
-
-        case LOAD_PERFORMANCES_SUCCESS: {
-            return {
-                ...state,
-                loading: false,
-                data: action.payload.data,
-            }
-        }
-
-        case LOAD_PERFORMANCES_END: {
-            return {
-                ...state,
-                loading: false,
-                error: action.payload.error,
-            }
-        }
-
         case FILTER_PERFORMANCES: {
             return {
                 ...state,

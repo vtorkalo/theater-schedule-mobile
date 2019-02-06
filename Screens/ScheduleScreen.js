@@ -19,7 +19,7 @@ class ScheduleScreen extends Component {
     componentWillMount() {
         let currentDate = new Date();
         let dateAfterWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7);
-        this.props.onFilter(currentDate, dateAfterWeek);
+        this.props.filterPerformances(currentDate, dateAfterWeek);
     }
 
     render() {
@@ -69,10 +69,8 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onFilter: (startDate, endDate) => dispatch(filterPerformances(startDate, endDate)),
-    }
+const mapDispatchToProps = {
+    filterPerformances,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);

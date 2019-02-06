@@ -37,7 +37,7 @@ class DateFilter extends LocalizeComponent {
             isFilterVisible: false,
         });
 
-        this.props.onFilter(startDate, endDate);
+        this.props.filterPerformances(startDate, endDate);
     }
 
     render() {
@@ -97,10 +97,8 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onFilter: (startDate, endDate) => dispatch(filterPerformances(startDate, endDate)),
-    }
+const mapDispatchToProps = {
+    filterPerformances,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DateFilter);
