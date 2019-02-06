@@ -6,8 +6,9 @@ import navigation from "./Reducers/NavigationReducer";
 import settings from "./Reducers/settingsReducer";
 import { middleware } from "./Navigation/Navigator";
 import { translations } from "./Localization/translations";
-import I18n, { i18nState } from "redux-i18n";
-import Navigator from "./Navigation/Navigator";
+import I18n, { i18nState } from "redux-i18n"
+import Navigator from './Navigation/Navigator';
+import sliderReducer from './Reducers/SliderReducer';
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -15,6 +16,7 @@ import DeviceInfo from "react-native-device-info";
 const appReducer = combineReducers({
   i18nState,
   navigation,
+  sliderActiveSlide: sliderReducer
   settings,
   defaultReducer
 });

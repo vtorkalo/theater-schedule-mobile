@@ -4,10 +4,13 @@ import SettingsScreen from '../Screens/SettingsScreen';
 import CustomDrawerContent from './CustomDrawerContentComponent';
 import { connect } from 'react-redux';
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
+import SliderScreen from '../Screens/SliderScreen';
+
 
 export const AppNavigator = createDrawerNavigator({
     Schedule: { screen: ScheduleScreen },
-    Settings: { screen: SettingsScreen }
+    Settings: { screen: SettingsScreen },
+    Repertoire: { screen: SliderScreen }
 },
     {
         initialRouteName: "Schedule",
