@@ -2,6 +2,7 @@ export const LOAD_SETTINGS_BEGIN = "LOAD_SETTINGS_BEGIN";
 export const LOAD_SETTINGS_SUCCESS = "LOAD_SETTINGS_SUCCESS";
 export const LOAD_SETTINGS_FAILURE = "LOAD_SETTINGS_FAILURE";
 
+export const STORE_SETTINGS_BEGIN = "STORE_SETTINGS_BEGIN";
 export const STORE_SETTINGS_SUCCESS = "STORE_SETTINGS_SUCCESS";
 export const STORE_SETTINGS_FAILURE = "STORE_SETTINGS_FAILURE";
 
@@ -17,6 +18,10 @@ export const loadSettingsSuccess = settings => ({
 export const loadSettingsFailure = error => ({
   type: LOAD_SETTINGS_FAILURE,
   payload: { error }
+});
+
+export const storeSettingsBegin = () => ({
+  type: STORE_SETTINGS_BEGIN
 });
 
 export const storeSettingsSuccess = settings => ({
@@ -44,6 +49,7 @@ export const loadSettings = deviceId => {
 
 export const storeSettings = (deviceId, newSettings) => {
   return dispatch => {
+    dispatch(storeSettingsBegin());
     fetch(`pathToOurSettingsApi/${deviceId}`, {
       method: "PUT",
       headers: {
@@ -51,7 +57,13 @@ export const storeSettings = (deviceId, newSettings) => {
       },
       body: JSON.stringify(newSettings)
     })
-      .then(res => res.json())
+      .then(res => {
+        if(!res.ok)
+        {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
       .then(resJson => {
         dispatch(storeSettingsSuccess(resJson));
       })

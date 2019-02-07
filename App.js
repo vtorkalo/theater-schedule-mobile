@@ -16,7 +16,7 @@ import DeviceInfo from "react-native-device-info";
 const appReducer = combineReducers({
   i18nState,
   navigation,
-  sliderActiveSlide: sliderReducer
+  sliderActiveSlide: sliderReducer,
   settings,
   defaultReducer
 });
