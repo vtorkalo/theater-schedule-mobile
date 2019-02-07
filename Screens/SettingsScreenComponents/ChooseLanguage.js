@@ -1,9 +1,12 @@
 import React from 'react';
-import { Text, StyleSheet, View, Picker, TouchableOpacity, Alert } from 'react-native';
+import { Text, StyleSheet, View, Picker, TouchableOpacity, Alert, Modal } from 'react-native';
 import DeviceInfo from "react-native-device-info";
 import { connect } from 'react-redux';
 import { storeSettings } from '../../Actions/settingsActions';
 import LocalizeComponent from '../../Localization/LocalizedComponent';
+import FlashMessage from "react-native-flash-message";
+import { showMessage } from "react-native-flash-message";
+
 
 class ChooseLanguage extends LocalizeComponent {
     state = {
@@ -12,11 +15,32 @@ class ChooseLanguage extends LocalizeComponent {
 
     componentDidUpdate(prevState) {
         if (!prevState.settings.error && this.props.settings.error) {
-            Alert.alert(this.t('Error!'), this.t('Please try again'));
+            this.errorDisplay();
+            
         }
         else if (prevState.settings.loading && !this.props.settings.error) {
-            Alert.alert(this.t('Success!'), this.t('Settings saved'));
+            this.successDisplay();
         }
+    }
+
+    errorDisplay = () => {
+        showMessage({
+            message: this.t('Error!'),
+            description: this.t('Please try again'),
+            type: "danger",
+            position: 'center',
+            duration: 2500
+          });
+    }
+
+    successDisplay = () => {
+        showMessage({
+            message: this.t('Success!'),
+            description: this.t('Settings saved'),
+            type: "success",
+            position: 'center',
+            duration: 2500
+          });
     }
 
     onSaveLanguage = () => {
@@ -49,6 +73,7 @@ class ChooseLanguage extends LocalizeComponent {
                 <TouchableOpacity style={styles.button} onPress={this.onSaveLanguage}>
                     <Text style={styles.buttonText}>{this.t('Save')}</Text>
                 </TouchableOpacity>
+                <FlashMessage/>
             </View>
         )
     }
@@ -83,6 +108,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     }
 })
+
 
 const mapStateToProps = (state) => {
     return {

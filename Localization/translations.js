@@ -33,3 +33,4 @@ export const translations = {
       'Now the performances premieres are':'Сейчас в прокате :'
     },
   }
+  
