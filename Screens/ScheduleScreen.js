@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from '../Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
 import PerformanceList from './ScheduleScreenComponents/PerformanceList'
-
 import DateFilter from './ScheduleScreenComponents/DateFilter';
-
 import { filterPerformances } from '../Actions/ScheduleActions/ScheduleActionCreators'
 
 class ScheduleScreen extends Component {
@@ -28,15 +26,14 @@ class ScheduleScreen extends Component {
                 <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                 <Content contentContainerStyle={styles.contentContainer}>
                     <View style={styles.filterContainer}>
-                        <DateFilter
-                            startDate={this.props.startDate}
-                            endDate={this.props.endDate} />
+                        <DateFilter />
                     </View>
                     <View style={styles.performancesContainer}>
                         <PerformanceList
                             performances={this.props.performances}
                         />
                     </View>
+                    <TouchableOpacity onPress={() => { console.log(this.props.startDate, this.props.endDate); console.log(this.props.performances) }}><Text>jhdasfkjlhdlfkjhadslkfjahlsdkfhd</Text></TouchableOpacity>
                 </Content>
             </Container>
         )
@@ -66,11 +63,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         performances: state.scheduleReducer.performances,
+        startDate: state.scheduleReducer.startDate,
+        endDate: state.scheduleReducer.endDate,
     };
 }
 
-const mapDispatchToProps = {
-    filterPerformances,
+const mapDispatchToProps = dispatch => {
+    return {
+        filterPerformances: (startDate, endDate) => dispatch(filterPerformances(startDate, endDate)),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);

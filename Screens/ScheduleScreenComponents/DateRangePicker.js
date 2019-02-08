@@ -19,7 +19,7 @@ class DateRangePicker extends LocalizedComponent {
     }
 
     convertDateToReadableFormat = date => {
-        return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+        //return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
     }
 
     showStartDatePicker = () => {

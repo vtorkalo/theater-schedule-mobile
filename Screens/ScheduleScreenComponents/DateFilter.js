@@ -17,7 +17,7 @@ class DateFilter extends LocalizeComponent {
     }
 
     convertToReadableFormat = date => {
-        return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+        //return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
     }
 
     pressFilterIconHandler = () => {

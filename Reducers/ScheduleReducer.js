@@ -1,61 +1,48 @@
-import { FILTER_PERFORMANCES } from '../Actions/ScheduleActions/ScheduleActionTypes';
-
-let currentDate = new Date();
-let dateAfterWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7);
+import {
+    FILTER_PERFORMANCES_BEGIN,
+    FILTER_PERFORMANCES_SUCCESS,
+    FILTER_PERFORMANCES_FAILURE
+} from '../Actions/ScheduleActions/ScheduleActionTypes';
 
 const initialState = {
-    performances: [
-        { id: 1, title: "Курочка ряба", mainImage: "uri", startDate: '2019/02/9', beggining: '10:00' },
-        { id: 2, title: "Коза Дереза", mainImage: "uri", startDate: '2019/03/9', beggining: '10:00' },
-        { id: 3, title: "Колобок", mainImage: "uri", startDate: '2019/04/9', beggining: '10:00' },
-        { id: 4, title: "Семеро козенят", mainImage: "uri", startDate: '2019/02/5', beggining: '10:00' },
-        { id: 5, title: "Котигорошко", mainImage: "uri", startDate: '2019/02/3', beggining: '10:00' },
-        { id: 6, title: "Івасик-Телесик", mainImage: "uri", startDate: '2019/02/10', beggining: '10:00' },
-    ],
-    performancesBackup: [
-        { id: 1, title: "Курочка ряба", mainImage: "uri", startDate: '2019/02/9', beggining: '10:00' },
-        { id: 2, title: "Коза Дереза", mainImage: "uri", startDate: '2019/03/9', beggining: '10:00' },
-        { id: 3, title: "Колобок", mainImage: "uri", startDate: '2019/04/9', beggining: '10:00' },
-        { id: 4, title: "Семеро козенят", mainImage: "uri", startDate: '2019/02/5', beggining: '10:00' },
-        { id: 5, title: "Котигорошко", mainImage: "uri", startDate: '2019/02/3', beggining: '10:00' },
-        { id: 6, title: "Івасик-Телесик", mainImage: "uri", startDate: '2019/02/10', beggining: '10:00' },
-    ],
-    startDate: currentDate,
-    endDate: dateAfterWeek,
+    performances: [],
+    startDate: null,
+    endDate: null,
+    loading: false,
+    error: null,
 }
 
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
-        case FILTER_PERFORMANCES: {
+        case FILTER_PERFORMANCES_BEGIN: {
+            console.log("begin");
+
             return {
                 ...state,
+                loading: true,
+            }
+        }
+
+        case FILTER_PERFORMANCES_SUCCESS: {
+            console.log("success");
+            console.log(action.payload.performances);
+            return {
+                ...state,
+                loading: false,
+                performances: action.payload.performances,
                 startDate: action.payload.startDate,
                 endDate: action.payload.endDate,
-                performances: state.performancesBackup.filter(performance => {
-                    return new Date(performance.startDate) >= action.payload.startDate && new Date(performance.startDate) <= action.payload.endDate;
-                })
             }
+        }
+        
+        case FILTER_PERFORMANCES_FAILURE: {
+            console.log("failure");
 
-            // let endDate = new Date(
-            //     action.payload.endDate.getFullYear(),
-            //     action.payload.endDate.getMonth(),
-            //     action.payload.endDate.getDate() + 1,
-            //     action.payload.endDate.getMinutes(),
-            //     0, 0, 0
-            // );
-
-            // let filteredPerfomances =
-            //     fetch(`api/Schedule/FilterByDate?startDate=${action.payload.startDate}&${endDate}`)
-            //         .then(response => response.json())
-            //         .catch(error => console.log(error));
-
-            // return {
-            //     ...state,
-            //     startDate: action.payload.startDate,
-            //     endDate: action.payload.endDate,
-            //     performances: filteredPerfomances,
-            // };
-
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error,
+            }
         }
 
         default: {

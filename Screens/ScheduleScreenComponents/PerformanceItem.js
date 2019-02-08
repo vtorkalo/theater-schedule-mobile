@@ -34,7 +34,7 @@ class PerformanceItem extends LocalizedComponent {
                             {this.t('The closest session')}:
                         </Text>
                         <TouchableOpacity>
-                            <Text style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}>{this.props.performance.beggining}</Text>
+                            <Text style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}>{this.props.performance.beginning}</Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={this.pressedDetailsHandler}>

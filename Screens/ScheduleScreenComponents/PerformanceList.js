@@ -8,7 +8,7 @@ export default PerformanceList = props => {
         <FlatList
             style={styles.performanceList}
             data={props.performances}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => item.scheduleId.toString()}
             renderItem={({ item }) => (
                 <PerformanceItem
                     performance={item}
