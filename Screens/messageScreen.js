@@ -14,10 +14,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { connect } from "react-redux";
 import {
-  enterSubject,
-  enterMessage,
-  validateSubject,
-  validateMessage,
+  enterMessageSubject,
+  enterMessageText,
+  validateMessageSubject,
+  validateMessageText,
   sendMessage
 } from "../Actions/messageActions";
 
@@ -38,12 +38,13 @@ class MessageScreen extends Component {
   }
 
   onSendMessage = () => {
-    this.props.validateSubject();
-    this.props.validateMessage();
+    this.props.validateMessageSubject();
+    this.props.validateMessageText();
 
     this.props.sendMessage({
       subject: this.props.message.subject,
-      message: this.props.message.message
+      text: this.props.message.text,
+      accountId: 1
     });
   };
 
@@ -56,22 +57,23 @@ class MessageScreen extends Component {
       );
     }
 
-    const { subjectError, messageError } = this.props.message;
+    const { subjectError, textError } = this.props.message;
     return (
       <Container>
         <DrawerMenucIcon
           onPressMenuIcon={() => this.props.navigation.openDrawer()}
         />
         <Content contentContainerStyle={styles.contentContainer}>
+          <Text style={styles.header}>We are open to your suggestions!</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.subject}
               value={this.props.message.subject}
               placeholder="Subject"
               onChangeText={text => {
-                this.props.enterSubject(text.trim());
+                this.props.enterMessageSubject(text);
               }}
-              onBlur={this.props.validateSubject}
+              onBlur={this.props.validateMessageSubject}
             />
             {subjectError ? (
               <Text style={styles.error}>{subjectError}</Text>
@@ -80,18 +82,16 @@ class MessageScreen extends Component {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.message}
-              value={this.props.message.message}
+              value={this.props.message.text}
               multiline={true}
               maxLength={200}
               placeholder="Your message..."
               onChangeText={text => {
-                this.props.enterMessage(text.trim());
+                this.props.enterMessageText(text);
               }}
-              onBlur={this.props.validateMessage}
+              onBlur={this.props.validateMessageText}
             />
-            {messageError ? (
-              <Text style={styles.error}>{messageError}</Text>
-            ) : null}
+            {textError ? <Text style={styles.error}>{textError}</Text> : null}
           </View>
           <View style={styles.buttonContainer}>
             <Button onPress={this.onSendMessage} title="Send" />
@@ -108,10 +108,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    enterSubject: subject => dispatch(enterSubject(subject)),
-    enterMessage: message => dispatch(enterMessage(message)),
-    validateSubject: () => dispatch(validateSubject()),
-    validateMessage: () => dispatch(validateMessage()),
+    enterMessageSubject: subject => dispatch(enterMessageSubject(subject)),
+    enterMessageText: text => dispatch(enterMessageText(text)),
+    validateMessageSubject: () => dispatch(validateMessageSubject()),
+    validateMessageText: () => dispatch(validateMessageText()),
     sendMessage: message => dispatch(sendMessage(message))
   };
 };
@@ -127,8 +127,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between"
   },
+  header: {
+    color: "blue",
+    fontWeight: "bold",
+    fontSize: 20,
+    margin: 10
+  },
   inputContainer: {
-    margin: 20,
+    margin: 10,
     padding: 10,
     //height: 300
     width: "85%"
