@@ -1,8 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, Dimensions } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Image,
+    Text,
+    TouchableOpacity,
+    Dimensions
+} from 'react-native';
 import { connect } from 'react-redux';
 
-import LocalizedComponent from '../../Localization/LocalizedComponent'
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 
 class PerformanceItem extends LocalizedComponent {
     constructor(props) {
@@ -10,7 +17,15 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     pressedDetailsHandler = () => {
+        // TODO - redirect to detailed information
         alert('redirect to details page');
+    }
+
+    convertToReadableTime = date => {
+        let beginning = new Date(date);
+        let hours = beginning.getHours();
+        let minutes = beginning.getMinutes();
+        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
     }
 
     render() {
@@ -18,15 +33,14 @@ class PerformanceItem extends LocalizedComponent {
 
         return (
             <View style={styles.performanceContainer}>
-                {/* Container for image */}
                 <View style={styles.imageContainer}>
                     <Image
                         style={styles.image}
                         resizeMode='contain'
-                        source={{ uri: base64Image }} />
+                        source={{ uri: base64Image }}
+                    />
                 </View>
 
-                {/* Container for some title and details button */}
                 <View style={styles.infoContainer}>
                     <Text style={styles.title}>{this.props.performance.title}</Text>
                     <View style={styles.detailsContainer}>
@@ -34,12 +48,18 @@ class PerformanceItem extends LocalizedComponent {
                             {this.t('The closest session')}:
                         </Text>
                         <TouchableOpacity>
-                            <Text style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}>{this.props.performance.beginning}</Text>
+                            <Text
+                                style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
+                            >
+                                {this.convertToReadableTime(this.props.performance.beginning)}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={this.pressedDetailsHandler}>
                         <View style={styles.detailsButton}>
-                            <Text style={styles.buttonText}>{this.t('Details')}</Text>
+                            <Text style={styles.buttonText}>
+                                {this.t('Details')}
+                            </Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -48,9 +68,11 @@ class PerformanceItem extends LocalizedComponent {
     }
 }
 
+const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
+
 const styles = StyleSheet.create({
     performanceContainer: {
-        height: Dimensions.get('window').height * 0.25,
+        height: QUARTER_OF_WINDOW_HEIGHT,
         flexDirection: 'row',
         backgroundColor: '#fff',
         borderColor: '#7154b8',

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Container, Content } from 'native-base';
-import DrawerMenuIcon from '../Navigation/DrawerMenuIcon';
+import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import { BallIndicator } from 'react-native-indicators';
 
-import PerformanceList from './ScheduleScreenComponents/PerformanceList'
-import DateFilter from './ScheduleScreenComponents/DateFilter';
-import { filterPerformances } from '../Actions/ScheduleActions/ScheduleActionCreators'
+import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
+import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
+import { filterPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
 
 class ScheduleScreen extends Component {
     static navigationOptions = {
@@ -15,32 +16,50 @@ class ScheduleScreen extends Component {
     }
 
     componentWillMount() {
+        const DAYS_IN_WEEK = 7;
+
         let currentDate = new Date();
-        let dateAfterWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7);
+        let dateAfterWeek = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_WEEK);
+
         this.props.filterPerformances(currentDate, dateAfterWeek);
     }
 
     render() {
-        return (
-            <Container style={{ flex: 1 }}>
-                <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
-                <Content contentContainerStyle={styles.contentContainer}>
-                    <View style={styles.filterContainer}>
-                        <DateFilter />
-                    </View>
-                    <View style={styles.performancesContainer}>
-                        <PerformanceList
-                            performances={this.props.performances}
-                        />
-                    </View>
-                    <TouchableOpacity onPress={() => { console.log(this.props.startDate, this.props.endDate); console.log(this.props.performances) }}><Text>jhdasfkjlhdlfkjhadslkfjahlsdkfhd</Text></TouchableOpacity>
-                </Content>
-            </Container>
-        )
+        if (this.props.isLoading) {
+            return (
+                <Container style={styles.container}>
+                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <BallIndicator color="#aaa" />
+                    </Content>
+                </Container>
+            );
+        }
+        else {
+            return (
+                <Container style={styles.container}>
+                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <View style={styles.filterContainer}>
+                            <DateFilter />
+                        </View>
+                        <View style={styles.performancesContainer}>
+                            <PerformanceList />
+                        </View>
+                    </Content>
+                </Container>
+            )
+        }
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     contentContainer: {
         flex: 1,
         justifyContent: 'space-between',
@@ -62,16 +81,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        performances: state.scheduleReducer.performances,
-        startDate: state.scheduleReducer.startDate,
-        endDate: state.scheduleReducer.endDate,
-    };
+        isLoading: state.scheduleReducer.loading,
+    }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        filterPerformances: (startDate, endDate) => dispatch(filterPerformances(startDate, endDate)),
-    }
+const mapDispatchToProps = {
+    filterPerformances,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);

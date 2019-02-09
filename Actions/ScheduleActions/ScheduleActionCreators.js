@@ -1,9 +1,9 @@
-import BASE_URL from '../../baseURL';
+import BASE_URL from 'TheaterSchedule/baseURL';
 import {
     FILTER_PERFORMANCES_BEGIN,
     FILTER_PERFORMANCES_SUCCESS,
     FILTER_PERFORMANCES_FAILURE
-} from './ScheduleActionTypes';
+} from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 export const filterPerformancesBegin = () => ({
     type: FILTER_PERFORMANCES_BEGIN
@@ -12,7 +12,7 @@ export const filterPerformancesBegin = () => ({
 export const filterPerformancesSuccess = (performances, startDate, endDate) => ({
     type: FILTER_PERFORMANCES_SUCCESS,
     payload: {
-        performances: { performances },
+        performances,
         startDate,
         endDate,
     },
@@ -29,23 +29,22 @@ export const filterPerformances = (startDate, endDate) => {
     return dispatch => {
         dispatch(filterPerformancesBegin());
 
-        let end = new Date(
-            endDate.getFullYear() + 1,
+        let dayAfterEndDate = new Date(
+            endDate.getFullYear(),
             endDate.getMonth(),
             endDate.getDate() + 1,
             0, 0, 0
         );
+        let url = `${BASE_URL}schedule/uk/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
 
-        let url = `${BASE_URL}schedule/pl/FilterByDate?startDate=${startDate.toJSON()}&endDate=${end.toJSON()}`;
-        
         fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                return response.json();
+            })
             .then(responseJson => {
-                console.log(responseJson);
                 dispatch(filterPerformancesSuccess(responseJson, startDate, endDate));
             })
             .catch(error => {
-                console.log(error);
                 dispatch(filterPerformancesFailure(error));
             });
     };

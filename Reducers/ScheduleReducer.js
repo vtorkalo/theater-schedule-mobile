@@ -2,12 +2,13 @@ import {
     FILTER_PERFORMANCES_BEGIN,
     FILTER_PERFORMANCES_SUCCESS,
     FILTER_PERFORMANCES_FAILURE
-} from '../Actions/ScheduleActions/ScheduleActionTypes';
+} from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
+let currentDate = new Date();
 const initialState = {
     performances: [],
-    startDate: null,
-    endDate: null,
+    startDate: currentDate,
+    endDate: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()),
     loading: false,
     error: null,
 }
@@ -15,8 +16,6 @@ const initialState = {
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
         case FILTER_PERFORMANCES_BEGIN: {
-            console.log("begin");
-
             return {
                 ...state,
                 loading: true,
@@ -24,8 +23,6 @@ export default function scheduleReducer(state = initialState, action) {
         }
 
         case FILTER_PERFORMANCES_SUCCESS: {
-            console.log("success");
-            console.log(action.payload.performances);
             return {
                 ...state,
                 loading: false,
@@ -36,8 +33,6 @@ export default function scheduleReducer(state = initialState, action) {
         }
         
         case FILTER_PERFORMANCES_FAILURE: {
-            console.log("failure");
-
             return {
                 ...state,
                 loading: false,

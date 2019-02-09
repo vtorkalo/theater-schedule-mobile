@@ -3,9 +3,9 @@ import { View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
-import { filterPerformances } from '../../Actions/ScheduleActions/ScheduleActionCreators';
-import DateRangePicker from './DateRangePicker';
-import LocalizeComponent from '../../Localization/LocalizedComponent';
+import { filterPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import DateRangePicker from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateRangePicker';
+import LocalizeComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 
 class DateFilter extends LocalizeComponent {
     constructor(props) {
@@ -16,8 +16,8 @@ class DateFilter extends LocalizeComponent {
         }
     }
 
-    convertToReadableFormat = date => {
-        //return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+    convertToReadableDate = date => {
+        return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
     }
 
     pressFilterIconHandler = () => {
@@ -49,11 +49,12 @@ class DateFilter extends LocalizeComponent {
                         onCancel={this.cancelFilteringHandler}
                         onConfirm={this.confirmFilteringHandler}
                         startDate={this.props.startDate}
-                        endDate={this.props.endDate} />
+                        endDate={this.props.endDate}
+                    />
                 </View>
                 <Text
                     style={styles.text}>
-                    {this.t('Current dates')}: {this.convertToReadableFormat(this.props.startDate)} - {this.convertToReadableFormat(this.props.endDate)}
+                    {this.t('Current dates')}: {this.convertToReadableDate(this.props.startDate)} - {this.convertToReadableDate(this.props.endDate)}
                 </Text>
                 <View style={styles.icon}>
                     <Ionicons

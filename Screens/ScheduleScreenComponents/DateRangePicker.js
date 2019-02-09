@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Modal, Text, StyleSheet } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import LocalizedComponent from '../../Localization/LocalizedComponent';
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 
 class DateRangePicker extends LocalizedComponent {
     constructor(props) {
@@ -18,8 +18,9 @@ class DateRangePicker extends LocalizedComponent {
         }
     }
 
-    convertDateToReadableFormat = date => {
-        //return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    convertDateToReadableDate = date => {
+        let filterDate = new Date(date);
+        return `${filterDate.getDate()}.${filterDate.getMonth() + 1}.${filterDate.getFullYear()}`;
     }
 
     showStartDatePicker = () => {
@@ -50,6 +51,7 @@ class DateRangePicker extends LocalizedComponent {
         this.setState({
             startFilterDate: date,
         });
+
         this.hideStartDatePicker();
     }
 
@@ -57,6 +59,7 @@ class DateRangePicker extends LocalizedComponent {
         this.setState({
             endFilterDate: date,
         });
+
         this.hideEndDatePicker();
     }
 
@@ -70,7 +73,11 @@ class DateRangePicker extends LocalizedComponent {
 
     render() {
         return (
-            <Modal onRequestClose={() => { this.onCancel }} visible={this.props.isVisible} animationType="fade">
+            <Modal
+                onRequestClose={() => { this.onCancel }}
+                visible={this.props.isVisible}
+                animationType="fade"
+            >
                 <View style={styles.container}>
                     {/* start date modal picker */}
                     <DateTimePicker
@@ -79,7 +86,8 @@ class DateRangePicker extends LocalizedComponent {
                         onCancel={this.hideStartDatePicker}
                         mode="date"
                         datePickerModeAndroid="spinner"
-                        minimumDate={new Date()}
+                        minimumDate={this.props.startDate}
+                        maximumDate={this.state.endFilterDate}
                         date={this.state.startFilterDate}
                     />
 
@@ -90,36 +98,51 @@ class DateRangePicker extends LocalizedComponent {
                         onCancel={this.hideEndDatePicker}
                         mode="date"
                         datePickerModeAndroid="spinner"
-                        minimumDate={new Date()}
+                        minimumDate={this.state.startFilterDate}
                         date={this.state.endFilterDate}
                     />
 
                     {/* buttons for choosing start and end dates */}
                     <View style={styles.datesSelectorContainer}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#7154b8', borderBottomWidth: 1, paddingBottom: 10, margin: 10 }}>
-                            <Text style={styles.text}>{this.t('From')}: {this.convertDateToReadableFormat(this.state.startFilterDate)}</Text>
+                        <View style={[styles.editRangeButton, { borderBottomColor: '#7154b8', borderBottomWidth: 1, paddingBottom: 10 }]}>
+                            <Text style={styles.text}>
+                                {this.t('From')}: {this.convertDateToReadableDate(this.state.startFilterDate)}
+                            </Text>
                             <View style={styles.icon}>
                                 <Ionicons
-                                    name='md-create' color='#7154b8' size={32}
-                                    onPress={this.showStartDatePicker} />
+                                    name='md-create'
+                                    color='#7154b8'
+                                    size={32}
+                                    onPress={this.showStartDatePicker}
+                                />
                             </View>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between',  margin: 10, marginTop: 0 }}>
-                            <Text style={styles.text}>{this.t('To')}: {this.convertDateToReadableFormat(this.state.endFilterDate)}</Text>
+                        <View style={[styles.editRangeButton, { marginTop: 0 }]}>
+                            <Text style={styles.text}>
+                                {this.t('To')}: {this.convertDateToReadableDate(this.state.endFilterDate)}
+                            </Text>
                             <View style={styles.icon}>
                                 <Ionicons
-                                    name='md-create' color='#7154b8' size={32}
-                                    onPress={this.showEndDatePicker} />
+                                    name='md-create'
+                                    color='#7154b8'
+                                    size={32}
+                                    onPress={this.showEndDatePicker}
+                                />
                             </View>
                         </View>
                     </View>
 
                     {/* buttons for saving or canceling new date range */}
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%', alignItems: 'center', position: 'absolute', bottom: 10 }}>
+                    <View style={styles.saveCancelButtonsContainer}>
                         <Ionicons
-                            name='ios-close-circle' color='#7154b8' size={70}
+                            name='ios-close-circle'
+                            color='#7154b8'
+                            size={70}
                             onPress={this.cancelHandler} />
-                        <Ionicons name='ios-checkmark-circle' color='#7154b8' size={70}
+                        <Ionicons
+                            name='ios-checkmark-circle'
+                            color='#7154b8'
+                            size={70}
                             onPress={this.confirmHandler} />
                     </View>
                 </View>
@@ -149,6 +172,19 @@ const styles = StyleSheet.create({
         borderLeftWidth: 2,
         paddingLeft: 5,
         margin: 2,
+    },
+    editRangeButton: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 10,
+    },
+    saveCancelButtonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 10,
     },
 });
 
