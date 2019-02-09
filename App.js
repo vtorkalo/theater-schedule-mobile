@@ -17,9 +17,8 @@ import DeviceInfo from "react-native-device-info";
 const appReducer = combineReducers({
   i18nState,
   navigation,
-  scheduleReducer: scheduleReducer,
-  defaultReducer,
   sliderActiveSlide: sliderReducer,
+  scheduleReducer: scheduleReducer,
   settings,
   defaultReducer
 });
@@ -39,7 +38,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <I18n translations={translations} initialLang="ua" fallbackLang="en">
+        <I18n translations={translations} initialLang="uk" fallbackLang="en">
           <Navigator />
         </I18n>
       </Provider>
