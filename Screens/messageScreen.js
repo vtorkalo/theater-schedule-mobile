@@ -77,7 +77,7 @@ class MessageScreen extends LocalizeComponent {
               onBlur={this.props.validateMessageSubject}
             />
             {subjectError ? (
-              <Text style={styles.error}>{subjectError}</Text>
+              <Text style={styles.error}>{this.t("subjectError")}</Text>
             ) : null}
           </View>
           <View style={styles.inputContainer}>
@@ -92,7 +92,7 @@ class MessageScreen extends LocalizeComponent {
               }}
               onBlur={this.props.validateMessageText}
             />
-            {textError ? <Text style={styles.error}>{textError}</Text> : null}
+            {textError ? <Text style={styles.error}>{this.t("textError")}</Text> : null}
           </View>
           <View style={styles.buttonContainer}>
             <Button onPress={this.onSendMessage} title={this.t("send")} />
