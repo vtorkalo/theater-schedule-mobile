@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
-import defaultReducer from "./Reducers/Reducer";
-import navigation from "./Reducers/NavigationReducer";
+import React, { Component } from 'react';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import defaultReducer from './Reducers/Reducer';
+import navigation from './Reducers/NavigationReducer';
+import scheduleReducer from './Reducers/ScheduleReducer';
 import settings from "./Reducers/settingsReducer";
 import { middleware } from "./Navigation/Navigator";
 import { translations } from "./Localization/translations";
-import I18n, { i18nState } from "redux-i18n"
-import Navigator from './Navigation/Navigator';
+import I18n, { i18nState } from "redux-i18n";
+import Navigator from "./Navigation/Navigator";
 import sliderReducer from './Reducers/SliderReducer';
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   i18nState,
   navigation,
   sliderActiveSlide: sliderReducer,
+  scheduleReducer: scheduleReducer,
   settings,
   defaultReducer
 });
@@ -36,7 +38,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <I18n translations={translations} initialLang="ua" fallbackLang="en">
+        <I18n translations={translations} initialLang="uk" fallbackLang="en">
           <Navigator />
         </I18n>
       </Provider>

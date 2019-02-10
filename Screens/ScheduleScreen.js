@@ -1,30 +1,92 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Container, Content } from 'native-base';
-import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
+import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { connect } from 'react-redux';
+import { BallIndicator } from 'react-native-indicators';
 
-export default class ScheduleScreen extends Component {
+import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
+import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
+import { filterPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
+
+class ScheduleScreen extends Component {
     static navigationOptions = {
         drawerIcon: <MaterialCommunityIcons name='calendar-clock' size={25} />
     }
+
+    componentWillMount() {
+        const DAYS_IN_WEEK = 7;
+
+        let currentDate = new Date();
+        let dateAfterWeek = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_WEEK);
+
+        this.props.filterPerformances(currentDate, dateAfterWeek);
+    }
+
     render() {
-        return (
-            <Container style={{ flex: 1 }}>
-                <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
-                <Content contentContainerStyle={styles.contentContainer}>
-                    <Text>Schedule</Text>
-                </Content>
-            </Container>
-        )
+        if (this.props.isLoading) {
+            return (
+                <Container style={styles.container}>
+                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <BallIndicator color="#aaa" />
+                    </Content>
+                </Container>
+            );
+        }
+        else {
+            return (
+                <Container style={styles.container}>
+                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <View style={styles.filterContainer}>
+                            <DateFilter />
+                        </View>
+                        <View style={styles.performancesContainer}>
+                            <PerformanceList />
+                        </View>
+                    </Content>
+                </Container>
+            )
+        }
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     contentContainer: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between',
+        backgroundColor: '#eee',
+    },
+    filterContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        borderColor: '#7154b8',
+        borderWidth: 2,
+        margin: 5,
+        borderRadius: 50,
+        backgroundColor: '#fff',
+    },
+    performancesContainer: {
+        flex: 12,
+    },
+});
+
+const mapStateToProps = state => {
+    return {
+        isLoading: state.scheduleReducer.loading,
     }
-})
+}
+
+const mapDispatchToProps = {
+    filterPerformances,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);
