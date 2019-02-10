@@ -39,8 +39,9 @@ export const storeSettingsFailure = error => ({
 export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
-
-    let url = `${BASE_URL}/settings/${deviceId}`;
+    deviceId = "(465) 454-8347";
+    let url = `${BASE_URL}settings/${deviceId}`;
+    
     fetch(url)
       .then(res => res.json())
       .then(resJson => {
@@ -53,8 +54,8 @@ export const loadSettings = deviceId => {
 export const storeSettings = (deviceId, newSettings) => {
   return dispatch => {
     dispatch(storeSettingsBegin());
-    
-    let url = `${BASE_URL}/settings/${deviceId}`;
+
+    let url = `${BASE_URL}settings/${deviceId}`;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -63,8 +64,7 @@ export const storeSettings = (deviceId, newSettings) => {
       body: JSON.stringify(newSettings)
     })
       .then(res => {
-        if(!res.ok)
-        {
+        if (!res.ok) {
           throw Error(res.statusText);
         }
         return res.json();

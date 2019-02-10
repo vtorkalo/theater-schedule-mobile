@@ -25,7 +25,7 @@ export const loadPerformancesFailure = error => ({
     },
 });
 
-export const loadPerformances = (startDate, endDate) => {
+export const loadPerformances = (startDate, endDate, languageCode) => {
     return dispatch => {
         dispatch(loadPerformancesBegin());
 
@@ -35,9 +35,8 @@ export const loadPerformances = (startDate, endDate) => {
             endDate.getDate() + 1,
             0, 0, 0
         );
-        let languageCode = 'uk';
         let url = `${BASE_URL}schedule/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
-
+        
         fetch(url)
             .then(response => {
                 return response.json();

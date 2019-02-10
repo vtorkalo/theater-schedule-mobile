@@ -8,7 +8,9 @@ import {
 } from "../Actions/settingsActions";
 
 const initialState = {
-  settings: {},
+  settings: { 
+    languageCode: "",
+  },
   loading: false,
   error: null
 };
@@ -29,7 +31,9 @@ export default function settingsReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        settings: settings
+        settings: {
+          languageCode: settings.languageCode,
+        }
       };
 
     case LOAD_SETTINGS_FAILURE:

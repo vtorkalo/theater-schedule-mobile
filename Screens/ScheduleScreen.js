@@ -24,7 +24,7 @@ class ScheduleScreen extends Component {
             currentDate.getMonth(),
             currentDate.getDate() + DAYS_IN_WEEK);
 
-        this.props.loadPerformances(currentDate, dateAfterWeek);
+        this.props.loadPerformances(currentDate, dateAfterWeek, this.props.languageCode);
     }
 
     render() {
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         isLoading: state.scheduleReducer.loading,
+        languageCode: state.settings.settings.languageCode,
     }
 }
 

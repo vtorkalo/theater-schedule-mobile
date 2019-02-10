@@ -31,7 +31,7 @@ let deviceId =
     : DeviceInfo.getUniqueID();
 
 export default class App extends Component {
-  componentDidMount() {
+  componentWillMount() {
     store.dispatch(loadSettings(deviceId));
   }
 
