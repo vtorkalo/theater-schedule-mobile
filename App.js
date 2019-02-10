@@ -3,6 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import defaultReducer from "./Reducers/Reducer";
 import navigation from "./Reducers/NavigationReducer";
+import scheduleReducer from "./Reducers/ScheduleReducer";
 import settings from "./Reducers/settingsReducer";
 import message from "./Reducers/messageReducer";
 import { middleware } from "./Navigation/Navigator";
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   i18nState,
   navigation,
   sliderActiveSlide: sliderReducer,
+  scheduleReducer: scheduleReducer,
   settings,
   message,
   defaultReducer
@@ -38,7 +40,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <I18n translations={translations} initialLang="ua" fallbackLang="en">
+        <I18n translations={translations} initialLang="uk" fallbackLang="en">
           <Navigator />
         </I18n>
       </Provider>
