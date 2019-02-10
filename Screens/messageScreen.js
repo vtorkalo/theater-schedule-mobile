@@ -44,7 +44,7 @@ class MessageScreen extends Component {
     this.props.sendMessage({
       subject: this.props.message.subject,
       text: this.props.message.text,
-      accountId: 1
+      phoneId: this.props.deviceId
     });
   };
 
@@ -103,7 +103,8 @@ class MessageScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  message: state.message
+  message: state.message,
+  deviceId: state.settings.deviceId
 });
 
 const mapDispatchToProps = dispatch => {

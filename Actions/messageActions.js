@@ -1,3 +1,5 @@
+import BASE_URL from '../baseURL';
+
 export const ENTER_MESSAGE_SUBJECT = "ENTER_MESSAGE_SUBJECT";
 export const ENTER_MESSAGE_TEXT = "ENTER_MESSAGE_TEXT";
 
@@ -48,7 +50,7 @@ export const sendMessage = message => {
     if (subjectError || textError) return;
 
     dispatch(sendMessageBegin());
-    fetch("http://192.168.0.103:8900/api/message", {
+    fetch(`${BASE_URL}message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

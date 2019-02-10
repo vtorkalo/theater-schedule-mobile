@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, StyleSheet, View, Picker, TouchableOpacity, Alert, Modal } from 'react-native';
-import DeviceInfo from "react-native-device-info";
 import { connect } from 'react-redux';
 import { storeSettings } from '../../Actions/settingsActions';
 import LocalizeComponent from '../../Localization/LocalizedComponent';
@@ -10,7 +9,7 @@ import { showMessage } from "react-native-flash-message";
 
 class ChooseLanguage extends LocalizeComponent {
     state = {
-        settings: { language: "" }
+        settings: { languageCode: "" }
     }
 
     componentDidUpdate(prevState) {
@@ -44,12 +43,7 @@ class ChooseLanguage extends LocalizeComponent {
     }
 
     onSaveLanguage = () => {
-        let deviceId =
-            Expo.Constants.appOwnership == "expo"
-                ? Expo.Constants.deviceId
-                : DeviceInfo.getUniqueID();
-        
-        this.props.storeSettings(deviceId, this.state.settings);
+        this.props.storeSettings(this.props.settings.deviceId, this.state.settings);
     }
 
     render() {
@@ -60,10 +54,10 @@ class ChooseLanguage extends LocalizeComponent {
                 </View>
                 <View style={styles.container}>
                     <Picker
-                        selectedValue={this.state.settings.language}
+                        selectedValue={this.state.settings.languageCode}
                         style={styles.picker}
                         onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ settings: { language: itemValue } })
+                            this.setState({ settings: { languageCode: itemValue } })
                         }>
                         <Picker.Item label="English" value="en" />
                         <Picker.Item label="Ukrainian" value="uk" />

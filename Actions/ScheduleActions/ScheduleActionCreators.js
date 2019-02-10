@@ -1,4 +1,4 @@
-import BASE_URL from 'TheaterSchedule/baseURL';
+import BASE_URL from '../../baseURL';
 import {
     FILTER_PERFORMANCES_BEGIN,
     FILTER_PERFORMANCES_SUCCESS,
