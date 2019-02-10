@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import { BallIndicator } from 'react-native-indicators';
 
 import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
 import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
-import { filterPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
+import { loadPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
 
 class ScheduleScreen extends Component {
     static navigationOptions = {
@@ -24,7 +24,7 @@ class ScheduleScreen extends Component {
             currentDate.getMonth(),
             currentDate.getDate() + DAYS_IN_WEEK);
 
-        this.props.filterPerformances(currentDate, dateAfterWeek);
+        this.props.loadPerformances(currentDate, dateAfterWeek);
     }
 
     render() {
@@ -86,7 +86,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    filterPerformances,
+    loadPerformances,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);

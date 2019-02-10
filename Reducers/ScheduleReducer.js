@@ -1,7 +1,7 @@
 import {
-    FILTER_PERFORMANCES_BEGIN,
-    FILTER_PERFORMANCES_SUCCESS,
-    FILTER_PERFORMANCES_FAILURE
+    LOAD_PERFORMANCES_BEGIN,
+    LOAD_PERFORMANCES_SUCCESS,
+    LOAD_PERFORMANCES_FAILURE
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 let currentDate = new Date();
@@ -15,14 +15,14 @@ const initialState = {
 
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
-        case FILTER_PERFORMANCES_BEGIN: {
+        case LOAD_PERFORMANCES_BEGIN: {
             return {
                 ...state,
                 loading: true,
             }
         }
 
-        case FILTER_PERFORMANCES_SUCCESS: {
+        case LOAD_PERFORMANCES_SUCCESS: {
             return {
                 ...state,
                 loading: false,
@@ -32,7 +32,7 @@ export default function scheduleReducer(state = initialState, action) {
             }
         }
         
-        case FILTER_PERFORMANCES_FAILURE: {
+        case LOAD_PERFORMANCES_FAILURE: {
             return {
                 ...state,
                 loading: false,

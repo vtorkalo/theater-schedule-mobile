@@ -55,3 +55,6 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 /.expo
+
+# Base url to server
+baseURL.js

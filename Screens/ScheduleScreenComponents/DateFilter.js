@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
-import { filterPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import { loadPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import DateRangePicker from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateRangePicker';
 import LocalizeComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 
@@ -37,7 +37,7 @@ class DateFilter extends LocalizeComponent {
             isFilterVisible: false,
         });
 
-        this.props.filterPerformances(startDate, endDate);
+        this.props.loadPerformances(startDate, endDate);
     }
 
     render() {
@@ -99,7 +99,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    filterPerformances,
+    loadPerformances,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DateFilter);
