@@ -20,20 +20,21 @@ import {
   validateMessageText,
   sendMessage
 } from "../Actions/messageActions";
+import LocalizeComponent from "../Localization/LocalizedComponent";
 
-class MessageScreen extends Component {
+class MessageScreen extends LocalizeComponent {
   static navigationOptions = {
     drawerIcon: <MaterialCommunityIcons name="message" size={25} />
   };
 
   componentDidUpdate(prevProps) {
     if (!prevProps.message.sendingError && this.props.message.sendingError) {
-      Alert.alert("Error", "Please try again");
+      Alert.alert(this.t("sendingError"), this.t("errorMessage"));
     } else if (
       prevProps.message.isSending &&
       !this.props.message.sendingError
     ) {
-      Alert.alert("Thank you", "Your message was sent");
+      Alert.alert(this.t("sendingSuccess"), this.t("successMessage"));
     }
   }
 
@@ -64,12 +65,12 @@ class MessageScreen extends Component {
           onPressMenuIcon={() => this.props.navigation.openDrawer()}
         />
         <Content contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.header}>We are open to your suggestions!</Text>
+          <Text style={styles.header}>{this.t("messageScreenHeader")}</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.subject}
               value={this.props.message.subject}
-              placeholder="Subject"
+              placeholder={this.t("messageSubject")}
               onChangeText={text => {
                 this.props.enterMessageSubject(text);
               }}
@@ -85,7 +86,7 @@ class MessageScreen extends Component {
               value={this.props.message.text}
               multiline={true}
               maxLength={200}
-              placeholder="Your message..."
+              placeholder={this.t("messageText")}
               onChangeText={text => {
                 this.props.enterMessageText(text);
               }}
@@ -94,7 +95,7 @@ class MessageScreen extends Component {
             {textError ? <Text style={styles.error}>{textError}</Text> : null}
           </View>
           <View style={styles.buttonContainer}>
-            <Button onPress={this.onSendMessage} title="Send" />
+            <Button onPress={this.onSendMessage} title={this.t("send")} />
           </View>
         </Content>
       </Container>
