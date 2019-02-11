@@ -1,3 +1,5 @@
+import BASE_URL from 'TheaterSchedule/baseURL';
+
 export const LOAD_SETTINGS_BEGIN = "LOAD_SETTINGS_BEGIN";
 export const LOAD_SETTINGS_SUCCESS = "LOAD_SETTINGS_SUCCESS";
 export const LOAD_SETTINGS_FAILURE = "LOAD_SETTINGS_FAILURE";
@@ -37,8 +39,10 @@ export const storeSettingsFailure = error => ({
 export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
-
-    fetch(`pathToOurSettingsApi/${deviceId}`)
+    
+    let url = `${BASE_URL}settings/${deviceId}`;
+    
+    fetch(url)
       .then(res => res.json())
       .then(resJson => {
         dispatch(loadSettingsSuccess(resJson));
@@ -50,7 +54,9 @@ export const loadSettings = deviceId => {
 export const storeSettings = (deviceId, newSettings) => {
   return dispatch => {
     dispatch(storeSettingsBegin());
-    fetch(`pathToOurSettingsApi/${deviceId}`, {
+
+    let url = `${BASE_URL}settings/${deviceId}`;
+    fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -58,8 +64,7 @@ export const storeSettings = (deviceId, newSettings) => {
       body: JSON.stringify(newSettings)
     })
       .then(res => {
-        if(!res.ok)
-        {
+        if (!res.ok) {
           throw Error(res.statusText);
         }
         return res.json();
