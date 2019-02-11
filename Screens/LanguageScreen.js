@@ -6,13 +6,10 @@ import DeviceInfo from "react-native-device-info";
 import { connect } from 'react-redux';
 import {setLanguage} from 'redux-i18n';
 
-let deviceId =
-            Expo.Constants.appOwnership == "expo"
-                ? Expo.Constants.deviceId
-                : DeviceInfo.getUniqueID();
+
 export default class InitialScreen extends Component {
     SetLang=(code)=>{
-        this.props.storeSettings(deviceId,{languageCode: code});
+        this.props.storeSettings(this.props.deviceId,{languageCode: code});
         this.props.setLanguage(code);
         this.props.navigation.navigate("drawerStack");
    }

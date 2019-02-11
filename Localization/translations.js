@@ -14,7 +14,18 @@ export const translations = {
     'Details': 'Деталі',
     'From': 'Від',
     'To': 'До',
-    'Now the performances premieres are :': 'Зараз у прокаті'
+    'Now the performances premieres are:': 'Зараз у прокаті:',
+    //for message screen
+    "messageScreenHeader": "Ми відкриті до ваших пропозицій",
+    "messageSubject": "Тема",
+    "messageText": "Ваше повідомлення",
+    "send": "Надіслати",
+    "sendingError": "Помилка!",
+    "sendingSuccess": "Дякуємо!",
+    "errorMessage": "Будь ласка, спробуйте ще раз",
+    "successMessage":"Ваше повідомлення надіслано",
+    "subjectError": "Введіть тему",
+    "textError": "Введіть повідомлення"
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -31,7 +42,18 @@ export const translations = {
     'Details': 'Details',
     'From': 'From',
     'To': 'To',
-    'Now the performances premieres are': 'Now the performances premieres are'
+    'Now the performances premieres are:': 'Now the performances premieres are:',
+    //for message screen
+    "messageScreenHeader": "We are open to your suggestions",
+    "messageSubject": "Subject",
+    "messageText": "Your message",
+    "send": "Send",
+    "sendingError": "Error!",
+    "sendingSuccess": "Thank you!",
+    "errorMessage": "Please try again",
+    "successMessage":"Your message was sent",
+    "subjectError": "Please enter a subject",
+    "textError": "Please enter a message"
   },
   'ru': {
     'Hello world!': 'Привет мир!',
@@ -48,6 +70,17 @@ export const translations = {
     'Details': 'Детали',
     'From': 'От',
     'To': 'До',
-    'Now the performances premieres are': 'Сейчас в прокате :'
+    'Now the performances premieres are:': 'Сейчас в прокате:',
+    //for message screen
+    "messageScreenHeader": "Мы открыты для ваших предложений",
+    "messageSubject": "Тема",
+    "messageText": "Ваше сообщение",
+    "send": "Отправить",
+    "sendingError": "Ошибка!",
+    "sendingSuccess": "Спасибо!",
+    "errorMessage": "Пожалуйста, попробуйте еще раз",
+    "successMessage":"Ваше сообщение было отправлено",
+    "subjectError": "Введите тему",
+    "textError": "Введите сообщение"
   },
 }

@@ -1,25 +1,25 @@
 import React from 'react';
 import { Text, StyleSheet, View, Picker, TouchableOpacity, Alert, Modal } from 'react-native';
-import DeviceInfo from "react-native-device-info";
 import { connect } from 'react-redux';
 import { storeSettings } from '../../Actions/settingsActions';
 import LocalizeComponent from '../../Localization/LocalizedComponent';
 import FlashMessage from "react-native-flash-message";
 import { showMessage } from "react-native-flash-message";
+import {setLanguage} from "redux-i18n";
 
 
 class ChooseLanguage extends LocalizeComponent {
     state = {
-        settings: { language: "" }
+        settings: { languageCode: "en" }
     }
 
     componentDidUpdate(prevState) {
         if (!prevState.settings.error && this.props.settings.error) {
             this.errorDisplay();
-            
         }
         else if (prevState.settings.loading && !this.props.settings.error) {
             this.successDisplay();
+            this.props.setLanguage(this.state.settings.languageCode);
         }
     }
 
@@ -44,12 +44,7 @@ class ChooseLanguage extends LocalizeComponent {
     }
 
     onSaveLanguage = () => {
-        let deviceId =
-            Expo.Constants.appOwnership == "expo"
-                ? Expo.Constants.deviceId
-                : DeviceInfo.getUniqueID();
-        
-        this.props.storeSettings(deviceId, this.state.settings);
+        this.props.storeSettings(this.props.settings.deviceId, this.state.settings);
     }
 
     render() {
@@ -60,10 +55,10 @@ class ChooseLanguage extends LocalizeComponent {
                 </View>
                 <View style={styles.container}>
                     <Picker
-                        selectedValue={this.state.settings.language}
+                        selectedValue={this.state.settings.languageCode}
                         style={styles.picker}
                         onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ settings: { language: itemValue } })
+                            this.setState({ settings: { languageCode: itemValue } })
                         }>
                         <Picker.Item label="English" value="en" />
                         <Picker.Item label="Ukrainian" value="uk" />
@@ -117,7 +112,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    storeSettings
+    storeSettings,
+    setLanguage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChooseLanguage);
