@@ -4,15 +4,13 @@ import SettingsScreen from "../Screens/SettingsScreen";
 import MessageScreen from "../Screens/messageScreen";
 import CustomDrawerContent from "./CustomDrawerContentComponent";
 import { connect } from "react-redux";
-import {
-  reduxifyNavigator,
-  createReactNavigationReduxMiddleware
-} from "react-navigation-redux-helpers";
+import {  reduxifyNavigator,  createReactNavigationReduxMiddleware} from "react-navigation-redux-helpers";
 import SliderScreen from "../Screens/SliderScreen";
 import InitialScreen from "../Screens/InitialScreen";
-
+import LanguageScreen from '../Screens/LanguageScreen';
 const DrawerStack = createDrawerNavigator(
   {
+
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
@@ -37,14 +35,14 @@ const DrawerNavigation = createStackNavigator(
   }
 );
 
+
 const InitialStack = createStackNavigator(
   {
-    initialScreen: { screen: InitialScreen }
+    initialScreen: { screen: LanguageScreen }
   },
-  {
-    headerMode: "none"
-  }
-);
+   {
+        headerMode: 'none',
+    })
 
 export const AppNavigator = createStackNavigator(
   {
