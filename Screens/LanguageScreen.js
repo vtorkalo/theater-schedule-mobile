@@ -10,14 +10,14 @@ let deviceId =
             Expo.Constants.appOwnership == "expo"
                 ? Expo.Constants.deviceId
                 : DeviceInfo.getUniqueID();
-export default class App extends Component {
-    
-  render() {
+export default class InitialScreen extends Component {
     SetLang=(code)=>{
-         this.props.storeSettings(deviceId,{languageCode: code});
-        //this.props.navigation.navigate("ScheduleScreen");
-         this.props.setLanguage(code);
-    }
+        this.props.storeSettings(deviceId,{languageCode: code});
+        this.props.setLanguage(code);
+        this.props.navigation.navigate("drawerStack");
+   }
+  render() {
+    
     return (
       <View style={styles.container}>
        <View style={styles.imageBox}>
@@ -40,7 +40,7 @@ export default class App extends Component {
     );
   }
 }
-//func ()
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -81,7 +81,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    storeSettings
+    storeSettings,
+    setLanguage,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LanguageScreen);

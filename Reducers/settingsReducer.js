@@ -29,7 +29,7 @@ export default function settingsReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        settings: settings
+        settings: settings,
       };
 
     case LOAD_SETTINGS_FAILURE:
