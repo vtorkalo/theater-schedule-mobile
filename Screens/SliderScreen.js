@@ -39,7 +39,7 @@ class SliderScreen extends LocalizedComponent {
                         <View style={styles.container}>
                             <View style={{ flex: 1, justifyContent: 'center' }}>
                                 <PostersSlider
-                                    title={this.t('Зараз у прокаті: ')}
+                                    title={this.t('Now the performances premieres are: ')}
                                     posters={posters}
                                     renderItemWithParallax={this.renderItemWithParallax}
                                     setActiveSlide={(index) => this.props.setSliderActiveSlide(index)}
