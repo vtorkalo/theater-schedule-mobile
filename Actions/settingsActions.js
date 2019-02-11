@@ -39,7 +39,7 @@ export const storeSettingsFailure = error => ({
 export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
-    deviceId = "(465) 454-8347";
+    
     let url = `${BASE_URL}settings/${deviceId}`;
     
     fetch(url)

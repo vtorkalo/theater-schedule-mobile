@@ -15,16 +15,17 @@ class ScheduleScreen extends Component {
         drawerIcon: <MaterialCommunityIcons name='calendar-clock' size={25} />
     }
 
-    componentWillMount() {
-        const DAYS_IN_WEEK = 7;
+    componentDidUpdate(prevProps) {
+        if (prevProps.languageCode !== this.props.languageCode) {
+            const DAYS_IN_WEEK = 7;
+            let currentDate = new Date();
+            let dateAfterWeek = new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth(),
+                currentDate.getDate() + DAYS_IN_WEEK);
 
-        let currentDate = new Date();
-        let dateAfterWeek = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth(),
-            currentDate.getDate() + DAYS_IN_WEEK);
-
-        this.props.loadPerformances(currentDate, dateAfterWeek, this.props.languageCode);
+            this.props.loadPerformances(currentDate, dateAfterWeek, this.props.languageCode);
+        }
     }
 
     render() {
