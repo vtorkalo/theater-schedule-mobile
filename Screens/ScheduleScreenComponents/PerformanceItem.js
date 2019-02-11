@@ -28,6 +28,13 @@ class PerformanceItem extends LocalizedComponent {
         return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
     }
 
+    convertToReadableDate = date => {
+        let beginning = new Date(date);
+        let day = beginning.getDate();
+        let month = beginning.getMonth() + 1;
+        return `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}`;
+    }
+
     render() {
         let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
 
@@ -45,7 +52,12 @@ class PerformanceItem extends LocalizedComponent {
                     <Text style={styles.title}>{this.props.performance.title}</Text>
                     <View style={styles.detailsContainer}>
                         <Text style={styles.additionalInfo}>
-                            {this.t('The closest session')}:
+                            {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
+                        </Text>
+                    </View>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.additionalInfo}>
+                            {this.t('Beginning')}:
                         </Text>
                         <TouchableOpacity>
                             <Text
@@ -100,7 +112,6 @@ const styles = StyleSheet.create({
     detailsContainer: {
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'center',
         alignItems: 'center',
     },
     title: {
@@ -114,7 +125,6 @@ const styles = StyleSheet.create({
     },
     additionalInfo: {
         fontSize: 17,
-        textAlign: 'center',
         color: '#7154b8',
         margin: 2,
         paddingBottom: 2,
