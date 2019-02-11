@@ -8,6 +8,7 @@ import {
 } from "../Actions/settingsActions";
 
 const initialState = {
+  deviceId: null,
   settings: {},
   loading: false,
   error: null
@@ -24,12 +25,17 @@ export default function settingsReducer(state = initialState, action) {
       };
 
     case LOAD_SETTINGS_SUCCESS:
-    case STORE_SETTINGS_SUCCESS:
-      const settings = { ...action.payload.settings };
       return {
         ...state,
         loading: false,
-        settings: settings,
+        deviceId: action.payload.deviceId,
+        settings: { ...action.payload.settings }
+      };
+    case STORE_SETTINGS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        settings: { ...action.payload.settings }
       };
 
     case LOAD_SETTINGS_FAILURE:
