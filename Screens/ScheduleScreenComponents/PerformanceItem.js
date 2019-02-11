@@ -8,6 +8,8 @@ import {
     Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import 'moment/locale/uk';
 
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 
@@ -22,17 +24,11 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     convertToReadableTime = date => {
-        let beginning = new Date(date);
-        let hours = beginning.getHours();
-        let minutes = beginning.getMinutes();
-        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+        return moment(date).format("HH:mm");
     }
 
     convertToReadableDate = date => {
-        let beginning = new Date(date);
-        let day = beginning.getDate();
-        let month = beginning.getMonth() + 1;
-        return `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}`;
+        return moment(date).format("dddd, Do MMMM");
     }
 
     render() {

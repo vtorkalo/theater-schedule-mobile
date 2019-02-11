@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
 import { loadPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import DateRangePicker from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateRangePicker';
-import LocalizeComponent from 'TheaterSchedule/Localization/LocalizedComponent';
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
+import moment from 'moment';
 
-class DateFilter extends LocalizeComponent {
+class DateFilter extends LocalizedComponent {
     constructor(props) {
         super(props);
 
@@ -17,7 +18,7 @@ class DateFilter extends LocalizeComponent {
     }
 
     convertToReadableDate = date => {
-        return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+        return moment(date).format("DD.MM.YYYY");
     }
 
     pressFilterIconHandler = () => {
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
         color: '#7154b8',
-        fontSize: 17,
+        fontSize: 16,
     },
     icon: {
         borderLeftColor: '#ccc',
