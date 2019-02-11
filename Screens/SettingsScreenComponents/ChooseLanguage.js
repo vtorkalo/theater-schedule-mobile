@@ -5,20 +5,21 @@ import { storeSettings } from '../../Actions/settingsActions';
 import LocalizeComponent from '../../Localization/LocalizedComponent';
 import FlashMessage from "react-native-flash-message";
 import { showMessage } from "react-native-flash-message";
+import {setLanguage} from "redux-i18n";
 
 
 class ChooseLanguage extends LocalizeComponent {
     state = {
-        settings: { languageCode: "" }
+        settings: { languageCode: "en" }
     }
 
     componentDidUpdate(prevState) {
         if (!prevState.settings.error && this.props.settings.error) {
             this.errorDisplay();
-            
         }
         else if (prevState.settings.loading && !this.props.settings.error) {
             this.successDisplay();
+            this.props.setLanguage(this.state.settings.languageCode);
         }
     }
 
@@ -111,7 +112,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    storeSettings
+    storeSettings,
+    setLanguage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChooseLanguage);

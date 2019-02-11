@@ -14,6 +14,7 @@ import sliderReducer from "./Reducers/SliderReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
+import {setLanguage} from "redux-i18n";
 
 const appReducer = combineReducers({
   i18nState,
@@ -33,14 +34,15 @@ let deviceId =
     : DeviceInfo.getUniqueID();
 
 export default class App extends Component {
-  componentDidMount() {
-    store.dispatch(loadSettings(deviceId));
+  componentWillMount() {
+    store.dispatch(loadSettings(deviceId))
+    .then(()=>store.dispatch(setLanguage(store.getState().settings.settings.languageCode)));
   }
 
   render() {
     return (
       <Provider store={store}>
-        <I18n translations={translations} initialLang="uk" fallbackLang="en">
+        <I18n translations={translations}  initialLang="uk" fallbackLang="en">
           <Navigator />
         </I18n>
       </Provider>

@@ -40,7 +40,7 @@ export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
 
-    fetch(`${BASE_URL}settings/${deviceId}`)
+    return fetch(`${BASE_URL}settings/${deviceId}`)
       .then(res => res.json())
       .then(resJson => {
         dispatch(loadSettingsSuccess(deviceId, resJson));
