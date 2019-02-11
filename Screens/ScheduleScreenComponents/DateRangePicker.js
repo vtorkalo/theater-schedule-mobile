@@ -3,6 +3,7 @@ import { View, Modal, Text, StyleSheet } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 
@@ -19,8 +20,7 @@ class DateRangePicker extends LocalizedComponent {
     }
 
     convertDateToReadableDate = date => {
-        let filterDate = new Date(date);
-        return `${filterDate.getDate()}.${filterDate.getMonth() + 1}.${filterDate.getFullYear()}`;
+        return moment(date).format("DD.MM.YYYY");
     }
 
     showStartDatePicker = () => {
