@@ -1,4 +1,4 @@
-import BASE_URL from '../baseURL';
+import BASE_URL from 'TheaterSchedule/baseURL';
 
 export const ENTER_MESSAGE_SUBJECT = "ENTER_MESSAGE_SUBJECT";
 export const ENTER_MESSAGE_TEXT = "ENTER_MESSAGE_TEXT";
