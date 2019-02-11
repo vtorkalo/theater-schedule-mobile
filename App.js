@@ -13,6 +13,8 @@ import sliderReducer from './Reducers/SliderReducer';
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
+import {fetchPosters} from './Actions/sliderActions';
+
 
 const appReducer = combineReducers({
   i18nState,
@@ -33,6 +35,7 @@ let deviceId =
 export default class App extends Component {
   componentDidMount() {
     store.dispatch(loadSettings(deviceId));
+    store.dispatch(fetchPosters(store.getState().settings.settings.language));
   }
 
   render() {
