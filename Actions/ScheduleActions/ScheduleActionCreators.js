@@ -1,4 +1,4 @@
-import BASE_URL from '../../baseURL';
+import BASE_URL from 'TheaterSchedule/baseURL';
 import {
     LOAD_PERFORMANCES_BEGIN,
     LOAD_PERFORMANCES_SUCCESS,
