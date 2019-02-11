@@ -16,7 +16,7 @@ class ScheduleScreen extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.languageCode !== this.props.languageCode) {
+        if (!prevProps.languageCode && this.props.languageCode) {
             const DAYS_IN_WEEK = 7;
             let currentDate = new Date();
             let dateAfterWeek = new Date(
@@ -29,7 +29,7 @@ class ScheduleScreen extends Component {
     }
 
     render() {
-        if (this.props.isLoading) {
+        if (this.props.isScheduleLoading || this.props.isLanguageLoading) {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.scheduleReducer.loading,
+        isScheduleLoading: state.scheduleReducer.loading,
+        isLanguageLoading: state.settings.loading,
         languageCode: state.settings.settings.languageCode,
     }
 }
