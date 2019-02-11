@@ -1,16 +1,16 @@
 import BASE_URL from '../../baseURL';
 import {
-    FILTER_PERFORMANCES_BEGIN,
-    FILTER_PERFORMANCES_SUCCESS,
-    FILTER_PERFORMANCES_FAILURE
+    LOAD_PERFORMANCES_BEGIN,
+    LOAD_PERFORMANCES_SUCCESS,
+    LOAD_PERFORMANCES_FAILURE,
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
-export const filterPerformancesBegin = () => ({
-    type: FILTER_PERFORMANCES_BEGIN
+export const loadPerformancesBegin = () => ({
+    type: LOAD_PERFORMANCES_BEGIN,
 });
 
-export const filterPerformancesSuccess = (performances, startDate, endDate) => ({
-    type: FILTER_PERFORMANCES_SUCCESS,
+export const loadPerformancesSuccess = (performances, startDate, endDate) => ({
+    type: LOAD_PERFORMANCES_SUCCESS,
     payload: {
         performances,
         startDate,
@@ -18,16 +18,16 @@ export const filterPerformancesSuccess = (performances, startDate, endDate) => (
     },
 });
 
-export const filterPerformancesFailure = error => ({
-    type: FILTER_PERFORMANCES_FAILURE,
+export const loadPerformancesFailure = error => ({
+    type: LOAD_PERFORMANCES_FAILURE,
     payload: {
         error,
     },
 });
 
-export const filterPerformances = (startDate, endDate) => {
+export const loadPerformances = (startDate, endDate, languageCode) => {
     return dispatch => {
-        dispatch(filterPerformancesBegin());
+        dispatch(loadPerformancesBegin());
 
         let dayAfterEndDate = new Date(
             endDate.getFullYear(),
@@ -35,17 +35,17 @@ export const filterPerformances = (startDate, endDate) => {
             endDate.getDate() + 1,
             0, 0, 0
         );
-        let url = `${BASE_URL}schedule/uk/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
-
+        let url = `${BASE_URL}schedule/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
+        
         fetch(url)
             .then(response => {
                 return response.json();
             })
             .then(responseJson => {
-                dispatch(filterPerformancesSuccess(responseJson, startDate, endDate));
+                dispatch(loadPerformancesSuccess(responseJson, startDate, endDate));
             })
             .catch(error => {
-                dispatch(filterPerformancesFailure(error));
+                dispatch(loadPerformancesFailure(error));
             });
     };
 };

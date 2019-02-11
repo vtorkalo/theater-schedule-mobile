@@ -1,4 +1,4 @@
-import { createDrawerNavigator } from "react-navigation";
+import { createDrawerNavigator, createStackNavigator } from "react-navigation";
 import ScheduleScreen from "../Screens/ScheduleScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
 import MessageScreen from "../Screens/messageScreen";
@@ -9,8 +9,9 @@ import {
   createReactNavigationReduxMiddleware
 } from "react-navigation-redux-helpers";
 import SliderScreen from "../Screens/SliderScreen";
+import InitialScreen from "../Screens/InitialScreen";
 
-export const AppNavigator = createDrawerNavigator(
+const DrawerStack = createDrawerNavigator(
   {
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
@@ -18,12 +19,43 @@ export const AppNavigator = createDrawerNavigator(
     Message: { screen: MessageScreen }
   },
   {
-    initialRouteName: "Schedule",
     drawerPosition: "left",
-    contentComponent: CustomDrawerContent
+    contentComponent: CustomDrawerContent,
+    initialRouteName: "Schedule"
   }
 );
 
+const DrawerNavigation = createStackNavigator(
+  {
+    DrawerStack: { screen: DrawerStack }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: () => ({
+      gesturesEnabled: true
+    })
+  }
+);
+
+const InitialStack = createStackNavigator(
+  {
+    initialScreen: { screen: InitialScreen }
+  },
+  {
+    headerMode: "none"
+  }
+);
+
+export const AppNavigator = createStackNavigator(
+  {
+    initialStack: { screen: InitialStack },
+    drawerStack: { screen: DrawerNavigation }
+  },
+  {
+    headerMode: "none",
+    initialRouteName: "initialStack"
+  }
+);
 export const middleware = createReactNavigationReduxMiddleware(
   "root",
   state => state.navigation
