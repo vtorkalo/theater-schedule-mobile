@@ -19,12 +19,12 @@ import { setLanguage } from "redux-i18n";
 
 const appReducer = combineReducers({
   i18nState,
-  navigation,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
   settings,
   message,
-  defaultReducer
+  defaultReducer,
+  navigation,
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
@@ -33,9 +33,8 @@ let deviceId =
   Expo.Constants.appOwnership == "expo"
     ? Expo.Constants.deviceId
     : DeviceInfo.getUniqueID();
-
+deviceId = "998";
 export default class App extends Component {
-
   componentWillMount() {
     store.dispatch(saveDeviceId(deviceId));
     store.dispatch(loadSettings(deviceId));

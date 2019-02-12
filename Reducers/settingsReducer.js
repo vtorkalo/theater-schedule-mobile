@@ -5,15 +5,19 @@ import {
   STORE_SETTINGS_BEGIN,
   STORE_SETTINGS_SUCCESS,
   STORE_SETTINGS_FAILURE,
-  SAVE_DEVICE_ID
+  SAVE_DEVICE_ID,
+  SET_SIGNED_IN
 } from "../Actions/settingsActions";
 
 const initialState = {
+  isSignedIn: false,
   deviceId: null,
   settings: {},
   loading: false,
   error: null
 };
+
+export var currentStack = initialState.isSignedIn ? "drawerStack" : "initialStack";
 
 export default function settingsReducer(state = initialState, action) {
   switch (action.type) {
@@ -53,6 +57,15 @@ export default function settingsReducer(state = initialState, action) {
         deviceId: action.payload.deviceId
       }
 
+    case SET_SIGNED_IN:
+      {
+        currentStack = action.payload.isSignedIn ? "drawerStack" : "initialStack";
+        console.log(currentStack);
+        return {
+          ...state,
+          isSignedIn: action.payload.isSignedIn
+        }
+      }
     default:
       return state;
   }
