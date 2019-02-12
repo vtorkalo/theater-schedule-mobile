@@ -37,7 +37,7 @@ const DrawerNavigation = createStackNavigator(
 
 const InitialStack = createStackNavigator(
   {
-    initialcreen: { screen: LanguageScreen }
+    initialScreen: { screen: LanguageScreen }
   },
    {
         headerMode: 'none',
