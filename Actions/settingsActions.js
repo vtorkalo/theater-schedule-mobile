@@ -8,6 +8,8 @@ export const STORE_SETTINGS_BEGIN = "STORE_SETTINGS_BEGIN";
 export const STORE_SETTINGS_SUCCESS = "STORE_SETTINGS_SUCCESS";
 export const STORE_SETTINGS_FAILURE = "STORE_SETTINGS_FAILURE";
 
+export const SAVE_DEVICE_ID = "SAVE_DEVICE_ID";
+
 export const loadSettingsBegin = () => ({
   type: LOAD_SETTINGS_BEGIN
 });
@@ -71,3 +73,10 @@ export const storeSettings = (deviceId, newSettings) => {
       .catch(error => dispatch(storeSettingsFailure(error)));
   };
 };
+
+export const saveDeviceId = (deviceId) => ({
+  type: SAVE_DEVICE_ID,
+  payload: {
+    deviceId
+  }
+})

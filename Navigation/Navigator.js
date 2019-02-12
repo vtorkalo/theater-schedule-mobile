@@ -6,7 +6,6 @@ import CustomDrawerContent from "./CustomDrawerContentComponent";
 import { connect } from "react-redux";
 import {  reduxifyNavigator,  createReactNavigationReduxMiddleware} from "react-navigation-redux-helpers";
 import SliderScreen from "../Screens/SliderScreen";
-import InitialScreen from "../Screens/InitialScreen";
 import LanguageScreen from '../Screens/LanguageScreen';
 const DrawerStack = createDrawerNavigator(
   {
@@ -30,11 +29,10 @@ const DrawerNavigation = createStackNavigator(
   {
     headerMode: "none",
     navigationOptions: () => ({
-      gesturesEnabled: true
+      gesturesEnabled: false
     })
   }
 );
-
 
 const InitialStack = createStackNavigator(
   {
