@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from 'react-native-check-box';
+import moment from 'moment';
+import 'moment/locale/uk';
+
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 
 class PerformanceItem extends LocalizedComponent {
@@ -26,10 +29,11 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     convertToReadableTime = date => {
-        let beginning = new Date(date);
-        let hours = beginning.getHours();
-        let minutes = beginning.getMinutes();
-        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+        return moment(date).format("HH:mm");
+    }
+
+    convertToReadableDate = date => {
+        return moment(date).format("dddd, Do MMMM");
     }
 
     render() {
@@ -60,7 +64,12 @@ class PerformanceItem extends LocalizedComponent {
                     </View>
                     <View style={styles.detailsContainer}>
                         <Text style={styles.additionalInfo}>
-                            {this.t('The closest session')}:
+                            {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
+                        </Text>
+                    </View>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.additionalInfo}>
+                            {this.t('Beginning')}:
                         </Text>
                         <TouchableOpacity>
                             <Text
@@ -110,6 +119,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
+        borderRadius: 50,
     },
     infoContainer: {
         flex: 2,
@@ -122,7 +132,6 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'center',
         alignItems: 'center',
     },
     title: {
@@ -140,7 +149,6 @@ const styles = StyleSheet.create({
     },
     additionalInfo: {
         fontSize: 17,
-        textAlign: 'center',
         color: '#7154b8',
         margin: 2,
         paddingBottom: 2,

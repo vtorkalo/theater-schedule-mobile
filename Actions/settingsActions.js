@@ -1,3 +1,5 @@
+import BASE_URL from "../baseURL";
+
 export const LOAD_SETTINGS_BEGIN = "LOAD_SETTINGS_BEGIN";
 export const LOAD_SETTINGS_SUCCESS = "LOAD_SETTINGS_SUCCESS";
 export const LOAD_SETTINGS_FAILURE = "LOAD_SETTINGS_FAILURE";
@@ -10,9 +12,9 @@ export const loadSettingsBegin = () => ({
   type: LOAD_SETTINGS_BEGIN
 });
 
-export const loadSettingsSuccess = settings => ({
+export const loadSettingsSuccess = (deviceId, settings) => ({
   type: LOAD_SETTINGS_SUCCESS,
-  payload: { settings }
+  payload: { deviceId, settings }
 });
 
 export const loadSettingsFailure = error => ({
@@ -38,10 +40,10 @@ export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
 
-    fetch(`pathToOurSettingsApi/${deviceId}`)
+    return fetch(`${BASE_URL}settings/${deviceId}`)
       .then(res => res.json())
       .then(resJson => {
-        dispatch(loadSettingsSuccess(resJson));
+        dispatch(loadSettingsSuccess(deviceId, resJson));
       })
       .catch(error => dispatch(loadSettingsFailure(error)));
   };
@@ -50,7 +52,7 @@ export const loadSettings = deviceId => {
 export const storeSettings = (deviceId, newSettings) => {
   return dispatch => {
     dispatch(storeSettingsBegin());
-    fetch(`pathToOurSettingsApi/${deviceId}`, {
+    fetch(`${BASE_URL}settings/${deviceId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -58,14 +60,13 @@ export const storeSettings = (deviceId, newSettings) => {
       body: JSON.stringify(newSettings)
     })
       .then(res => {
-        if(!res.ok)
-        {
+        if (!res.ok) {
           throw Error(res.statusText);
         }
-        return res.json();
+        return res;
       })
-      .then(resJson => {
-        dispatch(storeSettingsSuccess(resJson));
+      .then(() => {
+        dispatch(storeSettingsSuccess(newSettings));
       })
       .catch(error => dispatch(storeSettingsFailure(error)));
   };

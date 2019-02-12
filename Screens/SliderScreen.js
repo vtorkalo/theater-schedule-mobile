@@ -3,21 +3,18 @@ import { SafeAreaView, View } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import entries from '../entries.json';
 import PostersSlider from './SliderScreenComponents/postersSlider';
 import { connect } from 'react-redux';
-import { setSliderActiveSlide } from '../Actions/ActionCreators';
+import { setSliderActiveSlide } from '../Actions/sliderActions';
 import SliderEntry from './SliderScreenComponents/SliderEntry';
 import styles from '../Screens/SliderScreenComponents/indexStyles';
 import LocalizedComponent from '../Localization/LocalizedComponent';
 
-let posters = JSON.parse(JSON.stringify(entries));
 
 class SliderScreen extends LocalizedComponent {
     static navigationOptions = {
         drawerIcon: <MaterialCommunityIcons name='theater' size={25} />
     }
-
 
     renderItemWithParallax({ item, index }, parallaxProps) {
         return (
@@ -39,8 +36,8 @@ class SliderScreen extends LocalizedComponent {
                         <View style={styles.container}>
                             <View style={{ flex: 1, justifyContent: 'center' }}>
                                 <PostersSlider
-                                    title={this.t('Зараз у прокаті: ')}
-                                    posters={posters}
+                                    title={this.t('Now the performances premieres are: ')}
+                                    posters={this.props.posters}
                                     renderItemWithParallax={this.renderItemWithParallax}
                                     setActiveSlide={(index) => this.props.setSliderActiveSlide(index)}
                                     activeSlide={this.props.sliderActiveSlide}
@@ -57,8 +54,8 @@ class SliderScreen extends LocalizedComponent {
 
 function mapStateToProps(state) {
     return {
-        sliderActiveSlide: state.sliderActiveSlide.sliderActiveSlide
-
+        sliderActiveSlide: state.sliderActiveSlide.sliderActiveSlide,
+        posters: state.sliderActiveSlide.posters,
     }
 }
 const mapDispatchToProps = {
