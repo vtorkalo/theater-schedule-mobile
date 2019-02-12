@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import {setLanguage} from 'redux-i18n';
 
 
-export default class InitialScreen extends Component {
+export  class InitialScreen extends Component {
     SetLang=(code)=>{
         this.props.storeSettings(this.props.deviceId,{languageCode: code});
         this.props.setLanguage(code);
