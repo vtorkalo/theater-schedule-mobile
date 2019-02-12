@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
 
-import PerformanceItem from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceItem';
+import WatchListItem from 'TheaterSchedule/Screens/WatchListComponents/WatchListItem';
 
-class PerformanceList extends Component {
+class WatchList extends Component {
     render() {
         return (
             <FlatList
-                style={styles.performanceList}
-                data={this.props.performances}
+                style={styles.watchList}
+                data={this.props.chosenperformances}
                 keyExtractor={item => item.scheduleId.toString()}
                 renderItem={({ item }) => (
-                    <PerformanceItem performance={item} />
+                    <WatchListItem chosenperformance={item} />
                 )}
             />
         );
@@ -20,15 +20,15 @@ class PerformanceList extends Component {
 }
 
 const styles = StyleSheet.create({
-    performanceList: {
+    watchList: {
         width: '100%',
     },
 });
 
 const mapStateToProps = state => {
     return {
-        performances: state.scheduleReducer.performances,
+        chosenperformances: state.watchListReducer.chosenperformances,
     }
 }
 
-export default connect(mapStateToProps)(PerformanceList);
+export default connect(mapStateToProps)(WatchList);

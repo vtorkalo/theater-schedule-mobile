@@ -8,10 +8,11 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { deleteFromWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
 import CheckBox from 'react-native-check-box';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 
-class PerformanceItem extends LocalizedComponent {
+class WatchListItem extends LocalizedComponent {
     constructor(props) {
         super(props);
 
@@ -33,7 +34,7 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     render() {
-        let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+        let base64Image = `data:image/png;base64,${this.props.chosenperformance.mainImage}`;
 
         return (
             <View style={styles.performanceContainer}>
@@ -45,7 +46,7 @@ class PerformanceItem extends LocalizedComponent {
                     />
                 </View>
                 <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{this.props.performance.title}</Text>
+                    <Text style={styles.title}>{this.props.chosenperformance.title}</Text>
                     <View style={styles.starContainer}>
                         <CheckBox
                             onClick={() => {
@@ -66,7 +67,7 @@ class PerformanceItem extends LocalizedComponent {
                             <Text
                                 style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
                             >
-                                {this.convertToReadableTime(this.props.performance.beginning)}
+                                {this.convertToReadableTime(this.props.chosenperformance.beginning)}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -161,4 +162,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect()(PerformanceItem);
+const mapDispatchToProps = {
+    deleteFromWatchlist,
+}
+
+export default connect()(WatchListItem);
