@@ -39,7 +39,7 @@ class PerformanceScreen extends Component {
                                     borderBottomRightRadius: 8,
                                     borderTopLeftRadius: 8,
                                     borderTopRightRadius: 8,
-                                    width: 200, height: null
+                                    width: 200, height: 200
                                 }}
                                 resizeMode='cover'
                                 source={{ uri: base64Image }}
