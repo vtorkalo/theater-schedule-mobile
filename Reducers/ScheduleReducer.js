@@ -8,8 +8,9 @@ let currentDate = new Date();
 const initialState = {
     performances: [],
     startDate: currentDate,
-    endDate: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7),
+    endDate: new Date(currentDate.getFullYear()+2, currentDate.getMonth(), currentDate.getDate() + 7),
     loading: false,
+    performanceId:1,
     error: null,
 }
 

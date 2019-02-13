@@ -20,7 +20,9 @@ class PerformanceItem extends LocalizedComponent {
 
     pressedDetailsHandler = () => {
         // TODO - redirect to detailed information
-        alert('redirect to details page');
+        //ТРЕБА ПОСТАВИТИ НОРМАЛЬНИЙ ID
+        this.props.navigation.navigate("performanceStack");
+        
     }
 
     convertToReadableTime = date => {

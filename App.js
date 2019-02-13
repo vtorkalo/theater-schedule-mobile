@@ -16,11 +16,13 @@ import { loadSettings, saveDeviceId } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
 import { fetchPosters } from './Actions/sliderActions';
 import { setLanguage } from "redux-i18n";
+import performanceReducer from './Reducers/PerformanceReducer';
 
 const appReducer = combineReducers({
   i18nState,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
+  performanceReducer,
   settings,
   message,
   defaultReducer,

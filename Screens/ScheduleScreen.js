@@ -20,7 +20,7 @@ class ScheduleScreen extends Component {
             const DAYS_IN_WEEK = 7;
             let currentDate = new Date();
             let dateAfterWeek = new Date(
-                currentDate.getFullYear(),
+                currentDate.getFullYear()+2,
                 currentDate.getMonth(),
                 currentDate.getDate() + DAYS_IN_WEEK);
 
@@ -48,7 +48,7 @@ class ScheduleScreen extends Component {
                             <DateFilter />
                         </View>
                         <View style={styles.performancesContainer}>
-                            <PerformanceList />
+                            <PerformanceList navigation={this.props.navigation} />
                         </View>
                     </Content>
                 </Container>

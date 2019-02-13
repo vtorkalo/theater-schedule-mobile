@@ -1,5 +1,7 @@
 // import { SET_SLIDE } from './ActionTypes';
 // import { SET_POSTERS_SUCCESS, SET_POSTERS_FAILURE } from './ActionTypes';
+import BASE_URL from 'TheaterSchedule/baseURL';
+
 export const SET_SLIDE = 'SET_SLIDE';
 export const SET_POSTERS_SUCCESS = 'SET_POSTERS_SUCCESS';
 export const SET_POSTERS_FAILURE='SET_POSTERS_FAILURE';
@@ -14,7 +16,7 @@ export function setSliderActiveSlide(index) {
 export function fetchPosters(languageCode) {
     return (dispatch) => {
 
-        fetch(`http://10.211.55.5/TheaterSchedule/api/posters/${languageCode}`)
+        fetch(`${BASE_URL}posters/${languageCode}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 dispatch(setPostersSuccess(responseJson));

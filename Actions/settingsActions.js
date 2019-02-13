@@ -46,17 +46,17 @@ export const loadSettings = deviceId => {
     return fetch(`${BASE_URL}settings/${deviceId}`)
       .then(res => {
         if (res.status == 204) {
-          console.log("204");
+      
           dispatch(setSignedIn(false));
         } else {
-          console.log("200");
+        
           dispatch(setSignedIn(true));
         }
 
         return res.json();
       })
       .then(resJson => {
-        console.log("loadSettingsSuccess");
+      
         dispatch(loadSettingsSuccess(deviceId, resJson));
       })
       .catch(error => dispatch(loadSettingsFailure(error)));
@@ -80,7 +80,7 @@ export const storeSettings = (deviceId, newSettings) => {
         return res;
       })
       .then(() => {
-        console.log("storesettingssuccess", newSettings);
+        
         dispatch(storeSettingsSuccess(newSettings));
       })
       .catch(error => dispatch(storeSettingsFailure(error)));
