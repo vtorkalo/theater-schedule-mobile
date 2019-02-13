@@ -10,64 +10,18 @@ import { loadPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 
 
 class PerformanceMainScreen extends Component {
-constructor (props)
-{
-    super(props);
-    this.state = {
-        base64Image:`data:image/png;base64,${this.props.performance.mainImage}`
-    }
-}
 
 
-    componentDidUpdate(prevProps) {
-        // console.log("Prevprops.mainimage: ", prevProps.mainImage);
-        // console.log("Prevprops.mainimage: ", this.props.performance.mainImage);
-        if (!prevProps.photo && this.props.photo) {
-           this.setState({base64Image : `data:image/png;base64,${this.props.performance.mainImage}`});
-            // console.log(11);
-            // this.forceUpdate();
-            // console.log(this.state.base64Image);
-            
-        }
-
-    };
 
     render() {
-        console.log(this.props.navigation.state);
+        // console.log(this.props.navigation.state);
         // const photo = this.props.navigation.getParam('photo', 'NO-PHOTO');
-        console.log("Test", photo);
+        
+        let base64Image =`data:image/png;base64,${this.props.photo}`;
         return (
-            <View>
+            <View style={{flex:1}}>
 
-                <View style={{ alignItems: "center" }} >
-                    <Image
-                        style={{
-                            flex: 1, marginTop: 10,
-                            marginBottom: 10,
-                            borderBottomLeftRadius: 8,
-                            borderBottomRightRadius: 8,
-                            borderTopLeftRadius: 8,
-                            borderTopRightRadius: 8,
-                        }}
-
-                        source={{ uri:photo }}
-                        
-                    />
-                </View>
-
-                <View style={{ marginLeft: 10, marginRight: 10 }} >
-                    <Text style={{ fontWeight: "bold", fontSize: 20, textAlign: "center", marginBottom: 10, }} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                    <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>АВТОР</Text>
-                    <Text style={{ fontFamily: "serif", fontWeight: "300", marginBottom: 10, }}>Тарас Тимчук</Text>
-                    <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>ОПИС</Text>
-                    <Text>{this.props.performance.description}</Text>
-                    <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>ЦІНА</Text>
-                    <Text>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
-                    <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>ХЕШ-ТЕГИ</Text>
-                    <Text>{this.props.performance.hashTag}</Text>
-                    <View style={{ marginBottom: 10 }} />
-
-                </View>
+                
             </View>
         )
     }
@@ -91,7 +45,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
 
-        performance: state.scheduleReducer.performances,
+        performance: state.performanceReducer.performance,
         error: state.performanceReducer.error,
 
     }
