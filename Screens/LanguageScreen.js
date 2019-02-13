@@ -29,7 +29,7 @@ export  class LanguageScreen extends Component {
        <TouchableOpacity onPress={()=>this.SetLang("en")} style={styles.myButton}>
           <Text style={{color:"white"}}>English</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>this.SetLang("ua")} style={styles.myButton}>
+        <TouchableOpacity onPress={()=>this.SetLang("uk")} style={styles.myButton}>
           <Text style={{color:"white"}}>Українська</Text>
         </TouchableOpacity>
         <TouchableOpacity  onPress={()=>this.SetLang("ru")} style={styles.myButton}>
