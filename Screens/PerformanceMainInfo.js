@@ -22,7 +22,7 @@ constructor (props)
     componentDidUpdate(prevProps) {
         // console.log("Prevprops.mainimage: ", prevProps.mainImage);
         // console.log("Prevprops.mainimage: ", this.props.performance.mainImage);
-        if (!prevProps.performance.mainImage && this.props.performance.mainImage) {
+        if (!prevProps.photo && this.props.photo) {
            this.setState({base64Image : `data:image/png;base64,${this.props.performance.mainImage}`});
             // console.log(11);
             // this.forceUpdate();
@@ -33,7 +33,9 @@ constructor (props)
     };
 
     render() {
-        console.log("22", this.props.photo);
+        console.log(this.props.navigation.state);
+        // const photo = this.props.navigation.getParam('photo', 'NO-PHOTO');
+        console.log("Test", photo);
         return (
             <View>
 
@@ -48,7 +50,7 @@ constructor (props)
                             borderTopRightRadius: 8,
                         }}
 
-                        source={{ uri: this.props.photo }}
+                        source={{ uri:photo }}
                         
                     />
                 </View>
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
 
-        performance: state.performanceReducer.performance,
+        performance: state.scheduleReducer.performances,
         error: state.performanceReducer.error,
 
     }

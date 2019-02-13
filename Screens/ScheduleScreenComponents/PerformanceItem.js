@@ -21,7 +21,7 @@ class PerformanceItem extends LocalizedComponent {
     pressedDetailsHandler = () => {
         // TODO - redirect to detailed information
         //ТРЕБА ПОСТАВИТИ НОРМАЛЬНИЙ ID
-        this.props.navigation.navigate("performanceStack");
+        this.props.navigation.navigate("performanceStack", {photo:this.props.performance.mainImage});
         
     }
 
