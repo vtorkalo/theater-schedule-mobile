@@ -12,10 +12,9 @@ import I18n, { i18nState } from "redux-i18n";
 import Navigator from "./Navigation/Navigator";
 import sliderReducer from "./Reducers/SliderReducer";
 import thunk from "redux-thunk";
-import { loadSettings, saveDeviceId } from "./Actions/settingsActions";
+import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
 import { fetchPosters } from './Actions/sliderActions';
-import { setLanguage } from "redux-i18n";
 
 const appReducer = combineReducers({
   i18nState,
@@ -33,10 +32,9 @@ let deviceId =
   Expo.Constants.appOwnership == "expo"
     ? Expo.Constants.deviceId
     : DeviceInfo.getUniqueID();
-deviceId = "998";
+
 export default class App extends Component {
   componentWillMount() {
-    store.dispatch(saveDeviceId(deviceId));
     store.dispatch(loadSettings(deviceId));
     store.dispatch(fetchPosters(store.getState().settings.settings.language));
   }

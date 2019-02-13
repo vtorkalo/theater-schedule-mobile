@@ -8,9 +8,6 @@ export const STORE_SETTINGS_BEGIN = "STORE_SETTINGS_BEGIN";
 export const STORE_SETTINGS_SUCCESS = "STORE_SETTINGS_SUCCESS";
 export const STORE_SETTINGS_FAILURE = "STORE_SETTINGS_FAILURE";
 
-export const SAVE_DEVICE_ID = "SAVE_DEVICE_ID";
-export const SET_SIGNED_IN = "SET_SIGNED_IN";
-
 export const loadSettingsBegin = () => ({
   type: LOAD_SETTINGS_BEGIN
 });
@@ -56,7 +53,6 @@ export const loadSettings = deviceId => {
         return res.json();
       })
       .then(resJson => {
-        console.log("loadSettingsSuccess");
         dispatch(loadSettingsSuccess(deviceId, resJson));
       })
       .catch(error => dispatch(loadSettingsFailure(error)));
@@ -80,23 +76,8 @@ export const storeSettings = (deviceId, newSettings) => {
         return res;
       })
       .then(() => {
-        console.log("storesettingssuccess", newSettings);
         dispatch(storeSettingsSuccess(newSettings));
       })
       .catch(error => dispatch(storeSettingsFailure(error)));
   };
 };
-
-export const saveDeviceId = (deviceId) => ({
-  type: SAVE_DEVICE_ID,
-  payload: {
-    deviceId
-  }
-})
-
-export const setSignedIn = (isSignedIn) => ({
-  type: SET_SIGNED_IN,
-  payload: {
-    isSignedIn
-  }
-})
