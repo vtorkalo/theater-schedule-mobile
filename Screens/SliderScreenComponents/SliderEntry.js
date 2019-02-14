@@ -25,11 +25,15 @@ class SliderEntry extends Component {
        
     }
     pressedDetailsHandler = () =>{
-        //this.props.navigation.navigate("performanceStack",{photo:this.props.performance.mainImage});
-        // console.log(mainImage);
+        console.log('test');
+         console.log(this.props.mainImage);
+         console.log(this.props);
+         console.log(this.props.data);
+         this.props.navigation.navigate("performanceStack");
+
     }
     render() {
-        const { data: { title, subtitle}} = this.props;
+        const { data: { title, performanceId}} = this.props;
 
         const uppercaseTitle = title ? (
             <Text
@@ -39,12 +43,12 @@ class SliderEntry extends Component {
                 {title.toUpperCase()}
             </Text>
         ) : false;
-
+            const PerformanceId = performanceId;
         return (
             <TouchableOpacity
                 activeOpacity={1}
                 style={styles.slideInnerContainer}
-                onPress={this.pressedDetailsHandler }
+                onPress={()=> this.props.navigation.navigate("performanceStack",{performance:PerformanceId}) }
                 // this.props.navigation.navigate("performanceStack")
             >
                 <View style={styles.shadow} />
@@ -58,7 +62,6 @@ class SliderEntry extends Component {
                         style={[styles.subtitle]}
                         numberOfLines={2}
                     >
-                        {subtitle}
                     </Text>
                 </View>
             </TouchableOpacity>

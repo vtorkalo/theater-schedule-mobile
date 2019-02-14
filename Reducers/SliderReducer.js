@@ -3,7 +3,6 @@ import { SET_SLIDE, SET_POSTERS_FAILURE, SET_POSTERS_SUCCESS} from '../Actions/s
 const initialState = {
     sliderActiveSlide: 0,
     posters: [],
-    performanceId:2,
 }
 
 export default function sliderReducer(state = initialState, action) {
@@ -13,6 +12,7 @@ export default function sliderReducer(state = initialState, action) {
                 return { ...state, sliderActiveSlide: action.payload.index };
             }
         case SET_POSTERS_SUCCESS: {
+            
             return {...state, posters: action.payload.posters};
         }
         case SET_POSTERS_FAILURE:{
