@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './SliderEntryStyles'
+import { withNavigation } from 'react-navigation';
 
-export default class SliderEntry extends Component {
+
+class SliderEntry extends Component {
 
     get image() {
-        const { data: { illustration }, parallax, parallaxProps, even } = this.props;
+        const { data: { mainImage }, parallax, parallaxProps, even } = this.props;
         return parallax ? (
             <ParallaxImage
-                source={{ uri: `data:image/jpeg;base64,${illustration}` }}
+                source={{ uri: `data:image/png;base64,${mainImage}` }}
                 containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
                 style={styles.image}
                 parallaxFactor={0.35}
@@ -19,14 +21,16 @@ export default class SliderEntry extends Component {
             />
         ) : (
                 <Image
-                    source={{ uri: `data:image/jpeg;base64,${illustration}` }}
+                    source={{ uri: `data:image/png;base64,${mainImage}` }}
                     style={styles.image}
                 />
             );
     }
-
+    pressedDetailsHandler = () =>{
+        this.props.navigation.navigate("performanceStack",{photo:this.props.performance.mainImage});
+    }
     render() {
-        const { data: { title, subtitle }, even } = this.props;
+        const { data: { title, subtitle}, even } = this.props;
 
         const uppercaseTitle = title ? (
             <Text
@@ -41,7 +45,7 @@ export default class SliderEntry extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 style={styles.slideInnerContainer}
-                onPress={() => this.props.navigation.navigate("performanceStack")}
+                onPress={()=> this.props.navigation.navigate("performanceStack")}
             >
                 <View style={styles.shadow} />
                 <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
@@ -61,3 +65,5 @@ export default class SliderEntry extends Component {
         );
     }
 }
+
+export default withNavigation(SliderEntry);

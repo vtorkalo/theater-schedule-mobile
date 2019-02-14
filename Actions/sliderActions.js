@@ -1,5 +1,3 @@
-// import { SET_SLIDE } from './ActionTypes';
-// import { SET_POSTERS_SUCCESS, SET_POSTERS_FAILURE } from './ActionTypes';
 import BASE_URL from 'TheaterSchedule/baseURL';
 
 export const SET_SLIDE = 'SET_SLIDE';
