@@ -31,7 +31,7 @@ export default function scheduleReducer(state = initialState, action) {
                 endDate: action.payload.endDate,
             }
         }
-        
+
         case LOAD_SCHEDULE_FAILURE: {
             return {
                 ...state,

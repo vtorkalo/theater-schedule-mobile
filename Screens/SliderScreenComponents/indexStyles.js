@@ -31,15 +31,6 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    subtitle: {
-        marginTop: 5,
-        paddingHorizontal: 30,
-        backgroundColor: 'transparent',
-        color: 'rgba(255, 255, 255, 0.75)',
-        fontSize: 13,
-        fontStyle: 'italic',
-        textAlign: 'center'
-    },
     slider: {
         marginTop: 15,
         overflow: 'visible'

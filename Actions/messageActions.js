@@ -43,8 +43,6 @@ export const sendMessageFailure = error => ({
 
 export const sendMessage = message => {
   return (dispatch, getState) => {
-    //dispatch(validateSubject());
-    //dispatch(validateMessage());
     const { subjectError, textError } = getState().message;
 
     if (subjectError || textError) return;

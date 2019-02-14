@@ -19,8 +19,7 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     pressedDetailsHandler = () => {
-        // TODO - redirect to detailed information
-        alert('redirect to details page');
+        this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId});
     }
 
     convertToReadableTime = date => {

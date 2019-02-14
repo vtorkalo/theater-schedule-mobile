@@ -16,16 +16,12 @@ export default PostersSlider = (props) => {
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
                 hasParallaxImages={true}
-                firstItem={1}
+                firstItem={0}
                 inactiveSlideScale={0.94}
                 inactiveSlideOpacity={0.7}
                 containerCustomStyle={styles.slider}
                 contentContainerCustomStyle={styles.sliderContentContainer}
-                loop={true}
-                loopClonesPerSide={3}
-                autoplay={true}
-                autoplayDelay={500}
-                autoplayInterval={3000}
+                loop={false}
                 onSnapToItem={props.setActiveSlide}
             />
             <Pagination
