@@ -5,6 +5,7 @@ import {
     LOAD_SCHEDULE_FAILURE,
     CNANGE_PERFORMANCE_STATUS,
     CNANGE_CHOSENPERFORMANCE_STATUS,
+    CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 export const loadScheduleBegin = () => ({
@@ -13,6 +14,13 @@ export const loadScheduleBegin = () => ({
 
 export const changePerformanceStatus = (index) => ({
     type: CNANGE_PERFORMANCE_STATUS,
+    payload: {
+        index
+    },
+});
+
+export const changePerformanceStatusFromSchedule = (index) => ({
+    type: CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE,
     payload: {
         index
     },

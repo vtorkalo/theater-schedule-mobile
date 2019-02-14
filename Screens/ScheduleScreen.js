@@ -21,7 +21,7 @@ class ScheduleScreen extends Component {
             const DAYS_IN_WEEK = 7;
             let currentDate = new Date();
             let dateAfterWeek = new Date(
-                currentDate.getFullYear() + 1,
+                currentDate.getFullYear() + 2,
                 currentDate.getMonth(),
                 currentDate.getDate() + DAYS_IN_WEEK);
 

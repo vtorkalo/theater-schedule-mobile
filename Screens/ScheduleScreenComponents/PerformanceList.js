@@ -12,7 +12,7 @@ class PerformanceList extends Component {
                 data={this.props.schedule}
                 keyExtractor={item => item.scheduleId.toString()}
                 renderItem={({ item }) => (
-                    <PerformanceItem performance={item} index={item.scheduleId} isChosen={item.isChecked}/>
+                    <PerformanceItem performance={item} index={item.index} isChecked={item.isChecked}/>
                 )}
             />
         );
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        performances: state.scheduleReducer.performances.map((performance, index) => { return { ...performance, index: performance.scheduleId.toString() } }),
+        schedule: state.scheduleReducer.schedule.map((performance, index) => { return { ...performance, index: index.toString() } }),
     }
 }
 

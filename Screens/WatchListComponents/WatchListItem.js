@@ -33,15 +33,12 @@ class WatchListItem extends LocalizedComponent {
         return moment(date).format("dddd, Do MMMM");
     }
 
-    deletefromwatchlist = (index) => {
-        this.props.performances.map((item, indexPerformance) => {
-            if (index == indexPerformance) { 
-                this.props.changePerformanceStatus(index);
-                this.props.deleteFromWatchlist(item);              
-            }
-        }); 
+    deletefromwatchlist = (item, index) => {
+        if (this.props.isChecked == true){
+            this.props.changePerformanceStatus(item.scheduleId);
+            this.props.deleteFromWatchlist(index);
+        }
     }
-
 
     render() {
         let base64Image = `data:image/png;base64,${this.props.chosenperformance.mainImage}`;
@@ -83,8 +80,8 @@ class WatchListItem extends LocalizedComponent {
                             </View>
                         </TouchableOpacity>
                         <CheckBox
-                            onClick={() => this.deletefromwatchlist(this.props.index)}
-                            isChecked={this.props.isChosen}
+                            onClick={() => this.deletefromwatchlist(this.props.chosenperformance,this.props.index)}
+                            isChecked={this.props.isChecked}
                             checkedImage={<Image source={require('./Images/checked-star.png')} style={styles.imagestyle} />}
                             unCheckedImage={<Image source={require('./Images/unchecked-star.png')} style={styles.imagestyle} />}
                         />
@@ -174,7 +171,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        performances: state.scheduleReducer.performances.map((performance, index) => { return { ...performance, index: performance.scheduleId.toString() } }),
+        schedule: state.scheduleReducer.schedule.map((chosenperformance, index) => { return { ...chosenperformance, index: index.toString() } }),
     };
 }
 

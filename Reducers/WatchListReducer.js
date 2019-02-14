@@ -24,6 +24,7 @@ export default function watchlistReducer(state = initialState, action) {
         }
 
         case DELETE_FROM_WATCHLIST: {
+            
             let chosenperformances = state.chosenperformances;
             chosenperformances.splice(action.payload.index, 1);
             return { ...state, chosenperformances }

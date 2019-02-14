@@ -12,7 +12,7 @@ class WatchList extends Component {
                 data={this.props.chosenperformances}
                 keyExtractor={item => item.scheduleId.toString()}
                 renderItem={({ item }) => (
-                    <WatchListItem chosenperformance={item} index={item.scheduleId} isChosen={item.isChecked}/>
+                    <WatchListItem chosenperformance={item} index={item.index} isChecked={item.isChecked}/>
                 )}
             />
         );
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        chosenperformances: state.watchListReducer.chosenperformances.map((performance, index) => { return { ...performance, index: performance.scheduleId.toString() } }),
+        chosenperformances: state.watchListReducer.chosenperformances.map((chosenperformance, index) => { return { ...chosenperformance, index: index.toString() } }),
     }
 }
 

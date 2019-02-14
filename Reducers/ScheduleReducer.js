@@ -3,7 +3,8 @@ import {
     LOAD_SCHEDULE_SUCCESS,
     LOAD_SCHEDULE_FAILURE,
     CNANGE_PERFORMANCE_STATUS,
-    CNANGE_CHOSENPERFORMANCE_STATUS
+    CNANGE_CHOSENPERFORMANCE_STATUS,
+    CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 let currentDate = new Date();
@@ -17,39 +18,50 @@ const initialState = {
 
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
-        case CNANGE_CHOSENPERFORMANCE_STATUS:
+        case CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE:
         {
-            let performances = state.performances.map((item, index) => {
-                console.log("index 1: "+ item.scheduleId);
-                console.log("index 2: "+ action.payload.index);
-                if (index == action.payload.index) { 
+            let schedule = state.schedule.map((performance, index) => {
+                if (index == action.payload.index) {
                     return {
-                        ...item,
-                        isChecked: !item.isChecked
+                        ...performance,
+                        isChecked: !performance.isChecked
                     }
                 }
                 else {
-                    return state.performances[index];
+                    return state.schedule[index];
                 }
             })
-            return { ...state, performances };
+            return { ...state, schedule };
+        }
+        case CNANGE_CHOSENPERFORMANCE_STATUS:
+        {
+            let schedule = state.schedule.map((performance, index) => {
+                if (performance.scheduleId == action.payload.index) {
+                    return {
+                        ...performance,
+                        isChecked: !performance.isChecked
+                    }
+                }
+                else {
+                    return state.schedule[index];
+                }
+            })
+            return { ...state, schedule };
         }
         case CNANGE_PERFORMANCE_STATUS:
         {
-            let performances = state.performances.map((item, index) => {
-                console.log("index 1: "+ item.scheduleId);
-                console.log("index 2: "+ action.payload.index);
-                if (index == action.payload.index) { 
+            let schedule = state.schedule.map((performance, index) => {
+                if (performance.scheduleId == action.payload.index) {
                     return {
-                        ...item,
-                        isChecked: !item.isChecked
+                        ...performance,
+                        isChecked: !performance.isChecked
                     }
                 }
                 else {
-                    return state.performances[index];
+                    return state.schedule[index];
                 }
             })
-            return { ...state, performances };
+            return { ...state, schedule };
         }
         case LOAD_SCHEDULE_BEGIN: {
             return {
