@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions, Text, Image, ScrollView } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
+import LocalizeComponent from "../Localization/LocalizedComponent";
 
 
-
-class PerformanceScreen extends Component {
+class PerformanceScreen extends LocalizeComponent {
 
     componentWillMount() {
         this.props.loadPerformance(this.props.performanceId, this.props.languageCode);
@@ -35,13 +34,13 @@ class PerformanceScreen extends Component {
 
                             <View style={styles.textContainer} >
                                 <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                                <Text style={styles.textSubtitle}>АВТОР</Text>
-                                <Text style={styles.testStyle}>Тарас Тимчук</Text>
-                                <Text style={styles.textSubtitle}>ОПИС</Text>
+                                <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
+                                <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.description}</Text>
-                                <Text style={styles.textSubtitle}>ЦІНА</Text>
+                                <Text style={styles.textSubtitle}>{this.t("price")}</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
-                                <Text style={styles.textSubtitle}>ХЕШ-ТЕГИ</Text>
+                                <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
                                 <View style={{ marginBottom: 10 }} />
 
