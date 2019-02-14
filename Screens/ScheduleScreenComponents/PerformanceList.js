@@ -9,7 +9,7 @@ class PerformanceList extends Component {
         return (
             <FlatList
                 style={styles.performanceList}
-                data={this.props.performances}
+                data={this.props.schedule}
                 keyExtractor={item => item.scheduleId.toString()}
                 renderItem={({ item }) => (
                     <PerformanceItem performance={item} index={item.scheduleId} isChosen={item.isChecked}/>

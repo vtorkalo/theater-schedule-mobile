@@ -1,15 +1,11 @@
-
 import React, { Component } from 'react';
 import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import { storeSettings } from '../Actions/settingsActions';
-import DeviceInfo from "react-native-device-info";
 import { connect } from 'react-redux';
 import { setLanguage } from 'redux-i18n';
 
-
 class LanguageScreen extends Component {
   SetLang = (code) => {
-    console.log("LanguageId: ", this.props.deviceId);
     this.props.storeSettings(this.props.deviceId, { languageCode: code });
     this.props.setLanguage(code);
     this.props.navigation.navigate("drawerStack");
@@ -18,20 +14,22 @@ class LanguageScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.imageBox}>
-          
-        </View>
-        <View style={styles.buttonBox}>
-          <TouchableOpacity onPress={() => this.SetLang("en")} style={styles.myButton}>
-            <Text style={{ color: "white" }}>English</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.SetLang("uk")} style={styles.myButton}>
-            <Text style={{ color: "white" }}>Українська</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.SetLang("ru")} style={styles.myButton}>
-            <Text style={{ color: "white" }}>Русский</Text>
-          </TouchableOpacity>
-        </View>
+       <View style={styles.imageBox}>
+       <Image
+          source={require('../img/images.png')}
+        />
+       </View>
+       <View style={styles.buttonBox}>
+       <TouchableOpacity onPress={()=>this.SetLang("en")} style={styles.myButton}>
+          <Text style={{color:"white"}}>English</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>this.SetLang("uk")} style={styles.myButton}>
+          <Text style={{color:"white"}}>Українська</Text>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={()=>this.SetLang("ru")} style={styles.myButton}>
+          <Text style={{color:"white"}}>Русский</Text>
+        </TouchableOpacity>
+       </View>
       </View>
     );
   }
