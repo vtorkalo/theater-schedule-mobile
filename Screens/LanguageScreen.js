@@ -2,14 +2,17 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text,Image, View,TouchableOpacity} from 'react-native';
 import {storeSettings}from '../Actions/settingsActions';
-import DeviceInfo from "react-native-device-info";
 import { connect } from 'react-redux';
 import {setLanguage} from 'redux-i18n';
 
-
-export default class InitialScreen extends Component {
+let deviceId =
+  Expo.Constants.appOwnership == "expo"
+    ? Expo.Constants.deviceId
+    : DeviceInfo.getUniqueID();
+export  class LanguageScreen extends Component {
     SetLang=(code)=>{
-        this.props.storeSettings(this.props.deviceId,{languageCode: code});
+        
+        this.props.storeSettings(deviceId,{languageCode: code});
         this.props.setLanguage(code);
         this.props.navigation.navigate("drawerStack");
    }
@@ -19,17 +22,17 @@ export default class InitialScreen extends Component {
       <View style={styles.container}>
        <View style={styles.imageBox}>
        <Image
-          source={require('./images/images.png')}
+          source={require('../img/images.png')}
         />
        </View>
        <View style={styles.buttonBox}>
-       <TouchableOpacity onPress={()=>SetLang("en")} style={styles.myButton}>
+       <TouchableOpacity onPress={()=>this.SetLang("en")} style={styles.myButton}>
           <Text style={{color:"white"}}>English</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>SetLang("ua")} style={styles.myButton}>
+        <TouchableOpacity onPress={()=>this.SetLang("uk")} style={styles.myButton}>
           <Text style={{color:"white"}}>Українська</Text>
         </TouchableOpacity>
-        <TouchableOpacity  onPress={()=>SetLang("ru")} style={styles.myButton}>
+        <TouchableOpacity  onPress={()=>this.SetLang("ru")} style={styles.myButton}>
           <Text style={{color:"white"}}>Русский</Text>
         </TouchableOpacity>
        </View>
