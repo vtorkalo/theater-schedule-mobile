@@ -39,20 +39,19 @@ export const storeSettingsFailure = error => ({
 export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
-
+console.log(deviceId);
     return fetch(`${BASE_URL}settings/${deviceId}`)
       .then(res => {
         if (res.status == 204) {
           console.log("204");
-          dispatch(setSignedIn(false));
         } else {
           console.log("200");
-          dispatch(setSignedIn(true));
         }
 
         return res.json();
       })
       .then(resJson => {
+        console.log("success");
         dispatch(loadSettingsSuccess(deviceId, resJson));
       })
       .catch(error => dispatch(loadSettingsFailure(error)));
