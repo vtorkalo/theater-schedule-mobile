@@ -1,33 +1,33 @@
 import BASE_URL from 'TheaterSchedule/baseURL';
 import {
-    LOAD_PERFORMANCES_BEGIN,
-    LOAD_PERFORMANCES_SUCCESS,
-    LOAD_PERFORMANCES_FAILURE,
+    LOAD_SCHEDULE_BEGIN,
+    LOAD_SCHEDULE_SUCCESS,
+    LOAD_SCHEDULE_FAILURE,
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
-export const loadPerformancesBegin = () => ({
-    type: LOAD_PERFORMANCES_BEGIN,
+export const loadScheduleBegin = () => ({
+    type: LOAD_SCHEDULE_BEGIN,
 });
 
-export const loadPerformancesSuccess = (performances, startDate, endDate) => ({
-    type: LOAD_PERFORMANCES_SUCCESS,
+export const loadScheduleSuccess = (schedule, startDate, endDate) => ({
+    type: LOAD_SCHEDULE_SUCCESS,
     payload: {
-        performances,
+        schedule,
         startDate,
         endDate,
     },
 });
 
-export const loadPerformancesFailure = error => ({
-    type: LOAD_PERFORMANCES_FAILURE,
+export const loadScheduleFailure = error => ({
+    type: LOAD_SCHEDULE_FAILURE,
     payload: {
         error,
     },
 });
 
-export const loadPerformances = (startDate, endDate, languageCode) => {
+export const loadSchedule = (startDate, endDate, deviceId, languageCode) => {
     return dispatch => {
-        dispatch(loadPerformancesBegin());
+        dispatch(loadScheduleBegin());
 
         let dayAfterEndDate = new Date(
             endDate.getFullYear(),
@@ -35,17 +35,17 @@ export const loadPerformances = (startDate, endDate, languageCode) => {
             endDate.getDate() + 1,
             0, 0, 0
         );
-        let url = `${BASE_URL}schedule/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
+        let url = `${BASE_URL}schedule/${deviceId}/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
         
         fetch(url)
             .then(response => {
                 return response.json();
             })
             .then(responseJson => {
-                dispatch(loadPerformancesSuccess(responseJson, startDate, endDate));
+                dispatch(loadScheduleSuccess(responseJson, startDate, endDate));
             })
             .catch(error => {
-                dispatch(loadPerformancesFailure(error));
+                dispatch(loadScheduleFailure(error));
             });
     };
 };

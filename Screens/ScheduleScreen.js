@@ -8,7 +8,7 @@ import { BallIndicator } from 'react-native-indicators';
 
 import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
 import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
-import { loadPerformances } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
+import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
 
 class ScheduleScreen extends Component {
     static navigationOptions = {
@@ -16,15 +16,16 @@ class ScheduleScreen extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (!prevProps.languageCode && this.props.languageCode) {
+        if ((!prevProps.languageCode && this.props.languageCode) ||
+            (prevProps.languageCode !== this.props.languageCode)) {
             const DAYS_IN_WEEK = 7;
             let currentDate = new Date();
             let dateAfterWeek = new Date(
-                currentDate.getFullYear()+2,
+                currentDate.getFullYear(),
                 currentDate.getMonth(),
                 currentDate.getDate() + DAYS_IN_WEEK);
 
-            this.props.loadPerformances(currentDate, dateAfterWeek, this.props.languageCode);
+            this.props.loadSchedule(currentDate, dateAfterWeek, this.props.deviceId, this.props.languageCode);
         }
     }
 
@@ -84,12 +85,13 @@ const mapStateToProps = state => {
     return {
         isScheduleLoading: state.scheduleReducer.loading,
         isLanguageLoading: state.settings.loading,
+        deviceId: state.settings.deviceId,
         languageCode: state.settings.settings.languageCode,
     }
 }
 
 const mapDispatchToProps = {
-    loadPerformances,
+    loadSchedule,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);
