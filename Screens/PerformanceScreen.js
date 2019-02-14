@@ -5,8 +5,8 @@ import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { loadPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
-import PerformanceMainInfo from '../Screens/PerformanceMainInfo';
+import { loadPerformance } from '../Actions/PerformanceCreator';
+
 
 
 class PerformanceScreen extends Component {
@@ -17,47 +17,32 @@ class PerformanceScreen extends Component {
     };
 
     render() {
-        // const test = this.props.navigation.getParam('photo', "s");
-        //var base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
-        //    console.log(test);
-        let base64Image = `data:image/png;base64,${this.props.navigation.getParam('photo', "s")}`;
+        let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
         return (
 
             <Container>
                 <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
-
                 <Content contentContainerStyle={styles.contentContainer}>
-
-                    <ScrollView style={{ flex: 1, backgroundColor: "#BFD0D6"}}>
-                        <View style={{ flex: 1 }}>  
-                        {/* <PerformanceMainInfo photo={this.props.navigation.getParam('photo', "s")}/> */}
-                            <View style={{ height:Dimensions.get('window').height * 0.6, alignItems: "center"}} >
+                    <ScrollView style={styles.genericContainer}>
+                        <View style={{ flex: 1 }}>
+                            <View style={styles.imageContainer} >
                                 <Image
-                                    style={{
-                                        flex: 1, marginTop: 10,
-                                        marginBottom: 10,
-                                        borderBottomLeftRadius: 8,
-                                        borderBottomRightRadius: 8,
-                                        borderTopLeftRadius: 8,
-                                        borderTopRightRadius: 8,
-                                        width: Dimensions.get('window').width * 0.85, height: null
-                                    }}
+                                    style={styles.image}
                                     resizeMode='contain'
                                     source={{ uri: base64Image }}
-
                                 />
                             </View>
 
-                            <View style={{ flex: 1, marginLeft: 10, marginRight: 10 }} >
-                                <Text style={{ fontWeight: "bold", fontSize: 20, textAlign: "center", marginBottom: 10, }} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                                <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>АВТОР</Text>
-                                <Text style={{ fontFamily: "serif", fontWeight: "300", marginBottom: 10, }}>Тарас Тимчук</Text>
-                                <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>ОПИС</Text>
-                                <Text>{this.props.performance.description}</Text>
-                                <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>ЦІНА</Text>
-                                <Text>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
-                                <Text style={{ fontWeight: "bold", color: "gray", marginBottom: 5 }}>ХЕШ-ТЕГИ</Text>
-                                <Text>{this.props.performance.hashTag}</Text>
+                            <View style={styles.textContainer} >
+                                <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
+                                <Text style={styles.textSubtitle}>АВТОР</Text>
+                                <Text style={styles.testStyle}>Тарас Тимчук</Text>
+                                <Text style={styles.textSubtitle}>ОПИС</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.description}</Text>
+                                <Text style={styles.textSubtitle}>ЦІНА</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
+                                <Text style={styles.textSubtitle}>ХЕШ-ТЕГИ</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
                                 <View style={{ marginBottom: 10 }} />
 
                             </View>
@@ -76,6 +61,45 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
 
 
+    },
+    genericContainer: {
+        flex: 1,
+        backgroundColor: "#BFD0D6",
+    },
+    imageContainer: {
+        height: Dimensions.get('window').height * 0.6,
+        alignItems: "center"
+    },
+    image: {
+        flex: 1, marginTop: 10,
+        marginBottom: 10,
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+        width: Dimensions.get('window').width * 0.85,
+        height: null
+    },
+    textContainer: {
+        flex: 1,
+        marginLeft: 10,
+        marginRight: 10
+    },
+    textTitle: {
+        fontWeight: "bold",
+        fontSize: 20,
+        textAlign: "center",
+        marginBottom: 10,
+    },
+    textSubtitle: {
+        fontWeight: "bold",
+        color: "gray",
+        marginBottom: 5
+    },
+    testStyle: {
+        fontFamily: "serif",
+        fontWeight: "300",
+        marginBottom: 10,
     },
     contentContainer1: {
         flex: 1,
