@@ -25,7 +25,13 @@ export const translations = {
     "errorMessage": "Будь ласка, спробуйте ще раз",
     "successMessage":"Ваше повідомлення надіслано",
     "subjectError": "Введіть тему",
-    "textError": "Введіть повідомлення"
+    "textError": "Введіть повідомлення",
+    "actors": "АКТОРИ",
+    "description": "ОПИС",
+    "price": "ЦІНА",
+    "hashtags": "ХЕШТЕГИ",
+    "Andrii Mudrak":"Андрій Мудрак",
+    "Taras Tymchuk":"Тарас Тимчук",
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -53,7 +59,13 @@ export const translations = {
     "errorMessage": "Please try again",
     "successMessage":"Your message was sent",
     "subjectError": "Please enter a subject",
-    "textError": "Please enter a message"
+    "textError": "Please enter a message",
+    "actors": "ACTORS",
+    "description": "DESCRIPTION",
+    "price": "PRICE",
+    "hashtags": "HASHTAGS",
+    "Andrii Mudrak":"Andrii Mudrak",
+    "Taras Tymchuk":"Taras Tymchuk",
   },
   'ru': {
     'Hello world!': 'Привет мир!',
@@ -81,6 +93,12 @@ export const translations = {
     "errorMessage": "Пожалуйста, попробуйте еще раз",
     "successMessage":"Ваше сообщение было отправлено",
     "subjectError": "Введите тему",
-    "textError": "Введите сообщение"
+    "textError": "Введите сообщение",
+    "actors": "АКТОРЫ",
+    "description": "ОПИСАНИЕ",
+    "price": "ЦЕНА",
+    "hashtags": "ХЕШТЕГИ",
+     "Andrii Mudrak":"Андрей Мудрак",
+     "Taras Tymchuk":"Тарас Тымчук",
   },
 }

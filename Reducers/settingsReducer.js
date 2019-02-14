@@ -59,8 +59,6 @@ export default function settingsReducer(state = initialState, action) {
 
     case SET_SIGNED_IN:
       {
-        currentStack = action.payload.isSignedIn ? "drawerStack" : "initialStack";
-        console.log(currentStack);
         return {
           ...state,
           isSignedIn: action.payload.isSignedIn
