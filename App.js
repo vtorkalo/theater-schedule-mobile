@@ -10,7 +10,8 @@ import { middleware } from "./Navigation/Navigator";
 import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n";
 import Navigator from "./Navigation/Navigator";
-import sliderReducer from "./Reducers/SliderReducer";
+import sliderReducer from './Reducers/SliderReducer';
+import watchListReducer from './Reducers/WatchListReducer';
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   i18nState,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
+  watchListReducer :watchListReducer,
   performanceReducer,
   settings,
   message,

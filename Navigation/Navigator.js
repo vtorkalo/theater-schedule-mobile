@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import SliderScreen from "../Screens/SliderScreen";
 import LanguageScreen from '../Screens/LanguageScreen';
+import WatchListScreen from '../Screens/WatchListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
 
 const DrawerStack = createDrawerNavigator(
@@ -14,6 +15,7 @@ const DrawerStack = createDrawerNavigator(
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
+    WatchList: {screen: WatchListScreen},
     Message: { screen: MessageScreen },
   },
   {

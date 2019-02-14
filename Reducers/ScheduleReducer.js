@@ -1,7 +1,9 @@
 import {
     LOAD_SCHEDULE_BEGIN,
     LOAD_SCHEDULE_SUCCESS,
-    LOAD_SCHEDULE_FAILURE
+    LOAD_SCHEDULE_FAILURE,
+    CNANGE_STATUS_FROM_WATCHLIST,
+    CNANGE_STATUS_FROM_SCHEDULE,
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 let currentDate = new Date();
@@ -15,6 +17,36 @@ const initialState = {
 
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
+        case CNANGE_STATUS_FROM_SCHEDULE:
+        {
+            let schedule = state.schedule.map((performance, index) => {
+                if (index == action.payload.index) {
+                    return {
+                        ...performance,
+                        isChecked: !performance.isChecked
+                    }
+                }
+                else {
+                    return state.schedule[index];
+                }
+            })
+            return { ...state, schedule };
+        }
+        case CNANGE_STATUS_FROM_WATCHLIST:
+        {
+            let schedule = state.schedule.map((performance, index) => {
+                if (performance.scheduleId == action.payload.index && performance.isChecked) {
+                    return {
+                        ...performance,
+                        isChecked: !performance.isChecked
+                    }
+                }
+                else {
+                    return state.schedule[index];
+                }
+            })
+            return { ...state, schedule };
+        }
         case LOAD_SCHEDULE_BEGIN: {
             return {
                 ...state,

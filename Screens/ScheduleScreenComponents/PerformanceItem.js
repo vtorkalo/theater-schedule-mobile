@@ -5,9 +5,12 @@ import {
     Image,
     Text,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
+import CheckBox from 'react-native-check-box';
+import { addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
+import { changeStatusFromSchedule, deleteFromSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import moment from 'moment';
 import 'moment/locale/uk';
 
@@ -18,50 +21,62 @@ class PerformanceItem extends LocalizedComponent {
         super(props);
     }
 
-    pressedDetailsHandler = () => {
-        this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId});
+    togglewatchlist = (item, index) => {
+        if (this.props.isChecked == undefined || this.props.isChecked == false) {
+            this.props.addToWatchlist(item);   
+            this.props.changeStatusFromSchedule(index);
+        } else {  
+            this.props.deleteFromSchedule(item.scheduleId);
+            this.props.changeStatusFromSchedule(index);
+        }
     }
 
-    convertToReadableTime = date => {
-        return moment(date).format("HH:mm");
-    }
+        pressedDetailsHandler = () => {
+            this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId});
+        }
+    
 
-    convertToReadableDate = date => {
-        return moment(date).format("dddd, Do MMMM");
-    }
 
-    render() {
-        let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+convertToReadableTime = date => {
+    return moment(date).format("HH:mm");
+}
 
-        return (
-            <View style={styles.performanceContainer}>
-                <View style={styles.imageContainer}>
-                    <Image
-                        style={styles.image}
-                        resizeMode='contain'
-                        source={{ uri: base64Image }}
-                    />
+convertToReadableDate = date => {
+    return moment(date).format("dddd, Do MMMM");
+}
+
+render() {
+    let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+
+    return (
+        <View style={styles.performanceContainer}>
+            <View style={styles.imageContainer}>
+                <Image
+                    style={styles.image}
+                    resizeMode='contain'
+                    source={{ uri: base64Image }}
+                />
+            </View>
+            <View style={styles.infoContainer}>
+                <Text style={styles.title}>{this.props.performance.title}</Text>
+                <View style={styles.detailsContainer}>
+                    <Text style={styles.additionalInfo}>
+                        {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
+                    </Text>
                 </View>
-
-                <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{this.props.performance.title}</Text>
-                    <View style={styles.detailsContainer}>
-                        <Text style={styles.additionalInfo}>
-                            {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
+                <View style={styles.detailsContainer}>
+                    <Text style={styles.additionalInfo}>
+                        {this.t('Beginning')}:
                         </Text>
-                    </View>
-                    <View style={styles.detailsContainer}>
-                        <Text style={styles.additionalInfo}>
-                            {this.t('Beginning')}:
+                    <TouchableOpacity>
+                        <Text
+                            style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
+                        >
+                            {this.convertToReadableTime(this.props.performance.beginning)}
                         </Text>
-                        <TouchableOpacity>
-                            <Text
-                                style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
-                            >
-                                {this.convertToReadableTime(this.props.performance.beginning)}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.starContainer}>
                     <TouchableOpacity onPress={this.pressedDetailsHandler}>
                         <View style={styles.detailsButton}>
                             <Text style={styles.buttonText}>
@@ -69,10 +84,17 @@ class PerformanceItem extends LocalizedComponent {
                             </Text>
                         </View>
                     </TouchableOpacity>
+                    <CheckBox
+                        onClick={() => this.togglewatchlist(this.props.performance, this.props.index)}
+                        isChecked={this.props.isChecked}
+                        checkedImage={<Image source={require('./Images/checked-star.png')} style={styles.imagestyle} />}
+                        unCheckedImage={<Image source={require('./Images/unchecked-star.png')} style={styles.imagestyle} />}
+                    />
                 </View>
-            </View >
-        );
-    }
+            </View>
+        </View >
+    );
+}
 }
 
 const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
@@ -86,6 +108,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         margin: 5,
+    },
+    starContainer: {
+        flex: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     imageContainer: {
         flex: 1,
@@ -105,39 +132,56 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     detailsContainer: {
+        flex: 2,
         flexDirection: 'row',
         width: '100%',
-        alignItems: 'center',
     },
     title: {
         color: '#7154b8',
         textAlign: 'center',
-        margin: 4,
+        fontSize: 20,
         paddingBottom: 2,
+        margin: 4,
         borderBottomWidth: 2,
         borderBottomColor: '#7154b8',
-        fontSize: 20,
+    },
+    imagestyle: {
+        width: 25,
+        height: 25,
     },
     additionalInfo: {
         fontSize: 17,
         color: '#7154b8',
         margin: 2,
+        justifyContent: 'space-between',
+        alignItems: 'center',
         paddingBottom: 2,
     },
     detailsButton: {
-        marginBottom: 10,
-        marginLeft: 40,
-        marginRight: 40,
+        marginTop: 5,
         backgroundColor: '#7154b8',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
+        width: 100
     },
     buttonText: {
         color: '#fff',
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 16,
     }
 });
 
-export default connect()(PerformanceItem);
+const mapStateToProps = (state) => {
+    return {
+        
+    }
+}
+
+const mapDispatchToProps = {
+    addToWatchlist,
+    changeStatusFromSchedule,
+    deleteFromSchedule
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PerformanceItem);
