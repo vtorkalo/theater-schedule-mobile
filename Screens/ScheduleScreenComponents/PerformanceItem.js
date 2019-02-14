@@ -19,7 +19,8 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     pressedDetailsHandler = () => {
-        this.props.navigation.navigate("performanceStack");
+        console.log(this.props.performance.performanceId);
+        this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId});
     }
 
     convertToReadableTime = date => {

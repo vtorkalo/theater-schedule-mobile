@@ -5,8 +5,6 @@ import {
   STORE_SETTINGS_BEGIN,
   STORE_SETTINGS_SUCCESS,
   STORE_SETTINGS_FAILURE,
-  SAVE_DEVICE_ID,
-  SET_SIGNED_IN
 } from "../Actions/settingsActions";
 
 const initialState = {
@@ -51,19 +49,6 @@ export default function settingsReducer(state = initialState, action) {
         error: action.payload.error
       };
 
-    case SAVE_DEVICE_ID:
-      return {
-        ...state,
-        deviceId: action.payload.deviceId
-      }
-
-    case SET_SIGNED_IN:
-      {
-        return {
-          ...state,
-          isSignedIn: action.payload.isSignedIn
-        }
-      }
     default:
       return state;
   }

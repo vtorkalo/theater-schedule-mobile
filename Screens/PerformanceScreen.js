@@ -7,12 +7,11 @@ import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 
-
 class PerformanceScreen extends LocalizeComponent {
 
     componentWillMount() {
-        this.props.loadPerformance(this.props.performanceId, this.props.languageCode);
-
+        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        console.log(this.props.navigation.getParam('performance', 'NO-ID'));
     };
 
     render() {
@@ -58,8 +57,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-
-
     },
     genericContainer: {
         flex: 1,
@@ -98,11 +95,6 @@ const styles = StyleSheet.create({
     testStyle: {
         fontWeight: "300",
         marginBottom: 10,
-    },
-    contentContainer1: {
-        flex: 1,
-        justifyContent: 'space-between',
-        backgroundColor: '#eee',
     },
 });
 

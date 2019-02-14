@@ -9,7 +9,7 @@ class PerformanceList extends Component {
         return (
             <FlatList
                 style={styles.performanceList}
-                data={this.props.performances}
+                data={this.props.schedule}
                 keyExtractor={item => item.scheduleId.toString()}
                 renderItem={({ item }) => (
                     <PerformanceItem performance={item} navigation={this.props.navigation} />
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        performances: state.scheduleReducer.performances,
+        schedule: state.scheduleReducer.schedule,
     }
 }
 
