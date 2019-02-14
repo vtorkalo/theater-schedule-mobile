@@ -1,11 +1,18 @@
 
+<<<<<<< HEAD
 import React, { Component } from 'react';
 import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import { storeSettings } from '../Actions/settingsActions';
 import DeviceInfo from "react-native-device-info";
+=======
+import React, {Component} from 'react';
+import { StyleSheet, Text,Image, View,TouchableOpacity} from 'react-native';
+import {storeSettings}from '../Actions/settingsActions';
+>>>>>>> 700ec8c7333d26d6c2698bf98d36ab4c8ab11fae
 import { connect } from 'react-redux';
 import { setLanguage } from 'redux-i18n';
 
+<<<<<<< HEAD
 
 class LanguageScreen extends Component {
   SetLang = (code) => {
@@ -14,10 +21,24 @@ class LanguageScreen extends Component {
     this.props.setLanguage(code);
     this.props.navigation.navigate("drawerStack");
   }
+=======
+let deviceId =
+  Expo.Constants.appOwnership == "expo"
+    ? Expo.Constants.deviceId
+    : DeviceInfo.getUniqueID();
+export  class LanguageScreen extends Component {
+    SetLang=(code)=>{
+        
+        this.props.storeSettings(deviceId,{languageCode: code});
+        this.props.setLanguage(code);
+        this.props.navigation.navigate("drawerStack");
+   }
+>>>>>>> 700ec8c7333d26d6c2698bf98d36ab4c8ab11fae
   render() {
 
     return (
       <View style={styles.container}>
+<<<<<<< HEAD
         <View style={styles.imageBox}>
           
         </View>
@@ -32,6 +53,24 @@ class LanguageScreen extends Component {
             <Text style={{ color: "white" }}>Русский</Text>
           </TouchableOpacity>
         </View>
+=======
+       <View style={styles.imageBox}>
+       <Image
+          source={require('../img/images.png')}
+        />
+       </View>
+       <View style={styles.buttonBox}>
+       <TouchableOpacity onPress={()=>this.SetLang("en")} style={styles.myButton}>
+          <Text style={{color:"white"}}>English</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>this.SetLang("uk")} style={styles.myButton}>
+          <Text style={{color:"white"}}>Українська</Text>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={()=>this.SetLang("ru")} style={styles.myButton}>
+          <Text style={{color:"white"}}>Русский</Text>
+        </TouchableOpacity>
+       </View>
+>>>>>>> 700ec8c7333d26d6c2698bf98d36ab4c8ab11fae
       </View>
     );
   }
