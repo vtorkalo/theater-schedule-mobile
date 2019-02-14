@@ -2,7 +2,7 @@ import {
     LOAD_PERFORMANCE_BEGIN,
     LOAD_PERFORMANCE_SUCCESS,
     LOAD_PERFORMANCE_FAILURE,
-} from "../Actions/PerformanceActions/PerformanceTypes";
+} from "../Actions/PerformanceTypes";
 
 const initialState = {
     performance: [],
