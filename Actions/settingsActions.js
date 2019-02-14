@@ -50,6 +50,7 @@ export const loadSettings = deviceId => {
         }
         else {
           dispatch(storeSettings(deviceId, { languageCode: "uk" }))
+          dispatch(setLanguage("uk"));
         }
         dispatch(loadSettingsSuccess(deviceId, resJson));
       })
