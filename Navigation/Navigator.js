@@ -9,7 +9,6 @@ import SliderScreen from "../Screens/SliderScreen";
 import LanguageScreen from '../Screens/LanguageScreen';
 const DrawerStack = createDrawerNavigator(
   {
-
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
@@ -29,11 +28,10 @@ const DrawerNavigation = createStackNavigator(
   {
     headerMode: "none",
     navigationOptions: () => ({
-      gesturesEnabled: true
+      gesturesEnabled: false
     })
   }
 );
-
 
 const InitialStack = createStackNavigator(
   {

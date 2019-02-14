@@ -4,15 +4,18 @@ import {
   LOAD_SETTINGS_FAILURE,
   STORE_SETTINGS_BEGIN,
   STORE_SETTINGS_SUCCESS,
-  STORE_SETTINGS_FAILURE
+  STORE_SETTINGS_FAILURE,
 } from "../Actions/settingsActions";
 
 const initialState = {
+  isSignedIn: false,
   deviceId: null,
   settings: {},
   loading: false,
   error: null
 };
+
+export var currentStack = initialState.isSignedIn ? "drawerStack" : "initialStack";
 
 export default function settingsReducer(state = initialState, action) {
   switch (action.type) {

@@ -42,9 +42,10 @@ class MessageScreen extends LocalizeComponent {
     this.props.validateMessageSubject();
     this.props.validateMessageText();
 
+    console.log(this.props.deviceId);
     this.props.sendMessage({
       subject: this.props.message.subject,
-      text: this.props.message.text,
+      messageText: this.props.message.text,
       phoneId: this.props.deviceId
     });
   };
