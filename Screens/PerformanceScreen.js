@@ -10,8 +10,8 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 class PerformanceScreen extends LocalizeComponent {
 
     componentWillMount() {
-        this.props.loadPerformance(this.props.performanceId, this.props.languageCode);
-
+        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        console.log(this.props.navigation.getParam('performance', 'NO-ID'));
     };
 
     render() {
