@@ -8,14 +8,12 @@ import {
 } from "../Actions/settingsActions";
 
 const initialState = {
-  isSignedIn: false,
   deviceId: null,
   settings: {},
   loading: false,
   error: null
 };
 
-export var currentStack = initialState.isSignedIn ? "drawerStack" : "initialStack";
 
 export default function settingsReducer(state = initialState, action) {
   switch (action.type) {
@@ -47,7 +45,7 @@ export default function settingsReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error
-      };
+      };      
 
     default:
       return state;

@@ -1,4 +1,5 @@
 import BASE_URL from "../baseURL";
+import { setLanguage } from "redux-i18n";
 
 export const LOAD_SETTINGS_BEGIN = "LOAD_SETTINGS_BEGIN";
 export const LOAD_SETTINGS_SUCCESS = "LOAD_SETTINGS_SUCCESS";
@@ -45,6 +46,7 @@ export const loadSettings = deviceId => {
       })
       .then(resJson => {
         dispatch(loadSettingsSuccess(deviceId, resJson));
+        dispatch(setLanguage(resJson.languageCode));
       })
       .catch(error => dispatch(loadSettingsFailure(error)));
   };
