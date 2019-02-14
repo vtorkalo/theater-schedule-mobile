@@ -16,8 +16,8 @@ class ScheduleScreen extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if ((!prevProps.languageCode && this.props.languageCode) ||
-            (prevProps.languageCode !== this.props.languageCode)) {
+        if ((!prevProps.settings && this.props.settings) ||
+            (prevProps.settings !== this.props.settings)) {
             const DAYS_IN_WEEK = 7;
             let currentDate = new Date();
             let dateAfterWeek = new Date(
@@ -25,7 +25,7 @@ class ScheduleScreen extends Component {
                 currentDate.getMonth(),
                 currentDate.getDate() + DAYS_IN_WEEK);
 
-            this.props.loadSchedule(currentDate, dateAfterWeek, this.props.deviceId, this.props.languageCode);
+            this.props.loadSchedule(currentDate, dateAfterWeek, this.props.deviceId, this.props.settings.languageCode);
         }
     }
 
@@ -86,7 +86,7 @@ const mapStateToProps = state => {
         isScheduleLoading: state.scheduleReducer.loading,
         isLanguageLoading: state.settings.loading,
         deviceId: state.settings.deviceId,
-        languageCode: state.settings.settings.languageCode,
+        settings: state.settings.settings,
     }
 }
 
