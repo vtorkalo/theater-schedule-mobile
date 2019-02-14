@@ -10,22 +10,33 @@ import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/Pe
 import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
 import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
 
+const getDateAfterWeek = () => {
+    let currentDate = new Date();
+    const DAYS_IN_WEEK = 7;
+    let dateAfterWeek = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() + DAYS_IN_WEEK);
+    return dateAfterWeek;
+}
+
 class ScheduleScreen extends Component {
     static navigationOptions = {
         drawerIcon: <MaterialCommunityIcons name='calendar-clock' size={25} />
     }
 
+    componentDidMount() {
+        if (this.props.deviceId && this.props.languageCode) {
+            let currentDate = new Date();
+            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.deviceId, this.props.languageCode);
+        }
+    }
+
     componentDidUpdate(prevProps) {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
-            const DAYS_IN_WEEK = 7;
             let currentDate = new Date();
-            let dateAfterWeek = new Date(
-                currentDate.getFullYear(),
-                currentDate.getMonth(),
-                currentDate.getDate() + DAYS_IN_WEEK);
-
-            this.props.loadSchedule(currentDate, dateAfterWeek, this.props.deviceId, this.props.languageCode);
+            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.deviceId, this.props.languageCode);
         }
     }
 

@@ -3,10 +3,15 @@ import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import { storeSettings } from '../Actions/settingsActions';
 import { connect } from 'react-redux';
 import { setLanguage } from 'redux-i18n';
+import DeviceInfo from "react-native-device-info";
 
+let deviceId =
+  Expo.Constants.appOwnership == "expo"
+    ? Expo.Constants.deviceId
+    : DeviceInfo.getUniqueID();
 class LanguageScreen extends Component {
   SetLang = (code) => {
-    this.props.storeSettings(this.props.deviceId, { languageCode: code });
+    this.props.storeSettings(deviceId, { languageCode: code });
     this.props.setLanguage(code);
     this.props.navigation.navigate("drawerStack");
   }
