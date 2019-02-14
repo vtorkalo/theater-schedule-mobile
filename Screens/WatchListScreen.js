@@ -29,7 +29,7 @@ class WatchListScreen extends Component {
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            <WatchList />
+                            <WatchList navigation={this.props.navigation}/>
                         </View>
                     </Content>
                 </Container>

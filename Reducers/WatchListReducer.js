@@ -3,6 +3,10 @@ import {
     DELETE_FROM_WATCHLIST
 } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionTypes';
 
+import {
+    DELETE_FROM_SCHEDULE
+} from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
+
 const initialState = {
     chosenperformances: [
     ],
@@ -18,6 +22,7 @@ export default function watchlistReducer(state = initialState, action) {
                 title: action.payload.item.title,
                 beginning: action.payload.item.beginning,
                 mainImage: action.payload.item.mainImage,
+                performanceId: action.payload.item.performanceId,
                 isChecked: true
             }]
             return { ...state, chosenperformances }
@@ -27,6 +32,14 @@ export default function watchlistReducer(state = initialState, action) {
             
             let chosenperformances = state.chosenperformances;
             chosenperformances.splice(action.payload.index, 1);
+            return { ...state, chosenperformances }
+        }
+
+        case DELETE_FROM_SCHEDULE: {
+
+            let chosenperformances = state.chosenperformances;
+            let index = chosenperformances.findIndex(item => item.scheduleId == index);
+            chosenperformances.splice(index, 1);
             return { ...state, chosenperformances }
         }
 

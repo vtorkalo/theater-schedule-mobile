@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from 'react-native-check-box';
-import { deleteFromWatchlist, addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
-import { changePerformanceStatus, changeChosenPerformanceStatus, changePerformanceStatusFromSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import { addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
+import { changeStatusFromSchedule, deleteFromSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import moment from 'moment';
 import 'moment/locale/uk';
 
@@ -24,18 +24,18 @@ class PerformanceItem extends LocalizedComponent {
     togglewatchlist = (item, index) => {
         if (this.props.isChecked == undefined || this.props.isChecked == false) {
             this.props.addToWatchlist(item);   
-            this.props.changePerformanceStatusFromSchedule(index);
-        } else {
-            this.props.changePerformanceStatusFromSchedule(index);
-            this.props.changeChosenPerformanceStatus(item.ScheduleId);
-            this.props.deleteFromWatchlist(index);
+            this.props.changeStatusFromSchedule(index);
+        } else {  
+            this.props.deleteFromSchedule(item.scheduleId);
+            this.props.changeStatusFromSchedule(index);
         }
     }
 
-pressedDetailsHandler = () => {
-    // TODO - redirect to detailed information
-    alert('redirect to details page');
-}
+        pressedDetailsHandler = () => {
+            this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId});
+        }
+    
+
 
 convertToReadableTime = date => {
     return moment(date).format("HH:mm");
@@ -135,8 +135,6 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     title: {
         color: '#7154b8',
@@ -176,16 +174,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        chosenperformances: state.watchListReducer.chosenperformances.map((performance, index) => { return { ...performance, index: index.toString() } }),
+        
     }
 }
 
 const mapDispatchToProps = {
-    deleteFromWatchlist,
     addToWatchlist,
-    changePerformanceStatus,
-    changeChosenPerformanceStatus,
-    changePerformanceStatusFromSchedule
+    changeStatusFromSchedule,
+    deleteFromSchedule
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceItem);

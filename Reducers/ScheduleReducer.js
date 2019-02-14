@@ -2,9 +2,8 @@ import {
     LOAD_SCHEDULE_BEGIN,
     LOAD_SCHEDULE_SUCCESS,
     LOAD_SCHEDULE_FAILURE,
-    CNANGE_PERFORMANCE_STATUS,
-    CNANGE_CHOSENPERFORMANCE_STATUS,
-    CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE
+    CNANGE_STATUS_FROM_WATCHLIST,
+    CNANGE_STATUS_FROM_SCHEDULE,
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 let currentDate = new Date();
@@ -18,7 +17,7 @@ const initialState = {
 
 export default function scheduleReducer(state = initialState, action) {
     switch (action.type) {
-        case CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE:
+        case CNANGE_STATUS_FROM_SCHEDULE:
         {
             let schedule = state.schedule.map((performance, index) => {
                 if (index == action.payload.index) {
@@ -33,25 +32,10 @@ export default function scheduleReducer(state = initialState, action) {
             })
             return { ...state, schedule };
         }
-        case CNANGE_CHOSENPERFORMANCE_STATUS:
+        case CNANGE_STATUS_FROM_WATCHLIST:
         {
             let schedule = state.schedule.map((performance, index) => {
-                if (performance.scheduleId == action.payload.index) {
-                    return {
-                        ...performance,
-                        isChecked: !performance.isChecked
-                    }
-                }
-                else {
-                    return state.schedule[index];
-                }
-            })
-            return { ...state, schedule };
-        }
-        case CNANGE_PERFORMANCE_STATUS:
-        {
-            let schedule = state.schedule.map((performance, index) => {
-                if (performance.scheduleId == action.payload.index) {
+                if (performance.scheduleId == action.payload.index && performance.isChecked) {
                     return {
                         ...performance,
                         isChecked: !performance.isChecked
@@ -79,7 +63,7 @@ export default function scheduleReducer(state = initialState, action) {
                 endDate: action.payload.endDate,
             }
         }
-        
+
         case LOAD_SCHEDULE_FAILURE: {
             return {
                 ...state,

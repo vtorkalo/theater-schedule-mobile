@@ -3,31 +3,31 @@ import {
     LOAD_SCHEDULE_BEGIN,
     LOAD_SCHEDULE_SUCCESS,
     LOAD_SCHEDULE_FAILURE,
-    CNANGE_PERFORMANCE_STATUS,
-    CNANGE_CHOSENPERFORMANCE_STATUS,
-    CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE
+    CNANGE_STATUS_FROM_WATCHLIST,
+    CNANGE_STATUS_FROM_SCHEDULE,
+    DELETE_FROM_SCHEDULE
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 export const loadScheduleBegin = () => ({
     type: LOAD_SCHEDULE_BEGIN,
 });
 
-export const changePerformanceStatus = (index) => ({
-    type: CNANGE_PERFORMANCE_STATUS,
+export const deleteFromSchedule = (index) => ({
+    type: DELETE_FROM_SCHEDULE,
     payload: {
         index
     },
 });
 
-export const changePerformanceStatusFromSchedule = (index) => ({
-    type: CNANGE_CHOSENPERFORMANCE_STATUS_FROM_SCHEDULE,
+export const changeStatusFromWatchList = (index) => ({
+    type: CNANGE_STATUS_FROM_WATCHLIST,
     payload: {
         index
     },
 });
 
-export const changeChosenPerformanceStatus = (index) => ({
-    type: CNANGE_CHOSENPERFORMANCE_STATUS,
+export const changeStatusFromSchedule = (index) => ({
+    type: CNANGE_STATUS_FROM_SCHEDULE,
     payload: {
         index
     },

@@ -9,11 +9,15 @@ import { setSliderActiveSlide } from '../Actions/sliderActions';
 import SliderEntry from './SliderScreenComponents/SliderEntry';
 import styles from '../Screens/SliderScreenComponents/indexStyles';
 import LocalizedComponent from '../Localization/LocalizedComponent';
-
+import { fetchPosters } from '../Actions/sliderActions';
 
 class SliderScreen extends LocalizedComponent {
     static navigationOptions = {
         drawerIcon: <MaterialCommunityIcons name='theater' size={25} />
+    }
+
+    componentDidMount() {
+        this.props.fetchPosters(this.props.languageCode);
     }
 
     renderItemWithParallax({ item, index }, parallaxProps) {
@@ -26,8 +30,8 @@ class SliderScreen extends LocalizedComponent {
         );
     }
 
-
     render() {
+        this.props.fetchPosters(this.props.languageCode);
         return (
             <Container style={{ flex: 1 }}>
                 <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
@@ -36,7 +40,7 @@ class SliderScreen extends LocalizedComponent {
                         <View style={styles.container}>
                             <View style={{ flex: 1, justifyContent: 'center' }}>
                                 <PostersSlider
-                                    title={this.t('Now the performances premieres are: ')}
+                                    title={this.t('Now the performances premieres are:')}
                                     posters={this.props.posters}
                                     renderItemWithParallax={this.renderItemWithParallax}
                                     setActiveSlide={(index) => this.props.setSliderActiveSlide(index)}
@@ -51,15 +55,16 @@ class SliderScreen extends LocalizedComponent {
     }
 }
 
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
         sliderActiveSlide: state.sliderActiveSlide.sliderActiveSlide,
         posters: state.sliderActiveSlide.posters,
+        languageCode: state.settings.settings.languageCode,
     }
 }
 const mapDispatchToProps = {
     setSliderActiveSlide,
+    fetchPosters
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SliderScreen)

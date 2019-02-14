@@ -12,7 +12,7 @@ class PerformanceList extends Component {
                 data={this.props.schedule}
                 keyExtractor={item => item.scheduleId.toString()}
                 renderItem={({ item }) => (
-                    <PerformanceItem performance={item} index={item.index} isChecked={item.isChecked}/>
+                    <PerformanceItem performance={item} navigation={this.props.navigation} index={item.index} isChecked={item.isChecked}/>
                 )}
             />
         );

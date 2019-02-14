@@ -12,7 +12,7 @@ class WatchList extends Component {
                 data={this.props.chosenperformances}
                 keyExtractor={item => item.scheduleId.toString()}
                 renderItem={({ item }) => (
-                    <WatchListItem chosenperformance={item} index={item.index} isChecked={item.isChecked}/>
+                    <WatchListItem chosenperformance={item} navigation={this.props.navigation} index={item.index} isChecked={item.isChecked}/>
                 )}
             />
         );

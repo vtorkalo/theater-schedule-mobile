@@ -16,12 +16,14 @@ import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
 import { fetchPosters } from './Actions/sliderActions';
+import performanceReducer from './Reducers/PerformanceReducer';
 
 const appReducer = combineReducers({
   i18nState,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
   watchListReducer :watchListReducer,
+  performanceReducer,
   settings,
   message,
   defaultReducer,
@@ -38,7 +40,6 @@ let deviceId =
 export default class App extends Component {
   componentWillMount() {
     store.dispatch(loadSettings(deviceId));
-    store.dispatch(fetchPosters(store.getState().settings.settings.language));
   }
 
   render() {

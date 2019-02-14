@@ -8,8 +8,8 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { deleteFromWatchlist, addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
-import { changePerformanceStatus } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import { deleteFromWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
+import { changeStatusFromWatchList } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import CheckBox from 'react-native-check-box';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import moment from 'moment';
@@ -21,8 +21,7 @@ class WatchListItem extends LocalizedComponent {
     }
 
     pressedDetailsHandler = () => {
-        // TODO - redirect to detailed information
-        alert('redirect to details page');
+        this.props.navigation.navigate("performanceStack", { performance: this.props.chosenperformance.performanceId});
     }
 
     convertToReadableTime = date => {
@@ -35,7 +34,7 @@ class WatchListItem extends LocalizedComponent {
 
     deletefromwatchlist = (item, index) => {
         if (this.props.isChecked == true){
-            this.props.changePerformanceStatus(item.scheduleId);
+            this.props.changeStatusFromWatchList(item.scheduleId);
             this.props.deleteFromWatchlist(index);
         }
     }
@@ -130,8 +129,6 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     title: {
         color: '#7154b8',
@@ -171,14 +168,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        schedule: state.scheduleReducer.schedule.map((chosenperformance, index) => { return { ...chosenperformance, index: index.toString() } }),
+
     };
 }
 
 const mapDispatchToProps = {
     deleteFromWatchlist,
-    addToWatchlist,
-    changePerformanceStatus
+    changeStatusFromWatchList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WatchListItem);
