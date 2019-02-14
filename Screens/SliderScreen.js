@@ -31,7 +31,6 @@ class SliderScreen extends LocalizedComponent {
     }
 
     render() {
-        this.props.fetchPosters(this.props.languageCode);
         return (
             <Container style={{ flex: 1 }}>
                 <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
