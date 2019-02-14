@@ -27,7 +27,8 @@ class SliderEntry extends Component {
             );
     }
     pressedDetailsHandler = () =>{
-        this.props.navigation.navigate("performanceStack",{photo:this.props.performance.mainImage});
+        //this.props.navigation.navigate("performanceStack",{photo:this.props.performance.mainImage});
+        // console.log(mainImage);
     }
     render() {
         const { data: { title, subtitle}, even } = this.props;
@@ -45,7 +46,8 @@ class SliderEntry extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 style={styles.slideInnerContainer}
-                onPress={()=> this.props.navigation.navigate("performanceStack")}
+                onPress={this.pressedDetailsHandler }
+                // this.props.navigation.navigate("performanceStack")
             >
                 <View style={styles.shadow} />
                 <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
