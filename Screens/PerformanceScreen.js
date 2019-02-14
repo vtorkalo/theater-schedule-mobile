@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
+import { BallIndicator } from 'react-native-indicators';
 
 class PerformanceScreen extends LocalizeComponent {
 
@@ -14,40 +15,51 @@ class PerformanceScreen extends LocalizeComponent {
     };
 
     render() {
-        let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
-        return (
+        if (this.props.isLoading) {
+            return (
+                <Container style={styles.container}>
+                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <BallIndicator color="#aaa" />
+                    </Content>
+                </Container>
+            );
+        } else {
+            let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+            return (
 
-            <Container>
-                <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
-                <Content contentContainerStyle={styles.contentContainer}>
-                    <ScrollView style={styles.genericContainer}>
-                        <View style={{ flex: 1 }}>
-                            <View style={styles.imageContainer} >
-                                <Image
-                                    style={styles.image}
-                                    resizeMode='contain'
-                                    source={{ uri: base64Image }}
-                                />
+                <Container>
+                    <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <ScrollView style={styles.genericContainer}>
+                            <View style={{ flex: 1 }}>
+                                <View style={styles.imageContainer} >
+                                    <Image
+                                        style={styles.image}
+                                        resizeMode='contain'
+                                        source={{ uri: base64Image }}
+                                    />
+                                </View>
+
+                                <View style={styles.textContainer} >
+                                    <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
+                                    <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("description")}</Text>
+                                    <Text style={styles.testStyle}>{this.props.performance.description}</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("price")}</Text>
+                                    <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
+                                    <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
+                                    <View style={{ marginBottom: 10 }} />
+
+                                </View>
                             </View>
-
-                            <View style={styles.textContainer} >
-                                <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                                <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
-                                <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
-                                <Text style={styles.textSubtitle}>{this.t("description")}</Text>
-                                <Text style={styles.testStyle}>{this.props.performance.description}</Text>
-                                <Text style={styles.textSubtitle}>{this.t("price")}</Text>
-                                <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
-                                <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
-                                <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
-                                <View style={{ marginBottom: 10 }} />
-
-                            </View>
-                        </View>
-                    </ScrollView>
-                </Content>
-            </Container>
-        )
+                        </ScrollView>
+                    </Content>
+                </Container>
+            )
+        }
     }
 }
 
@@ -102,7 +114,7 @@ const mapStateToProps = state => {
         languageCode: state.settings.settings.languageCode,
         performanceId: state.scheduleReducer.performanceId,
         performance: state.performanceReducer.performance,
-
+        isLoading: state.performanceReducer.loading,
     }
 }
 
