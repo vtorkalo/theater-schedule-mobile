@@ -1,6 +1,6 @@
 import {
     ADD_TO_WATCHLIST,
-    DELETE_FROM_WATCHLIST
+    DELETE_FROM_WATCHLIST,
 } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionTypes';
 
 export const addToWatchlist = (item) => ({

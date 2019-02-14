@@ -4,15 +4,15 @@ import {
 } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionTypes';
 
 const initialState = {
-    chosenperformances: [],
-    isChecked: false,
-    loading: false
+    chosenperformances: [
+    ],
+    loading: false,
 }
 
 export default function watchlistReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_TO_WATCHLIST: {
-            let performances = [...state.chosenperformances,
+            let chosenperformances = [...state.chosenperformances,
             {
                 scheduleId: action.payload.item.scheduleId,
                 title: action.payload.item.title,
@@ -20,13 +20,13 @@ export default function watchlistReducer(state = initialState, action) {
                 mainImage: action.payload.item.mainImage,
                 isChecked: true
             }]
-            return { ...state, performances }
+            return { ...state, chosenperformances }
         }
 
         case DELETE_FROM_WATCHLIST: {
-            let performances = state.chosenperformances
-            performances.splice(action.payload.index, 1)
-            return { ...state, performances }
+            let chosenperformances = state.chosenperformances;
+            chosenperformances.splice(action.payload.index, 1);
+            return { ...state, chosenperformances }
         }
 
         default: {

@@ -3,10 +3,26 @@ import {
     LOAD_PERFORMANCES_BEGIN,
     LOAD_PERFORMANCES_SUCCESS,
     LOAD_PERFORMANCES_FAILURE,
+    CNANGE_PERFORMANCE_STATUS,
+    CNANGE_CHOSENPERFORMANCE_STATUS,
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 export const loadPerformancesBegin = () => ({
     type: LOAD_PERFORMANCES_BEGIN,
+});
+
+export const changePerformanceStatus = (index) =>({
+        type: CNANGE_PERFORMANCE_STATUS,
+        payload: {
+            index
+       },
+});
+
+export const changeChosenPerformanceStatus = (index) =>({
+    type: CNANGE_CHOSENPERFORMANCE_STATUS,
+    payload: {
+        index
+   },
 });
 
 export const loadPerformancesSuccess = (performances, startDate, endDate) => ({

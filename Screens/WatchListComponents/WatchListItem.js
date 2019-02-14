@@ -8,17 +8,16 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { deleteFromWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
+import { deleteFromWatchlist, addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
+import { changePerformanceStatus } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import CheckBox from 'react-native-check-box';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
+import moment from 'moment';
+import 'moment/locale/uk';
 
 class WatchListItem extends LocalizedComponent {
     constructor(props) {
         super(props);
-
-        this.state = {
-            checked: false,
-        };
     }
 
     pressedDetailsHandler = () => {
@@ -27,11 +26,22 @@ class WatchListItem extends LocalizedComponent {
     }
 
     convertToReadableTime = date => {
-        let beginning = new Date(date);
-        let hours = beginning.getHours();
-        let minutes = beginning.getMinutes();
-        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+        return moment(date).format("HH:mm");
     }
+
+    convertToReadableDate = date => {
+        return moment(date).format("dddd, Do MMMM");
+    }
+
+    deletefromwatchlist = (index) => {
+        this.props.performances.map((item, indexPerformance) => {
+            if (index == indexPerformance) { 
+                this.props.changePerformanceStatus(index);
+                this.props.deleteFromWatchlist(item);              
+            }
+        }); 
+    }
+
 
     render() {
         let base64Image = `data:image/png;base64,${this.props.chosenperformance.mainImage}`;
@@ -47,21 +57,14 @@ class WatchListItem extends LocalizedComponent {
                 </View>
                 <View style={styles.infoContainer}>
                     <Text style={styles.title}>{this.props.chosenperformance.title}</Text>
-                    <View style={styles.starContainer}>
-                        <CheckBox
-                            onClick={() => {
-                                this.setState({
-                                    isChecked: !this.state.isChecked
-                                })
-                            }}
-                            isChecked={this.state.isChecked}
-                            checkedImage={<Image source={require('./Images/checked-star.png')} style={styles.imagestyle} />}
-                            unCheckedImage={<Image source={require('./Images/unchecked-star.png')} style={styles.imagestyle} />}
-                        />
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.additionalInfo}>
+                            {this.t('Date')}: {this.convertToReadableDate(this.props.chosenperformance.beginning)}
+                        </Text>
                     </View>
                     <View style={styles.detailsContainer}>
                         <Text style={styles.additionalInfo}>
-                            {this.t('The closest session')}:
+                            {this.t('Beginning')}:
                         </Text>
                         <TouchableOpacity>
                             <Text
@@ -71,13 +74,21 @@ class WatchListItem extends LocalizedComponent {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={this.pressedDetailsHandler}>
-                        <View style={styles.detailsButton}>
-                            <Text style={styles.buttonText}>
-                                {this.t('Details')}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={styles.starContainer}>
+                        <TouchableOpacity onPress={this.pressedDetailsHandler}>
+                            <View style={styles.detailsButton}>
+                                <Text style={styles.buttonText}>
+                                    {this.t('Details')}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <CheckBox
+                            onClick={() => this.deletefromwatchlist(this.props.index)}
+                            isChecked={this.props.isChosen}
+                            checkedImage={<Image source={require('./Images/checked-star.png')} style={styles.imagestyle} />}
+                            unCheckedImage={<Image source={require('./Images/unchecked-star.png')} style={styles.imagestyle} />}
+                        />
+                    </View>
                 </View>
             </View >
         );
@@ -97,11 +108,9 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     starContainer: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 5,
+        justifyContent: 'space-around',
     },
     imageContainer: {
         flex: 1,
@@ -111,6 +120,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
+        borderRadius: 50,
     },
     infoContainer: {
         flex: 2,
@@ -141,29 +151,37 @@ const styles = StyleSheet.create({
     },
     additionalInfo: {
         fontSize: 17,
-        textAlign: 'center',
         color: '#7154b8',
         margin: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
         paddingBottom: 2,
     },
     detailsButton: {
-        marginBottom: 10,
-        marginLeft: 40,
-        marginRight: 40,
+        marginTop: 5,
         backgroundColor: '#7154b8',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
+        width: 100
     },
     buttonText: {
         color: '#fff',
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 16,
     }
 });
 
-const mapDispatchToProps = {
-    deleteFromWatchlist,
+const mapStateToProps = (state) => {
+    return {
+        performances: state.scheduleReducer.performances.map((performance, index) => { return { ...performance, index: performance.scheduleId.toString() } }),
+    };
 }
 
-export default connect()(WatchListItem);
+const mapDispatchToProps = {
+    deleteFromWatchlist,
+    addToWatchlist,
+    changePerformanceStatus
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WatchListItem);
