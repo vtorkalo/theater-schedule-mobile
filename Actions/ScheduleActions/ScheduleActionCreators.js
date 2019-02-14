@@ -25,7 +25,7 @@ export const loadScheduleFailure = error => ({
     },
 });
 
-export const loadSchedule = (startDate, endDate, languageCode) => {
+export const loadSchedule = (startDate, endDate, deviceId, languageCode) => {
     return dispatch => {
         dispatch(loadScheduleBegin());
 
@@ -35,7 +35,7 @@ export const loadSchedule = (startDate, endDate, languageCode) => {
             endDate.getDate() + 1,
             0, 0, 0
         );
-        let url = `${BASE_URL}schedule/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
+        let url = `${BASE_URL}schedule/${deviceId}/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
         
         fetch(url)
             .then(response => {

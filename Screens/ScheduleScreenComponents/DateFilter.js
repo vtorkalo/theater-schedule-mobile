@@ -38,7 +38,7 @@ class DateFilter extends LocalizedComponent {
             isFilterVisible: false,
         });
 
-        this.props.loadSchedule(startDate, endDate, this.props.languageCode);
+        this.props.loadSchedule(startDate, endDate, this.props.deviceId, this.props.languageCode);
     }
 
     render() {
@@ -96,6 +96,7 @@ const mapStateToProps = state => {
     return {
         startDate: state.scheduleReducer.startDate,
         endDate: state.scheduleReducer.endDate,
+        deviceId: state.settings.deviceId,
         languageCode: state.settings.settings.languageCode,
     }
 }
