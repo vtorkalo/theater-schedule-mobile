@@ -41,8 +41,6 @@ class MessageScreen extends LocalizeComponent {
   onSendMessage = () => {
     this.props.validateMessageSubject();
     this.props.validateMessageText();
-
-    console.log(this.props.deviceId);
     this.props.sendMessage({
       subject: this.props.message.subject,
       messageText: this.props.message.text,

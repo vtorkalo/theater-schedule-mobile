@@ -4,7 +4,7 @@ import { colors } from './indexStyles';
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
-function wp (percentage) {
+function wp(percentage) {
     const value = (percentage * viewportWidth) / 100;
     return Math.round(value);
 }
@@ -23,7 +23,7 @@ export default StyleSheet.create({
         width: itemWidth,
         height: slideHeight,
         paddingHorizontal: itemHorizontalMargin,
-        paddingBottom: 18 
+        paddingBottom: 18
     },
     shadow: {
         position: 'absolute',
@@ -39,11 +39,11 @@ export default StyleSheet.create({
     },
     imageContainer: {
         flex: 1,
-        marginBottom: IS_IOS ? 0 : -1, 
+        marginBottom: IS_IOS ? 0 : -1,
         backgroundColor: 'white',
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius,
-        backgroundColor:"violet",
+        backgroundColor: "violet",
     },
     imageContainerEven: {
         backgroundColor: colors.black
@@ -51,7 +51,7 @@ export default StyleSheet.create({
     image: {
         ...StyleSheet.absoluteFillObject,
         resizeMode: 'cover',
-        height:null,
+        height: null,
         borderRadius: IS_IOS ? entryBorderRadius : 0,
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius,

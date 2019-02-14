@@ -10,7 +10,6 @@ const initialState = {
     startDate: currentDate,
     endDate: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7),
     loading: false,
-    performanceId:1,
     error: null,
 }
 
@@ -32,7 +31,7 @@ export default function scheduleReducer(state = initialState, action) {
                 endDate: action.payload.endDate,
             }
         }
-        
+
         case LOAD_SCHEDULE_FAILURE: {
             return {
                 ...state,

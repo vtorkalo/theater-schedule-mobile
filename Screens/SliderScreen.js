@@ -9,17 +9,17 @@ import { setSliderActiveSlide } from '../Actions/sliderActions';
 import SliderEntry from './SliderScreenComponents/SliderEntry';
 import styles from '../Screens/SliderScreenComponents/indexStyles';
 import LocalizedComponent from '../Localization/LocalizedComponent';
-import {fetchPosters} from '../Actions/sliderActions';
+import { fetchPosters } from '../Actions/sliderActions';
 
 class SliderScreen extends LocalizedComponent {
     static navigationOptions = {
         drawerIcon: <MaterialCommunityIcons name='theater' size={25} />
     }
+
     componentDidMount() {
-        console.log(this.props.languageCode);
         this.props.fetchPosters(this.props.languageCode);
     }
-   
+
     renderItemWithParallax({ item, index }, parallaxProps) {
         return (
             <SliderEntry
@@ -30,9 +30,8 @@ class SliderScreen extends LocalizedComponent {
         );
     }
 
-
     render() {
-        let name = this.t("Schedule")
+        this.props.fetchPosters(this.props.languageCode);
         return (
             <Container style={{ flex: 1 }}>
                 <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
@@ -56,8 +55,7 @@ class SliderScreen extends LocalizedComponent {
     }
 }
 
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
         sliderActiveSlide: state.sliderActiveSlide.sliderActiveSlide,
         posters: state.sliderActiveSlide.posters,

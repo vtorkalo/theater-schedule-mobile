@@ -11,7 +11,6 @@ class PerformanceScreen extends LocalizeComponent {
 
     componentWillMount() {
         this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
-        console.log(this.props.navigation.getParam('performance', 'NO-ID'));
     };
 
     render() {

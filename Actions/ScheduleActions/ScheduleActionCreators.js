@@ -36,7 +36,7 @@ export const loadSchedule = (startDate, endDate, deviceId, languageCode) => {
             0, 0, 0
         );
         let url = `${BASE_URL}schedule/${deviceId}/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
-        
+
         fetch(url)
             .then(response => {
                 return response.json();

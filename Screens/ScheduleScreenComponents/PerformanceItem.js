@@ -19,7 +19,6 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     pressedDetailsHandler = () => {
-        console.log(this.props.performance.performanceId);
         this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId});
     }
 

@@ -15,7 +15,6 @@ const DrawerStack = createDrawerNavigator(
     Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
     Message: { screen: MessageScreen },
-   
   },
   {
     drawerPosition: "left",

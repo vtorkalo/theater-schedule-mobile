@@ -20,21 +20,14 @@ export const loadPerformanceFailure = (error) => ({
 });
 
 export const loadPerformance = (performanceId, languageCode) => {
-
     return dispatch => {
         dispatch(loadPerformanceBegin());
-
         let url = `${BASE_URL}PerformanceDetails/${languageCode}/GetInfo?id=${performanceId}`;
-
-
         fetch(url)
             .then(response => response.json())
             .then(responseJson => {
-
-
                 dispatch(loadPerformanceSuccess(responseJson));
             })
             .catch(error => { dispatch(loadPerformanceFailure(error)) });
-
     };
 };

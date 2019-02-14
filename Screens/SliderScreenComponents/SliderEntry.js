@@ -3,7 +3,6 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './SliderEntryStyles'
 import { withNavigation } from 'react-navigation';
-import ImageResizeMode from 'react-native/Libraries/Image/ImageResizeMode';
 
 class SliderEntry extends Component {
 
@@ -21,19 +20,10 @@ class SliderEntry extends Component {
                     style={styles.image}
                 />
             );
-
-       
     }
-    pressedDetailsHandler = () =>{
-        console.log('test');
-         console.log(this.props.mainImage);
-         console.log(this.props);
-         console.log(this.props.data);
-         this.props.navigation.navigate("performanceStack");
 
-    }
     render() {
-        const { data: { title, performanceId}} = this.props;
+        const { data: { title, performanceId } } = this.props;
 
         const uppercaseTitle = title ? (
             <Text
@@ -43,17 +33,16 @@ class SliderEntry extends Component {
                 {title.toUpperCase()}
             </Text>
         ) : false;
-            const PerformanceId = performanceId;
+        const PerformanceId = performanceId;
         return (
             <TouchableOpacity
                 activeOpacity={1}
                 style={styles.slideInnerContainer}
-                onPress={()=> this.props.navigation.navigate("performanceStack",{performance:PerformanceId}) }
-                // this.props.navigation.navigate("performanceStack")
+                onPress={() => this.props.navigation.navigate("performanceStack", { performance: PerformanceId })}
             >
                 <View style={styles.shadow} />
                 <View style={[styles.imageContainer]}>
-                    {this.image }
+                    {this.image}
                     <View style={[styles.radiusMask]} />
                 </View>
                 <View style={[styles.textContainer]}>

@@ -39,9 +39,8 @@ export const storeSettingsFailure = error => ({
 export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
-console.log(deviceId);
     return fetch(`${BASE_URL}settings/${deviceId}`)
-      .then(res => {     
+      .then(res => {
         return res.json();
       })
       .then(resJson => {
