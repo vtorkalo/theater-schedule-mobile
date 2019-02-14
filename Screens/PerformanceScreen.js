@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     testStyle: {
-        fontFamily: "serif",
         fontWeight: "300",
         marginBottom: 10,
     },

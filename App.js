@@ -40,7 +40,6 @@ export default class App extends Component {
   componentWillMount() {
     store.dispatch(saveDeviceId(deviceId));
     store.dispatch(loadSettings(deviceId));
-    store.dispatch(fetchPosters(store.getState().settings.settings.language));
   }
 
   render() {

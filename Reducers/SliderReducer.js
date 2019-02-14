@@ -1,7 +1,7 @@
 import { SET_SLIDE, SET_POSTERS_FAILURE, SET_POSTERS_SUCCESS} from '../Actions/sliderActions';
 
 const initialState = {
-    sliderActiveSlide: 1,
+    sliderActiveSlide: 0,
     posters: [],
     performanceId:2,
 }

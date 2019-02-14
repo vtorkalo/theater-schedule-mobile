@@ -11,7 +11,6 @@ import PerformanceScreen from '../Screens/PerformanceScreen';
 
 const DrawerStack = createDrawerNavigator(
   {
-
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
