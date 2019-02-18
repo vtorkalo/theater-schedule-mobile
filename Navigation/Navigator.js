@@ -8,19 +8,21 @@ import { reduxifyNavigator, createReactNavigationReduxMiddleware } from "react-n
 import SliderScreen from "../Screens/SliderScreen";
 import WatchListScreen from '../Screens/WatchListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
+import SplashScreen from "../Screens/SplashScreen";
 
 const DrawerStack = createDrawerNavigator(
   {
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
-    WatchList: {screen: WatchListScreen},
+    WatchList: { screen: WatchListScreen },
     Message: { screen: MessageScreen },
+    Splash: { screen: SplashScreen },
   },
   {
     drawerPosition: "left",
     contentComponent: CustomDrawerContent,
-    initialRouteName: "Schedule"
+    initialRouteName: "Splash"
   }
 );
 

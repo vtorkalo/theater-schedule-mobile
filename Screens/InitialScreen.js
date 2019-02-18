@@ -71,9 +71,8 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 25
     }
-
-
 });
+
 const mapStateToProps = (state) => {
     return {
         deviceId: state.settings.deviceId
