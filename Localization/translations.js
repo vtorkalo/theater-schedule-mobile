@@ -31,6 +31,7 @@ export const translations = {
     "hashtags": "ХЕШТЕГИ",
     "Andrii Mudrak": "Андрій Мудрак",
     "Taras Tymchuk": "Тарас Тимчук",
+    'ScheduleScreenTitle': 'Розклад',
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -64,6 +65,7 @@ export const translations = {
     "hashtags": "HASHTAGS",
     "Andrii Mudrak": "Andrii Mudrak",
     "Taras Tymchuk": "Taras Tymchuk",
+    'ScheduleScreenTitle': 'Schedule',
   },
   'ru': {
     'Hello world!': 'Привет мир!',
@@ -98,5 +100,6 @@ export const translations = {
     "hashtags": "ХЕШТЕГИ",
     "Andrii Mudrak": "Андрей Мудрак",
     "Taras Tymchuk": "Тарас Тымчук",
+    'ScheduleScreenTitle': 'Расписание',
   },
 }

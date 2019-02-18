@@ -6,7 +6,6 @@ import CustomDrawerContent from "./CustomDrawerContentComponent";
 import { connect } from "react-redux";
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import SliderScreen from "../Screens/SliderScreen";
-import LanguageScreen from '../Screens/LanguageScreen';
 import WatchListScreen from '../Screens/WatchListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
 
@@ -37,15 +36,6 @@ const DrawerNavigation = createStackNavigator(
   }
 );
 
-const InitialStack = createStackNavigator(
-  {
-    initialScreen: { screen: LanguageScreen }
-  },
-  {
-    headerMode: 'none',
-  })
-
-
 const PerformanceStack = createStackNavigator(
   {
     performanceScreen: { screen: PerformanceScreen }
@@ -56,13 +46,12 @@ const PerformanceStack = createStackNavigator(
 
 export const AppNavigator = createStackNavigator(
   {
-    initialStack: { screen: InitialStack },
     drawerStack: { screen: DrawerNavigation },
     performanceStack: { screen: PerformanceStack },
   },
   {
     headerMode: "none",
-    initialRouteName: "initialStack"
+    initialRouteName: "drawerStack"
   }
 );
 export const middleware = createReactNavigationReduxMiddleware(

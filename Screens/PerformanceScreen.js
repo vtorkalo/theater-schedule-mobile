@@ -10,7 +10,7 @@ import { BallIndicator } from 'react-native-indicators';
 
 class PerformanceScreen extends LocalizeComponent {
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
     };
 

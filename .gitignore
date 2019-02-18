@@ -58,3 +58,4 @@ buck-out/
 
 # Base url to server
 baseURL.js
+/baseURL.js

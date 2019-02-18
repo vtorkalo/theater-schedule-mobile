@@ -1,4 +1,5 @@
 import BASE_URL from "../baseURL";
+import { setLanguage } from "redux-i18n";
 
 export const LOAD_SETTINGS_BEGIN = "LOAD_SETTINGS_BEGIN";
 export const LOAD_SETTINGS_SUCCESS = "LOAD_SETTINGS_SUCCESS";
@@ -43,7 +44,14 @@ export const loadSettings = deviceId => {
       .then(res => {
         return res.json();
       })
-      .then(resJson => {
+      .then(resJson => {        
+        if (resJson && resJson.languageCode) {
+          dispatch(setLanguage(resJson.languageCode));
+        }
+        else {
+          dispatch(setLanguage("uk"));
+          dispatch(storeSettings(deviceId, { languageCode: "uk" }))
+        }
         dispatch(loadSettingsSuccess(deviceId, resJson));
       })
       .catch(error => dispatch(loadSettingsFailure(error)));
@@ -67,6 +75,7 @@ export const storeSettings = (deviceId, newSettings) => {
         return res;
       })
       .then(() => {
+        dispatch(setLanguage(newSettings.languageCode));
         dispatch(storeSettingsSuccess(newSettings));
       })
       .catch(error => dispatch(storeSettingsFailure(error)));
