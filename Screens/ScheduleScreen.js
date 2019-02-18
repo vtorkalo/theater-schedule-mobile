@@ -39,7 +39,7 @@ class ScheduleScreen extends LocalizeComponent  {
             (prevProps.languageCode !== this.props.languageCode)) {
             let currentDate = new Date();
             this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.deviceId, this.props.languageCode);
-            this.props.navigation.setParams({ scheduleScreenTitle: this.t("Hello world!") });
+            this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
     }
 
