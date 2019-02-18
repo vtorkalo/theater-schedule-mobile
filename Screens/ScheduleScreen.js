@@ -5,10 +5,10 @@ import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { BallIndicator } from 'react-native-indicators';
-
 import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
 import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
 import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
+import LocalizeComponent from "../Localization/LocalizedComponent";
 
 const getDateAfterWeek = () => {
     let currentDate = new Date();
@@ -20,11 +20,13 @@ const getDateAfterWeek = () => {
     return dateAfterWeek;
 }
 
-class ScheduleScreen extends Component {
-    static navigationOptions = {
-        drawerIcon: <MaterialCommunityIcons name='calendar-clock' size={25} />
-    }
-
+class ScheduleScreen extends LocalizeComponent  {
+    static navigationOptions = ({ navigation }) => {
+        return {
+          drawerIcon: (<MaterialCommunityIcons name="calendar-clock" size={25} />),
+          title: navigation.getParam("title", "default")
+        };
+      };
     componentDidMount() {
         if (this.props.deviceId && this.props.languageCode) {
             let currentDate = new Date();
@@ -37,6 +39,7 @@ class ScheduleScreen extends Component {
             (prevProps.languageCode !== this.props.languageCode)) {
             let currentDate = new Date();
             this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.deviceId, this.props.languageCode);
+            this.props.navigation.setParams({ title: this.t("Hello world!") });
         }
     }
 
