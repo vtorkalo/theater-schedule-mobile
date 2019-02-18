@@ -9,6 +9,7 @@ import SliderScreen from "../Screens/SliderScreen";
 import WatchListScreen from '../Screens/WatchListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
 import SplashScreen from "../Screens/SplashScreen";
+import LanguageScreen from "../Screens/LanguageScreen";
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -17,12 +18,11 @@ const DrawerStack = createDrawerNavigator(
     Repertoire: { screen: SliderScreen },
     WatchList: { screen: WatchListScreen },
     Message: { screen: MessageScreen },
-    Splash: { screen: SplashScreen },
   },
   {
     drawerPosition: "left",
     contentComponent: CustomDrawerContent,
-    initialRouteName: "Splash"
+    initialRouteName: "Schedule"
   }
 );
 
@@ -50,10 +50,12 @@ export const AppNavigator = createStackNavigator(
   {
     drawerStack: { screen: DrawerNavigation },
     performanceStack: { screen: PerformanceStack },
+    Splash: { screen: SplashScreen },
+    ChooseLanguage: { screen: LanguageScreen },
   },
   {
     headerMode: "none",
-    initialRouteName: "drawerStack"
+    initialRouteName: "Splash"
   }
 );
 export const middleware = createReactNavigationReduxMiddleware(
