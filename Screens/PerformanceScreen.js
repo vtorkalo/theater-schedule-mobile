@@ -7,14 +7,47 @@ import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
+import ImageLayout from "react-native-image-layout";
 
 class PerformanceScreen extends LocalizeComponent {
 
     componentWillMount() {
-        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        //        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        this.props.loadPerformance(1, "en");
     };
+    state = {
+        images: [
+            {
+                URL: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg",
+                index: 1,
+                title: "sometext",
+                description: "sometext asdasdasdas",
+            },
+            {
+                URL: "https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg",
+                index: 2,
+                title: "sometext",
+                description: "sometext asdasdasdas",
+            },
+            {
+                URL: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg",
+                index: 3,
+                title: "sometext",
+                description: "sometext asdasdasdas",
+            },
+            {
+                URL: "https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg",
+                index: 4,
+                title: "sometext",
+                description: "sometext asdasdasdas",
+            },
+        ]
+    }
+
 
     render() {
+
+
         if (this.props.isLoading) {
             return (
                 <Container style={styles.container}>
@@ -26,6 +59,7 @@ class PerformanceScreen extends LocalizeComponent {
             );
         } else {
             let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+
             return (
 
                 <Container>
@@ -54,6 +88,21 @@ class PerformanceScreen extends LocalizeComponent {
                                     <View style={{ marginBottom: 10 }} />
 
                                 </View>
+                            </View>
+                            {/* <ImageBrowser images={imageURLs} /> */}
+                            <View style={{backgroundColor:"#BFD0D6"}}>
+                                <ImageLayout
+                                    imageContainerStyle={{ height: 100 }}
+                                    columns={2}
+                                    images={[
+                                        { uri: "https://luehangs.site/pic-chat-app-images/animals-avian-beach-760984.jpg" },
+                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg", },
+                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg", },
+                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg", },
+                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg", },
+                                        // { uri: "https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg", },
+                                    ]}
+                                />
                             </View>
                         </ScrollView>
                     </Content>
