@@ -7,26 +7,13 @@ import { changeScreen, } from '../Actions/AppActions/AppActionCreators';
 class SplashScreen extends Component {
     componentDidUpdate() {
         if (this.props.isAppReady) {
-            // if (this.props.isLoggedIn) {
-            if (true) {
+            if (this.props.isLoggedIn) {
                 this.props.changeScreen("drawerStack")
-                //this.navigateTo("drawerStack");
             }
             else {
                 this.props.changeScreen("ChooseLanguage");
             }
         }
-    }
-
-    navigateTo(screenName) {
-        let key = null;
-        console.log(key, screenName);
-        const resetAction = StackActions.reset({
-            index: 0,
-            key: key,
-            actions: [NavigationActions.navigate({ screenName })]
-        });
-        this.props.navigation.dispatch(resetAction);
     }
 
     render() {

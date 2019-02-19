@@ -1,4 +1,7 @@
-import { SET_APP_READY } from 'TheaterSchedule/Actions/AppActions/AppActionTypes';
+import {
+    SET_APP_READY,
+    SET_LOGGED_IN,
+} from 'TheaterSchedule/Actions/AppActions/AppActionTypes';
 
 const initialState = {
     isAppReady: false,
@@ -13,6 +16,14 @@ export default function defaultReducer(state = initialState, action) {
                 isAppReady: true,
             }
         }
+
+        case SET_LOGGED_IN: {
+            return {
+                ...state,
+                isLoggedIn: action.payload.isLoggedIn,
+            }
+        }
+
         default:
             return state;
     }

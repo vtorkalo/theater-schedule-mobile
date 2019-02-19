@@ -36,11 +36,10 @@ let deviceId =
   Expo.Constants.appOwnership == "expo"
     ? Expo.Constants.deviceId
     : DeviceInfo.getUniqueID();
-
+    
 export default class App extends Component {
   componentDidMount() {
     store.dispatch(loadSettings(deviceId));
-    setTimeout(() => { store.dispatch(setAppReady()) }, 2000);
   }
 
   render() {

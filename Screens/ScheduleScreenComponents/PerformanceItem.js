@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
-        borderRadius: 50,
+        borderRadius: 30,
     },
     infoContainer: {
         flex: 2,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         height: 25,
     },
     additionalInfo: {
-        fontSize: 17,
+        fontSize: 15,
         color: '#7154b8',
         margin: 2,
         justifyContent: 'space-between',
