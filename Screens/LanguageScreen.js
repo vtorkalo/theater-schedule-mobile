@@ -4,8 +4,8 @@ import { storeSettings } from '../Actions/settingsActions';
 import { connect } from 'react-redux';
 import { setLanguage } from 'redux-i18n';
 
-class InitialScreen extends Component {
-    SetLang = (code) => {
+class LanguageScreen extends Component {
+    setLang = (code) => {
         this.props.storeSettings(this.props.deviceId, { languageCode: code });
         this.props.setLanguage(code);
         this.props.navigation.navigate("drawerStack");
@@ -21,13 +21,13 @@ class InitialScreen extends Component {
                     />
                 </View>
                 <View style={styles.buttonBox}>
-                    <TouchableOpacity onPress={() => this.SetLang("en")} style={styles.myButton}>
+                    <TouchableOpacity onPress={() => this.setLang("en")} style={styles.myButton}>
                         <Text style={styles.textContainer}>English</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.SetLang("uk")} style={styles.myButton}>
+                    <TouchableOpacity onPress={() => this.setLang("uk")} style={styles.myButton}>
                         <Text style={styles.textContainer}>Українська</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.SetLang("ru")} style={styles.myButton}>
+                    <TouchableOpacity onPress={() => this.setLang("ru")} style={styles.myButton}>
                         <Text style={styles.textContainer}>Русский</Text>
                     </TouchableOpacity>
                 </View>
@@ -84,4 +84,4 @@ const mapDispatchToProps = {
     setLanguage,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InitialScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageScreen);
