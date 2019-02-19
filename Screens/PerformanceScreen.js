@@ -9,46 +9,43 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import ImageLayout from "react-native-image-layout";
 
+var  employeeByRoles = {};
+
 class PerformanceScreen extends LocalizeComponent {
 
-    componentWillMount() {
+    componentDidMount() {
         //        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
-        this.props.loadPerformance(1, "en");
+        this.props.loadPerformance(1, "uk");
     };
-    state = {
-        images: [
-            {
-                URL: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg",
-                index: 1,
-                title: "sometext",
-                description: "sometext asdasdasdas",
-            },
-            {
-                URL: "https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg",
-                index: 2,
-                title: "sometext",
-                description: "sometext asdasdasdas",
-            },
-            {
-                URL: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg",
-                index: 3,
-                title: "sometext",
-                description: "sometext asdasdasdas",
-            },
-            {
-                URL: "https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg",
-                index: 4,
-                title: "sometext",
-                description: "sometext asdasdasdas",
-            },
-        ]
-    }
 
+    seperateRoles(...roles) {
+
+        roles.forEach(element => {
+            this.getPersonToRole(element);
+           
+        });
+
+    };
+
+    getPersonToRole(role) {
+        checkingForKoma = 0;
+        employeeByRoles[role] = this.props.performance.teamMember.filter(element => {
+
+            return element.role == role;
+         
+        }).map(({firstName, lastName}) => {
+            // checkingForKoma++;
+            // if (checkingForKoma == 1)
+            // return firstName + ' ' + lastName+ ' ';
+            // else
+        })
+        
+    };
 
     render() {
 
 
-        if (this.props.isLoading) {
+        if ((this.props.isLoading) ||  (!this.props.performance.teamMember)) {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
@@ -60,6 +57,8 @@ class PerformanceScreen extends LocalizeComponent {
         } else {
             let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
 
+            this.seperateRoles(this.t("PRODUCER"), this.t("AUTHOR"), this.t("PAINTER"));
+            console.log(employeeByRoles);
             return (
 
                 <Container>
@@ -77,8 +76,12 @@ class PerformanceScreen extends LocalizeComponent {
 
                                 <View style={styles.textContainer} >
                                     <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
-                                    <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("AUTHOR")}:</Text>
+                                    <Text style={styles.testStyle}>{employeeByRoles[this.t("AUTHOR")]} </Text>
+                                    <Text style={styles.textSubtitle}>{this.t("PRODUCER")}:</Text>
+                                    <Text style={styles.testStyle}>{employeeByRoles[this.t("PRODUCER")]} </Text>
+                                    <Text style={styles.textSubtitle}>{this.t("PAINTER")}:</Text>
+                                    <Text style={styles.testStyle}>{employeeByRoles[this.t("PAINTER")]} </Text>
                                     <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                     <Text style={styles.testStyle}>{this.props.performance.description}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("price")}</Text>
@@ -90,17 +93,16 @@ class PerformanceScreen extends LocalizeComponent {
                                 </View>
                             </View>
                             {/* <ImageBrowser images={imageURLs} /> */}
-                            <View style={{backgroundColor:"#BFD0D6"}}>
+                            <View style={{ backgroundColor: "#BFD0D6" }}>
                                 <ImageLayout
                                     imageContainerStyle={{ height: 100 }}
                                     columns={2}
                                     images={[
-                                        { uri: "https://luehangs.site/pic-chat-app-images/animals-avian-beach-760984.jpg" },
-                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg", },
-                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg", },
-                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg", },
-                                        { uri: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg", },
-                                        // { uri: "https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg", },
+                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
+                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3196-300x170.jpg", },
+                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3184-300x169.jpg", },
+                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3178-300x169.jpg", },
+                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3165-300x169.jpg", },
                                     ]}
                                 />
                             </View>

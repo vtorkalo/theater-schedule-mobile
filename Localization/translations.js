@@ -29,8 +29,9 @@ export const translations = {
     "description": "ОПИС",
     "price": "ЦІНА",
     "hashtags": "ХЕШТЕГИ",
-    "Andrii Mudrak": "Андрій Мудрак",
-    "Taras Tymchuk": "Тарас Тимчук",
+    "PRODUCER": "РЕЖИСЕР",
+    "PAINTER":"ХУДОЖНИК",
+    "AUTHOR":"АВТОР",
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -62,8 +63,9 @@ export const translations = {
     "description": "DESCRIPTION",
     "price": "PRICE",
     "hashtags": "HASHTAGS",
-    "Andrii Mudrak": "Andrii Mudrak",
-    "Taras Tymchuk": "Taras Tymchuk",
+    "PRODUCER":"PRODUCER",
+    "PAINTER":"PAINTER",
+    "AUTHOR":"AUTHOR",
   },
   'ru': {
     'Hello world!': 'Привет мир!',
