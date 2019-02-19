@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { changeScreen, } from '../Actions/AppActions/AppActionCreators';
 
 class SplashScreen extends Component {
     componentDidUpdate() {
         if (this.props.isAppReady) {
-            if (this.props.isLoggedIn) {
-                this.navigateTo("drawerStack");
+            // if (this.props.isLoggedIn) {
+            if (true) {
+                this.props.changeScreen("drawerStack")
+                //this.navigateTo("drawerStack");
             }
             else {
-                this.navigateTo("ChooseLanguage");
+                this.props.changeScreen("ChooseLanguage");
             }
         }
     }
@@ -21,7 +24,7 @@ class SplashScreen extends Component {
         const resetAction = StackActions.reset({
             index: 0,
             key: key,
-            actions: [NavigationActions.navigate({screenName})]
+            actions: [NavigationActions.navigate({ screenName })]
         });
         this.props.navigation.dispatch(resetAction);
     }
@@ -58,4 +61,8 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(SplashScreen);
+const mapDispatchToProps = {
+    changeScreen,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);
