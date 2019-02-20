@@ -9,6 +9,7 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import ImageLayout from "react-native-image-layout";
 
+var employeeByRoles = {};
 
 class PerformanceScreen extends LocalizeComponent {
 
@@ -17,40 +18,29 @@ class PerformanceScreen extends LocalizeComponent {
     };
 
     seperateRoles(...roles) {
-
         roles.forEach(element => {
             this.getPersonToRole(element);
-
         });
-
     };
 
     getPersonToRole(role) {
         var filterByRole = {};
-
+        
         filterByRole[role] = this.props.performance.filter(element => {
-
             return element.role == role;
-
         });
 
-
         for (element = 0; element < filterByRole[role].length; element++) {
-
             if (element == 0) {
                 employeeByRoles[role] = (filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName);
             }
-            else
+            else {
                 employeeByRoles[role] += ' , ' + (filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName);
+            }
         }
-        console.log(employeeByRoles[role]);
-
-        var employeeByRoles = {};
     };
 
     render() {
-
-
         if ((this.props.isLoading) || (!this.props.performance.teamMember)) {
             return (
                 <Container style={styles.container}>
