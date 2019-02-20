@@ -17,6 +17,7 @@ import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
 import { fetchPosters } from './Actions/sliderActions';
 import performanceReducer from './Reducers/PerformanceReducer';
+import AppNavigator from './AppNavigatorComponent';
 
 const appReducer = combineReducers({
   i18nState,
@@ -46,7 +47,8 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <I18n translations={translations} initialLang="uk" fallbackLang="en">
-          <Navigator />
+          {/* <Navigator /> */}
+          <AppNavigator/>
         </I18n>
       </Provider>
     );

@@ -11,6 +11,7 @@ class SliderEntry extends Component {
         return parallax ? (
             <ParallaxImage
                 source={{ uri: `data:image/png;base64,${mainImage}` }}
+                style={styles.image}
                 containerStyle={styles.imageContainer}
                 {...parallaxProps}
             />

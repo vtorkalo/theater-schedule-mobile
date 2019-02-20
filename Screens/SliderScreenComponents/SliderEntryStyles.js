@@ -23,7 +23,7 @@ export default StyleSheet.create({
         width: itemWidth,
         height: slideHeight,
         paddingHorizontal: itemHorizontalMargin,
-        paddingBottom: 18
+        paddingBottom: 18,
     },
     shadow: {
         position: 'absolute',
@@ -39,19 +39,15 @@ export default StyleSheet.create({
     },
     imageContainer: {
         flex: 1,
-        marginBottom: IS_IOS ? 0 : -1,
         backgroundColor: 'white',
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius,
-        backgroundColor: "violet",
-    },
-    imageContainerEven: {
-        backgroundColor: colors.black
+        paddingHorizontal: 10,
+        paddingVertical: 10,
     },
     image: {
         ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
-        height: null,
+        resizeMode: 'contain',
         borderRadius: IS_IOS ? entryBorderRadius : 0,
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius,
@@ -64,9 +60,6 @@ export default StyleSheet.create({
         height: entryBorderRadius,
         backgroundColor: 'white'
     },
-    radiusMaskEven: {
-        backgroundColor: colors.black
-    },
     textContainer: {
         justifyContent: 'center',
         paddingTop: 20 - entryBorderRadius,
@@ -76,25 +69,10 @@ export default StyleSheet.create({
         borderBottomLeftRadius: entryBorderRadius,
         borderBottomRightRadius: entryBorderRadius
     },
-    textContainerEven: {
-        backgroundColor: colors.black
-    },
     title: {
         color: colors.black,
         fontSize: 13,
         fontWeight: 'bold',
         letterSpacing: 0.5
     },
-    titleEven: {
-        color: 'white'
-    },
-    subtitle: {
-        marginTop: 6,
-        color: colors.gray,
-        fontSize: 12,
-        fontStyle: 'italic'
-    },
-    subtitleEven: {
-        color: 'rgba(255, 255, 255, 0.7)'
-    }
 });

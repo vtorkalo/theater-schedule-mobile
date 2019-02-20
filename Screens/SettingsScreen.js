@@ -8,8 +8,11 @@ import Header  from './SettingsScreenComponents/Header';
 import ChooseLanguage from './SettingsScreenComponents/ChooseLanguage';
 
 class SettingsScreen extends Component {
-    static navigationOptions = {
-        drawerIcon: <MaterialCommunityIcons name='settings-box' size={25} />
+    static navigationOptions = ({screenProps})=> {
+        return {
+            drawerIcon: (<MaterialCommunityIcons name='settings-box' size={25} />),
+            title: screenProps.SettingsScreenTitle,
+        }
     }  
 
     render() {
