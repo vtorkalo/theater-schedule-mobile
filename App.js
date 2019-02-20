@@ -16,6 +16,7 @@ import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
 import performanceReducer from './Reducers/PerformanceReducer';
+import AppNavigator from './AppNavigatorComponent';
 import { setAppReady } from './Actions/AppActions/AppActionCreators';
 
 const appReducer = combineReducers({
@@ -46,7 +47,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <I18n translations={translations} initialLang="uk" fallbackLang="en">
-          <Navigator />
+          <AppNavigator/>
         </I18n>
       </Provider>
     );

@@ -14,7 +14,7 @@ export const translations = {
     'Details': 'Деталі',
     'From': 'Від',
     'To': 'До',
-    'Now the performances premieres are:': 'Зараз у прокаті:',
+    'Now the performances premieres are:': 'Актуальні вистави:',
     "messageScreenHeader": "Ми відкриті до ваших пропозицій",
     "messageSubject": "Тема",
     "messageText": "Ваше повідомлення",
@@ -32,6 +32,10 @@ export const translations = {
     "Andrii Mudrak": "Андрій Мудрак",
     "Taras Tymchuk": "Тарас Тимчук",
     'ScheduleScreenTitle': 'Розклад',
+    'SliderScreenTitle' : 'Репертуар',
+    'SettingsScreenTitle': "Налаштування",
+    'MessageScreenTitle': 'Відправити повідомлення',
+    'WatchlistScreenTitle': 'Хочу подитивись',
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -66,6 +70,10 @@ export const translations = {
     "Andrii Mudrak": "Andrii Mudrak",
     "Taras Tymchuk": "Taras Tymchuk",
     'ScheduleScreenTitle': 'Schedule',
+    'SliderScreenTitle': 'Repertoire',
+    'SettingsScreenTitle': 'Settings',
+    'MessageScreenTitle': 'Send message',
+    'WatchlistScreenTitle': 'WishList'
   },
   'ru': {
     'Hello world!': 'Привет мир!',

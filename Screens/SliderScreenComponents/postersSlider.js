@@ -23,6 +23,7 @@ export default PostersSlider = (props) => {
                 contentContainerCustomStyle={styles.sliderContentContainer}
                 loop={false}
                 onSnapToItem={props.setActiveSlide}
+                removeClippedSubviews={false}
             />
             <Pagination
                 dotsLength={props.posters.length}
