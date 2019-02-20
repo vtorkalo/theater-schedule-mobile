@@ -47,7 +47,6 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <I18n translations={translations} initialLang="uk" fallbackLang="en">
-          {/* <Navigator /> */}
           <AppNavigator/>
         </I18n>
       </Provider>
