@@ -9,43 +9,49 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import ImageLayout from "react-native-image-layout";
 
-var  employeeByRoles = {};
 
 class PerformanceScreen extends LocalizeComponent {
 
     componentDidMount() {
-        //        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
-        this.props.loadPerformance(1, "uk");
+        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
     };
 
     seperateRoles(...roles) {
 
         roles.forEach(element => {
             this.getPersonToRole(element);
-           
+
         });
 
     };
 
     getPersonToRole(role) {
-        checkingForKoma = 0;
-        employeeByRoles[role] = this.props.performance.teamMember.filter(element => {
+        var filterByRole = {};
+
+        filterByRole[role] = this.props.performance.filter(element => {
 
             return element.role == role;
-         
-        }).map(({firstName, lastName}) => {
-            // checkingForKoma++;
-            // if (checkingForKoma == 1)
-            // return firstName + ' ' + lastName+ ' ';
-            // else
-        })
-        
+
+        });
+
+
+        for (element = 0; element < filterByRole[role].length; element++) {
+
+            if (element == 0) {
+                employeeByRoles[role] = (filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName);
+            }
+            else
+                employeeByRoles[role] += ' , ' + (filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName);
+        }
+        console.log(employeeByRoles[role]);
+
+        var employeeByRoles = {};
     };
 
     render() {
 
 
-        if ((this.props.isLoading) ||  (!this.props.performance.teamMember)) {
+        if ((this.props.isLoading) || (!this.props.performance.teamMember)) {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
@@ -92,7 +98,6 @@ class PerformanceScreen extends LocalizeComponent {
 
                                 </View>
                             </View>
-                            {/* <ImageBrowser images={imageURLs} /> */}
                             <View style={{ backgroundColor: "#BFD0D6" }}>
                                 <ImageLayout
                                     imageContainerStyle={{ height: 100 }}
