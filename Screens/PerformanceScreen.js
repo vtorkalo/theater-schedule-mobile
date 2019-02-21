@@ -8,6 +8,7 @@ import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import ImageLayout from "react-native-image-layout";
+import _ from 'lodash';
 
 
 
@@ -20,14 +21,34 @@ class PerformanceScreen extends LocalizeComponent {
     }
 
     componentDidUpdate(prevProps) {
+
         if (prevProps.performance !== this.props.performance) {
+          
+        //     var roles = _.groupBy(this.props.performance.teamMember, teamMember => teamMember.role);
+        //     console.log(roles);
+        //     console.log( this.props.performance.teamMember);
+        //     //_.forEach(grouped, (value) =)
+        //     this.props.performance.teamMember.forEach( role => {
+        //             // role.forEach(person => {
+        //             //     employeeByRoles[role] += person.firstName + ", " + person.lastName + ", ";
+        //             // });
+                  
+        //             // console.log(employeeByRoles[role]);
+        //             // _.trimEnd(employeeByRoles[role]);
+        //             // console.log(employeeByRoles[role]);
+                
+        //         });
+            
+        //    // console.log(grouped);
             this.seperateRoles(this.t("PRODUCER"), this.t("AUTHOR"), this.t("PAINTER"));
         }
     }
 
     componentDidMount() {
-        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        //this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        this.props.loadPerformance(1, 'uk');
     };
+
 
     seperateRoles(...roles) {
         roles.forEach(element => {
@@ -40,20 +61,20 @@ class PerformanceScreen extends LocalizeComponent {
         filterByRole[role] = this.props.performance.teamMember.filter(element => {
             return element.role == role;
         });
-
-        var employeeByRoles = this.state.employeeByRoles;
-
+       // console.log(filterByRole[role])
+        var employeeByRoles =  this.state.employeeByRoles;
+        employeeByRoles[role]= "";
         for (element = 0; element < filterByRole[role].length; element++) {
-            if (element == 0) {
-                employeeByRoles[role] = filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName;
-            }
-            else {
-                employeeByRoles[role] += ', ' + (filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName);
-            }
+           
+                employeeByRoles[role] += filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName;
+                
         }
-
+        _.trimEnd(employeeByRoles[role], '-');
+        console.log( employeeByRoles[role]);
         if (!employeeByRoles[role]) employeeByRoles[role] = this.t("not found");
-        this.setState({ employeeByRoles: employeeByRoles });
+      
+            this.setState({ employeeByRoles: employeeByRoles });
+  
     };
 
     render() {
@@ -171,7 +192,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         languageCode: state.settings.settings.languageCode,
-        performanceId: state.scheduleReducer.performanceId,
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
     }
