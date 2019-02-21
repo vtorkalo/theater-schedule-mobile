@@ -27,9 +27,6 @@ class LanguageScreen extends Component {
                     <TouchableOpacity onPress={() => this.setLang("uk")} style={styles.myButton}>
                         <Text style={styles.textContainer}>Українська</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.setLang("ru")} style={styles.myButton}>
-                        <Text style={styles.textContainer}>Русский</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         );

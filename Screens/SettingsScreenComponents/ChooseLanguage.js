@@ -62,7 +62,6 @@ class ChooseLanguage extends LocalizeComponent {
                         }>
                         <Picker.Item label="English" value="en" />
                         <Picker.Item label="Ukrainian" value="uk" />
-                        <Picker.Item label="Russian" value="ru" />
                     </Picker>
                 </View>
                 <TouchableOpacity style={styles.button} onPress={this.onSaveLanguage}>
