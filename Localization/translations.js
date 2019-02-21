@@ -31,6 +31,8 @@ export const translations = {
     "hashtags": "ХЕШТЕГИ",
     "Andrii Mudrak": "Андрій Мудрак",
     "Taras Tymchuk": "Тарас Тимчук",
+    "Add to favourites":"Додати до улюблених",
+    "Remove from favourites":"Прибрати з улюблених", 
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -64,6 +66,8 @@ export const translations = {
     "hashtags": "HASHTAGS",
     "Andrii Mudrak": "Andrii Mudrak",
     "Taras Tymchuk": "Taras Tymchuk",
+    "Add to favourites":"Add to favourites",
+    "Remove from favourites":"Remove from favourites",
   },
   'ru': {
     'Hello world!': 'Привет мир!',

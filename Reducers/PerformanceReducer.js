@@ -4,6 +4,10 @@ import {
     LOAD_PERFORMANCE_FAILURE,
 } from "../Actions/PerformanceTypes";
 
+import {
+    CNANGE_STATUS_PERFORMANCE
+} from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
+
 const initialState = {
     performance: [],
     loading: false,
@@ -13,6 +17,11 @@ const initialState = {
 
 export default function performanceReducer(state = initialState, action) {
     switch (action.type) {
+        case CNANGE_STATUS_PERFORMANCE:
+            {
+                state.performance.isChecked = !state.performance.isChecked;
+            };
+
         case LOAD_PERFORMANCE_BEGIN:
             return {
                 ...state,

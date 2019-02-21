@@ -10,9 +10,9 @@ class WatchList extends Component {
             <FlatList
                 style={styles.watchList}
                 data={this.props.chosenperformances}
-                keyExtractor={item => item.scheduleId.toString()}
+                keyExtractor={item => item.performanceId.toString()}
                 renderItem={({ item }) => (
-                    <WatchListItem chosenperformance={item} navigation={this.props.navigation} index={item.index} isChecked={item.isChecked}/>
+                    <WatchListItem chosenperformance={item} navigation={this.props.navigation} isChecked={item.isChecked}/>
                 )}
             />
         );

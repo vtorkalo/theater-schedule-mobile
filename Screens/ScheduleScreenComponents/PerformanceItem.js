@@ -8,9 +8,8 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import CheckBox from 'react-native-check-box';
 import { addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
-import { changeStatusFromSchedule, deleteFromSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import { deletePerformance, changeStatusPerformance } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import moment from 'moment';
 import 'moment/locale/uk';
 
@@ -21,80 +20,73 @@ class PerformanceItem extends LocalizedComponent {
         super(props);
     }
 
-    togglewatchlist = (item, index) => {
-        if (this.props.isChecked == undefined || this.props.isChecked == false) {
-            this.props.addToWatchlist(item);   
-            this.props.changeStatusFromSchedule(index);
-        } else {  
-            this.props.deleteFromSchedule(item.scheduleId);
-            this.props.changeStatusFromSchedule(index);
+    togglewatchlist = (item) => {
+        if (item.isChecked == undefined || item.isChecked == false) {
+            this.props.addToWatchlist(item);
+            this.props.changeStatusPerformance(item.scheduleId);
+        } else {
+            this.props.deletePerformance(item.scheduleId);
+            this.props.changeStatusPerformance(item.scheduleId);
         }
     }
 
-        pressedDetailsHandler = () => {
-            this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId});
-        }
-    
+    pressedDetailsHandler = () => {
+        this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId });
+    }
 
 
-convertToReadableTime = date => {
-    return moment(date).format("HH:mm");
-}
+    convertToReadableTime = date => {
+        return moment(date).format("HH:mm");
+    }
 
-convertToReadableDate = date => {
-    return moment(date).format("dddd, Do MMMM");
-}
+    convertToReadableDate = date => {
+        return moment(date).format("dddd, Do MMMM");
+    }
 
-render() {
-    let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+    render() {
+        let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
 
-    return (
-        <View style={styles.performanceContainer}>
-            <View style={styles.imageContainer}>
-                <Image
-                    style={styles.image}
-                    resizeMode='contain'
-                    source={{ uri: base64Image }}
-                />
-            </View>
-            <View style={styles.infoContainer}>
-                <Text style={styles.title}>{this.props.performance.title}</Text>
-                <View style={styles.detailsContainer}>
-                    <Text style={styles.additionalInfo}>
-                        {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
-                    </Text>
-                </View>
-                <View style={styles.detailsContainer}>
-                    <Text style={styles.additionalInfo}>
-                        {this.t('Beginning')}:
-                        </Text>
-                    <TouchableOpacity>
-                        <Text
-                            style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
-                        >
-                            {this.convertToReadableTime(this.props.performance.beginning)}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.starContainer}>
-                    <TouchableOpacity onPress={this.pressedDetailsHandler}>
-                        <View style={styles.detailsButton}>
-                            <Text style={styles.buttonText}>
-                                {this.t('Details')}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                    <CheckBox
-                        onClick={() => this.togglewatchlist(this.props.performance, this.props.index)}
-                        isChecked={this.props.isChecked}
-                        checkedImage={<Image source={require('./Images/checked-star.png')} style={styles.imagestyle} />}
-                        unCheckedImage={<Image source={require('./Images/unchecked-star.png')} style={styles.imagestyle} />}
+        return (
+            <View style={styles.performanceContainer}>
+                <View style={styles.imageContainer}>
+                    <Image
+                        style={styles.image}
+                        resizeMode='contain'
+                        source={{ uri: base64Image }}
                     />
                 </View>
-            </View>
-        </View >
-    );
-}
+                <View style={styles.infoContainer}>
+                    <Text style={styles.title}>{this.props.performance.title}</Text>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.additionalInfo}>
+                            {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
+                        </Text>
+                    </View>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.additionalInfo}>
+                            {this.t('Beginning')}:
+                        </Text>
+                        <TouchableOpacity>
+                            <Text
+                                style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
+                            >
+                                {this.convertToReadableTime(this.props.performance.beginning)}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.starContainer}>
+                        <TouchableOpacity onPress={this.pressedDetailsHandler}>
+                            <View style={styles.detailsButton}>
+                                <Text style={styles.buttonText}>
+                                    {this.t('Details')}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View >
+        );
+    }
 }
 
 const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
@@ -174,14 +166,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        
+
     }
 }
 
 const mapDispatchToProps = {
     addToWatchlist,
-    changeStatusFromSchedule,
-    deleteFromSchedule
+    deletePerformance,
+    changeStatusPerformance
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceItem);

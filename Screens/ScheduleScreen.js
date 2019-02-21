@@ -24,8 +24,7 @@ class ScheduleScreen extends Component {
                 currentDate.getFullYear(),
                 currentDate.getMonth(),
                 currentDate.getDate() + DAYS_IN_WEEK);
-
-            this.props.loadSchedule(currentDate, dateAfterWeek, this.props.deviceId, this.props.languageCode);
+            this.props.loadSchedule(currentDate, dateAfterWeek, this.props.languageCode);
         }
     }
 
@@ -85,7 +84,6 @@ const mapStateToProps = state => {
     return {
         isScheduleLoading: state.scheduleReducer.loading,
         isLanguageLoading: state.settings.loading,
-        deviceId: state.settings.deviceId,
         languageCode: state.settings.settings.languageCode,
     }
 }

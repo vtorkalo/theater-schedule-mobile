@@ -1,18 +1,11 @@
 import {
     ADD_TO_WATCHLIST,
-    DELETE_FROM_WATCHLIST,
 } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionTypes';
 
-export const addToWatchlist = (item) => ({
+export const addToWatchlist = (performanceId,item) => ({
     type: ADD_TO_WATCHLIST,
     payload: {
+        performanceId,
         item
-    },
-});
-
-export const deleteFromWatchlist = (index) => ({
-    type: DELETE_FROM_WATCHLIST,
-    payload: {
-        index,
     },
 });
