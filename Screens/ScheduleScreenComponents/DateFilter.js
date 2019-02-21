@@ -37,7 +37,6 @@ class DateFilter extends LocalizedComponent {
         this.setState({
             isFilterVisible: false,
         });
-        console.log("22");
         this.props.loadSchedule(startDate, endDate, this.props.languageCode);
     }
 

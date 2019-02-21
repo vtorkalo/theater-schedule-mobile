@@ -2,8 +2,20 @@ import {
     LOAD_PERFORMANCE_BEGIN,
     LOAD_PERFORMANCE_SUCCESS,
     LOAD_PERFORMANCE_FAILURE,
+    CNANGE_STATUS_PERFORMANCE,
+    SET_STATUS_PERFORMANCE,
 } from "./PerformanceTypes";
 import BASE_URL from 'TheaterSchedule/baseURL';
+
+export const changeStatusPerformance = (isChecked) => ({
+    type: CNANGE_STATUS_PERFORMANCE,
+    payload: {isChecked},
+});
+
+export const setStatusPerformance = (isChecked) => ({
+    type: SET_STATUS_PERFORMANCE,
+    payload: {isChecked},
+});
 
 export const loadPerformanceBegin = () => ({
     type: LOAD_PERFORMANCE_BEGIN,

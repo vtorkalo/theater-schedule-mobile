@@ -3,26 +3,10 @@ import {
     LOAD_SCHEDULE_BEGIN,
     LOAD_SCHEDULE_SUCCESS,
     LOAD_SCHEDULE_FAILURE,
-    CNANGE_STATUS_PERFORMANCE,
-    DELETE_PERFORMANCE
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 export const loadScheduleBegin = () => ({
     type: LOAD_SCHEDULE_BEGIN,
-});
-
-export const deletePerformance = (index) => ({
-    type: DELETE_PERFORMANCE,
-    payload: {
-        index
-    },
-});
-
-export const changeStatusPerformance = (index) => ({
-    type: CNANGE_STATUS_PERFORMANCE,
-    payload: {
-        index
-    },
 });
 
 export const loadScheduleSuccess = (schedule, startDate, endDate) => ({
@@ -52,7 +36,6 @@ export const loadSchedule = (startDate, endDate, languageCode) => {
             0, 0, 0
         );
         let url = `${BASE_URL}schedule/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
-             console.log(url);
         fetch(url)
             .then(response => {
                 return response.json();

@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
 
-import WatchListItem from 'TheaterSchedule/Screens/WatchListComponents/WatchListItem';
+import WishListItem from 'TheaterSchedule/Screens/WishListComponents/WishListItem';
 
-class WatchList extends Component {
+class WishList extends Component {
     render() {
         return (
             <FlatList
-                style={styles.watchList}
+                style={styles.WishList}
                 data={this.props.chosenperformances}
                 keyExtractor={item => item.performanceId.toString()}
                 renderItem={({ item }) => (
-                    <WatchListItem chosenperformance={item} navigation={this.props.navigation} isChecked={item.isChecked}/>
+                    <WishListItem chosenperformance={item} navigation={this.props.navigation} isChecked={item.isChecked}/>
                 )}
             />
         );
@@ -20,15 +20,15 @@ class WatchList extends Component {
 }
 
 const styles = StyleSheet.create({
-    watchList: {
+    WishList: {
         width: '100%',
     },
 });
 
 const mapStateToProps = state => {
     return {
-        chosenperformances: state.watchListReducer.chosenperformances.map((chosenperformance, index) => { return { ...chosenperformance, index: index.toString() } }),
+        chosenperformances: state.WishListReducer.chosenperformances.map((chosenperformance, index) => { return { ...chosenperformance, index: index.toString() } }),
     }
 }
 
-export default connect(mapStateToProps)(WatchList);
+export default connect(mapStateToProps)(WishList);

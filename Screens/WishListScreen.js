@@ -5,13 +5,13 @@ import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { BallIndicator } from 'react-native-indicators';
-import WatchList from 'TheaterSchedule/Screens/WatchListComponents/WatchList'
+import WishList from 'TheaterSchedule/Screens/WishListComponents/WishList'
 
-class WatchListScreen extends Component {
+class WishListScreen extends Component {
     static navigationOptions = ({ screenProps }) => {
         return {
             drawerIcon: (<MaterialCommunityIcons name='wunderlist' size={25} />),
-            title: screenProps.WatchlistScreenTitle,
+            title: screenProps.WishlistScreenTitle,
         }
     }
 
@@ -32,7 +32,7 @@ class WatchListScreen extends Component {
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            <WatchList navigation={this.props.navigation} />
+                            <WishList navigation={this.props.navigation} />
                         </View>
                     </Content>
                 </Container>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.watchListReducer.Loading,
+        isLoading: state.WishListReducer.Loading,
     }
 }
 
@@ -74,4 +74,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WatchListScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(WishListScreen);

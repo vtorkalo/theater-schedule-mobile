@@ -13,7 +13,7 @@ import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import moment from 'moment';
 import 'moment/locale/uk';
 
-class WatchListItem extends LocalizedComponent {
+class WishListItem extends LocalizedComponent {
     constructor(props) {
         super(props);
     }
@@ -30,7 +30,7 @@ class WatchListItem extends LocalizedComponent {
         return moment(date).format("dddd, Do MMMM");
     }
 
-    deletefromwatchlist = (item) => {
+    deletefromWishlist = (item) => {
         if (item.isChecked == true){
             this.props.changeStatusPerformance(item.performanceId);
             this.props.deletePerformance(item.performanceId);
@@ -59,7 +59,7 @@ class WatchListItem extends LocalizedComponent {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.deletefromwatchlist(this.props.chosenperformance)}>
+                        <TouchableOpacity onPress={this.deletefromWishlist(this.props.chosenperformance)}>
                             <View style={styles.detailsButton}>
                                 <Text style={styles.buttonText}>
                                     {this.t('Remove from favourites')}
@@ -160,4 +160,4 @@ const mapDispatchToProps = {
     deletePerformance
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WatchListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(WishListItem);

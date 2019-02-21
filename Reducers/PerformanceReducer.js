@@ -2,24 +2,43 @@ import {
     LOAD_PERFORMANCE_BEGIN,
     LOAD_PERFORMANCE_SUCCESS,
     LOAD_PERFORMANCE_FAILURE,
+    CNANGE_STATUS_PERFORMANCE,
+    SET_STATUS_PERFORMANCE,
 } from "../Actions/PerformanceTypes";
 
-import {
-    CNANGE_STATUS_PERFORMANCE
-} from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
-
 const initialState = {
-    performance: [],
+    performance: {},
     loading: false,
     error: null,
+    isChecked: null,
 };
 
 
 export default function performanceReducer(state = initialState, action) {
     switch (action.type) {
+
+        case SET_STATUS_PERFORMANCE: {
+            return {
+                ...state,
+                isChecked: state.performance.isChecked,
+            };
+        };
+
         case CNANGE_STATUS_PERFORMANCE:
             {
-                state.performance.isChecked = !state.performance.isChecked;
+                if (action.payload.isChecked) {
+                    return {
+                        ...state,
+                        isChecked: false,
+                    };
+                }
+                else {
+                    return {
+                        ...state,
+                        isChecked: true,
+                    };
+
+                }
             };
 
         case LOAD_PERFORMANCE_BEGIN:

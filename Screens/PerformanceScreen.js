@@ -4,35 +4,27 @@ import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { loadPerformance, loadPerformanceSuccess } from '../Actions/PerformanceCreator';
+import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
-import { addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
-import { deletePerformance, changeStatusPerformance } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { changeStatusPerformance, setStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 
-class PerformanceScreen extends LocalizeComponent {
+
+class PerformanceScreen extends LocalizeComponent { 
     constructor(props) {
         super(props);
 
-        this.state = { performanceId: this.props.navigation.getParam('performance', 'NO-ID'),
-                       buttonText: "" };
+        this.state = { performanceId: this.props.navigation.getParam('performance', 'NO-ID')};
     }
 
     componentDidMount() {
-        this.props.loadPerformance(this.props.deviceId, this.state.performanceId, this.props.languageCode);
+        this.props.loadPerformance(this.props.deviceId, this.state.performanceId, this.props.languageCode); 
     };
 
-    togglewatchlist = (performanceId, item) => {
-        if (item.isChecked == false) {
-            this.props.addToWatchlist(performanceId, item);
-            this.props.changeStatusPerformance(performanceId);
-            this.props.loadPerformanceSuccess(item);
-        } else {
-            this.props.deletePerformance(performanceId);
-            this.props.changeStatusPerformance(performanceId);
-            this.props.loadPerformanceSuccess(item);
-            console.log("AAAAAA");
-        }
+    toggleWishlist = (deviceId,performanceId) => {       
+            this.props.SaveOrDeletePerformance(deviceId, performanceId);
+            this.props.changeStatusPerformance(this.props.isChecked);
     }
 
     render() {
@@ -66,11 +58,11 @@ class PerformanceScreen extends LocalizeComponent {
                                 </View>
 
                                 <View style={styles.ButtonContainer} >
-                                    <TouchableOpacity onPress={() => this.togglewatchlist(this.state.performanceId, this.props.performance)}>
+                                    <TouchableOpacity onPress={() => this.toggleWishlist(this.props.deviceId,this.state.performanceId)}>
                                         <View style={styles.detailsButton}>
-                                            {this.props.performance.isChecked? 
-                                              <Text style={styles.buttonText}>{this.t("remove from favourites")}</Text>:
-                                              <Text style={styles.buttonText}>{this.t("add to favourites")}</Text>}                  
+                                            {this.props.isChecked? 
+                                              <Text style={styles.buttonText}>{this.t("Remove from favourites")}</Text>:
+                                              <Text style={styles.buttonText}>{this.t("Add to favourites")}</Text>}                  
                                         </View>
                                     </TouchableOpacity>
                                 </View>
@@ -162,15 +154,15 @@ const mapStateToProps = state => {
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
         deviceId: state.settings.deviceId,
+        isChecked: state.performanceReducer.isChecked,
     }
 }
 
 const mapDispatchToProps = {
     loadPerformance,
-    addToWatchlist,
-    deletePerformance,
+    SaveOrDeletePerformance,
     changeStatusPerformance,
-    loadPerformanceSuccess
+    setStatusPerformance
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceScreen);

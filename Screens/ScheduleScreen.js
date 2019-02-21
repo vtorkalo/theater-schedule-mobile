@@ -30,7 +30,7 @@ class ScheduleScreen extends LocalizeComponent  {
     componentDidMount() {
         if (this.props.deviceId && this.props.languageCode) {
             let currentDate = new Date();
-            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.deviceId, this.props.languageCode);
+            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
         }
     }
 
@@ -38,11 +38,7 @@ class ScheduleScreen extends LocalizeComponent  {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
             let currentDate = new Date();
-            let dateAfterWeek = new Date(
-                currentDate.getFullYear(),
-                currentDate.getMonth(),
-                currentDate.getDate() + DAYS_IN_WEEK);
-            this.props.loadSchedule(currentDate, dateAfterWeek, this.props.languageCode);
+            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
             this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
     }

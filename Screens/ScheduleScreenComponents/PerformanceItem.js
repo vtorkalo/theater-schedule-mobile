@@ -8,8 +8,6 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { addToWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
-import { deletePerformance, changeStatusPerformance } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import moment from 'moment';
 import 'moment/locale/uk';
 
@@ -18,16 +16,6 @@ import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 class PerformanceItem extends LocalizedComponent {
     constructor(props) {
         super(props);
-    }
-
-    togglewatchlist = (item) => {
-        if (item.isChecked == undefined || item.isChecked == false) {
-            this.props.addToWatchlist(item);
-            this.props.changeStatusPerformance(item.scheduleId);
-        } else {
-            this.props.deletePerformance(item.scheduleId);
-            this.props.changeStatusPerformance(item.scheduleId);
-        }
     }
 
     pressedDetailsHandler = () => {
@@ -164,16 +152,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state) => {
-    return {
-
-    }
-}
-
-const mapDispatchToProps = {
-    addToWatchlist,
-    deletePerformance,
-    changeStatusPerformance
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PerformanceItem);
+export default connect()(PerformanceItem);
