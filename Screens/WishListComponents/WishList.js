@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
+import { loadWishList } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 
 import WishListItem from 'TheaterSchedule/Screens/WishListComponents/WishListItem';
 
 class WishList extends Component {
+
+    componentDidMount() {
+        this.props.loadWishList(this.props.deviceId, this.props.languageCode); 
+    };
+
     render() {
         return (
             <FlatList
@@ -27,8 +33,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        chosenperformances: state.WishListReducer.chosenperformances.map((chosenperformance, index) => { return { ...chosenperformance, index: index.toString() } }),
+        chosenperformances: state.WishListReducer.chosenperformances,
+        deviceId: state.settings.deviceId,
+        languageCode: state.settings.settings.languageCode,
     }
 }
+const mapDispatchToProps = {
+    loadWishList,
+}
 
-export default connect(mapStateToProps)(WishList);
+export default connect(mapStateToProps, mapDispatchToProps)(WishList);

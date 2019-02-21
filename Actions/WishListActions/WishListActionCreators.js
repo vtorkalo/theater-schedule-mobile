@@ -7,16 +7,16 @@ import {
     STORE_PERFORMANCE_FAILURE
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
 
-export const loadPerformanceToWishListBegin = () => ({
+export const loadWishListBegin = () => ({
     type: LOAD_PERFORMANCE_BEGIN
   });
   
-  export const loadPerformanceToWishListSuccess = (deviceId, performanceId) => ({
+  export const loadWishListSuccess = (deviceId, performanceId) => ({
     type: LOAD_PERFORMANCE_SUCCESS,
     payload: { deviceId, performanceId }
   });
   
-  export const loadPerformanceToWishListFailure = error => ({
+  export const loadWishListFailure = error => ({
     type: LOAD_PERFORMANCE_FAILURE,
     payload: { error }
   });
@@ -58,3 +58,20 @@ export const SaveOrDeletePerformance = (deviceId, performanceId) => {
         .catch(error => dispatch(storePerformanceToWishListFailure(error)));
     };
   };
+
+  export const loadWishList = (deviceId, languageCode) => {
+    return dispatch => {
+        dispatch(loadWishListBegin());
+        let url = `${BASE_URL}wishlist/${deviceId}/${languageCode}/`;
+        fetch(url)
+            .then(response => {
+                return response.json();
+            })
+            .then(responseJson => {
+                dispatch(loadWishListSuccess(responseJson,deviceId,performanceId));
+            })
+            .catch(error => {
+                dispatch(loadWishListFailure(error));
+            });
+    };
+};

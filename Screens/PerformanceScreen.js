@@ -10,24 +10,22 @@ import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance, setStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 
-
 class PerformanceScreen extends LocalizeComponent { 
     constructor(props) {
         super(props);
-
-        this.state = { performanceId: this.props.navigation.getParam('performance', 'NO-ID')};
     }
 
     componentDidMount() {
-        this.props.loadPerformance(this.props.deviceId, this.state.performanceId, this.props.languageCode); 
+        this.props.loadPerformance(this.props.deviceId ,this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode); 
     };
 
-    toggleWishlist = (deviceId,performanceId) => {       
+    toggleWishlist = (deviceId, performanceId) => {       
             this.props.SaveOrDeletePerformance(deviceId, performanceId);
             this.props.changeStatusPerformance(this.props.isChecked);
     }
 
     render() {
+        const performanceId = this.props.navigation.getParam('performance', 'NO-ID');
         if (this.props.isLoading) {
             return (
                 <Container style={styles.container}>
@@ -58,7 +56,7 @@ class PerformanceScreen extends LocalizeComponent {
                                 </View>
 
                                 <View style={styles.ButtonContainer} >
-                                    <TouchableOpacity onPress={() => this.toggleWishlist(this.props.deviceId,this.state.performanceId)}>
+                                    <TouchableOpacity onPress={() => this.toggleWishlist(this.props.deviceId, performanceId)}>
                                         <View style={styles.detailsButton}>
                                             {this.props.isChecked? 
                                               <Text style={styles.buttonText}>{this.t("Remove from favourites")}</Text>:
@@ -150,7 +148,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         languageCode: state.settings.settings.languageCode,
-        performanceId: state.scheduleReducer.performanceId,
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
         deviceId: state.settings.deviceId,

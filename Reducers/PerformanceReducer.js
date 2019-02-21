@@ -53,6 +53,7 @@ export default function performanceReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 performance: action.payload.performance,
+                isChecked: action.payload.performance.isChecked,
             };
 
         case LOAD_PERFORMANCE_FAILURE:

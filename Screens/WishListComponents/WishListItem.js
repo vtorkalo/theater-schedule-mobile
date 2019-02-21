@@ -8,7 +8,8 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { changeStatusPerformance, deletePerformance } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import moment from 'moment';
 import 'moment/locale/uk';
@@ -32,8 +33,8 @@ class WishListItem extends LocalizedComponent {
 
     deletefromWishlist = (item) => {
         if (item.isChecked == true){
-            this.props.changeStatusPerformance(item.performanceId);
-            this.props.deletePerformance(item.performanceId);
+            this.props.SaveOrDeletePerformance(deviceId, performanceId);
+            this.props.changeStatusPerformance(item.performanceId);    
         }
     }
 
@@ -151,13 +152,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-
+        deviceId: state.settings.deviceId,
     };
 }
 
 const mapDispatchToProps = {
     changeStatusPerformance,
-    deletePerformance
+    SaveOrDeletePerformance,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WishListItem);
