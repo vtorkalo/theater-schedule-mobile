@@ -12,12 +12,20 @@ import LocalizedComponent from '../Localization/LocalizedComponent';
 import { fetchPosters } from '../Actions/sliderActions';
 
 class SliderScreen extends LocalizedComponent {
-    static navigationOptions = {
-        drawerIcon: <MaterialCommunityIcons name='theater' size={25} />
+    static navigationOptions = ({ screenProps }) => {
+        return {
+            drawerIcon: (<MaterialCommunityIcons name='theater' size={25} />),
+            title: screenProps.SliderScreenTitle,
+        }
     }
 
     componentDidMount() {
         this.props.fetchPosters(this.props.languageCode);
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.languageCode !== this.props.languageCode) {
+            this.props.fetchPosters(this.props.languageCode);
+        }
     }
 
     renderItemWithParallax({ item, index }, parallaxProps) {

@@ -11,7 +11,6 @@ import {
 import { Container, Content } from "native-base";
 import DrawerMenucIcon from "../Navigation/DrawerMenuIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import { connect } from "react-redux";
 import {
   enterMessageSubject,
@@ -23,8 +22,11 @@ import {
 import LocalizeComponent from "../Localization/LocalizedComponent";
 
 class MessageScreen extends LocalizeComponent {
-  static navigationOptions = {
-    drawerIcon: <MaterialCommunityIcons name="message" size={25} />
+  static navigationOptions = ({ screenProps }) => {
+    return {
+      drawerIcon: (<MaterialCommunityIcons name="message" size={25} />),
+      title: screenProps.MessageScreenTitle,
+    }
   };
 
   componentDidUpdate(prevProps) {

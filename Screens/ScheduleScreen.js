@@ -5,26 +5,45 @@ import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { BallIndicator } from 'react-native-indicators';
-
 import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
 import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
 import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
+import LocalizeComponent from "../Localization/LocalizedComponent";
 
-class ScheduleScreen extends Component {
-    static navigationOptions = {
-        drawerIcon: <MaterialCommunityIcons name='calendar-clock' size={25} />
+const getDateAfterWeek = () => {
+    let currentDate = new Date();
+    const DAYS_IN_WEEK = 7;
+    let dateAfterWeek = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() + DAYS_IN_WEEK);
+    return dateAfterWeek;
+}
+
+class ScheduleScreen extends LocalizeComponent  {
+    static navigationOptions = ({ navigation }) => {
+        return {
+          drawerIcon: (<MaterialCommunityIcons name="calendar-clock" size={25} />),
+          title: navigation.getParam("scheduleScreenTitle", "Schedule_Screen")
+        };
+      };
+    componentDidMount() {
+        if (this.props.deviceId && this.props.languageCode) {
+            let currentDate = new Date();
+            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.deviceId, this.props.languageCode);
+        }
     }
 
     componentDidUpdate(prevProps) {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
-            const DAYS_IN_WEEK = 7;
             let currentDate = new Date();
             let dateAfterWeek = new Date(
                 currentDate.getFullYear(),
                 currentDate.getMonth(),
                 currentDate.getDate() + DAYS_IN_WEEK);
             this.props.loadSchedule(currentDate, dateAfterWeek, this.props.languageCode);
+            this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
     }
 

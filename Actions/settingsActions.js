@@ -1,4 +1,6 @@
 import BASE_URL from "../baseURL";
+import { setLanguage } from "redux-i18n";
+import { setAppReady, setLoggedIn } from './AppActions/AppActionCreators';
 
 export const LOAD_SETTINGS_BEGIN = "LOAD_SETTINGS_BEGIN";
 export const LOAD_SETTINGS_SUCCESS = "LOAD_SETTINGS_SUCCESS";
@@ -44,8 +46,16 @@ export const loadSettings = deviceId => {
         return res.json();
       })
       .then(resJson => {
+        if (resJson && resJson.languageCode) {
+          dispatch(setLoggedIn(true));
+          dispatch(setLanguage(resJson.languageCode));
+        }
+        else {
+          dispatch(setLoggedIn(false));
+        }
         dispatch(loadSettingsSuccess(deviceId, resJson));
       })
+      .then(() => dispatch(setAppReady()))
       .catch(error => dispatch(loadSettingsFailure(error)));
   };
 };
@@ -67,6 +77,7 @@ export const storeSettings = (deviceId, newSettings) => {
         return res;
       })
       .then(() => {
+        dispatch(setLanguage(newSettings.languageCode));
         dispatch(storeSettingsSuccess(newSettings));
       })
       .catch(error => dispatch(storeSettingsFailure(error)));

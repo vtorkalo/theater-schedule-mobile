@@ -8,8 +8,11 @@ import { BallIndicator } from 'react-native-indicators';
 import WatchList from 'TheaterSchedule/Screens/WatchListComponents/WatchList'
 
 class WatchListScreen extends Component {
-    static navigationOptions = {
-        drawerIcon: <MaterialCommunityIcons name='wunderlist' size={25} />
+    static navigationOptions = ({ screenProps }) => {
+        return {
+            drawerIcon: (<MaterialCommunityIcons name='wunderlist' size={25} />),
+            title: screenProps.WatchlistScreenTitle,
+        }
     }
 
     render() {
@@ -29,7 +32,7 @@ class WatchListScreen extends Component {
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            <WatchList navigation={this.props.navigation}/>
+                            <WatchList navigation={this.props.navigation} />
                         </View>
                     </Content>
                 </Container>

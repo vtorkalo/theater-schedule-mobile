@@ -15,14 +15,15 @@ import watchListReducer from './Reducers/WatchListReducer';
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
-import { fetchPosters } from './Actions/sliderActions';
 import performanceReducer from './Reducers/PerformanceReducer';
+import AppNavigator from './AppNavigatorComponent';
+import { setAppReady } from './Actions/AppActions/AppActionCreators';
 
 const appReducer = combineReducers({
   i18nState,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
-  watchListReducer :watchListReducer,
+  watchListReducer: watchListReducer,
   performanceReducer,
   settings,
   message,
@@ -36,9 +37,9 @@ let deviceId =
   Expo.Constants.appOwnership == "expo"
     ? Expo.Constants.deviceId
     : DeviceInfo.getUniqueID();
-
+    
 export default class App extends Component {
-  componentWillMount() {
+  componentDidMount() {
     store.dispatch(loadSettings(deviceId));
   }
 
@@ -46,7 +47,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <I18n translations={translations} initialLang="uk" fallbackLang="en">
-          <Navigator />
+          <AppNavigator/>
         </I18n>
       </Provider>
     );
