@@ -13,69 +13,26 @@ import _ from 'lodash';
 
 
 class PerformanceScreen extends LocalizeComponent {
-    constructor() {
-        super();
-        this.state = {
-            employeeByRoles: {},
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-
-        if (prevProps.performance !== this.props.performance) {
-          
-        //     var roles = _.groupBy(this.props.performance.teamMember, teamMember => teamMember.role);
-        //     console.log(roles);
-        //     console.log( this.props.performance.teamMember);
-        //     //_.forEach(grouped, (value) =)
-        //     this.props.performance.teamMember.forEach( role => {
-        //             // role.forEach(person => {
-        //             //     employeeByRoles[role] += person.firstName + ", " + person.lastName + ", ";
-        //             // });
-                  
-        //             // console.log(employeeByRoles[role]);
-        //             // _.trimEnd(employeeByRoles[role]);
-        //             // console.log(employeeByRoles[role]);
-                
-        //         });
-            
-        //    // console.log(grouped);
-            this.seperateRoles(this.t("PRODUCER"), this.t("AUTHOR"), this.t("PAINTER"));
-        }
-    }
 
     componentDidMount() {
-        //this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
-        this.props.loadPerformance(1, 'uk');
+        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        //this.props.loadPerformance(1, 'uk');
     };
 
 
-    seperateRoles(...roles) {
-        roles.forEach(element => {
-            this.getPersonToRole(element);
-        });
-    };
-
-    getPersonToRole(role) {
-        var filterByRole = {};
-        filterByRole[role] = this.props.performance.teamMember.filter(element => {
-            return element.role == role;
-        });
-       // console.log(filterByRole[role])
-        var employeeByRoles =  this.state.employeeByRoles;
-        employeeByRoles[role]= "";
-        for (element = 0; element < filterByRole[role].length; element++) {
-           
-                employeeByRoles[role] += filterByRole[role][element].firstName + " " + filterByRole[role][element].lastName;
-                
-        }
-        _.trimEnd(employeeByRoles[role], '-');
-        console.log( employeeByRoles[role]);
-        if (!employeeByRoles[role]) employeeByRoles[role] = this.t("not found");
+    
+    getCreativeTeamMembers(role) {
+        var roles = _.groupBy(this.props.performance.teamMember, teamMember => teamMember.role);
       
-            this.setState({ employeeByRoles: employeeByRoles });
-  
-    };
+        if (!roles[role]) return this.t("not found");
+        var personByRole = []
+        roles[role].forEach(person => {
+            personByRole.push(person.firstName + " " + person.lastName);
+        
+        })
+ 
+      return _.join(personByRole, ', ');
+    }
 
     render() {
         if ((this.props.isLoading) || (!this.props.performance.teamMember)) {
@@ -107,11 +64,11 @@ class PerformanceScreen extends LocalizeComponent {
                                 <View style={styles.textContainer} >
                                     <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
                                     <Text style={styles.textSubtitle}>{this.t("AUTHOR")}:</Text>
-                                    <Text style={styles.testStyle}>{this.state.employeeByRoles[this.t("AUTHOR")]} </Text>
+                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("AUTHOR"))}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("PRODUCER")}:</Text>
-                                    <Text style={styles.testStyle}>{this.state.employeeByRoles[this.t("PRODUCER")]} </Text>
+                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("PRODUCER"))}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("PAINTER")}:</Text>
-                                    <Text style={styles.testStyle}>{this.state.employeeByRoles[this.t("PAINTER")]} </Text>
+                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("PAINTER"))}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                     <Text style={styles.testStyle}>{this.props.performance.description}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("price")}</Text>
@@ -122,7 +79,7 @@ class PerformanceScreen extends LocalizeComponent {
 
                                 </View>
                             </View>
-                            <View style={{ backgroundColor: "#BFD0D6" }}>
+                            {/* <View style={{ backgroundColor: "#BFD0D6" }}>
                                 <ImageLayout
                                     imageContainerStyle={{ height: 100 }}
                                     columns={2}
@@ -134,7 +91,7 @@ class PerformanceScreen extends LocalizeComponent {
                                         { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3165-300x169.jpg", },
                                     ]}
                                 />
-                            </View>
+                            </View> */}
                         </ScrollView>
                     </Content>
                 </Container>
@@ -190,6 +147,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+
     return {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,
