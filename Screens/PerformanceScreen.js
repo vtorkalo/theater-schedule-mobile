@@ -24,7 +24,6 @@ class PerformanceScreen extends LocalizeComponent {
 
     componentDidMount() {
         this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
-        //this.props.loadPerformance(1, 'uk');
     };
 
     getCreativeTeamMembers(role) {
@@ -86,7 +85,6 @@ class PerformanceScreen extends LocalizeComponent {
                             </View>
                             <View style={{ backgroundColor: "#BFD0D6" }}>
                                 <ImageLayout
-                                  
                                     columns={2}
                                     images={images}
                                 />
