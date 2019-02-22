@@ -12,6 +12,14 @@ import _ from 'lodash';
 
 
 
+var images = [ // temp images while we don`t have gellery images from site
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3196-300x170.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3184-300x169.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3178-300x169.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3165-300x169.jpg", },
+]
+
 class PerformanceScreen extends LocalizeComponent {
 
     componentDidMount() {
@@ -19,19 +27,16 @@ class PerformanceScreen extends LocalizeComponent {
         //this.props.loadPerformance(1, 'uk');
     };
 
-
-    
     getCreativeTeamMembers(role) {
         var roles = _.groupBy(this.props.performance.teamMember, teamMember => teamMember.role);
-      
+
         if (!roles[role]) return this.t("not found");
+
         var personByRole = []
         roles[role].forEach(person => {
             personByRole.push(person.firstName + " " + person.lastName);
-        
         })
- 
-      return _.join(personByRole, ', ');
+        return _.join(personByRole, ', ');
     }
 
     render() {
@@ -79,19 +84,13 @@ class PerformanceScreen extends LocalizeComponent {
 
                                 </View>
                             </View>
-                            {/* <View style={{ backgroundColor: "#BFD0D6" }}>
+                            <View style={{ backgroundColor: "#BFD0D6" }}>
                                 <ImageLayout
-                                    imageContainerStyle={{ height: 100 }}
+                                  
                                     columns={2}
-                                    images={[
-                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
-                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3196-300x170.jpg", },
-                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3184-300x169.jpg", },
-                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3178-300x169.jpg", },
-                                        { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3165-300x169.jpg", },
-                                    ]}
+                                    images={images}
                                 />
-                            </View> */}
+                            </View>
                         </ScrollView>
                     </Content>
                 </Container>
@@ -147,7 +146,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-
     return {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,
