@@ -29,13 +29,10 @@ export default PostersSlider = (props) => {
                 dotsLength={props.posters.length}
                 activeDotIndex={props.activeSlide}
                 containerStyle={styles.paginationContainer}
-                dotColor={'rgba(255, 255, 255, 0.92)'}
                 dotStyle={styles.paginationDot}
-                inactiveDotColor={'black'}
-                inactiveDotOpacity={0.4}
+                inactiveDotStyle={styles.inactivePaginationDot}
+                inactiveDotOpacity={0.6}
                 inactiveDotScale={0.6}
-                carouselRef={this._slider1Ref}
-                tappableDots={!!this._slider1Ref}
             />
         </View>
     );
