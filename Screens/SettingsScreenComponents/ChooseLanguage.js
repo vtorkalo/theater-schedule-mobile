@@ -7,10 +7,9 @@ import FlashMessage from "react-native-flash-message";
 import { showMessage } from "react-native-flash-message";
 import {setLanguage} from "redux-i18n";
 
-
 class ChooseLanguage extends LocalizeComponent {
     state = {
-        settings: { languageCode: "en" }
+        settings: { languageCode: this.props.settings.settings.languageCode }
     }
 
     componentDidUpdate(prevState) {
@@ -19,7 +18,6 @@ class ChooseLanguage extends LocalizeComponent {
         }
         else if (prevState.settings.loading && !this.props.settings.error) {
             this.successDisplay();
-            this.props.setLanguage(this.state.settings.languageCode);
         }
     }
 
