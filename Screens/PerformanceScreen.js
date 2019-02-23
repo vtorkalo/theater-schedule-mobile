@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { Component } from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-=======
 import React  from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, ScrollView } from 'react-native';
->>>>>>> 26d175f497e118149f1461f0a7b8af9ff7ee640c
+import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
