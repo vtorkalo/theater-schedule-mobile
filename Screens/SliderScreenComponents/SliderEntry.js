@@ -41,18 +41,14 @@ class SliderEntry extends Component {
                 style={styles.slideInnerContainer}
                 onPress={() => this.props.navigation.navigate("performanceStack", { performance: PerformanceId })}
             >
-                <View style={styles.shadow} />
+                <View style={styles.shadow}>
                 <View style={[styles.imageContainer]}>
                     {this.image}
                     <View style={[styles.radiusMask]} />
                 </View>
                 <View style={[styles.textContainer]}>
                     {uppercaseTitle}
-                    <Text
-                        style={[styles.subtitle]}
-                        numberOfLines={2}
-                    >
-                    </Text>
+                </View>
                 </View>
             </TouchableOpacity>
         );
