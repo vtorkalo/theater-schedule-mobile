@@ -8,10 +8,8 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
-import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
+import { SaveOrDeletePerformance, addToWishlist, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
-import moment from 'moment';
 import 'moment/locale/uk';
 
 class WishListItem extends LocalizedComponent {
@@ -19,23 +17,13 @@ class WishListItem extends LocalizedComponent {
         super(props);
     }
 
+    deletefromWishlist = () => {
+        this.props.SaveOrDeletePerformance(this.props.deviceId, this.props.chosenperformance.performanceId);
+        this.props.deleteFromWishlist(this.props.chosenperformance.performanceId);
+    }
+
     pressedDetailsHandler = () => {
-        this.props.navigation.navigate("performanceStack", { performance: this.props.chosenperformance.performanceId});
-    }
-
-    convertToReadableTime = date => {
-        return moment(date).format("HH:mm");
-    }
-
-    convertToReadableDate = date => {
-        return moment(date).format("dddd, Do MMMM");
-    }
-
-    deletefromWishlist = (item) => {
-        if (item.isChecked == true){
-            this.props.SaveOrDeletePerformance(deviceId, performanceId);
-            this.props.changeStatusPerformance(item.performanceId);    
-        }
+        this.props.navigation.navigate("performanceStack", { performance: this.props.chosenperformance.performanceId });
     }
 
     render() {
@@ -60,7 +48,7 @@ class WishListItem extends LocalizedComponent {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.deletefromWishlist(this.props.chosenperformance)}>
+                        <TouchableOpacity onPress={this.deletefromWishlist}>
                             <View style={styles.detailsButton}>
                                 <Text style={styles.buttonText}>
                                     {this.t('Remove from favourites')}
@@ -157,8 +145,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    changeStatusPerformance,
     SaveOrDeletePerformance,
+    addToWishlist,
+    deleteFromWishlist
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WishListItem);

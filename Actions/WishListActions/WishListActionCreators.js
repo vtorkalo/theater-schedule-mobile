@@ -1,23 +1,40 @@
 import {
-    LOAD_PERFORMANCE_BEGIN,
-    LOAD_PERFORMANCE_SUCCESS,
-    LOAD_PERFORMANCE_FAILURE,
+    LOAD_WISHLIST_BEGIN,
+    LOAD_WISHLIST_SUCCESS,
+    LOAD_WISHLIST_FAILURE,
     STORE_PERFORMANCE_BEGIN,
     STORE_PERFORMANCE_SUCCESS,
-    STORE_PERFORMANCE_FAILURE
+    STORE_PERFORMANCE_FAILURE,
+    ADD_TO_WISHLIST,
+    DELETE_FROM_WISHLIST,
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
 
+export const addToWishlist = (item, performanceId) => ({
+  type: ADD_TO_WISHLIST,
+  payload: {
+      item,
+      performanceId
+  },
+});
+
+export const deleteFromWishlist = (performanceId) => ({
+  type: DELETE_FROM_WISHLIST,
+  payload: {
+    performanceId
+  },
+});
+
 export const loadWishListBegin = () => ({
-    type: LOAD_PERFORMANCE_BEGIN
+    type: LOAD_WISHLIST_BEGIN
   });
   
-  export const loadWishListSuccess = (deviceId, performanceId) => ({
-    type: LOAD_PERFORMANCE_SUCCESS,
-    payload: { deviceId, performanceId }
+  export const loadWishListSuccess = (performances, deviceId, languageCode) => ({
+    type: LOAD_WISHLIST_SUCCESS,
+    payload: { performances, deviceId, languageCode }
   });
   
   export const loadWishListFailure = error => ({
-    type: LOAD_PERFORMANCE_FAILURE,
+    type: LOAD_WISHLIST_FAILURE,
     payload: { error }
   });
   
@@ -60,15 +77,16 @@ export const SaveOrDeletePerformance = (deviceId, performanceId) => {
   };
 
   export const loadWishList = (deviceId, languageCode) => {
+    console.log("LOL");
     return dispatch => {
         dispatch(loadWishListBegin());
-        let url = `${BASE_URL}wishlist/${deviceId}/${languageCode}/`;
+        let url = `${BASE_URL}wishlist/${deviceId}/${languageCode}`;
         fetch(url)
             .then(response => {
                 return response.json();
             })
             .then(responseJson => {
-                dispatch(loadWishListSuccess(responseJson,deviceId,performanceId));
+                dispatch(loadWishListSuccess(responseJson, deviceId, languageCode));
             })
             .catch(error => {
                 dispatch(loadWishListFailure(error));

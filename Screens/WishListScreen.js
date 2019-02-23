@@ -4,24 +4,30 @@ import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { BallIndicator } from 'react-native-indicators';
 import WishList from 'TheaterSchedule/Screens/WishListComponents/WishList'
+import LocalizeComponent from "../Localization/LocalizedComponent";
 
-class WishListScreen extends Component {
+class WishListScreen extends LocalizeComponent {
     static navigationOptions = ({ screenProps }) => {
         return {
             drawerIcon: (<MaterialCommunityIcons name='wunderlist' size={25} />),
             title: screenProps.WishlistScreenTitle,
-        }
-    }
+        };
+    };
 
     render() {
-        if (this.props.isLoading) {
+
+        if (this.props.isLoading || this.props.isLanguageLoading) {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
-                        <BallIndicator color="#aaa" />
+                        <View style={styles.performancesContainer}>
+                            {this.props.chosenperformances.length != 0 ?
+                                <WishList navigation={this.props.navigation} /> :
+                                null
+                            }
+                        </View>
                     </Content>
                 </Container>
             );
@@ -66,12 +72,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.WishListReducer.Loading,
+        isLoading: state.WishListReducer.loading,
+        isLanguageLoading: state.settings.loading,
+        chosenperformances: state.WishListReducer.chosenperformances,
     }
 }
 
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WishListScreen);
+export default connect(mapStateToProps)(WishListScreen);

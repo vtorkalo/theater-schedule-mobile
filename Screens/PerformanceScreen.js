@@ -7,21 +7,27 @@ import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
-import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
-import { changeStatusPerformance, setStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
+import { SaveOrDeletePerformance, addToWishlist, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 
-class PerformanceScreen extends LocalizeComponent { 
+class PerformanceScreen extends LocalizeComponent {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        this.props.loadPerformance(this.props.deviceId ,this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode); 
+        this.props.loadPerformance(this.props.deviceId, this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
     };
 
-    toggleWishlist = (deviceId, performanceId) => {       
-            this.props.SaveOrDeletePerformance(deviceId, performanceId);
-            this.props.changeStatusPerformance(this.props.isChecked);
+    toggleWishlist = (performanceId) => {
+        this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
+        if (this.props.isChecked) { 
+            this.props.deleteFromWishlist(performanceId); 
+        }
+        else { 
+            this.props.addToWishlist(this.props.performance, performanceId); 
+        }
+        this.props.changeStatusPerformance(this.props.isChecked);
     }
 
     render() {
@@ -51,32 +57,32 @@ class PerformanceScreen extends LocalizeComponent {
                                     source={{ uri: base64Image }}
                                 />
                             </View>
-                                <View style={styles.textContainer} >
-                                    <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                                </View>
+                            <View style={styles.textContainer} >
+                                <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
+                            </View>
 
-                                <View style={styles.ButtonContainer} >
-                                    <TouchableOpacity onPress={() => this.toggleWishlist(this.props.deviceId, performanceId)}>
-                                        <View style={styles.detailsButton}>
-                                            {this.props.isChecked? 
-                                              <Text style={styles.buttonText}>{this.t("Remove from favourites")}</Text>:
-                                              <Text style={styles.buttonText}>{this.t("Add to favourites")}</Text>}                  
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
+                            <View style={styles.ButtonContainer} >
+                                <TouchableOpacity onPress={() => this.toggleWishlist(performanceId)}>
+                                    <View style={styles.detailsButton}>
+                                        {this.props.isChecked ?
+                                            <Text style={styles.buttonText}>{this.t("Remove from favourites")}</Text> :
+                                            <Text style={styles.buttonText}>{this.t("Add to favourites")}</Text>}
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
 
-                                <View style={styles.textContainer} >
-                                    <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
-                                    <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("description")}</Text>
-                                    <Text style={styles.testStyle}>{this.props.performance.description}</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("price")}</Text>
-                                    <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
-                                    <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
-                                    <View style={{ marginBottom: 10 }} />
+                            <View style={styles.textContainer} >
+                                <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
+                                <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("description")}</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.description}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("price")}</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
+                                <View style={{ marginBottom: 10 }} />
 
-                                </View>
+                            </View>
                         </ScrollView>
                     </Content>
                 </Container>
@@ -136,7 +142,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 30,
         padding: 5,
-        width: Dimensions.get('window').width * 0.5,
+        width: Dimensions.get('window').width * 0.6,
     },
     buttonText: {
         color: '#fff',
@@ -159,7 +165,8 @@ const mapDispatchToProps = {
     loadPerformance,
     SaveOrDeletePerformance,
     changeStatusPerformance,
-    setStatusPerformance
+    addToWishlist,
+    deleteFromWishlist,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceScreen);
