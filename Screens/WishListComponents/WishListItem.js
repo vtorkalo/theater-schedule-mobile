@@ -8,7 +8,7 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { SaveOrDeletePerformance, addToWishlist, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import 'moment/locale/uk';
 
@@ -146,7 +146,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     SaveOrDeletePerformance,
-    addToWishlist,
     deleteFromWishlist
 }
 
