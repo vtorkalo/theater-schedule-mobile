@@ -24,7 +24,6 @@ export default function WishlistReducer(state = initialState, action) {
       let chosenperformances = state.chosenperformances;
       let index = chosenperformances.findIndex(item => item.performanceId == action.payload.performanceId);
       chosenperformances.splice(index, 1);
-      console.log(chosenperformances);
       return { ...state, chosenperformances }
     }
 

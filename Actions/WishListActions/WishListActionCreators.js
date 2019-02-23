@@ -77,7 +77,6 @@ export const SaveOrDeletePerformance = (deviceId, performanceId) => {
   };
 
   export const loadWishList = (deviceId, languageCode) => {
-    console.log("LOL");
     return dispatch => {
         dispatch(loadWishListBegin());
         let url = `${BASE_URL}wishlist/${deviceId}/${languageCode}`;
