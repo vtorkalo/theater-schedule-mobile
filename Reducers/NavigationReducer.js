@@ -9,10 +9,8 @@ export default (state = initialState, action) => {
             const nextState = AppNavigator.router.getStateForAction(nextAction);
             return nextState ||state;
         }
-
         default: {
             const nextState = AppNavigator.router.getStateForAction(action, state);
-           
             return nextState|| state;
         }
     }
