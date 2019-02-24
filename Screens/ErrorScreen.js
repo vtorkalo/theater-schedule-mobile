@@ -1,17 +1,27 @@
-import React from 'react';
+import React , { Component } from 'react';
 import { StyleSheet, Text, View ,TouchableOpacity,Image  } from 'react-native';
-import {setLanguage} from "redux-i18n"; 
-
-export class ErrorScreen extends Component {
-  render() {
+import LocalizeComponent from "../Localization/LocalizedComponent";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Container } from 'native-base';
+export class ErrorScreen extends LocalizeComponent {
+    static navigationOptions = ({screenProps})=> {
+        return {
+            drawerIcon: (<MaterialCommunityIcons name='alien' size={25} />),
+            title: screenProps.ErrorScreenTitle,
+        }
+    }  
+    render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.errorLogo}><Image  style={styles.errorImage}source={require('../img/errorLogo.png')}></Image></View>
-        <View style={styles.errorMessage}><Text style={styles.bigErrorText}>Oooooh no!!</Text>
-        <Text style={styles.errorText}>Something went wrong!</Text></View>
-        <View style={styles.errorMessage}><Text style={styles.errorText}>ErrorMessage</Text></View>
-        <View style={styles.reloadContainer}><TouchableOpacity style={styles.reloadButton} onPress={()=> this.props.navigation.navigate("drawerStack")}><Text style={styles.errorText}>Reload!</Text></TouchableOpacity></View>
-      </View>
+        <Container>
+            <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+            <View style={styles.container}>
+                <View style={styles.errorLogo}><Image  style={styles.errorImage}source={require('../img/errorLogo.png')}></Image></View>
+                <View style={styles.errorMessage}><Text style={styles.bigErrorText}>{this.t('ErrorTextHeader')}</Text>
+                <Text style={styles.errorText}>{this.t('ErrorTextBody')}</Text></View>
+                <View style={styles.errorMessage}><Text style={styles.errorText}>{this.t('ErrorMessage')}</Text></View>
+                <View style={styles.reloadContainer}><TouchableOpacity style={styles.reloadButton} onPress={()=> this.props.navigation.navigate("Schedule")}><Text style={styles.errorText}>{this.t('Reload')}</Text></TouchableOpacity></View>
+            </View>
+      </Container>
     );
   }
 }

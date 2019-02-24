@@ -36,6 +36,12 @@ export const translations = {
     'SettingsScreenTitle': "Налаштування",
     'MessageScreenTitle': 'Відправити повідомлення',
     'WatchlistScreenTitle': 'Хочу подитивись',
+    'ErrorScreenTitle':'Екран помилки',
+    'ErrorTextHeader':'Уупс! ',
+    'ErrorTextBody':'Щось пішло не так!',
+    'ErrorMessage':'Повідомлення про помилку...',
+    'Reload':'Повернутись назад',
+    
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -73,6 +79,11 @@ export const translations = {
     'SliderScreenTitle': 'Repertoire',
     'SettingsScreenTitle': 'Settings',
     'MessageScreenTitle': 'Send message',
-    'WatchlistScreenTitle': 'WishList'
+    'WatchlistScreenTitle': 'WishList',
+    'ErrorScreenTitle':'Error test screen',
+    'ErrorTextHeader':'Ooooh no! ',
+    'ErrorTextBody':'Something went wrong!',
+    'ErrorMessage':'Error message...',
+    'Reload':'Go back!',
   },
 }

@@ -20,6 +20,7 @@ const DrawerStack = createDrawerNavigator(
     WatchList: { screen: WatchListScreen },
     Message: { screen: MessageScreen },
     Error:{screen:ErrorScreen},
+    
   },
   {
     drawerPosition: "left",
@@ -54,6 +55,7 @@ export const AppNavigator = createStackNavigator(
     performanceStack: { screen: PerformanceStack },
     Splash: { screen: SplashScreen },
     ChooseLanguage: { screen: LanguageScreen },
+    Error:{screen:ErrorScreen},
   },
   {
     headerMode: "none",
