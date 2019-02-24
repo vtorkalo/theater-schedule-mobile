@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { StyleSheet, View, Dimensions, Text, Image, ScrollView } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
@@ -24,19 +24,10 @@ class PerformanceScreen extends LocalizeComponent {
 
     componentDidMount() {
         this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        this.props.loadPerformance(1, 'en');
     };
 
-    getCreativeTeamMembers(role) {
-        var roles = _.groupBy(this.props.performance.teamMember, teamMember => teamMember.role);
 
-        if (!roles[role]) return this.t("not found");
-
-        var personByRole = []
-        roles[role].forEach(person => {
-            personByRole.push(person.firstName + " " + person.lastName);
-        })
-        return _.join(personByRole, ', ');
-    }
 
     render() {
         if ((this.props.isLoading) || (!this.props.performance.teamMember)) {
@@ -68,11 +59,11 @@ class PerformanceScreen extends LocalizeComponent {
                                 <View style={styles.textContainer} >
                                     <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
                                     <Text style={styles.textSubtitle}>{this.t("AUTHOR")}:</Text>
-                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("AUTHOR"))}</Text>
+                                    <Text style={styles.testStyle}>{this.props.Authors}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("PRODUCER")}:</Text>
-                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("PRODUCER"))}</Text>
+                                    <Text style={styles.testStyle}>{this.props.Producers}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("PAINTER")}:</Text>
-                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("PAINTER"))}</Text>
+                                    <Text style={styles.testStyle}>{this.props.Composers}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                     <Text style={styles.testStyle}>{this.props.performance.description}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("price")}</Text>
@@ -85,6 +76,7 @@ class PerformanceScreen extends LocalizeComponent {
                             </View>
                             <View style={{ backgroundColor: "#BFD0D6" }}>
                                 <ImageLayout
+                                    imageContainerStyle={{ height: 100 }}
                                     columns={2}
                                     images={images}
                                 />
@@ -143,11 +135,32 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = state => {
+const getCreativeTeamMembers = (role) => {
+    console.log(role);
+    if (!role) return '-';
+    
+    var personByRole = []
+    role.forEach(person => {
+        personByRole.push(person.firstName + " " + person.lastName);
+    })
+    return _.join(personByRole, ', ');
+};
+
+const mapStateToProps = (state) => {
+    const roles = _.groupBy(state.performanceReducer.performance.teamMember, teamMember => teamMember.roleKey);
+    const Authors = getCreativeTeamMembers(roles['Author']);
+    const Producers = getCreativeTeamMembers(roles['Producer']);
+    const Composers = getCreativeTeamMembers(roles["Composer"]);
+    const Painters= getCreativeTeamMembers(roles['Choreographer']);
+  
     return {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
+        Authors,
+        Producers,
+        Composers,
+        Painters,
     }
 }
 
