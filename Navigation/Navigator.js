@@ -10,6 +10,7 @@ import WatchListScreen from '../Screens/WatchListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
 import SplashScreen from "../Screens/SplashScreen";
 import LanguageScreen from "../Screens/LanguageScreen";
+import { ErrorScreen } from "../Screens/ErrorScreen";
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -18,6 +19,7 @@ const DrawerStack = createDrawerNavigator(
     Repertoire: { screen: SliderScreen },
     WatchList: { screen: WatchListScreen },
     Message: { screen: MessageScreen },
+    Error:{screen:ErrorScreen},
   },
   {
     drawerPosition: "left",
