@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { StyleSheet, View, Dimensions, Text, Image, ScrollView } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         languageCode: state.settings.settings.languageCode,
-        performanceId: state.scheduleReducer.performanceId,
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
     }
@@ -123,4 +122,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceScreen);
-
