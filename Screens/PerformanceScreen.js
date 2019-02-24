@@ -10,8 +10,6 @@ import { BallIndicator } from 'react-native-indicators';
 import ImageLayout from "react-native-image-layout";
 import _ from 'lodash';
 
-
-
 var images = [ // temp images while we don`t have gellery images from site
     { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
     { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3196-300x170.jpg", },
@@ -21,13 +19,10 @@ var images = [ // temp images while we don`t have gellery images from site
 ]
 
 class PerformanceScreen extends LocalizeComponent {
-
     componentDidMount() {
         this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
         this.props.loadPerformance(1, 'en');
     };
-
-
 
     render() {
         if ((this.props.isLoading) || (!this.props.performance.teamMember)) {
@@ -136,7 +131,6 @@ const styles = StyleSheet.create({
 });
 
 const getCreativeTeamMembers = (role) => {
-    console.log(role);
     if (!role) return '-';
     
     var personByRole = []

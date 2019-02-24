@@ -30,14 +30,13 @@ export const translations = {
     "price": "ЦІНА",
     "hashtags": "ХЕШТЕГИ",
     'ScheduleScreenTitle': 'Розклад',
-    'SliderScreenTitle' : 'Репертуар',
+    'SliderScreenTitle': 'Репертуар',
     'SettingsScreenTitle': "Налаштування",
     'MessageScreenTitle': 'Відправити повідомлення',
     'WatchlistScreenTitle': 'Хочу подитивись',
     "PRODUCER": "РЕЖИСЕР",
-    "PAINTER":"ХУДОЖНИК",
-    "AUTHOR":"АВТОР",
-    "not found": "Не знайдено"
+    "PAINTER": "ХУДОЖНИК",
+    "AUTHOR": "АВТОР",
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -73,9 +72,9 @@ export const translations = {
     'SliderScreenTitle': 'Repertoire',
     'SettingsScreenTitle': 'Settings',
     'MessageScreenTitle': 'Send message',
-    "PRODUCER":"PRODUCER",
-    "PAINTER":"PAINTER",
-    "AUTHOR":"AUTHOR",
-    "not found": "Not found"
+    'WatchlistScreenTitle': 'WishList',
+    "PRODUCER": "PRODUCER",
+    "PAINTER": "PAINTER",
+    "AUTHOR": "AUTHOR",
   },
 }
