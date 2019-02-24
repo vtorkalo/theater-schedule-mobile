@@ -29,13 +29,15 @@ export const translations = {
     "description": "ОПИС",
     "price": "ЦІНА",
     "hashtags": "ХЕШТЕГИ",
-    "Andrii Mudrak": "Андрій Мудрак",
-    "Taras Tymchuk": "Тарас Тимчук",
     'ScheduleScreenTitle': 'Розклад',
     'SliderScreenTitle' : 'Репертуар',
     'SettingsScreenTitle': "Налаштування",
     'MessageScreenTitle': 'Відправити повідомлення',
     'WatchlistScreenTitle': 'Хочу подитивись',
+    "PRODUCER": "РЕЖИСЕР",
+    "PAINTER":"ХУДОЖНИК",
+    "AUTHOR":"АВТОР",
+    "not found": "Не знайдено"
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -67,12 +69,13 @@ export const translations = {
     "description": "DESCRIPTION",
     "price": "PRICE",
     "hashtags": "HASHTAGS",
-    "Andrii Mudrak": "Andrii Mudrak",
-    "Taras Tymchuk": "Taras Tymchuk",
     'ScheduleScreenTitle': 'Schedule',
     'SliderScreenTitle': 'Repertoire',
     'SettingsScreenTitle': 'Settings',
     'MessageScreenTitle': 'Send message',
-    'WatchlistScreenTitle': 'WishList'
+    "PRODUCER":"PRODUCER",
+    "PAINTER":"PAINTER",
+    "AUTHOR":"AUTHOR",
+    "not found": "Not found"
   },
 }

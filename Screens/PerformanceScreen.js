@@ -7,6 +7,18 @@ import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
+import ImageLayout from "react-native-image-layout";
+import _ from 'lodash';
+
+
+
+var images = [ // temp images while we don`t have gellery images from site
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3196-300x170.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3184-300x169.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3178-300x169.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3165-300x169.jpg", },
+]
 
 class PerformanceScreen extends LocalizeComponent {
 
@@ -14,8 +26,20 @@ class PerformanceScreen extends LocalizeComponent {
         this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
     };
 
+    getCreativeTeamMembers(role) {
+        var roles = _.groupBy(this.props.performance.teamMember, teamMember => teamMember.role);
+
+        if (!roles[role]) return this.t("not found");
+
+        var personByRole = []
+        roles[role].forEach(person => {
+            personByRole.push(person.firstName + " " + person.lastName);
+        })
+        return _.join(personByRole, ', ');
+    }
+
     render() {
-        if (this.props.isLoading) {
+        if ((this.props.isLoading) || (!this.props.performance.teamMember)) {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
@@ -43,8 +67,12 @@ class PerformanceScreen extends LocalizeComponent {
 
                                 <View style={styles.textContainer} >
                                     <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
-                                    <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("AUTHOR")}:</Text>
+                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("AUTHOR"))}</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("PRODUCER")}:</Text>
+                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("PRODUCER"))}</Text>
+                                    <Text style={styles.textSubtitle}>{this.t("PAINTER")}:</Text>
+                                    <Text style={styles.testStyle}>{this.getCreativeTeamMembers(this.t("PAINTER"))}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                     <Text style={styles.testStyle}>{this.props.performance.description}</Text>
                                     <Text style={styles.textSubtitle}>{this.t("price")}</Text>
@@ -54,6 +82,12 @@ class PerformanceScreen extends LocalizeComponent {
                                     <View style={{ marginBottom: 10 }} />
 
                                 </View>
+                            </View>
+                            <View style={{ backgroundColor: "#BFD0D6" }}>
+                                <ImageLayout
+                                    columns={2}
+                                    images={images}
+                                />
                             </View>
                         </ScrollView>
                     </Content>
