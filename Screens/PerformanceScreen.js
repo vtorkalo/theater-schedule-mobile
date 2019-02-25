@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
-import { SaveOrDeletePerformance, addToWishlist, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 
 class PerformanceScreen extends LocalizeComponent {
@@ -21,12 +21,6 @@ class PerformanceScreen extends LocalizeComponent {
 
     toggleWishlist = (performanceId) => {
         this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
-        if (this.props.isChecked) { 
-            this.props.deleteFromWishlist(performanceId); 
-        }
-        else { 
-            this.props.addToWishlist(this.props.performance, performanceId); 
-        }
         this.props.changeStatusPerformance(this.props.isChecked);
     }
 
@@ -165,8 +159,6 @@ const mapDispatchToProps = {
     loadPerformance,
     SaveOrDeletePerformance,
     changeStatusPerformance,
-    addToWishlist,
-    deleteFromWishlist,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceScreen);

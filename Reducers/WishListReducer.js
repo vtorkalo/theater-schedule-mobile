@@ -5,7 +5,6 @@ import {
   STORE_PERFORMANCE_BEGIN,
   STORE_PERFORMANCE_SUCCESS,
   STORE_PERFORMANCE_FAILURE,
-  ADD_TO_WISHLIST,
   DELETE_FROM_WISHLIST
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
 
@@ -55,18 +54,6 @@ export default function wishListReducer(state = initialState, action) {
         loading: false,
         error: action.payload.error
       };
-
-    case ADD_TO_WISHLIST: {
-        let chosenPerformances = [...state.chosenPerformances,
-        {
-            title: action.payload.item.title,
-            mainImage: action.payload.item.mainImage,
-            performanceId: action.payload.performanceId,
-        }]
-        return { ...state, chosenPerformances }
-    }
-
-    
 
     default: {
       return state;

@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import { BallIndicator } from 'react-native-indicators';
 import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
 import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
-import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators'
-import { loadWishList } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 
 const getDateAfterWeek = () => {
@@ -32,7 +31,6 @@ class ScheduleScreen extends LocalizeComponent  {
         if (this.props.deviceId && this.props.languageCode) {
             let currentDate = new Date();
             this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
-            this.props.loadWishList(this.props.deviceId, this.props.languageCode);
         }
     }
 
@@ -41,7 +39,6 @@ class ScheduleScreen extends LocalizeComponent  {
             (prevProps.languageCode !== this.props.languageCode)) {
             let currentDate = new Date();
             this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
-            this.props.loadWishList(this.props.deviceId, this.props.languageCode);
             this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
     }
@@ -103,13 +100,11 @@ const mapStateToProps = state => {
         isScheduleLoading: state.scheduleReducer.loading,
         isLanguageLoading: state.settings.loading,
         languageCode: state.settings.settings.languageCode,
-        deviceId: state.settings.deviceId,
     }
 }
 
 const mapDispatchToProps = {
-    loadSchedule,
-    loadWishList
+    loadSchedule
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);
