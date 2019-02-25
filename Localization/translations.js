@@ -35,7 +35,9 @@ export const translations = {
     'SliderScreenTitle' : 'Репертуар',
     'SettingsScreenTitle': "Налаштування",
     'MessageScreenTitle': 'Відправити повідомлення',
-    'WatchlistScreenTitle': 'Хочу подитивись',
+    'WishlistScreenTitle': 'Хочу подитивись',
+    "Add to favourites":"Додати до улюблених",
+    "Remove from favourites":"Прибрати з улюблених",
   },
   'en': {
     'Hello world!': 'Hello world!',
@@ -73,6 +75,8 @@ export const translations = {
     'SliderScreenTitle': 'Repertoire',
     'SettingsScreenTitle': 'Settings',
     'MessageScreenTitle': 'Send message',
-    'WatchlistScreenTitle': 'WishList'
+    'WishlistScreenTitle': 'WishList',
+    "Add to favourites":"Add to favourites",
+    "Remove from favourites":"Remove from favourites",
   },
 }

@@ -3,34 +3,10 @@ import {
     LOAD_SCHEDULE_BEGIN,
     LOAD_SCHEDULE_SUCCESS,
     LOAD_SCHEDULE_FAILURE,
-    CNANGE_STATUS_FROM_WATCHLIST,
-    CNANGE_STATUS_FROM_SCHEDULE,
-    DELETE_FROM_SCHEDULE
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
 export const loadScheduleBegin = () => ({
     type: LOAD_SCHEDULE_BEGIN,
-});
-
-export const deleteFromSchedule = (index) => ({
-    type: DELETE_FROM_SCHEDULE,
-    payload: {
-        index
-    },
-});
-
-export const changeStatusFromWatchList = (index) => ({
-    type: CNANGE_STATUS_FROM_WATCHLIST,
-    payload: {
-        index
-    },
-});
-
-export const changeStatusFromSchedule = (index) => ({
-    type: CNANGE_STATUS_FROM_SCHEDULE,
-    payload: {
-        index
-    },
 });
 
 export const loadScheduleSuccess = (schedule, startDate, endDate) => ({
@@ -49,7 +25,7 @@ export const loadScheduleFailure = error => ({
     },
 });
 
-export const loadSchedule = (startDate, endDate, deviceId, languageCode) => {
+export const loadSchedule = (startDate, endDate, languageCode) => {
     return dispatch => {
         dispatch(loadScheduleBegin());
 
@@ -59,8 +35,7 @@ export const loadSchedule = (startDate, endDate, deviceId, languageCode) => {
             endDate.getDate() + 1,
             0, 0, 0
         );
-        let url = `${BASE_URL}schedule/${deviceId}/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
-
+        let url = `${BASE_URL}schedule/${languageCode}/FilterByDate?startDate=${startDate.toJSON()}&endDate=${dayAfterEndDate.toJSON()}`;
         fetch(url)
             .then(response => {
                 return response.json();

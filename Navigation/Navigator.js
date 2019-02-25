@@ -6,7 +6,7 @@ import CustomDrawerContent from "./CustomDrawerContentComponent";
 import { connect } from "react-redux";
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import SliderScreen from "../Screens/SliderScreen";
-import WatchListScreen from '../Screens/WatchListScreen';
+import WishListScreen from '../Screens/WishListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
 import SplashScreen from "../Screens/SplashScreen";
 import LanguageScreen from "../Screens/LanguageScreen";
@@ -16,7 +16,7 @@ const DrawerStack = createDrawerNavigator(
     Schedule: { screen: ScheduleScreen },
     Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
-    WatchList: { screen: WatchListScreen },
+    WishList: { screen: WishListScreen },
     Message: { screen: MessageScreen },
   },
   {

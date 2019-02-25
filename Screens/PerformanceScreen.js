@@ -1,5 +1,5 @@
 import React  from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
@@ -7,14 +7,25 @@ import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
+import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 
 class PerformanceScreen extends LocalizeComponent {
+    constructor(props) {
+        super(props);
+    }
 
     componentDidMount() {
-        this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        this.props.loadPerformance(this.props.deviceId, this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
     };
 
+    toggleWishlist = (performanceId) => {
+        this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
+        this.props.changeStatusPerformance(this.props.isChecked);
+    }
+
     render() {
+        const performanceId = this.props.navigation.getParam('performance', 'NO-ID');
         if (this.props.isLoading) {
             return (
                 <Container style={styles.container}>
@@ -31,29 +42,40 @@ class PerformanceScreen extends LocalizeComponent {
                 <Container>
                     <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
                     <Content contentContainerStyle={styles.contentContainer}>
-                        <ScrollView style={styles.genericContainer}>
-                            <View style={{ flex: 1 }}>
-                                <View style={styles.imageContainer} >
-                                    <Image
-                                        style={styles.image}
-                                        resizeMode='contain'
-                                        source={{ uri: base64Image }}
-                                    />
-                                </View>
+                        <ScrollView>
 
-                                <View style={styles.textContainer} >
-                                    <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
-                                    <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("description")}</Text>
-                                    <Text style={styles.testStyle}>{this.props.performance.description}</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("price")}</Text>
-                                    <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
-                                    <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
-                                    <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
-                                    <View style={{ marginBottom: 10 }} />
+                            <View style={styles.imageContainer} >
+                                <Image
+                                    style={styles.image}
+                                    resizeMode='contain'
+                                    source={{ uri: base64Image }}
+                                />
+                            </View>
+                            <View style={styles.textContainer} >
+                                <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
+                            </View>
 
-                                </View>
+                            <View style={styles.ButtonContainer} >
+                                <TouchableOpacity onPress={() => this.toggleWishlist(performanceId)}>
+                                    <View style={styles.detailsButton}>
+                                        {this.props.isChecked ?
+                                            <Text style={styles.buttonText}>{this.t("Remove from favourites")}</Text> :
+                                            <Text style={styles.buttonText}>{this.t("Add to favourites")}</Text>}
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={styles.textContainer} >
+                                <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
+                                <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("description")}</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.description}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("price")}</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
+                                <View style={{ marginBottom: 10 }} />
+
                             </View>
                         </ScrollView>
                     </Content>
@@ -68,9 +90,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-    },
-    genericContainer: {
-        flex: 1,
         backgroundColor: "#BFD0D6",
     },
     imageContainer: {
@@ -88,9 +107,13 @@ const styles = StyleSheet.create({
         height: null
     },
     textContainer: {
-        flex: 1,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+    },
+    ButtonContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     textTitle: {
         fontWeight: "bold",
@@ -107,6 +130,19 @@ const styles = StyleSheet.create({
         fontWeight: "300",
         marginBottom: 10,
     },
+    detailsButton: {
+        marginBottom: 5,
+        backgroundColor: '#7154b8',
+        justifyContent: 'center',
+        borderRadius: 30,
+        padding: 5,
+        width: Dimensions.get('window').width * 0.6,
+    },
+    buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 16,
+    }
 });
 
 const mapStateToProps = state => {
@@ -114,11 +150,15 @@ const mapStateToProps = state => {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
+        deviceId: state.settings.deviceId,
+        isChecked: state.performanceReducer.isChecked,
     }
 }
 
 const mapDispatchToProps = {
     loadPerformance,
+    SaveOrDeletePerformance,
+    changeStatusPerformance,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceScreen);

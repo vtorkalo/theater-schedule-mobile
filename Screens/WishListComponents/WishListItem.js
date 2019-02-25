@@ -8,35 +8,22 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { deleteFromWatchlist } from 'TheaterSchedule/Actions/WatchListActions/WatchListActionCreators';
-import { changeStatusFromWatchList } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
-import CheckBox from 'react-native-check-box';
+import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
-import moment from 'moment';
 import 'moment/locale/uk';
 
-class WatchListItem extends LocalizedComponent {
+class WishListItem extends LocalizedComponent {
     constructor(props) {
         super(props);
     }
 
+    deletefromWishlist = () => {
+        this.props.SaveOrDeletePerformance(this.props.deviceId, this.props.chosenperformance.performanceId);
+        this.props.deleteFromWishlist(this.props.chosenperformance.performanceId);
+    }
+
     pressedDetailsHandler = () => {
-        this.props.navigation.navigate("performanceStack", { performance: this.props.chosenperformance.performanceId});
-    }
-
-    convertToReadableTime = date => {
-        return moment(date).format("HH:mm");
-    }
-
-    convertToReadableDate = date => {
-        return moment(date).format("dddd, Do MMMM");
-    }
-
-    deletefromwatchlist = (item, index) => {
-        if (this.props.isChecked == true){
-            this.props.changeStatusFromWatchList(item.scheduleId);
-            this.props.deleteFromWatchlist(index);
-        }
+        this.props.navigation.navigate("performanceStack", { performance: this.props.chosenperformance.performanceId });
     }
 
     render() {
@@ -54,23 +41,6 @@ class WatchListItem extends LocalizedComponent {
                 <View style={styles.infoContainer}>
                     <Text style={styles.title}>{this.props.chosenperformance.title}</Text>
                     <View style={styles.detailsContainer}>
-                        <Text style={styles.additionalInfo}>
-                            {this.t('Date')}: {this.convertToReadableDate(this.props.chosenperformance.beginning)}
-                        </Text>
-                    </View>
-                    <View style={styles.detailsContainer}>
-                        <Text style={styles.additionalInfo}>
-                            {this.t('Beginning')}:
-                        </Text>
-                        <TouchableOpacity>
-                            <Text
-                                style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
-                            >
-                                {this.convertToReadableTime(this.props.chosenperformance.beginning)}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.starContainer}>
                         <TouchableOpacity onPress={this.pressedDetailsHandler}>
                             <View style={styles.detailsButton}>
                                 <Text style={styles.buttonText}>
@@ -78,12 +48,13 @@ class WatchListItem extends LocalizedComponent {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                        <CheckBox
-                            onClick={() => this.deletefromwatchlist(this.props.chosenperformance,this.props.index)}
-                            isChecked={this.props.isChecked}
-                            checkedImage={<Image source={require('./Images/checked-star.png')} style={styles.imagestyle} />}
-                            unCheckedImage={<Image source={require('./Images/unchecked-star.png')} style={styles.imagestyle} />}
-                        />
+                        <TouchableOpacity onPress={this.deletefromWishlist}>
+                            <View style={styles.detailsButton}>
+                                <Text style={styles.buttonText}>
+                                    {this.t('Remove from favourites')}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View >
@@ -99,13 +70,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#fff',
         borderColor: '#7154b8',
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 30,
         margin: 5,
     },
     starContainer: {
         flex: 2,
-        flexDirection: 'row',
         justifyContent: 'space-around',
     },
     imageContainer: {
@@ -116,28 +86,27 @@ const styles = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
-        borderRadius: 50,
+        borderRadius: 20,
     },
     infoContainer: {
         flex: 2,
         borderLeftColor: '#7154b8',
-        borderLeftWidth: 1,
-        margin: 2,
+        borderLeftWidth: 2,
         justifyContent: 'space-between',
     },
     detailsContainer: {
         flex: 2,
-        flexDirection: 'row',
+        flexDirection: 'column',
         width: '100%',
+
+        borderTopWidth: 2,
+        borderTopColor: '#7154b8',
     },
     title: {
         color: '#7154b8',
         textAlign: 'center',
         fontSize: 20,
-        paddingBottom: 2,
-        margin: 4,
-        borderBottomWidth: 2,
-        borderBottomColor: '#7154b8',
+        margin: 5,
     },
     imagestyle: {
         width: 25,
@@ -152,12 +121,15 @@ const styles = StyleSheet.create({
         paddingBottom: 2,
     },
     detailsButton: {
-        marginTop: 5,
+        marginTop: 15,
         backgroundColor: '#7154b8',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
-        width: 100
+        marginRight: 10,
+        marginLeft: 10,
+        height: 30,
+        width: '90%',
     },
     buttonText: {
         color: '#fff',
@@ -168,13 +140,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-
+        deviceId: state.settings.deviceId,
     };
 }
 
 const mapDispatchToProps = {
-    deleteFromWatchlist,
-    changeStatusFromWatchList
+    SaveOrDeletePerformance,
+    deleteFromWishlist
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WatchListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(WishListItem);
