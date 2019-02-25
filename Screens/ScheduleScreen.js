@@ -28,7 +28,7 @@ class ScheduleScreen extends LocalizeComponent  {
         };
     };
     componentDidMount() {
-        if (this.props.deviceId && this.props.languageCode) {
+        if (this.props.languageCode) {
             let currentDate = new Date();
             this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
         }
