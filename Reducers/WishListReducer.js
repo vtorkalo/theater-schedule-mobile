@@ -10,21 +10,21 @@ import {
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
 
 const initialState = {
-  chosenperformances: [
+  chosenPerformances: [
   ],
   performanceId: null,
   loading: false,
   error: null,
 }
 
-export default function WishlistReducer(state = initialState, action) {
+export default function wishListReducer(state = initialState, action) {
   switch (action.type) {
 
     case DELETE_FROM_WISHLIST: {
-      let chosenperformances = state.chosenperformances;
-      let index = chosenperformances.findIndex(item => item.performanceId == action.payload.performanceId);
-      chosenperformances.splice(index, 1);
-      return { ...state, chosenperformances }
+      let chosenPerformances = state.chosenPerformances;
+      let index = chosenPerformances.findIndex(item => item.performanceId == action.payload.performanceId);
+      chosenPerformances.splice(index, 1);
+      return { ...state, chosenPerformances }
     }
 
     case LOAD_WISHLIST_BEGIN:
@@ -39,7 +39,7 @@ export default function WishlistReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        chosenperformances: action.payload.performances,
+        chosenPerformances: action.payload.performances,
       };
     case STORE_PERFORMANCE_SUCCESS:
       return {
@@ -57,13 +57,13 @@ export default function WishlistReducer(state = initialState, action) {
       };
 
     case ADD_TO_WISHLIST: {
-        let chosenperformances = [...state.chosenperformances,
+        let chosenPerformances = [...state.chosenPerformances,
         {
             title: action.payload.item.title,
             mainImage: action.payload.item.mainImage,
             performanceId: action.payload.performanceId,
         }]
-        return { ...state, chosenperformances }
+        return { ...state, chosenPerformances }
     }
 
     

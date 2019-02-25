@@ -9,7 +9,7 @@ class WishList extends Component {
         return (
             <FlatList
                 style={styles.WishList}
-                data={this.props.chosenperformances}
+                data={this.props.chosenPerformances}
                 keyExtractor={item => item.performanceId.toString()}
                 renderItem={({ item }) => (
                     <WishListItem chosenperformance={item} navigation={this.props.navigation}/>
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        chosenperformances: state.WishListReducer.chosenperformances,
+        chosenPerformances: state.wishListReducer.chosenPerformances,
     }
 }
 

@@ -11,7 +11,7 @@ import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n";
 import Navigator from "./Navigation/Navigator";
 import sliderReducer from './Reducers/SliderReducer';
-import WishListReducer from './Reducers/WishListReducer';
+import wishListReducer from './Reducers/WishListReducer';
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -23,7 +23,7 @@ const appReducer = combineReducers({
   i18nState,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
-  WishListReducer: WishListReducer,
+  wishListReducer: wishListReducer,
   performanceReducer,
   settings,
   message,

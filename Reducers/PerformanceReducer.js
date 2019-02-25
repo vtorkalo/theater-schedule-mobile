@@ -6,7 +6,7 @@ import {
 } from "../Actions/PerformanceTypes";
 
 const initialState = {
-    performance: {},
+    performance: [],
     loading: false,
     error: null,
     isChecked: null,

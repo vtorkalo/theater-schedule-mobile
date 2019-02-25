@@ -23,7 +23,7 @@ class WishListScreen extends LocalizeComponent {
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            {this.props.chosenperformances.length != 0 ?
+                            {this.props.chosenPerformances.length != 0 ?
                                 <WishList navigation={this.props.navigation} /> :
                                 null
                             }
@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.WishListReducer.loading,
+        isLoading: state.wishListReducer.loading,
         isLanguageLoading: state.settings.loading,
-        chosenperformances: state.WishListReducer.chosenperformances,
+        chosenPerformances: state.wishListReducer.chosenPerformances,
     }
 }
 
