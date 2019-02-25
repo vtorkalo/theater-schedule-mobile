@@ -2,8 +2,14 @@ import {
     LOAD_PERFORMANCE_BEGIN,
     LOAD_PERFORMANCE_SUCCESS,
     LOAD_PERFORMANCE_FAILURE,
+    CNANGE_STATUS_PERFORMANCE,
 } from "./PerformanceTypes";
 import BASE_URL from 'TheaterSchedule/baseURL';
+
+export const changeStatusPerformance = (isChecked) => ({
+    type: CNANGE_STATUS_PERFORMANCE,
+    payload: {isChecked},
+});
 
 export const loadPerformanceBegin = () => ({
     type: LOAD_PERFORMANCE_BEGIN,
@@ -19,10 +25,10 @@ export const loadPerformanceFailure = (error) => ({
     payload: { error },
 });
 
-export const loadPerformance = (performanceId, languageCode) => {
+export const loadPerformance = (deviceId, performanceId, languageCode) => {
     return dispatch => {
         dispatch(loadPerformanceBegin());
-        let url = `${BASE_URL}PerformanceDetails/${languageCode}/GetInfo?id=${performanceId}`;
+        let url = `${BASE_URL}PerformanceDetails/${deviceId}/${languageCode}/GetInfo?id=${performanceId}`;
         fetch(url)
             .then(response => response.json())
             .then(responseJson => {

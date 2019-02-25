@@ -4,52 +4,56 @@ import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { BallIndicator } from 'react-native-indicators';
-import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceList'
-import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
-import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
+import { loadWishList } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import WishList from 'TheaterSchedule/Screens/WishListComponents/WishList'
 import LocalizeComponent from "../Localization/LocalizedComponent";
 
-const getDateAfterWeek = () => {
-    let currentDate = new Date();
-    const DAYS_IN_WEEK = 7;
-    let dateAfterWeek = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate() + DAYS_IN_WEEK);
-    return dateAfterWeek;
-}
+class WishListScreen extends LocalizeComponent {
 
-class ScheduleScreen extends LocalizeComponent  {
     static navigationOptions = ({ screenProps }) => {
         return {
-            drawerIcon: (<MaterialCommunityIcons name="calendar-clock" size={25} />),
-            title: screenProps.ScheduleScreenTitle,
+            drawerIcon: (<MaterialCommunityIcons name='wunderlist' size={25} />),
+            title: screenProps.WishlistScreenTitle,
         };
     };
+
+
     componentDidMount() {
-        if (this.props.languageCode) {
-            let currentDate = new Date();
-            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
+        if (this.props.deviceId && this.props.languageCode) {
+            this.subs = [
+                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+            ];
         }
+    }
+
+    componentWillUnmount() {
+        this.subs.forEach((sub) => {
+            sub.remove();
+        });
     }
 
     componentDidUpdate(prevProps) {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
-            let currentDate = new Date();
-            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
-            this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
+            this.subs = [
+                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+            ];
         }
     }
 
     render() {
-        if (this.props.isScheduleLoading || this.props.isLanguageLoading) {
+
+        if (this.props.isLoading || this.props.isLanguageLoading) {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
-                        <BallIndicator color="#aaa" />
+                        <View style={styles.performancesContainer}>
+                            {this.props.chosenPerformances.length != 0 ?
+                                <WishList navigation={this.props.navigation} /> :
+                                null
+                            }
+                        </View>
                     </Content>
                 </Container>
             );
@@ -59,11 +63,8 @@ class ScheduleScreen extends LocalizeComponent  {
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
-                        <View style={styles.filterContainer}>
-                            <DateFilter />
-                        </View>
                         <View style={styles.performancesContainer}>
-                            <PerformanceList navigation={this.props.navigation} />
+                            <WishList navigation={this.props.navigation} />
                         </View>
                     </Content>
                 </Container>
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         justifyContent: 'space-between',
-        backgroundColor: '#BFD0D670'
+        backgroundColor: '#eee',
     },
     filterContainer: {
         flex: 1,
@@ -97,14 +98,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isScheduleLoading: state.scheduleReducer.loading,
+        isLoading: state.wishListReducer.loading,
         isLanguageLoading: state.settings.loading,
+        chosenPerformances: state.wishListReducer.chosenPerformances,
+        deviceId: state.settings.deviceId,
         languageCode: state.settings.settings.languageCode,
     }
 }
 
 const mapDispatchToProps = {
-    loadSchedule
+    loadWishList
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScheduleScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(WishListScreen);
