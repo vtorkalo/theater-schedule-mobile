@@ -9,6 +9,7 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import ImageLayout from "react-native-image-layout";
 import _ from 'lodash';
+import {getCreativeTeamMembers} from "../Selectors/PerformanceScreenSelector";
 
 var images = [ // temp images while we don`t have gellery images from site
     { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
@@ -21,7 +22,6 @@ var images = [ // temp images while we don`t have gellery images from site
 class PerformanceScreen extends LocalizeComponent {
     componentDidMount() {
         this.props.loadPerformance(this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
-        this.props.loadPerformance(1, 'en');
     };
 
     render() {
@@ -129,16 +129,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
-
-const getCreativeTeamMembers = (role) => {
-    if (!role) return '-';
-    
-    var personByRole = []
-    role.forEach(person => {
-        personByRole.push(person.firstName + " " + person.lastName);
-    })
-    return _.join(personByRole, ', ');
-};
 
 const mapStateToProps = (state) => {
     const roles = _.groupBy(state.performanceReducer.performance.teamMember, teamMember => teamMember.roleKey);
