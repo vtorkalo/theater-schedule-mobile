@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     },
     leftContainer: {
         width: 50,
-        backgroundColor: "red",
         justifyContent: "center",
     },
     touchableContainer: {

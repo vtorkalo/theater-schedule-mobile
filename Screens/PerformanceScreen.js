@@ -9,8 +9,7 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
-import _ from 'lodash';
-import { getComposers } from "../Selectors/CreativeTeamMembersSelector";
+import { getTeamMembers } from "../Selectors/CreativeTeamMembersSelector";
 
 var images = [ // temp images while we don`t have gellery images from site
     { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
@@ -32,7 +31,6 @@ class PerformanceScreen extends LocalizeComponent {
 
     render() {
         const performanceId = this.props.navigation.getParam('performance', 'NO-ID');
-
         if ((this.props.isLoading) || (!this.props.performance)) {
 
             return (
@@ -88,8 +86,8 @@ class PerformanceScreen extends LocalizeComponent {
                                 <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
                                 <View style={{ marginBottom: 10 }} />
-
                             </View>
+
                         </ScrollView>
                     </Content>
                 </Container>
@@ -159,8 +157,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-    const roles = _.groupBy(state.performanceReducer.performance.teamMember, teamMembers => teamMembers.roleKey);
-    const { Authors, Composers, Producers, Painters } = getComposers(roles);
+
+    const { Authors, Composers, Producers, Painters } = getTeamMembers(state.performanceReducer.performance.teamMember);
     return {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,

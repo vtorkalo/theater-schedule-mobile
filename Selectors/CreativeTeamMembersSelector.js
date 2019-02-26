@@ -1,12 +1,29 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash';
 
-const authorsSelector = roles => roles['Author']
-const producersSelector = roles => roles['Producer'];
-const composersSelector = roles => roles['Composer'];
-const paintersSelector = roles => roles['Painter'];
+const groupingSelector = creativeTeamMembers => _.groupBy(creativeTeamMembers, teamMembers => teamMembers.roleKey);
 
-export const getComposers = createSelector(
+const authorsSelector = createSelector(
+    groupingSelector,
+    (roles) => roles['Author']
+)
+
+const producersSelector = createSelector(
+    groupingSelector,
+    (roles) => roles['Producer']
+)
+
+const composersSelector = createSelector(
+    groupingSelector,
+    (roles) => roles['Composer']
+)
+
+const paintersSelector = createSelector(
+    groupingSelector,
+    (roles) => roles['Painter']
+)
+
+export const getTeamMembers = createSelector(
     authorsSelector,
     producersSelector,
     composersSelector,
@@ -21,11 +38,11 @@ export const getComposers = createSelector(
             });
             return _.join(personByRole, ', ');
         };
-        var Authors = getCreativeTeamMembers(authors);  
+        var Authors = getCreativeTeamMembers(authors);
         var Producers = getCreativeTeamMembers(producers);
-        var Composers = getCreativeTeamMembers(composers);   
+        var Composers = getCreativeTeamMembers(composers);
         var Painters = getCreativeTeamMembers(painters);
-       
+
         return { Authors, Composers, Producers, Painters };
     }
 );
