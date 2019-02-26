@@ -1,14 +1,19 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Left, Header, Right, Body } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 
 export default DrawerMenuIcon = (props) => {
     return (
         <Header style={styles.headerContainer} >
-            <Left>
-                <Ionicons name='md-arrow-round-back' color='white' size={32} onPress={props.onPressMenuIcon} />
-            </Left>
+            <TouchableOpacity
+                onPress={props.onPressMenuIcon}
+                style={styles.touchableContainer}
+            >
+                <Left style={styles.leftContainer} >
+                    <Ionicons name='md-arrow-round-back' color='white' size={32} />
+                </Left>
+            </TouchableOpacity>
             <Body />
             <Right />
         </Header>
@@ -16,6 +21,14 @@ export default DrawerMenuIcon = (props) => {
 }
 const styles = StyleSheet.create({
     headerContainer: {
-        backgroundColor: '#7154b8'
-    }
+        backgroundColor: '#7154b8',
+    },
+    leftContainer: {
+        width: 50,
+        justifyContent: "center",
+    },
+    touchableContainer: {
+        justifyContent: "center",
+    },
+
 })
