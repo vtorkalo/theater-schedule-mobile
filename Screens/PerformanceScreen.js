@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
@@ -9,12 +9,17 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
+import { getTeamMembers } from "../Selectors/CreativeTeamMembersSelector";
+
+var images = [ // temp images while we don`t have gellery images from site
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3196-300x170.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3184-300x169.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3178-300x169.jpg", },
+    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3165-300x169.jpg", },
+]
 
 class PerformanceScreen extends LocalizeComponent {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.loadPerformance(this.props.deviceId, this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
     };
@@ -26,10 +31,11 @@ class PerformanceScreen extends LocalizeComponent {
 
     render() {
         const performanceId = this.props.navigation.getParam('performance', 'NO-ID');
-        if (this.props.isLoading) {
+        if ((this.props.isLoading) || (!this.props.performance)) {
+
             return (
                 <Container style={styles.container}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <BallIndicator color="#aaa" />
                     </Content>
@@ -38,7 +44,6 @@ class PerformanceScreen extends LocalizeComponent {
         } else {
             let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
             return (
-
                 <Container>
                     <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
                     <Content contentContainerStyle={styles.contentContainer}>
@@ -66,8 +71,14 @@ class PerformanceScreen extends LocalizeComponent {
                             </View>
 
                             <View style={styles.textContainer} >
-                                <Text style={styles.textSubtitle}>{this.t("actors")}:</Text>
-                                <Text style={styles.testStyle}>{this.t("Andrii Mudrak")}, {this.t("Taras Tymchuk")}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("AUTHOR")}:</Text>
+                                <Text style={styles.testStyle}>{this.props.Authors}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("PRODUCER")}:</Text>
+                                <Text style={styles.testStyle}>{this.props.Producers}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("PAINTER")}:</Text>
+                                <Text style={styles.testStyle}>{this.props.Painters}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("COMPOSER")}:</Text>
+                                <Text style={styles.testStyle}>{this.props.Composers}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.description}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("price")}</Text>
@@ -75,8 +86,8 @@ class PerformanceScreen extends LocalizeComponent {
                                 <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
                                 <View style={{ marginBottom: 10 }} />
-
                             </View>
+
                         </ScrollView>
                     </Content>
                 </Container>
@@ -145,11 +156,17 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
+
+    const { Authors, Composers, Producers, Painters } = getTeamMembers(state.performanceReducer.performance.teamMember);
     return {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
+        Authors,
+        Producers,
+        Composers,
+        Painters,
         deviceId: state.settings.deviceId,
         isChecked: state.performanceReducer.isChecked,
     }

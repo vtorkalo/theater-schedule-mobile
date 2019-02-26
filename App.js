@@ -21,10 +21,10 @@ import { setAppReady } from './Actions/AppActions/AppActionCreators';
 
 const appReducer = combineReducers({
   i18nState,
+  performanceReducer,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
   wishListReducer: wishListReducer,
-  performanceReducer,
   settings,
   message,
   defaultReducer,
