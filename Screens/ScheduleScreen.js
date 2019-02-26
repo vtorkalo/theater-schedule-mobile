@@ -21,14 +21,14 @@ const getDateAfterWeek = () => {
 }
 
 class ScheduleScreen extends LocalizeComponent  {
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ screenProps }) => {
         return {
-          drawerIcon: (<MaterialCommunityIcons name="calendar-clock" size={25} />),
-          title: navigation.getParam("scheduleScreenTitle", "Schedule_Screen")
+            drawerIcon: (<MaterialCommunityIcons name="calendar-clock" size={25} />),
+            title: screenProps.ScheduleScreenTitle,
         };
-      };
+    };
     componentDidMount() {
-        if (this.props.deviceId && this.props.languageCode) {
+        if (this.props.languageCode) {
             let currentDate = new Date();
             this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
         }
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         justifyContent: 'space-between',
-        backgroundColor: '#eee',
+        backgroundColor: '#BFD0D670'
     },
     filterContainer: {
         flex: 1,
