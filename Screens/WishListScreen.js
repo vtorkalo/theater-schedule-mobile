@@ -45,7 +45,6 @@ class WishListScreen extends LocalizeComponent {
     render() {
 
         if (this.props.isLoading || this.props.isLanguageLoading) {
-            console.log(this.props.chosenPerformances.length);
             return (  
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
