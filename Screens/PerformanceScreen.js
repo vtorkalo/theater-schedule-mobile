@@ -10,6 +10,7 @@ import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 import _ from 'lodash';
+import { getComposers } from "../Selectors/CreativeTeamMembersSelector";
 
 var images = [ // temp images while we don`t have gellery images from site
     { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
@@ -30,14 +31,13 @@ class PerformanceScreen extends LocalizeComponent {
     }
 
     render() {
-
         const performanceId = this.props.navigation.getParam('performance', 'NO-ID');
 
         if ((this.props.isLoading) || (!this.props.performance)) {
 
             return (
                 <Container style={styles.container}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <BallIndicator color="#aaa" />
                     </Content>
@@ -78,6 +78,8 @@ class PerformanceScreen extends LocalizeComponent {
                                 <Text style={styles.textSubtitle}>{this.t("PRODUCER")}:</Text>
                                 <Text style={styles.testStyle}>{this.props.Producers}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("PAINTER")}:</Text>
+                                <Text style={styles.testStyle}>{this.props.Painters}</Text>
+                                <Text style={styles.textSubtitle}>{this.t("COMPOSER")}:</Text>
                                 <Text style={styles.testStyle}>{this.props.Composers}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.description}</Text>
@@ -156,23 +158,9 @@ const styles = StyleSheet.create({
     }
 });
 
-const getCreativeTeamMembers = (role) => {
-    if (!role) return '-';
-
-    var personByRole = []
-    role.forEach(person => {
-        personByRole.push(person.firstName + " " + person.lastName);
-    })
-    return _.join(personByRole, ', ');
-};
-
 const mapStateToProps = (state) => {
-    const roles = _.groupBy(state.performanceReducer.performance.teamMember, teamMember => teamMember.roleKey);
-    const Authors = getCreativeTeamMembers(roles['Author']);
-    const Producers = getCreativeTeamMembers(roles['Producer']);
-    const Composers = getCreativeTeamMembers(roles["Composer"]);
-    const Painters = getCreativeTeamMembers(roles['Choreographer']);
-
+    const roles = _.groupBy(state.performanceReducer.performance.teamMember, teamMembers => teamMembers.roleKey);
+    const { Authors, Composers, Producers, Painters } = getComposers(roles);
     return {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,
