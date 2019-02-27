@@ -4,6 +4,7 @@ import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import { BallIndicator } from 'react-native-indicators';
 import { loadWishList } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import WishList from 'TheaterSchedule/Screens/WishListComponents/WishList'
 import LocalizeComponent from "../Localization/LocalizedComponent";
@@ -44,15 +45,12 @@ class WishListScreen extends LocalizeComponent {
     render() {
 
         if (this.props.isLoading || this.props.isLanguageLoading) {
-            return (
+            return (  
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            {this.props.chosenPerformances.length != 0 ?
-                                <WishList navigation={this.props.navigation} /> :
-                                null
-                            }
+                            <BallIndicator color="#aaa" />
                         </View>
                     </Content>
                 </Container>
