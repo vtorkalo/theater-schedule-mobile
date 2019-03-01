@@ -40,6 +40,7 @@ export const translations = {
         'WishlistScreenTitle': 'Хочу подитивись',
         "Add to favourites": "Додати до улюблених",
         "Remove from favourites": "Прибрати з улюблених",
+        "emptyScreenMessage": "На жаль, на даний період вистав немає",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -82,5 +83,6 @@ export const translations = {
         'WishlistScreenTitle': 'WishList',
         "Add to favourites": "Add to favourites",
         "Remove from favourites": "Remove from favourites",
+        "emptyScreenMessage": "Unfortunately there are no performances for this period",
     },
 }
