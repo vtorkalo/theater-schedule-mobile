@@ -1,7 +1,7 @@
 import { AppNavigator } from '../Navigation/Navigator';
 import { CHANGE_SCREEN } from '../Actions/AppActions/AppActionTypes'
 
-const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('DrawerStack'));
+const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Splash'));
 
 export default (state = initialState, action) => {
     switch (action.type) {
