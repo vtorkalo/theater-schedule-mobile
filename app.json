@@ -1,29 +1,28 @@
 {
-   "name": "TheaterSchedule",
-   "displayName": "TheaterSchedule",
-   "expo": {
-      "name": "TheaterSchedule",
-      "slug": "TheaterSchedule",
-      "privacy": "public",
-      "sdkVersion": "32.0.0",
-      "platforms": [
-         "ios",
-         "android"
-      ],
-      "version": "1.0.0",
-      "orientation": "portrait",
-      "updates": {
-         "fallbackToCacheTimeout": 0
-      },
-      "assetBundlePatterns": [
-         "**/*"
-      ],
-      "ios": {
-         "supportsTablet": true
-      },
-      "androidStatusBarColor":"#334393",
-      "androidStatusBar": {
-         "backgroundColor": "#334393"
-       }
-   }
+  "name": "TheaterSchedule",
+  "displayName": "TheaterSchedule",
+  "expo": {
+    "name": "TheaterSchedule",
+    "slug": "TheaterSchedule",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "androidStatusBarColor": "#334393",
+    "androidStatusBar": {
+      "backgroundColor": "#334393"
+    },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.lv375dotnet.lvivpuppet"
+    }
+  }
 }
