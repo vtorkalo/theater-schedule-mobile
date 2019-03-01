@@ -4,6 +4,7 @@ import BASE_URL from "../baseURL";
 
 export default async () => {
   let previousToken = await AsyncStorage.getItem("pushtoken");
+  console.log(previousToken);
 
   if (previousToken) {
     return;
@@ -30,7 +31,7 @@ export default async () => {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ token })
+      body: JSON.stringify({ token, deviceId })
     });
 
     AsyncStorage.setItem("pushtoken", token);
