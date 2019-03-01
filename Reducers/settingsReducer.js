@@ -1,3 +1,6 @@
+import moment from "moment";
+import "moment/locale/uk";
+
 import {
   LOAD_SETTINGS_BEGIN,
   LOAD_SETTINGS_SUCCESS,
@@ -10,6 +13,7 @@ import {
 const initialState = {
   deviceId: null,
   settings: {},
+  moment: moment,
   loading: false,
   error: null
 };
@@ -25,19 +29,23 @@ export default function settingsReducer(state = initialState, action) {
         error: null
       };
 
-    case LOAD_SETTINGS_SUCCESS:
+    case LOAD_SETTINGS_SUCCESS: {
+      state.moment.locale(action.payload.settings.languageCode);
       return {
         ...state,
         loading: false,
         deviceId: action.payload.deviceId,
-        settings: { ...action.payload.settings }
+        settings: { ...action.payload.settings },
       };
-    case STORE_SETTINGS_SUCCESS:
+    }
+    case STORE_SETTINGS_SUCCESS: {
+      state.moment.locale(action.payload.settings.languageCode);
       return {
         ...state,
         loading: false,
         settings: { ...action.payload.settings }
       };
+    }
 
     case LOAD_SETTINGS_FAILURE:
     case STORE_SETTINGS_FAILURE:
