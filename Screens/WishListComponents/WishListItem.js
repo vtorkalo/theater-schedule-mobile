@@ -8,31 +8,26 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import 'moment/locale/uk';
 
-import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
-
-class PerformanceItem extends LocalizedComponent {
+class WishListItem extends LocalizedComponent {
     constructor(props) {
         super(props);
     }
 
+    deletefromWishlist = () => {
+        this.props.SaveOrDeletePerformance(this.props.deviceId, this.props.chosenperformance.performanceId);
+        this.props.deleteFromWishlist(this.props.chosenperformance.performanceId);
+    }
+
     pressedDetailsHandler = () => {
-        this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId });
-    }
-
-
-    convertToReadableTime = date => {
-        return moment(date).format("HH:mm");
-    }
-
-    convertToReadableDate = date => {
-        return moment(date).format("dddd, Do MMMM");
+        this.props.navigation.navigate("performanceStack", { performance: this.props.chosenperformance.performanceId });
     }
 
     render() {
-        let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+        let base64Image = `data:image/png;base64,${this.props.chosenperformance.mainImage}`;
 
         return (
             <View style={styles.performanceContainer}>
@@ -44,29 +39,19 @@ class PerformanceItem extends LocalizedComponent {
                     />
                 </View>
                 <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{this.props.performance.title}</Text>
+                    <Text style={styles.title}>{this.props.chosenperformance.title}</Text>
                     <View style={styles.detailsContainer}>
-                        <Text style={styles.additionalInfo}>
-                            {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
-                        </Text>
-                    </View>
-                    <View style={styles.detailsContainer}>
-                        <Text style={styles.additionalInfo}>
-                            {this.t('Beginning')}:
-                        </Text>
-                        <TouchableOpacity>
-                            <Text
-                                style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
-                            >
-                                {this.convertToReadableTime(this.props.performance.beginning)}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.starContainer}>
                         <TouchableOpacity onPress={this.pressedDetailsHandler}>
                             <View style={styles.detailsButton}>
                                 <Text style={styles.buttonText}>
                                     {this.t('Details')}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.deletefromWishlist}>
+                            <View style={styles.detailsButton}>
+                                <Text style={styles.buttonText}>
+                                    {this.t('Remove from favourites')}
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -85,13 +70,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#fff',
         borderColor: '#7154b8',
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 30,
         margin: 5,
     },
     starContainer: {
         flex: 2,
-        flexDirection: 'row',
         justifyContent: 'space-around',
     },
     imageContainer: {
@@ -102,48 +86,50 @@ const styles = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
-        borderRadius: 30,
+        borderRadius: 20,
     },
     infoContainer: {
         flex: 2,
         borderLeftColor: '#7154b8',
-        borderLeftWidth: 1,
-        margin: 2,
+        borderLeftWidth: 2,
         justifyContent: 'space-between',
     },
     detailsContainer: {
         flex: 2,
-        flexDirection: 'row',
+        flexDirection: 'column',
         width: '100%',
+
+        borderTopWidth: 2,
+        borderTopColor: '#7154b8',
     },
     title: {
         color: '#7154b8',
         textAlign: 'center',
         fontSize: 20,
-        paddingBottom: 2,
-        margin: 4,
-        borderBottomWidth: 2,
-        borderBottomColor: '#7154b8',
+        margin: 5,
     },
     imagestyle: {
         width: 25,
         height: 25,
     },
     additionalInfo: {
-        fontSize: 15,
+        fontSize: 17,
         color: '#7154b8',
         margin: 2,
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingBottom: 2,
     },
     detailsButton: {
-        marginTop: 5,
+        marginTop: 15,
         backgroundColor: '#7154b8',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
-        width: 100
+        marginRight: 10,
+        marginLeft: 10,
+        height: 30,
+        width: '90%',
     },
     buttonText: {
         color: '#fff',
@@ -152,4 +138,15 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect()(PerformanceItem);
+const mapStateToProps = (state) => {
+    return {
+        deviceId: state.settings.deviceId,
+    };
+}
+
+const mapDispatchToProps = {
+    SaveOrDeletePerformance,
+    deleteFromWishlist
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WishListItem);

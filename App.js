@@ -23,10 +23,10 @@ import { Notifications } from "expo";
 
 const appReducer = combineReducers({
   i18nState,
+  performanceReducer,
   sliderActiveSlide: sliderReducer,
   scheduleReducer: scheduleReducer,
-  watchListReducer: watchListReducer,
-  performanceReducer,
+  wishListReducer: wishListReducer,
   settings,
   message,
   defaultReducer,
