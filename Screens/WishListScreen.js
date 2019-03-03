@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -22,7 +22,7 @@ class WishListScreen extends LocalizeComponent {
     componentDidMount() {
         if (this.props.deviceId && this.props.languageCode) {
             this.subs = [
-                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+                this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
             ];
         }
     }
@@ -37,7 +37,7 @@ class WishListScreen extends LocalizeComponent {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
             this.subs = [
-                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+                this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
             ];
         }
     }
@@ -45,12 +45,15 @@ class WishListScreen extends LocalizeComponent {
     render() {
 
         if (this.props.isLoading || this.props.isLanguageLoading) {
-            return (  
+            return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            <BallIndicator color="#aaa" />
+                            {this.props.chosenPerformances.length != 0 ?
+                                <WishList navigation={this.props.navigation} />
+                                : <BallIndicator color="#aaa" />
+                            }
                         </View>
                     </Content>
                 </Container>
@@ -62,7 +65,17 @@ class WishListScreen extends LocalizeComponent {
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            <WishList navigation={this.props.navigation} />
+                            {this.props.chosenPerformances.length != 0 ?
+                                <WishList navigation={this.props.navigation} /> :
+                                <View style={styles.emptyListContainer}>
+                                    <Image
+                                        style={styles.image}
+                                        resizeMode='contain'
+                                        source={require('../img/logo.png')}
+                                    />
+                                    <Text style={styles.description} >{this.t("Description on empty wishlistscreen")}</Text>
+                                </View>
+                            }
                         </View>
                     </Content>
                 </Container>
@@ -91,6 +104,23 @@ const styles = StyleSheet.create({
     },
     performancesContainer: {
         flex: 12,
+    },
+    emptyListContainer: {
+        flex: 1,
+        backgroundColor: '#eee',
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    image: {
+        height: Dimensions.get('window').height * 0.4,
+    },
+    description: {
+        marginTop: 50,
+        fontSize: 20,
+        fontWeight: "bold",
+        color: '#7154b8',
+        textAlign: 'center',
+        width: Dimensions.get('window').width * 0.8,
     },
 });
 
