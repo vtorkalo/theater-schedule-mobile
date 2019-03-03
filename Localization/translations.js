@@ -40,6 +40,8 @@ export const translations = {
         'WishlistScreenTitle': 'Хочу подитивись',
         "Add to favourites": "Додати до улюблених",
         "Remove from favourites": "Прибрати з улюблених",
+        "Performance Image Gallery: ": "Галерея вистави: ",
+        "Lviv Puppet Theater": "Львівський театр ляльок",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -82,5 +84,7 @@ export const translations = {
         'WishlistScreenTitle': 'WishList',
         "Add to favourites": "Add to favourites",
         "Remove from favourites": "Remove from favourites",
+        "Performance Image Gallery: ": "Performance Image Gallery: ",
+        "Lviv Puppet Theater": "Lviv Puppet Theater",
     },
 }

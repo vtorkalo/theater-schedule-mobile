@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
@@ -10,6 +10,8 @@ import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 import { getTeamMembers } from "../Selectors/CreativeTeamMembersSelector";
+import { Card, CardItem, Left, Body, Thumbnail, List } from 'native-base';
+import ImageGallery from './PerformanceDetailsComponents/ImageGallery';
 
 var images = [ // temp images while we don`t have gellery images from site
     { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
@@ -85,9 +87,36 @@ class PerformanceScreen extends LocalizeComponent {
                                 <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
-                                <View style={{ marginBottom: 10 }} />
+                                {/* <View style={{ marginBottom: 10 }} /> */}
                             </View>
 
+                            <View style={{ flex: 1, marginBottom: 25 }}>
+                                <ImageGallery
+                                    images={images}
+                                    galleryTitle={this.t("Performance Image Gallery: ")}
+                                    keyExtractor={(item) => item.uri}
+                                    showImage={({ item }) =>
+                                        <View style={styles.cardContainer}>
+                                            <Card style={styles.card}>
+                                                <CardItem>
+                                                    <Left>
+                                                        <Thumbnail source={require('../img/puppet1.png')} />
+                                                        <Body>
+                                                            <Text style={{ fontSize: 18 }}>{this.props.performance.title}</Text>
+                                                            <Text note style={{ fontStyle: 'italic' }}>{this.t("Lviv Puppet Theater")}</Text>
+                                                        </Body>
+                                                    </Left>
+                                                </CardItem>
+                                                <CardItem cardBody>
+                                                    <Image source={{ uri: `${item.uri}` }} style={styles.galleryImage} />
+                                                </CardItem>
+                                                <CardItem>
+                                                </CardItem>
+                                            </Card>
+                                        </View>
+                                    }
+                                />
+                            </View>
                         </ScrollView>
                     </Content>
                 </Container>
@@ -101,7 +130,25 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        backgroundColor: "#BFD0D6",
+        backgroundColor: '#BFD0D670'
+    },
+    cardContainer: {
+        marginVertical: 10,
+        marginHorizontal: 5,
+        shadowColor: '#1a1917',
+        shadowOpacity: 0.5,
+        shadowOffset: { width: 0, height: 5 },
+        shadowRadius: 5
+    },
+    card: {
+        minHeight: 300,
+        minWidth: 300,
+    },
+    galleryImage: {
+        height: 200,
+        width: null,
+        flex: 1,
+        resizeMode: 'cover'
     },
     imageContainer: {
         height: Dimensions.get('window').height * 0.6,

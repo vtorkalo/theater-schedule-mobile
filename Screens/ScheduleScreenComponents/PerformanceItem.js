@@ -8,8 +8,6 @@ import {
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
-import 'moment/locale/uk';
 
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 
@@ -22,13 +20,12 @@ class PerformanceItem extends LocalizedComponent {
         this.props.navigation.navigate("performanceStack", { performance: this.props.performance.performanceId });
     }
 
-
     convertToReadableTime = date => {
-        return moment(date).format("HH:mm");
+        return this.props.moment(date).format("HH:mm");
     }
 
     convertToReadableDate = date => {
-        return moment(date).format("dddd, Do MMMM");
+        return this.props.moment(date).format("dddd, Do MMMM");
     }
 
     render() {
@@ -152,4 +149,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect()(PerformanceItem);
+const mapStateToProps = state => {
+    return {
+        moment: state.settings.moment,
+    }
+}
+
+export default connect(mapStateToProps)(PerformanceItem);

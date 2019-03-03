@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux';
 import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
-import 'moment/locale/uk';
 
 class WishListItem extends LocalizedComponent {
     constructor(props) {
