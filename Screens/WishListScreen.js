@@ -22,7 +22,7 @@ class WishListScreen extends LocalizeComponent {
     componentDidMount() {
         if (this.props.deviceId && this.props.languageCode) {
             this.subs = [
-                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+                this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
             ];
         }
     }
@@ -37,7 +37,7 @@ class WishListScreen extends LocalizeComponent {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
             this.subs = [
-                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+                this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
             ];
         }
     }
@@ -45,12 +45,15 @@ class WishListScreen extends LocalizeComponent {
     render() {
 
         if (this.props.isLoading || this.props.isLanguageLoading) {
-            return (  
+            return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
-                            <BallIndicator color="#aaa" />
+                            {this.props.chosenPerformances.length != 0 ?
+                                <WishList navigation={this.props.navigation} />
+                                : <BallIndicator color="#aaa" />
+                            }
                         </View>
                     </Content>
                 </Container>
