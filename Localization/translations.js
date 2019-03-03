@@ -42,6 +42,8 @@ export const translations = {
         "Remove from favourites": "Прибрати з улюблених",
         "Performance Image Gallery: ": "Галерея вистави: ",
         "Lviv Puppet Theater": "Львівський театр ляльок",
+        "emptyScheduleMessage": "На жаль, на даний період вистав немає",
+        "emptyWishlistMessage": "Наразі Ваш список порожній. Додати вистави можна зі сторінки з детальною інформацією.",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -86,5 +88,7 @@ export const translations = {
         "Remove from favourites": "Remove from favourites",
         "Performance Image Gallery: ": "Performance Image Gallery: ",
         "Lviv Puppet Theater": "Lviv Puppet Theater",
+        "emptyScheduleMessage": "Unfortunately there are no performances for this period",
+        "emptyWishlistMessage": "Your wishlist is currently empty. You can add the performance from the page with the detailed information.",
     },
 }
