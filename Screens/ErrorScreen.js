@@ -7,7 +7,7 @@ export class ErrorScreen extends LocalizeComponent {
   swichscreen=()=>
   {
     this.props.navigation.navigate("Schedule");
-    throw("hello");
+    
   }
     static navigationOptions = ({screenProps})=> {
         return {

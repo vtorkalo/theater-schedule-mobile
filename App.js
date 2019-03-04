@@ -18,24 +18,7 @@ import DeviceInfo from "react-native-device-info";
 import performanceReducer from './Reducers/PerformanceReducer';
 import AppNavigator from './AppNavigatorComponent';
 import { setAppReady } from './Actions/AppActions/AppActionCreators';
-import {setJSExceptionHandler} from 'react-native-exception-handler';
-import { setNativeExceptionHandler } from "react-native-exception-handler";
-const exceptionhandlerJS = (error, isFatal) => {
-  // error handler function//js
-  if (isFatal) {
-     this.props.navigation.navigate("Error");
-  } else {
-    console.log(error.name); 
-  }
-};
 
-setJSExceptionHandler(exceptionhandlerJS);
-const exceptionhandlerRN = (error)=>{
-  // exception handler code here//native
-   this.props.navigation.navigate("Error");
-   console.log(error)
-}
-setNativeExceptionHandler(exceptionhandlerRN);
 
 const appReducer = combineReducers({
   i18nState,

@@ -20,6 +20,7 @@ import {
   sendMessage
 } from "../Actions/messageActions";
 import LocalizeComponent from "../Localization/LocalizedComponent";
+import { ErrorScreen } from "./ErrorScreen";
 
 class MessageScreen extends LocalizeComponent {
   static navigationOptions = ({ screenProps }) => {
@@ -31,7 +32,7 @@ class MessageScreen extends LocalizeComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.message.sendingError && this.props.message.sendingError) {
-      Alert.alert(this.t("sendingError"), this.t("errorMessage"));
+       this.props.navigation.navigate("Error");
     } else if (
       prevProps.message.isSending &&
       !this.props.message.sendingError

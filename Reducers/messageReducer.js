@@ -1,3 +1,5 @@
+import { AppNavigator } from '../Navigation/Navigator';
+
 import {
   ENTER_MESSAGE_SUBJECT,
   ENTER_MESSAGE_TEXT,
@@ -14,7 +16,8 @@ const initialState = {
   subjectError: "",
   textError: "",
   isSending: false,
-  sendingError: null
+  sendingError: null,
+  errorScreen: AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Splash')),
 };
 
 export default function messageReducer(state = initialState, action) {
@@ -43,8 +46,10 @@ export default function messageReducer(state = initialState, action) {
       return { ...state, isSending: false, subject: "", text: "" };
 
     case SEND_MESSAGE_FAILURE:
-      return { ...state, isSending: false, sendingError: action.payload.error };
-
+    {
+      return { ...state, isSending: false, sendingError: action.payload.error , errorScreen: AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Splash'))};
+      
+    }
     default:
       return state;
   }

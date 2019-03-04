@@ -38,7 +38,7 @@ export const sendMessageSuccess = () => ({
 
 export const sendMessageFailure = error => ({
   type: SEND_MESSAGE_FAILURE,
-  payload: { error }
+  payload: { error },
 });
 
 export const sendMessage = message => {
@@ -47,14 +47,15 @@ export const sendMessage = message => {
 
     if (subjectError || textError) return;
 
-    dispatch(sendMessageBegin());
-    fetch(`${BASE_URL}message`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(message)
-    })
+      dispatch(sendMessageBegin());
+      fetch(`${BASE_URL}message`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(message),
+      
+      })
       .then(response => {
         if (!response.ok) {
           throw new Error(response.statusText);
