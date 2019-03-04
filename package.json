@@ -17,6 +17,7 @@
     "react-native": "0.57.8",
     "react-native-check-box": "^2.1.7",
     "react-native-device-info": "^0.25.1",
+    "react-native-exception-handler": "^2.10.6",
     "react-native-flash-message": "^0.1.10",
     "react-native-indicators": "^0.13.0",
     "react-native-modal-datetime-picker": "^6.0.0",

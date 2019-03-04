@@ -4,6 +4,11 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Container } from 'native-base';
 export class ErrorScreen extends LocalizeComponent {
+  swichscreen=()=>
+  {
+    this.props.navigation.navigate("Schedule");
+    throw("hello");
+  }
     static navigationOptions = ({screenProps})=> {
         return {
             drawerIcon: (<MaterialCommunityIcons name='alien' size={25} />),
@@ -19,7 +24,7 @@ export class ErrorScreen extends LocalizeComponent {
                 <View style={styles.errorMessage}><Text style={styles.bigErrorText}>{this.t('ErrorTextHeader')}</Text>
                 <Text style={styles.errorText}>{this.t('ErrorTextBody')}</Text></View>
                 <View style={styles.errorMessage}><Text style={styles.errorText}>{this.t('ErrorMessage')}</Text></View>
-                <View style={styles.reloadContainer}><TouchableOpacity style={styles.reloadButton} onPress={()=> this.props.navigation.navigate("Schedule")}><Text style={styles.errorText}>{this.t('Reload')}</Text></TouchableOpacity></View>
+                <View style={styles.reloadContainer}><TouchableOpacity style={styles.reloadButton} onPress={()=>this.swichscreen() }><Text style={styles.errorText}>{this.t('Reload')}</Text></TouchableOpacity></View>
             </View>
       </Container>
     );
