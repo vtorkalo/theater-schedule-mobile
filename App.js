@@ -10,12 +10,12 @@ import { middleware } from "./Navigation/Navigator";
 import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n";
 import sliderReducer from "./Reducers/SliderReducer";
+import wishListReducer from "./Reducers/WishListReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
 import performanceReducer from "./Reducers/PerformanceReducer";
 import AppNavigator from "./AppNavigatorComponent";
-import  wishListReducer  from "./Reducers/WishListReducer";
 import registerForNotification from "./services/pushNotification";
 import { Notifications } from "expo";
 
