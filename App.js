@@ -11,7 +11,7 @@ import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n";
 import Navigator from "./Navigation/Navigator";
 import sliderReducer from "./Reducers/SliderReducer";
-import watchListReducer from "./Reducers/WatchListReducer";
+import wishListReducer from "./Reducers/WishListReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -20,6 +20,7 @@ import AppNavigator from "./AppNavigatorComponent";
 import { setAppReady } from "./Actions/AppActions/AppActionCreators";
 import registerForNotification from "./services/pushNotification";
 import { Notifications } from "expo";
+import  PromoActionReducer  from "./Reducers/PromoActionReducer"
 
 const appReducer = combineReducers({
   i18nState,
@@ -29,6 +30,7 @@ const appReducer = combineReducers({
   wishListReducer: wishListReducer,
   settings,
   message,
+  PromoActionReducer,
   defaultReducer,
   navigation
 });

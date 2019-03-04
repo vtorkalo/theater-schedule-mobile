@@ -40,6 +40,7 @@ export const translations = {
         'WishlistScreenTitle': 'Хочу подитивись',
         "Add to favourites": "Додати до улюблених",
         "Remove from favourites": "Прибрати з улюблених",
+        "PromoActionScreenTitle": "Промоакції",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -82,5 +83,6 @@ export const translations = {
         'WishlistScreenTitle': 'WishList',
         "Add to favourites": "Add to favourites",
         "Remove from favourites": "Remove from favourites",
+        "PromoActionScreenTitle": "Promo Actions",
     },
 }
