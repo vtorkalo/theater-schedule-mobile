@@ -85,11 +85,8 @@ export const translations = {
         'WishlistScreenTitle': 'WishList',
         "Add to favourites": "Add to favourites",
         "Remove from favourites": "Remove from favourites",
-<<<<<<< HEAD
         "Performance Image Gallery: ": "Performance Image Gallery: ",
         "Lviv Puppet Theater": "Lviv Puppet Theater",
-=======
         "PromoActionScreenTitle": "Promo Actions",
->>>>>>> ce81da29edfc89ff1e08b148e1727fbf1aef9a4d
     },
 }
