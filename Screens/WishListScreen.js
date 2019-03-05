@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         backgroundColor: '#eee',
-        opacity: 0.3,
     },
     filterContainer: {
         flex: 1,
@@ -107,12 +106,12 @@ const styles = StyleSheet.create({
         flex: 12,
     },
     bottom: {
-        flex: 1,
         justifyContent: 'flex-end',
+        opacity: 0.3,
     },
     indicator: {
         position: 'absolute',
-        bottom: "50%",
+        top: "50%",
         right: 0,
         left: 0,
         zIndex: 10,
