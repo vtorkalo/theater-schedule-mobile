@@ -111,9 +111,9 @@ const styles = StyleSheet.create({
     },
     indicator: {
         position: 'absolute',
-        top: "50%",
-        right: 0,
-        left: 0,
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center',
         zIndex: 10,
     }
 
