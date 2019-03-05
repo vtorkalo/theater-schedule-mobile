@@ -48,12 +48,17 @@ class WishListScreen extends LocalizeComponent {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
-                    <Content contentContainerStyle={styles.contentContainer}>
+                    <Content contentContainerStyle={styles.contentContainerLoading}>
                         <View style={styles.performancesContainer}>
-                            {this.props.chosenPerformances.length != 0 ?
-                                <WishList navigation={this.props.navigation} />
-                                : <BallIndicator color="#aaa" />
-                            }
+                            <View style={styles.indicator}>
+                                <BallIndicator color="#aaa" />
+                            </View>
+                            <View style={styles.bottom}>
+                                {this.props.chosenPerformances.length != 0 ?
+                                    <WishList navigation={this.props.navigation} />
+                                    : null
+                                }
+                            </View>
                         </View>
                     </Content>
                 </Container>
@@ -83,6 +88,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#eee',
     },
+    contentContainerLoading: {
+        flex: 1,
+        justifyContent: 'space-between',
+        backgroundColor: '#eee',
+        opacity: 0.3,
+    },
     filterContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -95,6 +106,18 @@ const styles = StyleSheet.create({
     performancesContainer: {
         flex: 12,
     },
+    bottom: {
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+    indicator: {
+        position: 'absolute',
+        bottom: "50%",
+        right: 0,
+        left: 0,
+        zIndex: 10,
+    }
+
 });
 
 const mapStateToProps = state => {
