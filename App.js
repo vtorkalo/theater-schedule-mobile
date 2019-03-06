@@ -18,6 +18,7 @@ import performanceReducer from "./Reducers/PerformanceReducer";
 import AppNavigator from "./AppNavigatorComponent";
 import registerForNotification from "./services/pushNotification";
 import { Notifications } from "expo";
+import  promoActionReducer  from "./Reducers/PromoActionReducer"
 
 const appReducer = combineReducers({
   i18nState,
@@ -27,6 +28,7 @@ const appReducer = combineReducers({
   wishListReducer: wishListReducer,
   settings,
   message,
+  promoActionReducer,
   defaultReducer,
   navigation
 });
