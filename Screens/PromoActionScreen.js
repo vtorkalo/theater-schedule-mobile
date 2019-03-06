@@ -43,11 +43,13 @@ class PromoActionScreen extends Component {
         }
         else {
         return (
-            <Container>
+            <Container style={styles.container}>
                 <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                 <Content contentContainerStyle={styles.contentContainer}>
-                <View>
+                <View style={styles.headerContainer}>
                     <Header/>
+                </View>
+                <View style={styles.promoActionsContainer}>
                     <PromoActionsList/>                   
                 </View>            
                 </Content>
@@ -60,15 +62,19 @@ class PromoActionScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center',
-        backgroundColor: '#b6a2e3',
     },
     contentContainer: {
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        backgroundColor: '#BFD0D670',
+        flex: 1,
+        justifyContent: 'space-between',
+        backgroundColor: '#BFD0D670'
     },   
+    headerContainer: {
+        flex: 1,
+        marginBottom: 10,
+    },
+    promoActionsContainer: {
+        flex: 12,
+    },
 });
 
 const mapStateToProps = state => {
