@@ -10,6 +10,7 @@ import WishListScreen from '../Screens/WishListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
 import SplashScreen from "../Screens/SplashScreen";
 import LanguageScreen from "../Screens/LanguageScreen";
+import ExcursionScreen from "../Screens/ExcursionScreen";
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -18,6 +19,7 @@ const DrawerStack = createDrawerNavigator(
     Repertoire: { screen: SliderScreen },
     WishList: { screen: WishListScreen },
     Message: { screen: MessageScreen },
+    Excursion: { screen: ExcursionScreen}, 
   },
   {
     drawerPosition: "left",

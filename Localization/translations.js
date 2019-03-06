@@ -42,6 +42,7 @@ export const translations = {
         "Remove from favourites": "Прибрати з улюблених",
         "Performance Image Gallery: ": "Галерея вистави: ",
         "Lviv Puppet Theater": "Львівський театр ляльок",
+        "ExcursionScreenTitle": "Екскурсії"
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -86,5 +87,6 @@ export const translations = {
         "Remove from favourites": "Remove from favourites",
         "Performance Image Gallery: ": "Performance Image Gallery: ",
         "Lviv Puppet Theater": "Lviv Puppet Theater",
+        "ExcursionScreenTitle": "Excursions"
     },
 }
