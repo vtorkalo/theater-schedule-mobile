@@ -5,13 +5,13 @@ import {
   } from "../Actions/PromoActions";
   
   const initialState = {
-    promoActions: [{description: 'React native ome love React native ome love React native ome love React native ome love React native ome love React native ome love'}],
+    promoActions: [],
     loading: false,
     error: null
   };
   
   
-  export default function performanceReducer(state = initialState, action) {
+  export default function promoActionReducer(state = initialState, action) {
     switch (action.type) {        
         case LOAD_PROMOACTIONS_BEGIN:
             return {
@@ -21,11 +21,14 @@ import {
             };
 
         case LOAD_PROMOACTIONS_SUCCESS:
+        {
             return {
                 ...state,
-                loading: false,
-                performance: action.payload.promoActions,                
-            };
+                loading: false,                
+                promoActions: action.payload.promoActions,  
+                                        
+            };            
+        }
 
         case LOAD_PROMOACTIONS_FAILURE:
             return {

@@ -7,11 +7,11 @@ class PromoActionsList extends Component {
     render() {
         return (
             <View style={styles.promoActionList}>
-                <FlatList>
+                <FlatList
                     data={this.props.promoActions}
                     keyExtractor={(item) => item.description.toString()}  
-                    renderItem={({ item }) => <PromoActionItem promoAction={item}></PromoActionItem>}                              
-                </FlatList>
+                    renderItem={({ item }) => <PromoActionItem promoAction={item}/>}                              
+                />
             </View>
         );
     }
@@ -20,13 +20,12 @@ class PromoActionsList extends Component {
 const styles = StyleSheet.create({
     promoActionList: {
         flex: 8,
-        backgroundColor: "#BFD0D6",
     },
 });
 
 const mapStateToProps = state => {
     return {
-        promoActions: state.PromoActionReducer.promoActions,
+        promoActions: state.promoActionReducer.promoActions,
     }
 }
 

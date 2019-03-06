@@ -20,7 +20,7 @@ import AppNavigator from "./AppNavigatorComponent";
 import { setAppReady } from "./Actions/AppActions/AppActionCreators";
 import registerForNotification from "./services/pushNotification";
 import { Notifications } from "expo";
-import  PromoActionReducer  from "./Reducers/PromoActionReducer"
+import  promoActionReducer  from "./Reducers/PromoActionReducer"
 
 const appReducer = combineReducers({
   i18nState,
@@ -30,7 +30,7 @@ const appReducer = combineReducers({
   wishListReducer: wishListReducer,
   settings,
   message,
-  PromoActionReducer,
+  promoActionReducer,
   defaultReducer,
   navigation
 });
