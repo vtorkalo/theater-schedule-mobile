@@ -11,6 +11,7 @@ import PerformanceScreen from '../Screens/PerformanceScreen';
 import SplashScreen from "../Screens/SplashScreen";
 import LanguageScreen from "../Screens/LanguageScreen";
 import PromoActionScreen from "../Screens/PromoActionScreen"
+import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -20,6 +21,7 @@ const DrawerStack = createDrawerNavigator(
     WishList: { screen: WishListScreen },
     Message: { screen: MessageScreen },
     PromoAction: { screen: PromoActionScreen },
+    AboutTheater: { screen: AboutTheaterScreen },
   },
   {
     drawerPosition: "left",

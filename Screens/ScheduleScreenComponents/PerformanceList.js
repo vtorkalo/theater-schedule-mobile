@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
-import { FlatList, StyleSheet} from 'react-native';
+import React from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import PerformanceItem from 'TheaterSchedule/Screens/ScheduleScreenComponents/PerformanceItem';
+import ListEmpty from './ListEmpty';
 
-class PerformanceList extends Component {
+class PerformanceList extends LocalizedComponent {
     render() {
         return (
             <FlatList
                 style={styles.performanceList}
                 data={this.props.schedule}
                 keyExtractor={item => item.scheduleId.toString()}
+                ListEmptyComponent={<ListEmpty text={this.t("emptyScheduleMessage")} />}
+                contentContainerStyle={styles.contentContainer}
                 renderItem={({ item }) => (
-                    <PerformanceItem performance={item} navigation={this.props.navigation}/>
+                    <PerformanceItem performance={item} navigation={this.props.navigation} />
                 )}
             />
         );
@@ -21,7 +25,11 @@ class PerformanceList extends Component {
 
 const styles = StyleSheet.create({
     performanceList: {
+        flex: 1,
         width: '100%',
+    },
+    contentContainer: {
+        flexGrow: 1,
     },
 });
 
