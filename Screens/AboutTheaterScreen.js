@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
-import { Container, Content} from 'native-base';
+import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
+import { Container, Content, Header, Body } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
 import { Segment, Button } from 'native-base';
 import TheaterHistory from './AboutTheaterScreenComponents/TheaterHistory';
 import Contacts from './AboutTheaterScreenComponents/Contacts';
 import LocalizedComponent from '../Localization/LocalizedComponent';
+
 
 export default class AboutTheaterScreen extends LocalizedComponent {
     constructor(props) {
@@ -42,7 +43,7 @@ export default class AboutTheaterScreen extends LocalizedComponent {
                     <Image style={styles.image} source={{ uri: 'https://lvivpuppet.com/wp-content/themes/puppets/img/theatre-hero.png' }} />
                 </View>
                 <View><Text style={styles.title}>{this.t("AboutTheater")}</Text></View>
-                <Segment>
+                <Segment style={{backgroundColor:'white'}}>
                     <Button first active onPress={this.selectPage(1)} style={styles.button}><Text style={styles.text}>{this.t("Theater history")}</Text></Button>
                     <Button onPress={this.selectPage(2)} style={styles.button}><Text style={styles.text}>{this.t("Contacts")}</Text></Button>
                 </Segment>
@@ -54,9 +55,11 @@ export default class AboutTheaterScreen extends LocalizedComponent {
 
 }
 
+const { height: viewportHeight } = Dimensions.get('window');
+const imageHeight = viewportHeight*0.21;
 const styles = StyleSheet.create({
     imageContainer: {
-        height: 180,
+        height: imageHeight,
         width: null
     },
     image: {

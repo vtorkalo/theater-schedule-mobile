@@ -10,6 +10,7 @@ import SliderEntry from './SliderScreenComponents/SliderEntry';
 import styles from '../Screens/SliderScreenComponents/indexStyles';
 import LocalizedComponent from '../Localization/LocalizedComponent';
 import { fetchPosters } from '../Actions/sliderActions';
+import { BallIndicator } from 'react-native-indicators';
 
 class SliderScreen extends LocalizedComponent {
     static navigationOptions = ({ screenProps }) => {
@@ -39,26 +40,38 @@ class SliderScreen extends LocalizedComponent {
     }
 
     render() {
-        return (
-            <Container style={{ flex: 1 }}>
-                <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
-                <Content contentContainerStyle={styles.contentContainer}>
-                    <SafeAreaView style={styles.safeArea}>
-                        <View style={styles.container}>
-                            <View style={{ flex: 1, justifyContent: 'center' }}>
-                                <PostersSlider
-                                    title={this.t('Now the performances premieres are:')}
-                                    posters={this.props.posters}
-                                    renderItemWithParallax={this.renderItemWithParallax}
-                                    setActiveSlide={(index) => this.props.setSliderActiveSlide(index)}
-                                    activeSlide={this.props.sliderActiveSlide}
-                                />
+        if(this.props.isRepertoireLoading | this.props.isLanguageLoading){
+            return (
+                <Container style={{ flex: 1 }}>
+                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <BallIndicator color="#aaa" />
+                    </Content>
+                </Container>
+            );
+        }
+        else {
+            return (
+                <Container style={{ flex: 1 }}>
+                    <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <SafeAreaView style={styles.safeArea}>
+                            <View style={styles.container}>
+                                <View style={{ flex: 1, justifyContent: 'center' }}>
+                                    <PostersSlider
+                                        title={this.t('Now the performances premieres are:')}
+                                        posters={this.props.posters}
+                                        renderItemWithParallax={this.renderItemWithParallax}
+                                        setActiveSlide={(index) => this.props.setSliderActiveSlide(index)}
+                                        activeSlide={this.props.sliderActiveSlide}
+                                    />
+                                </View>
                             </View>
-                        </View>
-                    </SafeAreaView>
-                </Content>
-            </Container>
-        )
+                        </SafeAreaView>
+                    </Content>
+                </Container>
+            );
+        }
     }
 }
 
@@ -67,6 +80,8 @@ const mapStateToProps = state => {
         sliderActiveSlide: state.sliderActiveSlide.sliderActiveSlide,
         posters: state.sliderActiveSlide.posters,
         languageCode: state.settings.settings.languageCode,
+        isRepertoireLoading: state.sliderActiveSlide.loading,
+        isLanguageLoading: state.settings.loading,
     }
 }
 const mapDispatchToProps = {

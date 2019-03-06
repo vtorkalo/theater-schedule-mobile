@@ -1,8 +1,9 @@
-import { SET_SLIDE, SET_POSTERS_FAILURE, SET_POSTERS_SUCCESS } from '../Actions/sliderActions';
+import { SET_SLIDE, SET_POSTERS_FAILURE, SET_POSTERS_SUCCESS,LOAD_POSTERS_BEGIN } from '../Actions/sliderActions';
 
 const initialState = {
     sliderActiveSlide: 0,
     posters: [],
+    loading:false,
 }
 
 export default function sliderReducer(state = initialState, action) {
@@ -10,11 +11,14 @@ export default function sliderReducer(state = initialState, action) {
         case SET_SLIDE: {
             return { ...state, sliderActiveSlide: action.payload.index };
         }
+        case LOAD_POSTERS_BEGIN: {
+            return {...state, loading:true};
+        }
         case SET_POSTERS_SUCCESS: {
-            return { ...state, posters: action.payload.posters };
+            return { ...state, posters: action.payload.posters, loading:false };
         }
         case SET_POSTERS_FAILURE: {
-            return { ...state, error: action.payload.error, posters: [] }
+            return { ...state, error: action.payload.error, posters: [], loading:false }
         }
         default:
             return state;
