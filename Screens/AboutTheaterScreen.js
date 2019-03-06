@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
-import { Dimensions} from 'react-native';
+import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
 import { Container, Content, Header, Body } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
