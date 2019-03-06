@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        justifyContent: 'space-between',
         backgroundColor: '#BFD0D670'
     },
     filterContainer: {

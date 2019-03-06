@@ -22,7 +22,7 @@ class WishListScreen extends LocalizeComponent {
     componentDidMount() {
         if (this.props.deviceId && this.props.languageCode) {
             this.subs = [
-                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+                this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
             ];
         }
     }
@@ -37,7 +37,7 @@ class WishListScreen extends LocalizeComponent {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
             this.subs = [
-                this.props.navigation.addListener('didFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
+                this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
             ];
         }
     }
@@ -45,12 +45,20 @@ class WishListScreen extends LocalizeComponent {
     render() {
 
         if (this.props.isLoading || this.props.isLanguageLoading) {
-            return (  
+            return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
-                    <Content contentContainerStyle={styles.contentContainer}>
+                    <Content contentContainerStyle={styles.contentContainerLoading}>
                         <View style={styles.performancesContainer}>
-                            <BallIndicator color="#aaa" />
+                            <View style={styles.indicator}>
+                                <BallIndicator color="#aaa" />
+                            </View>
+                            <View style={styles.bottom}>
+                                {this.props.chosenPerformances.length != 0 ?
+                                    <WishList navigation={this.props.navigation} />
+                                    : null
+                                }
+                            </View>
                         </View>
                     </Content>
                 </Container>
@@ -80,6 +88,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#eee',
     },
+    contentContainerLoading: {
+        flex: 1,
+        justifyContent: 'space-between',
+        backgroundColor: '#eee',
+    },
     filterContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -92,6 +105,18 @@ const styles = StyleSheet.create({
     performancesContainer: {
         flex: 12,
     },
+    bottom: {
+        justifyContent: 'flex-end',
+        opacity: 0.3,
+    },
+    indicator: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center',
+        zIndex: 10,
+    }
+
 });
 
 const mapStateToProps = state => {

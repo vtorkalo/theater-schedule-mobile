@@ -19,6 +19,7 @@ import AppNavigator from "./AppNavigatorComponent";
 import registerForNotification from "./services/pushNotification";
 import { Notifications } from "expo";
 import excursionReducer from "./Reducers/excursionReducer";
+import  promoActionReducer  from "./Reducers/PromoActionReducer"
 
 const appReducer = combineReducers({
   i18nState,
@@ -29,6 +30,7 @@ const appReducer = combineReducers({
   settings,
   excursionReducer,
   message,
+  promoActionReducer,
   defaultReducer,
   navigation,
 });

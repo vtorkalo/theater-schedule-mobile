@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './SliderEntryStyles'
 import { withNavigation } from 'react-navigation';
+import { isBase64 } from 'is-base64'
 
 class SliderEntry extends Component {
 
@@ -10,14 +11,14 @@ class SliderEntry extends Component {
         const { data: { mainImage }, parallax, parallaxProps } = this.props;
         return parallax ? (
             <ParallaxImage
-                source={{ uri: `data:image/png;base64,${mainImage}` }}
+            source={{ uri: isBase64(mainImage) ? `data:image/png;base64,${mainImage}` : mainImage }}
                 style={styles.image}
                 containerStyle={styles.imageContainer}
                 {...parallaxProps}
             />
         ) : (
                 <Image
-                    source={{ uri: `data:image/png;base64,${mainImage}` }}
+                source={{ uri: isBase64(mainImage) ? `data:image/png;base64,${mainImage}` : mainImage }}
                     style={styles.image}
                 />
             );
