@@ -5,22 +5,22 @@ const groupingSelector = creativeTeamMembers => _.groupBy(creativeTeamMembers, t
 
 const authorsSelector = createSelector(
     groupingSelector,
-    (roles) => roles['Author']
+    (roles) => roles['AUTHOR']
 )
 
 const producersSelector = createSelector(
     groupingSelector,
-    (roles) => roles['Producer']
+    (roles) => roles['PRODUCER']
 )
 
 const composersSelector = createSelector(
     groupingSelector,
-    (roles) => roles['Composer']
+    (roles) => roles['COMPOSER']
 )
 
 const paintersSelector = createSelector(
     groupingSelector,
-    (roles) => roles['Painter']
+    (roles) => roles['PAINTER']
 )
 
 export const getTeamMembers = createSelector(

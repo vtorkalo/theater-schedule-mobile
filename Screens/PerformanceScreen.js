@@ -12,18 +12,12 @@ import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCrea
 import { getTeamMembers } from "../Selectors/CreativeTeamMembersSelector";
 import { Card, CardItem, Left, Body, Thumbnail, List } from 'native-base';
 import ImageGallery from './PerformanceDetailsComponents/ImageGallery';
-
-var images = [ // temp images while we don`t have gellery images from site
-    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3200-300x165.jpg" },
-    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3196-300x170.jpg", },
-    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3184-300x169.jpg", },
-    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3178-300x169.jpg", },
-    { uri: "https://lvivpuppet.com/wp-content/uploads/2019/01/IMG_3165-300x169.jpg", },
-]
+import { isBase64 } from 'is-base64';
 
 class PerformanceScreen extends LocalizeComponent {
     componentDidMount() {
         this.props.loadPerformance(this.props.deviceId, this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
+        console.log(this.props.navigation.getParam('performance', 'NO-ID'));
     };
 
     toggleWishlist = (performanceId) => {
@@ -44,7 +38,9 @@ class PerformanceScreen extends LocalizeComponent {
                 </Container>
             );
         } else {
-            let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+            let base64Image = isBase64(this.props.performance.mainImage) ? `data:image/png;base64,${this.props.performance.mainImage}` : this.props.performance.mainImage;
+            
+            
             return (
                 <Container>
                     <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
@@ -92,7 +88,7 @@ class PerformanceScreen extends LocalizeComponent {
 
                             <View style={{ flex: 1, marginBottom: 25 }}>
                                 <ImageGallery
-                                    images={images}
+                                    images={this.props.performance.galleryImage}
                                     galleryTitle={this.t("Performance Image Gallery: ")}
                                     keyExtractor={(item) => item.uri}
                                     showImage={({ item }) =>
@@ -108,7 +104,7 @@ class PerformanceScreen extends LocalizeComponent {
                                                     </Left>
                                                 </CardItem>
                                                 <CardItem cardBody>
-                                                    <Image source={{ uri: `${item.uri}` }} style={styles.galleryImage} />
+                                                    <Image source={{ uri: `${item}` }} style={styles.galleryImage} />
                                                 </CardItem>
                                                 <CardItem>
                                                 </CardItem>
