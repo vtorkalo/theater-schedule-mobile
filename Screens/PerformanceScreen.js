@@ -13,6 +13,7 @@ import { getTeamMembers } from "../Selectors/CreativeTeamMembersSelector";
 import { Card, CardItem, Left, Body, Thumbnail, List } from 'native-base';
 import ImageGallery from './PerformanceDetailsComponents/ImageGallery';
 import { isBase64 } from 'is-base64';
+import _ from 'lodash';
 
 class PerformanceScreen extends LocalizeComponent {
     componentDidMount() {
@@ -82,7 +83,7 @@ class PerformanceScreen extends LocalizeComponent {
                                 <Text style={styles.textSubtitle}>{this.t("price")}</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
-                                <Text style={styles.testStyle}>{this.props.performance.hashTag}</Text>
+                                <Text style={styles.testStyle}>{_.join(this.props.performance.hashTag, ', ')}</Text>
                                 {/* <View style={{ marginBottom: 10 }} /> */}
                             </View>
 
