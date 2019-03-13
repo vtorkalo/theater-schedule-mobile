@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { StackActions, NavigationActions } from 'react-navigation';
 import { changeScreen, } from '../Actions/AppActions/AppActionCreators';
 
 class SplashScreen extends Component {

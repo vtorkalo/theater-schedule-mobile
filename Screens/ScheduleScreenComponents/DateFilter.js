@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
 
 import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
-import DateRangePicker from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateRangePicker';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
+import CustomButton from '../Components/CustomButton';
 import moment from 'moment';
 
 class DateFilter extends LocalizedComponent {
@@ -43,26 +42,9 @@ class DateFilter extends LocalizedComponent {
     render() {
         return (
             <View style={styles.filterContainer} >
-                <View style={styles.filter}>
-                    <DateRangePicker
-                        isVisible={this.state.isFilterVisible}
-                        onCancel={this.cancelFilteringHandler}
-                        onConfirm={this.confirmFilteringHandler}
-                        startDate={this.props.startDate}
-                        endDate={this.props.endDate}
-                    />
-                </View>
-                <Text
-                    style={styles.text}>
-                    {this.t('Current dates')}: {this.convertToReadableDate(this.props.startDate)} - {this.convertToReadableDate(this.props.endDate)}
-                </Text>
-                <View style={styles.icon}>
-                    <Ionicons
-                        name='ios-options'
-                        color='#7154b8'
-                        size={32}
-                        onPress={this.pressFilterIconHandler} />
-                </View>
+                <CustomButton text="1 week" style={styles.button}></CustomButton>
+                <CustomButton text="2 weeks" style={styles.button}></CustomButton>
+                <CustomButton text="1 month" style={styles.button}></CustomButton>
             </View>
         );
     }
@@ -75,20 +57,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
     },
-    filter: {
-        width: '0%',
-    },
-    text: {
-        textAlign: 'center',
-        color: '#7154b8',
-        fontSize: 16,
-    },
-    icon: {
-        borderLeftColor: '#ccc',
-        borderLeftWidth: 2,
-        paddingLeft: 5,
-        margin: 2,
-    },
+    button: {
+        width: '30%', 
+        height: '100%', 
+        borderRadius: 10, 
+        fontSize: 20,
+    }
 });
 
 const mapStateToProps = state => {

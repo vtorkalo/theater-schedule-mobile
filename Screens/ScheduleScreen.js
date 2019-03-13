@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
@@ -20,7 +20,7 @@ const getDateAfterWeek = () => {
     return dateAfterWeek;
 }
 
-class ScheduleScreen extends LocalizeComponent  {
+class ScheduleScreen extends LocalizeComponent {
     static navigationOptions = ({ screenProps }) => {
         return {
             drawerIcon: (<MaterialCommunityIcons name="calendar-clock" size={25} />),
@@ -83,11 +83,7 @@ const styles = StyleSheet.create({
     filterContainer: {
         flex: 1,
         justifyContent: 'center',
-        borderColor: '#7154b8',
-        borderWidth: 2,
         margin: 5,
-        borderRadius: 50,
-        backgroundColor: '#fff',
     },
     performancesContainer: {
         flex: 12,
