@@ -49,7 +49,17 @@ class ScheduleScreen extends LocalizeComponent {
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
-                        <BallIndicator color="#aaa" />
+                        <View style={styles.filterContainer}>
+                            <DateFilter disabled={true} />
+                        </View>
+                        <View style={styles.indicator}>
+                            <BallIndicator color="#aaa" />
+                        </View>
+                        <View style={styles.backgroundPerformancesContainer}>
+                            {this.props.isScheduleEmpty
+                                ? null
+                                : <PerformanceList navigation={this.props.navigation} />}
+                        </View>
                     </Content>
                 </Container>
             );
@@ -60,7 +70,7 @@ class ScheduleScreen extends LocalizeComponent {
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.filterContainer}>
-                            <DateFilter />
+                            <DateFilter disabled={false} />
                         </View>
                         <View style={styles.performancesContainer}>
                             <PerformanceList navigation={this.props.navigation} />
@@ -84,10 +94,22 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         margin: 5,
+        marginBottom: 0,
     },
     performancesContainer: {
         flex: 12,
     },
+    backgroundPerformancesContainer: {
+        flex: 12,
+        opacity: 0.3,
+    },
+    indicator: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center',
+        zIndex: 10,
+    }
 });
 
 const mapStateToProps = state => {
@@ -95,6 +117,7 @@ const mapStateToProps = state => {
         isScheduleLoading: state.scheduleReducer.loading,
         isLanguageLoading: state.settings.loading,
         languageCode: state.settings.settings.languageCode,
+        isScheduleEmpty: state.scheduleReducer.schedule.length == 0,
     }
 }
 

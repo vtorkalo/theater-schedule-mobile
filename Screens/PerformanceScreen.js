@@ -38,9 +38,10 @@ class PerformanceScreen extends LocalizeComponent {
                 </Container>
             );
         } else {
-            let base64Image = isBase64(this.props.performance.mainImage) ? `data:image/png;base64,${this.props.performance.mainImage}` : this.props.performance.mainImage;
-            
-            
+            let base64Image = isBase64(this.props.performance.mainImage)
+                ? `data:image/png;base64,${this.props.performance.mainImage}`
+                : this.props.performance.mainImage;
+
             return (
                 <Container>
                     <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />

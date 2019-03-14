@@ -15,16 +15,18 @@ export default CustomButton = (props) => {
             borderRadius: props.style.borderRadius || 0,
         },
         text: {
-            color: '#000', 
-            textAlign: 'center', 
+            color: '#000',
+            textAlign: 'center',
             fontSize: props.style.fontSize || 15,
         },
     });
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.text}>{props.text}</Text>
+            <TouchableOpacity style={styles.button} onPress={props.onPress}>
+                <Text style={styles.text}>
+                    {props.text}
+                </Text>
             </TouchableOpacity>
         </View>
     );

@@ -4,11 +4,8 @@ import {
     LOAD_SCHEDULE_FAILURE,
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
-let currentDate = new Date();
 const initialState = {
     schedule: [],
-    startDate: currentDate,
-    endDate: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7),
     loading: false,
     error: null,
 }

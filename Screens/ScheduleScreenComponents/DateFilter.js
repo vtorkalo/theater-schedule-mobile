@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import CustomButton from '../Components/CustomButton';
-import moment from 'moment';
 
 class DateFilter extends LocalizedComponent {
     constructor(props) {
@@ -16,35 +15,63 @@ class DateFilter extends LocalizedComponent {
         }
     }
 
-    convertToReadableDate = date => {
-        return moment(date).format("DD.MM.YYYY");
+    getDateAfterMonth = () => {
+        let currentDate = new Date();
+        const DAYS_IN_MONTH = 30;
+        let dateAfterMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_MONTH);
+
+        return dateAfterMonth;
     }
 
-    pressFilterIconHandler = () => {
-        this.setState({
-            isFilterVisible: true,
-        });
+    getDateAfterWeek = () => {
+        let currentDate = new Date();
+        const DAYS_IN_WEEK = 7;
+        let dateAfterWeek = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_WEEK);
+
+        return dateAfterWeek;
     }
 
-    cancelFilteringHandler = () => {
-        this.setState({
-            isFilterVisible: false,
-        });
+    getDateAfterFortnight = () => {
+        let currentDate = new Date();
+        const DAYS_IN_FORTNIGHT = 14;
+        let getDateAfterFortnight = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_FORTNIGHT);
+
+        return getDateAfterFortnight;
     }
 
-    confirmFilteringHandler = (startDate, endDate) => {
-        this.setState({
-            isFilterVisible: false,
-        });
-        this.props.loadSchedule(startDate, endDate, this.props.languageCode);
+    loadScheduleForPeriod = (endDate) => {
+        this.props.loadSchedule(
+            new Date(),
+            endDate,
+            this.props.languageCode);
     }
 
     render() {
         return (
-            <View style={styles.filterContainer} >
-                <CustomButton text="1 week" style={styles.button}></CustomButton>
-                <CustomButton text="2 weeks" style={styles.button}></CustomButton>
-                <CustomButton text="1 month" style={styles.button}></CustomButton>
+            <View
+                style={styles.filterContainer}
+                pointerEvents={this.props.disabled ? "none" : "auto"}>
+                <CustomButton
+                    text={this.t("1 week")}
+                    style={styles.button}
+                    onPress={() => { this.loadScheduleForPeriod(this.getDateAfterWeek()) }} />
+                <CustomButton
+                    text={this.t("2 weeks")}
+                    style={styles.button}
+                    onPress={() => { this.loadScheduleForPeriod(this.getDateAfterFortnight()) }} />
+                <CustomButton
+                    text={this.t("1 month")}
+                    style={styles.button}
+                    onPress={() => { this.loadScheduleForPeriod(this.getDateAfterMonth()) }} />
             </View>
         );
     }
@@ -58,10 +85,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     button: {
-        width: '30%', 
-        height: '100%', 
-        borderRadius: 10, 
-        fontSize: 20,
+        width: '30%',
+        height: '100%',
+        borderRadius: 10,
+        fontSize: 18,
     }
 });
 
