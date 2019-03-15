@@ -11,7 +11,7 @@ class DateFilter extends LocalizedComponent {
         super(props);
 
         this.state = {
-            isFilterVisible: false,
+            activeButton: "WEEK",
         }
     }
 
@@ -48,7 +48,10 @@ class DateFilter extends LocalizedComponent {
         return getDateAfterFortnight;
     }
 
-    loadScheduleForPeriod = (endDate) => {
+    loadScheduleForPeriod = (period, endDate) => {
+        this.setState({
+            activeButton: period,
+        })
         this.props.loadSchedule(
             new Date(),
             endDate,
@@ -62,16 +65,31 @@ class DateFilter extends LocalizedComponent {
                 pointerEvents={this.props.disabled ? "none" : "auto"}>
                 <CustomButton
                     text={this.t("1 week")}
-                    style={styles.button}
-                    onPress={() => { this.loadScheduleForPeriod(this.getDateAfterWeek()) }} />
+                    style={this.state.activeButton == "WEEK"
+                        ? styles.activeButton
+                        : styles.button}
+                    textStyle={this.state.activeButton == "WEEK"
+                        ? styles.activeTextStyle
+                        : styles.textStyle}
+                    onPress={() => { this.loadScheduleForPeriod("WEEK", this.getDateAfterWeek()) }} />
                 <CustomButton
                     text={this.t("2 weeks")}
-                    style={styles.button}
-                    onPress={() => { this.loadScheduleForPeriod(this.getDateAfterFortnight()) }} />
+                    style={this.state.activeButton == "FORTNIGHT"
+                        ? styles.activeButton
+                        : styles.button}
+                    textStyle={this.state.activeButton == "FORTNIGHT"
+                        ? styles.activeTextStyle
+                        : styles.textStyle}
+                    onPress={() => { this.loadScheduleForPeriod("FORTNIGHT", this.getDateAfterFortnight()) }} />
                 <CustomButton
                     text={this.t("1 month")}
-                    style={styles.button}
-                    onPress={() => { this.loadScheduleForPeriod(this.getDateAfterMonth()) }} />
+                    style={this.state.activeButton == "MONTH"
+                        ? styles.activeButton
+                        : styles.button}
+                    textStyle={this.state.activeButton == "MONTH"
+                        ? styles.activeTextStyle
+                        : styles.textStyle}
+                    onPress={() => { this.loadScheduleForPeriod("MONTH", this.getDateAfterMonth()) }} />
             </View>
         );
     }
@@ -87,9 +105,23 @@ const styles = StyleSheet.create({
     button: {
         width: '30%',
         height: '100%',
-        borderRadius: 10,
+        backgroundColor: '#7154b8',
+    },
+    activeButton: {
+        width: '30%',
+        height: '100%',
+        backgroundColor: '#f9c20c',
+    },
+    textStyle: {
+        color: '#fff',
+        textAlign: 'center',
         fontSize: 18,
-    }
+    },
+    activeTextStyle: {
+        color: '#000',
+        textAlign: 'center',
+        fontSize: 18,
+    },
 });
 
 const mapStateToProps = state => {

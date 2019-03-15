@@ -11,20 +11,15 @@ export default CustomButton = (props) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#f9c20c',
-            borderRadius: props.style.borderRadius || 0,
-        },
-        text: {
-            color: '#000',
-            textAlign: 'center',
-            fontSize: props.style.fontSize || 15,
+            backgroundColor: props.style.backgroundColor,
+            borderRadius: 10,
         },
     });
 
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.button} onPress={props.onPress}>
-                <Text style={styles.text}>
+                <Text style={props.textStyle}>
                     {props.text}
                 </Text>
             </TouchableOpacity>
