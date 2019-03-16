@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
@@ -20,7 +20,7 @@ const getDateAfterWeek = () => {
     return dateAfterWeek;
 }
 
-class ScheduleScreen extends LocalizeComponent  {
+class ScheduleScreen extends LocalizeComponent {
     static navigationOptions = ({ screenProps }) => {
         return {
             drawerIcon: (<MaterialCommunityIcons name="calendar-clock" size={25} />),
@@ -49,7 +49,17 @@ class ScheduleScreen extends LocalizeComponent  {
                 <Container style={styles.container}>
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
-                        <BallIndicator color="#aaa" />
+                        <View style={styles.filterContainer}>
+                            <DateFilter disabled={true} />
+                        </View>
+                        <View style={styles.indicator}>
+                            <BallIndicator color="#aaa" />
+                        </View>
+                        <View style={styles.backgroundPerformancesContainer}>
+                            {this.props.isScheduleEmpty
+                                ? null
+                                : <PerformanceList navigation={this.props.navigation} />}
+                        </View>
                     </Content>
                 </Container>
             );
@@ -60,7 +70,7 @@ class ScheduleScreen extends LocalizeComponent  {
                     <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.filterContainer}>
-                            <DateFilter />
+                            <DateFilter disabled={false} />
                         </View>
                         <View style={styles.performancesContainer}>
                             <PerformanceList navigation={this.props.navigation} />
@@ -83,15 +93,23 @@ const styles = StyleSheet.create({
     filterContainer: {
         flex: 1,
         justifyContent: 'center',
-        borderColor: '#7154b8',
-        borderWidth: 2,
         margin: 5,
-        borderRadius: 50,
-        backgroundColor: '#fff',
+        marginBottom: 0,
     },
     performancesContainer: {
         flex: 12,
     },
+    backgroundPerformancesContainer: {
+        flex: 12,
+        opacity: 0.3,
+    },
+    indicator: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center',
+        zIndex: 10,
+    }
 });
 
 const mapStateToProps = state => {
@@ -99,6 +117,7 @@ const mapStateToProps = state => {
         isScheduleLoading: state.scheduleReducer.loading,
         isLanguageLoading: state.settings.loading,
         languageCode: state.settings.settings.languageCode,
+        isScheduleEmpty: state.scheduleReducer.schedule.length == 0,
     }
 }
 

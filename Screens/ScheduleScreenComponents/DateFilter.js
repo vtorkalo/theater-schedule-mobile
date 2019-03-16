@@ -1,68 +1,95 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
 
 import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
-import DateRangePicker from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateRangePicker';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
-import moment from 'moment';
+import CustomButton from '../Components/CustomButton';
 
 class DateFilter extends LocalizedComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            isFilterVisible: false,
+            activeButton: "WEEK",
         }
     }
 
-    convertToReadableDate = date => {
-        return moment(date).format("DD.MM.YYYY");
+    getDateAfterMonth = () => {
+        let currentDate = new Date();
+        const DAYS_IN_MONTH = 30;
+        let dateAfterMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_MONTH);
+
+        return dateAfterMonth;
     }
 
-    pressFilterIconHandler = () => {
-        this.setState({
-            isFilterVisible: true,
-        });
+    getDateAfterWeek = () => {
+        let currentDate = new Date();
+        const DAYS_IN_WEEK = 7;
+        let dateAfterWeek = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_WEEK);
+
+        return dateAfterWeek;
     }
 
-    cancelFilteringHandler = () => {
-        this.setState({
-            isFilterVisible: false,
-        });
+    getDateAfterFortnight = () => {
+        let currentDate = new Date();
+        const DAYS_IN_FORTNIGHT = 14;
+        let getDateAfterFortnight = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate() + DAYS_IN_FORTNIGHT);
+
+        return getDateAfterFortnight;
     }
 
-    confirmFilteringHandler = (startDate, endDate) => {
+    loadScheduleForPeriod = (period, endDate) => {
         this.setState({
-            isFilterVisible: false,
-        });
-        this.props.loadSchedule(startDate, endDate, this.props.languageCode);
+            activeButton: period,
+        })
+        this.props.loadSchedule(
+            new Date(),
+            endDate,
+            this.props.languageCode);
     }
 
     render() {
         return (
-            <View style={styles.filterContainer} >
-                <View style={styles.filter}>
-                    <DateRangePicker
-                        isVisible={this.state.isFilterVisible}
-                        onCancel={this.cancelFilteringHandler}
-                        onConfirm={this.confirmFilteringHandler}
-                        startDate={this.props.startDate}
-                        endDate={this.props.endDate}
-                    />
-                </View>
-                <Text
-                    style={styles.text}>
-                    {this.t('Current dates')}: {this.convertToReadableDate(this.props.startDate)} - {this.convertToReadableDate(this.props.endDate)}
-                </Text>
-                <View style={styles.icon}>
-                    <Ionicons
-                        name='ios-options'
-                        color='#7154b8'
-                        size={32}
-                        onPress={this.pressFilterIconHandler} />
-                </View>
+            <View
+                style={styles.filterContainer}
+                pointerEvents={this.props.disabled ? "none" : "auto"}>
+                <CustomButton
+                    text={this.t("1 week")}
+                    style={this.state.activeButton == "WEEK"
+                        ? styles.activeButton
+                        : styles.button}
+                    textStyle={this.state.activeButton == "WEEK"
+                        ? styles.activeTextStyle
+                        : styles.textStyle}
+                    onPress={() => { this.loadScheduleForPeriod("WEEK", this.getDateAfterWeek()) }} />
+                <CustomButton
+                    text={this.t("2 weeks")}
+                    style={this.state.activeButton == "FORTNIGHT"
+                        ? styles.activeButton
+                        : styles.button}
+                    textStyle={this.state.activeButton == "FORTNIGHT"
+                        ? styles.activeTextStyle
+                        : styles.textStyle}
+                    onPress={() => { this.loadScheduleForPeriod("FORTNIGHT", this.getDateAfterFortnight()) }} />
+                <CustomButton
+                    text={this.t("1 month")}
+                    style={this.state.activeButton == "MONTH"
+                        ? styles.activeButton
+                        : styles.button}
+                    textStyle={this.state.activeButton == "MONTH"
+                        ? styles.activeTextStyle
+                        : styles.textStyle}
+                    onPress={() => { this.loadScheduleForPeriod("MONTH", this.getDateAfterMonth()) }} />
             </View>
         );
     }
@@ -75,19 +102,25 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
     },
-    filter: {
-        width: '0%',
+    button: {
+        width: '30%',
+        height: '100%',
+        backgroundColor: '#7154b8',
     },
-    text: {
+    activeButton: {
+        width: '30%',
+        height: '100%',
+        backgroundColor: '#f9c20c',
+    },
+    textStyle: {
+        color: '#fff',
         textAlign: 'center',
-        color: '#7154b8',
-        fontSize: 16,
+        fontSize: 18,
     },
-    icon: {
-        borderLeftColor: '#ccc',
-        borderLeftWidth: 2,
-        paddingLeft: 5,
-        margin: 2,
+    activeTextStyle: {
+        color: '#000',
+        textAlign: 'center',
+        fontSize: 18,
     },
 });
 
