@@ -18,7 +18,6 @@ import _ from 'lodash';
 class PerformanceScreen extends LocalizeComponent {
     componentDidMount() {
         this.props.loadPerformance(this.props.deviceId, this.props.navigation.getParam('performance', 'NO-ID'), this.props.languageCode);
-        console.log(this.props.navigation.getParam('performance', 'NO-ID'));
     };
 
     toggleWishlist = (performanceId) => {
