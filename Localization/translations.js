@@ -8,7 +8,6 @@ export const translations = {
         'Please try again': 'Будь ласка, спробуйте ще раз',
         'Success!': 'Успіх!',
         'Settings saved': 'Налаштування збережено',
-        'Current dates': 'Поточні дати',
         'Date': 'Дата',
         'Beginning': 'Початок',
         'Details': 'Деталі',
@@ -64,7 +63,11 @@ export const translations = {
         "Address:": "Адреса:",
         "TheaterAddress": "м. Львів\nпл. Данила Галицького, 1",
         "Waiting room:": "Приймальня:",
-        "Pay office:": "Каса:"
+        "Pay office:": "Каса:",
+        "1 week": "1 тиждень",
+        "2 weeks": "2 тижні",
+        "1 month": "1 місяць",
+        "Buy ticket":"Купити квиток",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -75,7 +78,6 @@ export const translations = {
         'Please try again': 'Please try again',
         'Success!': 'Success!',
         'Settings saved': 'Settings saved',
-        'Current dates': 'Current dates',
         'Date': 'Date',
         'Beginning': 'Beginning',
         'Details': 'Details',
@@ -131,7 +133,11 @@ export const translations = {
         "Address:": "Address:",
         "TheaterAddress": " 1 Danylo Halytskyi square \n Lviv",
         "Waiting room:": "Waiting room:",
-        "Pay office:": "Pay office:"
+        "Pay office:": "Pay office:",
+        "1 week": "1 week",
+        "2 weeks": "2 weeks",
+        "1 month": "1 month",
+        "Buy ticket":"Buy ticket",
     },
 }
 
