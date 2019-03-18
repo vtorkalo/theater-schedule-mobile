@@ -73,6 +73,7 @@ export const translations = {
         "Cost": "Ціна",
         "uah": "грн",
         "Age": "Вік",
+        "Buy ticket":"Купити квиток",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -148,6 +149,7 @@ export const translations = {
         "Cost": "Price",
         "uah": "uah",
         "Age": "Age",
+        "Buy ticket":"Buy ticket",
     },
 }
 
