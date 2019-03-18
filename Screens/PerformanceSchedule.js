@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         marginHorizontal:19,
     },
     errorMessage: {
-        fontSize: 14,
+        fontSize: 20,
     }
 });
 const mapStateToProps = state => {
