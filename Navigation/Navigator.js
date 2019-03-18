@@ -13,6 +13,7 @@ import LanguageScreen from "../Screens/LanguageScreen";
 import ExcursionScreen from "../Screens/ExcursionScreen";
 import PromoActionScreen from "../Screens/PromoActionScreen"
 import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
+import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -58,6 +59,7 @@ export const AppNavigator = createStackNavigator(
     performanceStack: { screen: PerformanceStack },
     Splash: { screen: SplashScreen },
     ChooseLanguage: { screen: LanguageScreen },
+    PerformanceSchedule: {screen : PerformanceScheduleScreen}
   },
   {
     headerMode: "none",

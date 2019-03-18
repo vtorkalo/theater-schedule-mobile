@@ -68,6 +68,13 @@ class PerformanceScreen extends LocalizeComponent {
                                     </View>
                                 </TouchableOpacity>
                             </View>
+                            <View style={styles.ButtonContainer}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate("PerformanceSchedule", { performance: performanceId })}>
+                                    <View style={styles.detailsButton}>
+                                        <Text style={styles.buttonText}>{this.t("Show schedule")}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
 
                             <View style={styles.textContainer} >
                                 <Text style={styles.textSubtitle}>{this.t("AUTHOR")}:</Text>

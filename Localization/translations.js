@@ -67,6 +67,12 @@ export const translations = {
         "1 week": "1 тиждень",
         "2 weeks": "2 тижні",
         "1 month": "1 місяць",
+        "Show schedule":"Подивитись розклад",
+        "Duration": "Тривалість",
+        "min": "хв",
+        "Cost": "Ціна",
+        "uah": "грн",
+        "Age": "Вік",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -136,6 +142,12 @@ export const translations = {
         "1 week": "1 week",
         "2 weeks": "2 weeks",
         "1 month": "1 month",
+        "Show schedule": "Show perfromance schedule",
+        "Duration": "Duration",
+        "min": "min",
+        "Cost": "Price",
+        "uah": "uah",
+        "Age": "Age",
     },
 }
 
