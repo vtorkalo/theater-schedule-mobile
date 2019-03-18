@@ -19,7 +19,8 @@ import AppNavigator from "./AppNavigatorComponent";
 import registerForNotification from "./services/pushNotification";
 import { Notifications } from "expo";
 import excursionReducer from "./Reducers/excursionReducer";
-import  promoActionReducer  from "./Reducers/PromoActionReducer"
+import  promoActionReducer  from "./Reducers/PromoActionReducer";
+import performanceScheduleReducer from './Reducers/performanceScheduleReducer';
 
 const appReducer = combineReducers({
   i18nState,
@@ -33,6 +34,7 @@ const appReducer = combineReducers({
   promoActionReducer,
   defaultReducer,
   navigation,
+  performanceSchedule:performanceScheduleReducer,
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
