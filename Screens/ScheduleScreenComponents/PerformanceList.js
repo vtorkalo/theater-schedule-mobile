@@ -12,7 +12,7 @@ class PerformanceList extends LocalizedComponent {
             <FlatList
                 style={styles.performanceList}
                 data={this.props.schedule}
-                keyExtractor={item => item.scheduleId.toString()}
+                keyExtractor={(item, index) => 'key'+ index}
                 ListEmptyComponent={<ListEmpty text={this.t("emptyScheduleMessage")} />}
                 contentContainerStyle={styles.contentContainer}
                 renderItem={({ item }) => (

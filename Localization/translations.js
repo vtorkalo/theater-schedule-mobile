@@ -67,6 +67,7 @@ export const translations = {
         "1 week": "1 тиждень",
         "2 weeks": "2 тижні",
         "1 month": "1 місяць",
+        "Buy ticket":"Купити квиток",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -136,6 +137,7 @@ export const translations = {
         "1 week": "1 week",
         "2 weeks": "2 weeks",
         "1 month": "1 month",
+        "Buy ticket":"Buy ticket",
     },
 }
 

@@ -5,9 +5,11 @@ import {
     Image,
     Text,
     TouchableOpacity,
-    Dimensions,
+    Dimensions, 
+    Linking
 } from 'react-native';
 import { connect } from 'react-redux';
+import { isBase64 } from 'is-base64';
 
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 
@@ -29,7 +31,9 @@ class PerformanceItem extends LocalizedComponent {
     }
 
     render() {
-        let base64Image = `data:image/png;base64,${this.props.performance.mainImage}`;
+        let base64Image = isBase64(this.props.performance.mainImage)
+                ? `data:image/png;base64,${this.props.performance.mainImage}`
+                : this.props.performance.mainImage;
 
         return (
             <View style={styles.performanceContainer}>
@@ -59,11 +63,18 @@ class PerformanceItem extends LocalizedComponent {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.starContainer}>
+                    <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={this.pressedDetailsHandler}>
                             <View style={styles.detailsButton}>
                                 <Text style={styles.buttonText}>
                                     {this.t('Details')}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>Linking.openURL(this.props.performance.redirectToTicket)}>
+                            <View style={styles.detailsButton}>
+                                <Text style={styles.buttonText}>
+                                    {this.t('Buy ticket')}
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -86,7 +97,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         margin: 5,
     },
-    starContainer: {
+    buttonContainer: {
         flex: 2,
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -112,12 +123,13 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'row',
         width: '100%',
+        alignItems: "center",
+        justifyContent: "center",
     },
     title: {
         color: '#7154b8',
         textAlign: 'center',
         fontSize: 20,
-        paddingBottom: 2,
         margin: 4,
         borderBottomWidth: 2,
         borderBottomColor: '#7154b8',
@@ -127,20 +139,16 @@ const styles = StyleSheet.create({
         height: 25,
     },
     additionalInfo: {
-        fontSize: 15,
+        fontSize: 16,
         color: '#7154b8',
-        margin: 2,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingBottom: 2,
     },
     detailsButton: {
-        marginTop: 5,
         backgroundColor: '#7154b8',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
-        width: 100
+        width: 100,
+        height: 40,
     },
     buttonText: {
         color: '#fff',
