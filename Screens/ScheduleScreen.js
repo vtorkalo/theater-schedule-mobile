@@ -9,6 +9,7 @@ import PerformanceList from 'TheaterSchedule/Screens/ScheduleScreenComponents/Pe
 import DateFilter from 'TheaterSchedule/Screens/ScheduleScreenComponents/DateFilter';
 import { loadSchedule } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionCreators';
 import LocalizeComponent from "../Localization/LocalizedComponent";
+import registerForNotification from "../services/pushNotification";
 
 const getDateAfterWeek = () => {
     let currentDate = new Date();
@@ -41,6 +42,8 @@ class ScheduleScreen extends LocalizeComponent {
             this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
             this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
+        
+        registerForNotification(this.props.deviceId); //temporary, needs to be called after settings loaded
     }
 
     render() {
@@ -118,6 +121,7 @@ const mapStateToProps = state => {
         isLanguageLoading: state.settings.loading,
         languageCode: state.settings.settings.languageCode,
         isScheduleEmpty: state.scheduleReducer.schedule.length == 0,
+        deviceId: state.settings.deviceId
     }
 }
 
