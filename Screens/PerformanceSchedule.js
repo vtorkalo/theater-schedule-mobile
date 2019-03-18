@@ -62,8 +62,8 @@ class PerformanceSchedule extends LocalizedComponent {
                                     <Text style={styles.detailValue}>{this.props.schedule.age + "+"}</Text>
                                 </View>
                             </View>
-                            <View style={{flex: 1, justifyContent: 'center',alignItems: 'center', marginHorizontal:19}}>
-                                <Text style={{fontSize:20}}>{this.t("No performance schedule")}</Text>
+                            <View style={styles.errorMesageContainer}>
+                                <Text style={styles.errorMessage}>{this.t("No performance schedule")}</Text>
                             </View>
                         </Content>
                     </Container>
@@ -181,6 +181,15 @@ const styles = StyleSheet.create({
         fontSize:22,
         fontWeight: '500',
         color: '#5b3fa8', 
+    },
+    errorMesageContainer: {
+        flex: 1, 
+        justifyContent: 'center',
+        alignItems: 'center', 
+        marginHorizontal:19,
+    },
+    errorMessage: {
+        fontSize: 14,
     }
 });
 const mapStateToProps = state => {

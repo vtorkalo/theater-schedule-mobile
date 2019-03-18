@@ -143,7 +143,7 @@ export const translations = {
         "1 week": "1 week",
         "2 weeks": "2 weeks",
         "1 month": "1 month",
-        "Show schedule": "Show perfromance schedule",
+        "Show schedule": "Show performance schedule",
         "Duration": "Duration",
         "min": "min",
         "Cost": "Price",
