@@ -73,7 +73,7 @@ export const translations = {
         "Cost": "Ціна",
         "uah": "грн",
         "Age": "Вік",
-        "Buy ticket":"Купити квиток",
+        "No performance schedule": "На жаль, на даний період вистав немає",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -143,13 +143,12 @@ export const translations = {
         "1 week": "1 week",
         "2 weeks": "2 weeks",
         "1 month": "1 month",
-        "Show schedule": "Show perfromance schedule",
+        "Show schedule": "Show performance schedule",
         "Duration": "Duration",
         "min": "min",
         "Cost": "Price",
         "uah": "uah",
         "Age": "Age",
-        "Buy ticket":"Buy ticket",
+        "No performance schedule" : "Unfortunately, there are no performances for this period",
     },
 }
-

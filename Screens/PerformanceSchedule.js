@@ -32,46 +32,86 @@ class PerformanceSchedule extends LocalizedComponent {
             );
         }
         else {
-            return (
-                <Container>
-                    <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
-                    <Content style={styles.contentContainer}>
-                        <View style={styles.mainContainer}>
-                            <View style={styles.backgroundContainer}>
+            if(this.props.schedule.scheduleList==null)
+            {
+                return(
+                    <Container>
+                        <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
+                        <Content style={styles.contentContainer}>
+                            <View style={styles.mainContainer}>
+                                <View style={styles.backgroundContainer}>
+                                </View>
+                                <View style={styles.imageContainer}>
+                                    <Image style={styles.image} source={{ uri: this.props.schedule.mainImage }} />
+                                </View>
                             </View>
-                            <View style={styles.imageContainer}>
-                                <Image style={styles.image} source={{ uri: this.props.schedule.mainImage }} />
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>{this.props.schedule.title}</Text>
                             </View>
-                        </View>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{this.props.schedule.title}</Text>
-                        </View>
-                        <View style={styles.detailsContainer}>
-                            <View style={styles.priceContainer}>
-                                <Text style={styles.detailName}>{this.t("Duration")}</Text>
-                                <Text style={styles.detailValue}>{this.props.schedule.duration+this.t("min")}</Text>
+                            <View style={styles.detailsContainer}>
+                                <View style={styles.priceContainer}>
+                                    <Text style={styles.detailName}>{this.t("Duration")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.duration + this.t("min")}</Text>
+                                </View>
+                                <View style={styles.priceContainer}>
+                                    <Text style={styles.detailName}>{this.t("Cost")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.price + this.t("uah")}</Text>
+                                </View>
+                                <View style={styles.priceContainer}>
+                                    <Text style={styles.detailName}>{this.t("Age")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.age + "+"}</Text>
+                                </View>
                             </View>
-                            <View style={styles.priceContainer}>
-                                <Text style={styles.detailName}>{this.t("Cost")}</Text>
-                                <Text style={styles.detailValue}>{this.props.schedule.price+this.t("uah")}</Text>
+                            <View style={styles.errorMesageContainer}>
+                                <Text style={styles.errorMessage}>{this.t("No performance schedule")}</Text>
                             </View>
-                            <View style={styles.priceContainer}>
-                                <Text style={styles.detailName}>{this.t("Age")}</Text>
-                                <Text style={styles.detailValue}>{this.props.schedule.age+"+"}</Text>
+                        </Content>
+                    </Container>
+                );
+            }
+            else{
+                return (
+                    <Container>
+                        <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
+                        <Content style={styles.contentContainer}>
+                            <View style={styles.mainContainer}>
+                                <View style={styles.backgroundContainer}>
+                                </View>
+                                <View style={styles.imageContainer}>
+                                    <Image style={styles.image} source={{ uri: this.props.schedule.mainImage }} />
+                                </View>
                             </View>
-                        </View>
-                        <ScrollView>
-                        <View style={{flex:1, backgroundColor:'#F5F5F5', marginHorizontal:7}}>
-                            <FlatList
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>{this.props.schedule.title}</Text>
+                            </View>
+                            <View style={styles.detailsContainer}>
+                                <View style={styles.priceContainer}>
+                                    <Text style={styles.detailName}>{this.t("Duration")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.duration + this.t("min")}</Text>
+                                </View>
+                                <View style={styles.priceContainer}>
+                                    <Text style={styles.detailName}>{this.t("Cost")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.price + this.t("uah")}</Text>
+                                </View>
+                                <View style={styles.priceContainer}>
+                                    <Text style={styles.detailName}>{this.t("Age")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.age + "+"}</Text>
+                                </View>
+                            </View>
+                            <ScrollView>
+                                <View style={{ flex: 1, backgroundColor: '#F5F5F5', marginHorizontal: 7 }}>
+                                    <FlatList
                                         data={this.props.schedule.scheduleList}
-                                        keyExtractor={(item)=>item.toString()}
-                                        renderItem={({item})=><ScheduleItem data={item}/>}
+                                        keyExtractor={(item) => item.toString()}
+                                        renderItem={({ item }) => <ScheduleItem data={item} />}
                                     />
-                        </View> 
-                        </ScrollView>                    
-                    </Content>
-                </Container>
-            );
+                                </View>
+                            </ScrollView>
+                        </Content>
+                    </Container>
+                );
+            }
+            
         }
     }
 }
@@ -141,6 +181,15 @@ const styles = StyleSheet.create({
         fontSize:22,
         fontWeight: '500',
         color: '#5b3fa8', 
+    },
+    errorMesageContainer: {
+        flex: 1, 
+        justifyContent: 'center',
+        alignItems: 'center', 
+        marginHorizontal:19,
+    },
+    errorMessage: {
+        fontSize: 20,
     }
 });
 const mapStateToProps = state => {
