@@ -6,7 +6,11 @@ import { setLanguage } from 'redux-i18n';
 
 class LanguageScreen extends Component {
     setLang = (code) => {
-        this.props.storeSettings(this.props.deviceId, { languageCode: code });
+        this.props.storeSettings(this.props.deviceId, { 
+            languageCode: code,
+            doesNotify: true,
+            notificationFrequency: 7
+        });
         this.props.navigation.navigate("drawerStack");
     }
 
