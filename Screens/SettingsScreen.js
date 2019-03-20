@@ -6,7 +6,9 @@ import { connect } from "react-redux";
 import { storeSettings } from "../Actions/settingsActions";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { setLanguage } from "redux-i18n";
+import UniformButton from "../Screens/Components/UniformButton"
 import {
+
   Container,
   Content,
   Picker,
@@ -18,7 +20,8 @@ import {
   Button,
   Text,
   Separator,
-  Toast
+  Toast,
+  View
 } from "native-base";
 
 class SettingsScreen extends LocalizeComponent {
@@ -141,14 +144,14 @@ class SettingsScreen extends LocalizeComponent {
             </Right>
           </ListItem>
           <Separator />
-          <Button
-            rounded
-            small
+
+          <UniformButton
+            text={this.t("Save")}
             style={styles.button}
+            textStyle={styles.text}
             onPress={this.onSaveLanguage}
-          >
-            <Text>{this.t("Save")}</Text>
-          </Button>
+          />
+
         </Content>
       </Container>
     );
@@ -161,10 +164,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   text: {
-    color: "#7154b8",
-    marginLeft: 10,
+    color: "#fff",
     fontSize: 15,
-    marginTop: 15
+
   },
   picker: {
     height: 20,
@@ -172,8 +174,8 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 20,
+    backgroundColor: "#7154b8",
     alignSelf: "flex-end",
-    backgroundColor: "#7154b8"
   },
   buttonText: {
     color: "#fff",
