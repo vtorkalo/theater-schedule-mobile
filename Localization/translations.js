@@ -77,7 +77,6 @@ export const translations = {
         "uah": "грн",
         "Age": "Вік",
         "No performance schedule": "На жаль, на даний період вистав немає",
-        "UAH": "ГРН",
     },
     'en': {
         'Hello world!': 'Hello world!',
