@@ -13,7 +13,6 @@ export default CustomButton = (props) => {
             alignItems: 'center',
             backgroundColor: props.style.backgroundColor,
             borderRadius: 10,
-            marginRight: 20  
         },
     });
 
