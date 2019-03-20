@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import DrawerMenucIcon from "../Navigation/DrawerMenuIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
@@ -21,7 +21,7 @@ import {
   Text,
   Separator,
   Toast,
-  View
+  View,
 } from "native-base";
 
 class SettingsScreen extends LocalizeComponent {
@@ -161,7 +161,7 @@ class SettingsScreen extends LocalizeComponent {
 const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: "column",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   text: {
     color: "#fff",
@@ -169,12 +169,11 @@ const styles = StyleSheet.create({
 
   },
   picker: {
-    height: 20,
+    height: 30,
     width: 120
   },
   button: {
     margin: 20,
-    backgroundColor: "#7154b8",
     alignSelf: "flex-end",
   },
   buttonText: {
