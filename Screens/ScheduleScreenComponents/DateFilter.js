@@ -53,7 +53,6 @@ class DateFilter extends LocalizedComponent {
             activeButton: period,
         })
         this.props.loadSchedule(
-            new Date(),
             endDate,
             this.props.languageCode);
     }

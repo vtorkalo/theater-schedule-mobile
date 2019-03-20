@@ -9,11 +9,10 @@ export const loadScheduleBegin = () => ({
     type: LOAD_SCHEDULE_BEGIN,
 });
 
-export const loadScheduleSuccess = (schedule, startDate, endDate) => ({
+export const loadScheduleSuccess = (schedule, endDate) => ({
     type: LOAD_SCHEDULE_SUCCESS,
     payload: {
         schedule,
-        startDate,
         endDate,
     },
 });
@@ -25,10 +24,11 @@ export const loadScheduleFailure = error => ({
     },
 });
 
-export const loadSchedule = (startDate, endDate, languageCode) => {
+export const loadSchedule = (endDate, languageCode) => {
     return dispatch => {
         dispatch(loadScheduleBegin());
 
+        startDate = new Date();
         let dayAfterEndDate = new Date(
             endDate.getFullYear(),
             endDate.getMonth(),
@@ -41,7 +41,7 @@ export const loadSchedule = (startDate, endDate, languageCode) => {
                 return response.json();
             })
             .then(responseJson => {
-                dispatch(loadScheduleSuccess(responseJson, startDate, endDate));
+                dispatch(loadScheduleSuccess(responseJson, endDate));
             })
             .catch(error => {
                 dispatch(loadScheduleFailure(error));

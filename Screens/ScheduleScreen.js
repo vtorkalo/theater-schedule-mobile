@@ -30,16 +30,14 @@ class ScheduleScreen extends LocalizeComponent {
     };
     componentDidMount() {
         if (this.props.languageCode) {
-            let currentDate = new Date();
-            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
+            this.props.loadSchedule(getDateAfterWeek(), this.props.languageCode);
         }
     }
 
     componentDidUpdate(prevProps) {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
-            let currentDate = new Date();
-            this.props.loadSchedule(currentDate, getDateAfterWeek(), this.props.languageCode);
+            this.props.loadSchedule(this.props.endDate, this.props.languageCode);
             this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
         
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         margin: 5,
-        marginBottom: 0,
+        marginBottom: 10,
     },
     performancesContainer: {
         flex: 12,
@@ -118,6 +116,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         isScheduleLoading: state.scheduleReducer.loading,
+        endDate: state.scheduleReducer.endDate,
         isLanguageLoading: state.settings.loading,
         languageCode: state.settings.settings.languageCode,
         isScheduleEmpty: state.scheduleReducer.schedule.length == 0,
