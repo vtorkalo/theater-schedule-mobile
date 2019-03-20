@@ -156,6 +156,5 @@ export const translations = {
         "uah": "uah",
         "Age": "Age",
         "No performance schedule" : "Unfortunately, there are no performances for this period",
-        "UAH": "UAH",
     },
 }
