@@ -11,7 +11,7 @@ export default class Header extends LocalizedComponent {
     render() {
       return (
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>{this.t('ExcursionScreenTitle')}</Text>
+          <Text style={styles.headerText}>{this.t('EventScreenTitle')}</Text>
         </View>
       )
     }
