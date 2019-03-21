@@ -5,13 +5,14 @@ import {
     Image,
     Text,
     TouchableOpacity,
-    Dimensions, 
+    Dimensions,
     Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { isBase64 } from 'is-base64';
 
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
+import UniformButton from "../Components/UniformButton"
 
 class PerformanceItem extends LocalizedComponent {
     constructor(props) {
@@ -32,8 +33,8 @@ class PerformanceItem extends LocalizedComponent {
 
     render() {
         let base64Image = isBase64(this.props.performance.mainImage)
-                ? `data:image/png;base64,${this.props.performance.mainImage}`
-                : this.props.performance.mainImage;
+            ? `data:image/png;base64,${this.props.performance.mainImage}`
+            : this.props.performance.mainImage;
 
         return (
             <View style={styles.performanceContainer}>
@@ -64,21 +65,16 @@ class PerformanceItem extends LocalizedComponent {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={this.pressedDetailsHandler}>
-                            <View style={styles.detailsButton}>
-                                <Text style={styles.buttonText}>
-                                    {this.t('Details')}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>Linking.openURL(this.props.performance.redirectToTicket)}>
-                            <View style={styles.detailsButton}>
-                                <Text style={styles.buttonText}>
-                                    {this.t('Buy ticket')}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                        <UniformButton
+                            text={this.t('Details')}
+                            onPress={this.pressedDetailsHandler}
+                        />
+                        <UniformButton
+                            text={this.t('Buy ticket')}
+                            onPress={() => Linking.openURL(this.props.performance.redirectToTicket)}
+                        />
                     </View>
+
                 </View>
             </View >
         );
@@ -88,6 +84,10 @@ class PerformanceItem extends LocalizedComponent {
 const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
 
 const styles = StyleSheet.create({
+    container: {
+        margin: 15,
+        height: 50,
+    },
     performanceContainer: {
         height: QUARTER_OF_WINDOW_HEIGHT,
         flexDirection: 'row',
@@ -98,9 +98,10 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     buttonContainer: {
-        flex: 2,
+        flex: 3,
         flexDirection: 'row',
         justifyContent: 'space-around',
+
     },
     imageContainer: {
         flex: 1,
@@ -143,17 +144,13 @@ const styles = StyleSheet.create({
         color: '#7154b8',
     },
     detailsButton: {
-        backgroundColor: '#7154b8',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 30,
-        width: 100,
-        height: 40,
     },
     buttonText: {
-        color: '#fff',
+        color: 'red',
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 14,
     }
 });
 
