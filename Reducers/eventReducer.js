@@ -1,33 +1,33 @@
 import {
-    LOAD_EXCURSIONS_BEGIN,
-    LOAD_EXCURSIONS_SUCCESS,
-    LOAD_EXCURSIONS_FAILURE
-  } from "../Actions/excursionActions";
+    LOAD_EVENTS_BEGIN,
+    LOAD_EVENTS_SUCCESS,
+    LOAD_EVENTS_FAILURE
+  } from "../Actions/eventActions";
 
   const initialState = {
-    excursions: [],
+    events: [],
     loading: false,
     error: null
   };
 
 
-  export default function excursionReducer(state = initialState, action) {
+  export default function eventReducer(state = initialState, action) {
     switch (action.type) {        
-        case LOAD_EXCURSIONS_BEGIN:
+        case LOAD_EVENTS_BEGIN:
             return {
                 ...state,
                 loading: true,
                 error: null,
             };
 
-        case LOAD_EXCURSIONS_SUCCESS:
+        case LOAD_EVENTS_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                excursions: action.payload.excursions,                
+                events: action.payload.events,                
             };
 
-        case LOAD_EXCURSIONS_FAILURE:
+        case LOAD_EVENTS_FAILURE:
             return {
                 ...state,
                 loading: false,
