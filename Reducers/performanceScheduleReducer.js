@@ -11,8 +11,6 @@ export default function performanceScheduleReducer(state=initialState, action){
             return {...state, loading:true}
         }
         case SET_SCHEDULE_SUCCESS: {
-            console.log("reducer");
-             console.log(action.payload.schedule);
             return {...state, loading:false, schedule: action.payload.schedule}
         }
         case SET_SCHEDULE_FAILURE: {
