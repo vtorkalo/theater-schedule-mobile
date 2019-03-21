@@ -4,8 +4,19 @@ import {
     LOAD_SCHEDULE_FAILURE,
 } from 'TheaterSchedule/Actions/ScheduleActions/ScheduleActionTypes';
 
+const getDateAfterWeek = () => {
+    let currentDate = new Date();
+    const DAYS_IN_WEEK = 7;
+    let dateAfterWeek = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() + DAYS_IN_WEEK);
+    return dateAfterWeek;
+}
+
 const initialState = {
     schedule: [],
+    endDate: getDateAfterWeek(),
     loading: false,
     error: null,
 }
@@ -24,7 +35,6 @@ export default function scheduleReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 schedule: action.payload.schedule,
-                startDate: action.payload.startDate,
                 endDate: action.payload.endDate,
             }
         }

@@ -53,7 +53,6 @@ class DateFilter extends LocalizedComponent {
             activeButton: period,
         })
         this.props.loadSchedule(
-            new Date(),
             endDate,
             this.props.languageCode);
     }
@@ -71,6 +70,7 @@ class DateFilter extends LocalizedComponent {
                     textStyle={this.state.activeButton == "WEEK"
                         ? styles.activeTextStyle
                         : styles.textStyle}
+                    disabled={this.state.activeButton == "WEEK"}
                     onPress={() => { this.loadScheduleForPeriod("WEEK", this.getDateAfterWeek()) }} />
                 <CustomButton
                     text={this.t("2 weeks")}
@@ -80,6 +80,7 @@ class DateFilter extends LocalizedComponent {
                     textStyle={this.state.activeButton == "FORTNIGHT"
                         ? styles.activeTextStyle
                         : styles.textStyle}
+                    disabled={this.state.activeButton == "FORTNIGHT"}
                     onPress={() => { this.loadScheduleForPeriod("FORTNIGHT", this.getDateAfterFortnight()) }} />
                 <CustomButton
                     text={this.t("1 month")}
@@ -89,6 +90,7 @@ class DateFilter extends LocalizedComponent {
                     textStyle={this.state.activeButton == "MONTH"
                         ? styles.activeTextStyle
                         : styles.textStyle}
+                    disabled={this.state.activeButton == "MONTH"}
                     onPress={() => { this.loadScheduleForPeriod("MONTH", this.getDateAfterMonth()) }} />
             </View>
         );
