@@ -148,7 +148,6 @@ class SettingsScreen extends LocalizeComponent {
           <UniformButton
             text={this.t("Save")}
             style={styles.button}
-            textStyle={styles.text}
             onPress={this.onSaveLanguage}
           />
 
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 20,
-    alignSelf: "flex-end",
+    alignSelf: "flex-end"
   },
   buttonText: {
     color: "#fff",

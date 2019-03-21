@@ -67,12 +67,10 @@ class PerformanceItem extends LocalizedComponent {
                     <View style={styles.buttonContainer}>
                         <UniformButton
                             text={this.t('Details')}
-                            textStyle={styles.buttonText}
                             onPress={this.pressedDetailsHandler}
                         />
                         <UniformButton
                             text={this.t('Buy ticket')}
-                            textStyle={styles.buttonText}
                             onPress={() => Linking.openURL(this.props.performance.redirectToTicket)}
                         />
                     </View>
@@ -148,10 +146,9 @@ const styles = StyleSheet.create({
     detailsButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        //  borderRadius: 30,
     },
     buttonText: {
-        color: '#fff',
+        color: 'red',
         textAlign: 'center',
         fontSize: 14,
     }

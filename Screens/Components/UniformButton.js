@@ -9,11 +9,16 @@ export default UniformButton = (props) => {
             backgroundColor: '#7154b8',
             ...props.style
         },
+        buttonText: {
+            color: '#fff',
+            textAlign: 'center',
+            fontSize: 14,
+        }
 
     });
     return (
             <Button rounded style={styles.button} onPress={props.onPress} >
-                <Text style={props.textStyle}>{props.text}</Text>
+                <Text uppercase={false} style={styles.buttonText}>{props.text}</Text>
             </Button>
 
     );
