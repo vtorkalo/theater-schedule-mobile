@@ -78,6 +78,7 @@ export const translations = {
         "uah": "грн",
         "Age": "Вік",
         "No performance schedule": "На жаль, на даний період вистав немає",
+        "Buy ticket":"Купити квиток",
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -158,5 +159,6 @@ export const translations = {
         "uah": "uah",
         "Age": "Age",
         "No performance schedule" : "Unfortunately, there are no performances for this period",
+        "Buy ticket":"Buy ticket",
     },
 }

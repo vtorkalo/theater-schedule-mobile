@@ -9,7 +9,6 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
-import { getTeamMembers } from "../Selectors/CreativeTeamMembersSelector";
 import { Card, CardItem, Left, Body, Thumbnail, List } from 'native-base';
 import ImageGallery from './PerformanceDetailsComponents/ImageGallery';
 import { isBase64 } from 'is-base64';
@@ -77,21 +76,12 @@ class PerformanceScreen extends LocalizeComponent {
                             </View>
 
                             <View style={styles.textContainer} >
-                                <Text style={styles.textSubtitle}>{this.t("AUTHOR")}:</Text>
-                                <Text style={styles.testStyle}>{this.props.Authors}</Text>
-                                <Text style={styles.textSubtitle}>{this.t("PRODUCER")}:</Text>
-                                <Text style={styles.testStyle}>{this.props.Producers}</Text>
-                                <Text style={styles.textSubtitle}>{this.t("PAINTER")}:</Text>
-                                <Text style={styles.testStyle}>{this.props.Painters}</Text>
-                                <Text style={styles.textSubtitle}>{this.t("COMPOSER")}:</Text>
-                                <Text style={styles.testStyle}>{this.props.Composers}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.description}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("price")}</Text>
-                                <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice}</Text>
+                                <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice} {this.t("uah")}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
                                 <Text style={styles.testStyle}>{_.join(this.props.performance.hashTag, ', ')}</Text>
-                                {/* <View style={{ marginBottom: 10 }} /> */}
                             </View>
 
                             <View style={{ flex: 1, marginBottom: 25 }}>
@@ -208,16 +198,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-
-    const { Authors, Composers, Producers, Painters } = getTeamMembers(state.performanceReducer.performance.teamMember);
     return {
         languageCode: state.settings.settings.languageCode,
         performance: state.performanceReducer.performance,
         isLoading: state.performanceReducer.loading,
-        Authors,
-        Producers,
-        Composers,
-        Painters,
         deviceId: state.settings.deviceId,
         isChecked: state.performanceReducer.isChecked,
     }
