@@ -18,7 +18,7 @@ export default CustomButton = (props) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={props.onPress}>
+            <TouchableOpacity style={styles.button} onPress={props.onPress} disabled={props.disabled}>
                 <Text style={props.textStyle}>
                     {props.text}
                 </Text>

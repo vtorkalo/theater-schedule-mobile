@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button, Text } from 'native-base';
 
-
 export default UniformButton = (props) => {
     const styles = StyleSheet.create({
         button: {    
@@ -16,6 +15,7 @@ export default UniformButton = (props) => {
         }
 
     });
+
     return (
             <Button rounded style={styles.button} onPress={props.onPress} >
                 <Text uppercase={false} style={styles.buttonText}>{props.text}</Text>
