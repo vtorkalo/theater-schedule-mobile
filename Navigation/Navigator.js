@@ -10,8 +10,7 @@ import WishListScreen from '../Screens/WishListScreen';
 import PerformanceScreen from '../Screens/PerformanceScreen';
 import SplashScreen from "../Screens/SplashScreen";
 import LanguageScreen from "../Screens/LanguageScreen";
-import ExcursionScreen from "../Screens/ExcursionScreen";
-import PromoActionScreen from "../Screens/PromoActionScreen"
+import EventScreen from "../Screens/EventScreen";
 import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 
@@ -22,8 +21,7 @@ const DrawerStack = createDrawerNavigator(
     Repertoire: { screen: SliderScreen },
     WishList: { screen: WishListScreen },
     Message: { screen: MessageScreen },
-    Excursion: { screen: ExcursionScreen}, 
-    PromoAction: { screen: PromoActionScreen },
+    Event: { screen: EventScreen}, 
     AboutTheater: { screen: AboutTheaterScreen },
   },
   {
