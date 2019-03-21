@@ -8,7 +8,7 @@ export default ImageGallery = (props) => {
             <FlatList
                 horizontal
                 data={props.images}
-                keyExtractor={(item) => item.uri}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={props.showImage}
             />
         </ScrollView>
