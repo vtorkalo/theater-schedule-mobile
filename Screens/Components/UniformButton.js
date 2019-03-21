@@ -5,9 +5,8 @@ import { Button, Text } from 'native-base';
 
 export default UniformButton = (props) => {
     const styles = StyleSheet.create({
-        button: {    
+        button: {
             backgroundColor: '#7154b8',
-            ...props.style
         },
         buttonText: {
             color: '#fff',
@@ -17,9 +16,9 @@ export default UniformButton = (props) => {
 
     });
     return (
-            <Button rounded style={styles.button} onPress={props.onPress} >
-                <Text uppercase={false} style={styles.buttonText}>{props.text}</Text>
-            </Button>
+        <Button rounded style={[styles.button, { ...props.style }]} onPress={props.onPress} >
+            <Text uppercase={false} style={[styles.buttonText, { ...props.buttonText }]}>{props.text}</Text>
+        </Button>
 
     );
 }

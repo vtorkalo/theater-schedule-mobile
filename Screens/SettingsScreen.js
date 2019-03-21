@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   text: {
-    color: "#fff",
+    color: "red",
     fontSize: 15,
 
   },
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 20,
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
   },
   buttonText: {
     color: "#fff",
