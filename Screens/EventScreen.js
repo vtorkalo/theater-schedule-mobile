@@ -51,7 +51,7 @@ class EventScreen extends Component {
                         <Header/>
                     </View>
                     <View style={styles.eventsContainer}>
-                        <EventList/>
+                        <EventList navigation={this.props.navigation}/>
                     </View>            
                     </Content>
                 </Container>
