@@ -22,7 +22,7 @@ class EventList extends LocalizedComponent {
                 data={this.props.events.sort(this.compare)}
                 keyExtractor={(item) => item.eventId.toString()}  
                 ListEmptyComponent={<ListEmpty text={this.t("emptyEventMessage")} />}
-                renderItem={({ item }) => (<EventItem event={item}/>)}                              
+                renderItem={({ item }) => (<EventItem event={item} navigation={this.props.navigation}/>)}                              
             />
         );
     }

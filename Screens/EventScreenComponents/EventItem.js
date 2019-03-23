@@ -9,7 +9,7 @@ class EventItem extends LocalizedComponent {
     }
 
     pressedDetailsHandler = () => {
-        alert("Here is going to be detail screen soon =)")
+        this.props.navigation.navigate("eventDetailScreen", { event: this.props.event });
     }
 
     convertToReadableDate = date => {
