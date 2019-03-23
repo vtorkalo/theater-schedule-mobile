@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
@@ -9,10 +9,12 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
-import { Card, CardItem, Left, Body, Thumbnail, List } from 'native-base';
+import { Card, CardItem, Left, Body, Thumbnail } from 'native-base';
 import ImageGallery from './PerformanceDetailsComponents/ImageGallery';
 import { isBase64 } from 'is-base64';
 import _ from 'lodash';
+
+import ImageLoad from 'react-native-image-placeholder';
 
 class PerformanceScreen extends LocalizeComponent {
     componentDidMount() {
@@ -102,7 +104,12 @@ class PerformanceScreen extends LocalizeComponent {
                                                     </Left>
                                                 </CardItem>
                                                 <CardItem cardBody>
-                                                    <Image source={{ uri: `${item}` }} style={styles.galleryImage} />
+                                                    <ImageLoad
+                                                        source={{ uri: `${item}` }}
+                                                        style={styles.galleryImage}
+                                                        placeholderSource={require('../img/logo.png')}
+                                                        placeholderStyle={styles.placeholderStyle}
+                                                    />
                                                 </CardItem>
                                                 <CardItem>
                                                 </CardItem>
@@ -141,6 +148,12 @@ const styles = StyleSheet.create({
     galleryImage: {
         height: 200,
         width: null,
+        flex: 1,
+        resizeMode: 'cover'
+    },
+    placeholderStyle: {
+        height: 200,
+        width: 300,
         flex: 1,
         resizeMode: 'cover'
     },
