@@ -11,8 +11,6 @@ export function fetchSchedule(performanceId) {
         .then((response)=>response.json())
         .then((responseJson)=>{
             dispatch(setScheduleSuccess(responseJson));
-            console.log("fetch");
-            console.log(responseJson);
         })
         .catch((error)=>{
             dispatch(setScheduleFailure(error));

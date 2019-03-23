@@ -18,8 +18,7 @@ import performanceReducer from "./Reducers/PerformanceReducer";
 import AppNavigator from "./AppNavigatorComponent";
 import registerForNotification from "./services/pushNotification";
 import { Notifications } from "expo";
-import excursionReducer from "./Reducers/excursionReducer";
-import promoActionReducer from "./Reducers/PromoActionReducer";
+import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import { Root } from "native-base";
 
@@ -30,9 +29,8 @@ const appReducer = combineReducers({
   scheduleReducer: scheduleReducer,
   wishListReducer: wishListReducer,
   settings,
-  excursionReducer,
+  eventReducer,
   message,
-  promoActionReducer,
   defaultReducer,
   navigation,
   performanceSchedule: performanceScheduleReducer

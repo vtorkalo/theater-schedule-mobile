@@ -1,21 +1,26 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, Dimensions } from 'react-native';
-import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
+import { connect } from 'react-redux';
 
-class ExcursionItem extends LocalizedComponent {
+class EventItem extends LocalizedComponent {
     constructor(props) {
         super(props);
     }
 
     pressedDetailsHandler = () => {
-        alert(this.props.excursion.fullDescription)
+        this.props.navigation.navigate("eventDetailScreen", { event: this.props.event });
+    }
+
+    convertToReadableDate = date => {
+        return this.props.moment(date).format("dddd, Do MMMM");
     }
 
     render() {
-        let base64Image = `data:image/png;base64,${this.props.excursion.image}`;
+        let base64Image = `data:image/png;base64,${this.props.event.image}`;
         
         return (
-            <View style={styles.excursionContainer}>
+            <View style={styles.eventContainer}>
                 <View style={styles.imageContainer}>
                     <Image
                         style={styles.image}
@@ -24,9 +29,12 @@ class ExcursionItem extends LocalizedComponent {
                     />
                 </View>    
                 <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{this.props.excursion.excursionName}</Text>        
+                    <Text style={styles.title}>{this.props.event.title}</Text>        
                     <View style={styles.detailsContainer}>
-                        <Text style={styles.additionalInfo}>{this.props.excursion.shortDescription}</Text>
+                        <Text style={styles.additionalInfo}>{this.t("eventType")}: {this.props.event.type}</Text>
+                    </View>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.additionalInfo}>{this.t("Date")}: {this.convertToReadableDate(this.props.event.date)}</Text>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={this.pressedDetailsHandler}>
@@ -46,7 +54,7 @@ class ExcursionItem extends LocalizedComponent {
 const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
 
 const styles = StyleSheet.create({
-    excursionContainer: {
+    eventContainer: {
         height: QUARTER_OF_WINDOW_HEIGHT,
         flexDirection: 'row',
         backgroundColor: '#fff',
@@ -56,7 +64,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     buttonContainer: {
-        flex: 2,
+        flex: 3,
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
@@ -109,23 +117,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
-        width: 100
+        width: 150,
+        height: 35,
     },
     buttonText: {
         color: '#fff',
         textAlign: 'center',
         fontSize: 16,
     },
-    // taskContainer: {        
-    //     flex: 3,
-    //     flexDirection: 'row',
-    //     minHeight: 200,
-    //     marginVertical: 10,        
-    //     backgroundColor: '#eee',
-    //     height: '80%',
-    //     width: '100%',              
-    //     borderBottomColor: '#ddd', borderBottomWidth: 1,        
-    // },
 });
 
-export default ExcursionItem;
+const mapStateToProps = state => {
+    return {
+        moment: state.settings.moment,
+    }
+}
+
+export default connect(mapStateToProps)(EventItem);

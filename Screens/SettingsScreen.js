@@ -1,12 +1,14 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import DrawerMenucIcon from "../Navigation/DrawerMenuIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { storeSettings } from "../Actions/settingsActions";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { setLanguage } from "redux-i18n";
+import UniformButton from "../Screens/Components/UniformButton"
 import {
+
   Container,
   Content,
   Picker,
@@ -18,7 +20,8 @@ import {
   Button,
   Text,
   Separator,
-  Toast
+  Toast,
+  View,
 } from "native-base";
 
 class SettingsScreen extends LocalizeComponent {
@@ -141,14 +144,13 @@ class SettingsScreen extends LocalizeComponent {
             </Right>
           </ListItem>
           <Separator />
-          <Button
-            rounded
-            small
+
+          <UniformButton
+            text={this.t("Save")}
             style={styles.button}
             onPress={this.onSaveLanguage}
-          >
-            <Text>{this.t("Save")}</Text>
-          </Button>
+          />
+
         </Content>
       </Container>
     );
@@ -158,22 +160,20 @@ class SettingsScreen extends LocalizeComponent {
 const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: "column",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   text: {
-    color: "#7154b8",
-    marginLeft: 10,
+    color: "#fff",
     fontSize: 15,
-    marginTop: 15
+
   },
   picker: {
-    height: 20,
+    height: 30,
     width: 120
   },
   button: {
     margin: 20,
-    alignSelf: "flex-end",
-    backgroundColor: "#7154b8"
+    alignSelf: "flex-end"
   },
   buttonText: {
     color: "#fff",
