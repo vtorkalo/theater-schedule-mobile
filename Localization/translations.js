@@ -158,7 +158,7 @@ export const translations = {
         "Cost": "Price",
         "uah": "uah",
         "Age": "Age",
-        "No performance schedule" : "Unfortunately, there are no performances for this period",
+        "No performance schedule" : "We are sorry, this performance will be perform soon",
         "Buy ticket":"Buy ticket",
     },
 }
