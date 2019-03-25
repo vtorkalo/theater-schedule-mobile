@@ -32,7 +32,7 @@ class PerformanceSchedule extends LocalizedComponent {
             );
         }
         else {
-            if(this.props.schedule.scheduleList==null)
+            if(this.props.schedule.scheduleList==null || !this.props.schedule.scheduleList.length)
             {
                 return(
                     <Container>
