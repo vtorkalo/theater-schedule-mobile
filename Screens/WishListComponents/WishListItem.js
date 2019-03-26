@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
-import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
+import { isBase64 } from "is-base64";
 
 class WishListItem extends LocalizedComponent {
     constructor(props) {
@@ -26,7 +27,9 @@ class WishListItem extends LocalizedComponent {
     }
 
     render() {
-        let base64Image = `data:image/png;base64,${this.props.chosenperformance.mainImage}`;
+        let image = isBase64(this.props.chosenperformance.mainImage)
+            ? `data:image/png;base64,${this.props.chosenperformance.mainImage}`
+            : this.props.chosenperformance.mainImage;
 
         return (
             <View style={styles.performanceContainer}>
@@ -34,7 +37,7 @@ class WishListItem extends LocalizedComponent {
                     <Image
                         style={styles.image}
                         resizeMode='contain'
-                        source={{ uri: base64Image }}
+                        source={{ uri: image }}
                     />
                 </View>
                 <View style={styles.infoContainer}>
