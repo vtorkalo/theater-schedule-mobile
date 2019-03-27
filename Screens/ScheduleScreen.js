@@ -41,7 +41,7 @@ class ScheduleScreen extends LocalizeComponent {
             this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
         
-        //registerForNotification(this.props.deviceId); //temporary, needs to be called after settings loaded
+        registerForNotification(this.props.deviceId); //temporary, needs to be called after settings loaded
     }
 
     render() {
