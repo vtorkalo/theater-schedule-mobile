@@ -71,6 +71,7 @@ class MessageScreen extends LocalizeComponent {
             <TextInput
               style={styles.subject}
               value={this.props.message.subject}
+              maxLength={50}
               placeholder={this.t("messageSubject")}
               onChangeText={text => {
                 this.props.enterMessageSubject(text);
@@ -86,7 +87,7 @@ class MessageScreen extends LocalizeComponent {
               style={styles.message}
               value={this.props.message.text}
               multiline={true}
-              maxLength={200}
+              maxLength={500}
               placeholder={this.t("messageText")}
               onChangeText={text => {
                 this.props.enterMessageText(text);
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   header: {
-    color: "blue",
+    color: "#7154b8",
     fontWeight: "bold",
     fontSize: 20,
     margin: 10
@@ -165,7 +166,8 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: "#f5f5f5"
+    backgroundColor: "#f5f5f5",
+    textAlignVertical: 'top'
   },
   buttonContainer: {
     margin: 20,
