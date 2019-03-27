@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
 import { storeSettings } from '../Actions/settingsActions';
 import { connect } from 'react-redux';
 import { setLanguage } from 'redux-i18n';
+import Text from './Components/CustomText';
 
 class LanguageScreen extends Component {
     setLang = (code) => {

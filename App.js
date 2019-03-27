@@ -45,7 +45,7 @@ let deviceId =
       ? Expo.Constants.deviceId
       : DeviceInfo.getUniqueID();
 
-class App extends Component {
+export default class App extends Component {
   componentDidMount() {
     store.dispatch(loadSettings(deviceId));
 
@@ -59,22 +59,15 @@ class App extends Component {
   }
 
   async loadFonts() {
-    this.props.fontLoadingBegin();
-
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf"),
-      // 'Comfortaa-Bold': require('./assets/fonts/Comfortaa-Bold.ttf'),
-      // 'Comfortaa-Light': require('./assets/fonts/Comfortaa-Light.ttf'),
-      'Comfortaa-Regular': require('./assets/fonts/Comfortaa-Regular.ttf'),
       'Arsenal-Bold': require('./assets/fonts/Arsenal-Bold.ttf'),
       'Arsenal-Italic': require('./assets/fonts/Arsenal-Italic.ttf'),
       'Arsenal-BoldItalic': require('./assets/fonts/Arsenal-BoldItalic.ttf'),
       'Arsenal-Regular': require('./assets/fonts/Arsenal-Regular.ttf')
     });
-
-    this.props.fontLoadingSuccess();
   }
 
   render() {
@@ -89,10 +82,3 @@ class App extends Component {
     );
   }
 }
-
-const mapDispatchToProps = {
-  fontLoadingBegin,
-  fontLoadingSuccess,
-}
-
-export default connect(null, mapDispatchToProps)(App);

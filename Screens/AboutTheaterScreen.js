@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
-import { Container, Content, Header, Body } from 'native-base';
+import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { Container, Content } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
 import { Segment, Button } from 'native-base';
 import TheaterHistory from './AboutTheaterScreenComponents/TheaterHistory';
 import Contacts from './AboutTheaterScreenComponents/Contacts';
 import LocalizedComponent from '../Localization/LocalizedComponent';
-
+import Text from './Components/CustomText';
 
 export default class AboutTheaterScreen extends LocalizedComponent {
     constructor(props) {
@@ -39,14 +39,18 @@ export default class AboutTheaterScreen extends LocalizedComponent {
         return (
             <Container style={{ flex: 1 }}>
                 <DrawerMenucIcon
-                    onPressMenuIcon={() => this.props.navigation.openDrawer()} 
+                    onPressMenuIcon={() => this.props.navigation.openDrawer()}
                     text={this.t("AboutTheater")} />
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{ uri: 'https://lvivpuppet.com/wp-content/themes/puppets/img/theatre-hero.png' }} />
                 </View>
-                <Segment style={{backgroundColor:'white'}}>
-                    <Button first active onPress={this.selectPage(1)} style={styles.button}><Text style={styles.text}>{this.t("Theater history")}</Text></Button>
-                    <Button onPress={this.selectPage(2)} style={styles.button}><Text style={styles.text}>{this.t("Contacts")}</Text></Button>
+                <Segment style={{ backgroundColor: 'white' }}>
+                    <Button first active onPress={this.selectPage(1)} style={styles.button}>
+                        <Text style={styles.text}>{this.t("Theater history")}</Text>
+                    </Button>
+                    <Button onPress={this.selectPage(2)} style={styles.button}>
+                        <Text style={styles.text}>{this.t("Contacts")}</Text>
+                    </Button>
                 </Segment>
                 <Content padder>{this._renderPage()}</Content>
             </Container>

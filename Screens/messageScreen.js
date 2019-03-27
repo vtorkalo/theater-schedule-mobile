@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   Button,
-  Text,
   ActivityIndicator,
   Alert
 } from "react-native";
@@ -20,6 +19,7 @@ import {
   sendMessage
 } from "../Actions/messageActions";
 import LocalizeComponent from "../Localization/LocalizedComponent";
+import Text from './Components/CustomText';
 
 class MessageScreen extends LocalizeComponent {
   static navigationOptions = ({ screenProps }) => {
@@ -66,7 +66,7 @@ class MessageScreen extends LocalizeComponent {
           onPressMenuIcon={() => this.props.navigation.openDrawer()}
           text={this.t('Message')} />
         <Content contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.header}>{this.t("messageScreenHeader")}</Text>
+          <Text type="bold" style={styles.header}>{this.t("messageScreenHeader")}</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.subject}
@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "blue",
-    fontWeight: "bold",
     fontSize: 20,
     margin: 10
   },

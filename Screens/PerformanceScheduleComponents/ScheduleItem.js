@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet, FlatList, Linking} from 'react-native';
+import {View, StyleSheet, FlatList, Linking} from 'react-native';
 import {Feather} from '@expo/vector-icons';
 import moment from 'moment';
+import Text from '../Components/CustomText';
 
 export default class ScheduleItem extends Component{
 

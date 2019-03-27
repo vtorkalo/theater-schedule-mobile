@@ -14,15 +14,12 @@ import {
   Picker,
   ListItem,
   Left,
-  Body,
   Right,
   Switch,
-  Button,
-  Text,
   Separator,
   Toast,
-  View,
 } from "native-base";
+import Text from './Components/CustomText';
 
 class SettingsScreen extends LocalizeComponent {
   static navigationOptions = ({ screenProps }) => {
@@ -69,7 +66,7 @@ class SettingsScreen extends LocalizeComponent {
         <Content contentContainerStyle={styles.contentContainer}>
           <ListItem>
             <Left>
-              <Text>{this.t("Set language")}:</Text>
+              <Text style={{fontSize: 20}}>{this.t("Set language")}:</Text>
             </Left>
 
             <Right>
@@ -97,7 +94,7 @@ class SettingsScreen extends LocalizeComponent {
 
           <ListItem>
             <Left>
-              <Text>{this.t("Push notifications")}</Text>
+              <Text style={{fontSize: 20}}>{this.t("Push notifications")}:</Text>
             </Left>
 
             <Right>
@@ -119,7 +116,7 @@ class SettingsScreen extends LocalizeComponent {
 
           <ListItem>
             <Left>
-              <Text>{this.t("Notify in")}:</Text>
+              <Text style={{fontSize: 20}}>{this.t("Notify in")}:</Text>
             </Left>
 
             <Right>

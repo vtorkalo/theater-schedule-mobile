@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, Dimensions, ScrollView } from 'react-native';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
 import { Container, Content } from 'native-base';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import { connect } from 'react-redux';
+import Text from './Components/CustomText';
 
 class EventDetailScreen extends LocalizedComponent {
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Left, Header, Right, Body } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import Text from '../Screens/Components/CustomText'
 
 export default DrawerMenuIcon = (props) => {
     return (
@@ -10,7 +11,7 @@ export default DrawerMenuIcon = (props) => {
                 <Ionicons name='ios-menu' color='white' size={32} onPress={props.onPressMenuIcon} />
             </Left>
             <Body style={styles.bodyContainer}>
-                <Text style={styles.text}>{props.text}</Text>
+                <Text type="bold" style={styles.text}>{props.text}</Text>
             </Body>
             <Right style={styles.rightContainer} />
         </Header>

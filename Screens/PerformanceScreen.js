@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Dimensions, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
@@ -13,6 +13,7 @@ import { Card, CardItem, Left, Body, Thumbnail } from 'native-base';
 import ImageGallery from './PerformanceDetailsComponents/ImageGallery';
 import { isBase64 } from 'is-base64';
 import _ from 'lodash';
+import Text from './Components/CustomText';
 
 import ImageLoad from 'react-native-image-placeholder';
 
@@ -57,7 +58,7 @@ class PerformanceScreen extends LocalizeComponent {
                                 />
                             </View>
                             <View style={styles.textContainer} >
-                                <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
+                                <Text type="bold" style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
                             </View>
 
                             <View style={styles.ButtonContainer} >
@@ -181,7 +182,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     textTitle: {
-        fontWeight: "bold",
         fontSize: 20,
         textAlign: "center",
         marginBottom: 10,

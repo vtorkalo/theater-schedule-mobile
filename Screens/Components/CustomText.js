@@ -10,7 +10,7 @@ export default class CustomText extends Component {
             case 'italic':
                 return 'Arsenal-Italic';
             default:
-                return 'Comfortaa-Regular';
+                return 'Arsenal-Regular';
         }
     }
 

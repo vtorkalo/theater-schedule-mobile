@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import Text from '../Components/CustomText';
 
 export default CustomButton = (props) => {
     const styles = StyleSheet.create({
@@ -19,9 +20,7 @@ export default CustomButton = (props) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.button} onPress={props.onPress} disabled={props.disabled}>
-                <Text style={props.textStyle}>
-                    {props.text}
-                </Text>
+                <Text style={props.textStyle}>{props.text}</Text>
             </TouchableOpacity>
         </View>
     );

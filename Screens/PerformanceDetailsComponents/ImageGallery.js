@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, FlatList, Text } from 'react-native';
+import { ScrollView, StyleSheet, FlatList } from 'react-native';
+import Text from '../Components/CustomText';
 
 export default ImageGallery = (props) => {
     return (

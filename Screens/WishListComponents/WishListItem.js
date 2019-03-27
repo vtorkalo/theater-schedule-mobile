@@ -3,7 +3,6 @@ import {
     View,
     StyleSheet,
     Image,
-    Text,
     TouchableOpacity,
     Dimensions,
 } from 'react-native';
@@ -11,6 +10,7 @@ import { connect } from 'react-redux';
 import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import { isBase64 } from "is-base64";
+import Text from '../Components/CustomText';
 
 class WishListItem extends LocalizedComponent {
     constructor(props) {

@@ -3,15 +3,13 @@ import {
     View,
     StyleSheet,
     Image,
-    Text,
-    TouchableOpacity,
     Dimensions,
     Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { isBase64 } from 'is-base64';
 
-import CustomText from '../Components/CustomText'
+import Text from '../Components/CustomText'
 
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import UniformButton from "../Components/UniformButton"
@@ -48,7 +46,7 @@ class PerformanceItem extends LocalizedComponent {
                     />
                 </View>
                 <View style={styles.infoContainer}>
-                    <CustomText style={styles.title}>{this.props.performance.title}</CustomText>
+                    <Text type="bold" style={styles.title}>{this.props.performance.title}</Text>
                     <View style={styles.detailsContainer}>
                         <Text style={styles.additionalInfo}>
                             {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
@@ -56,15 +54,8 @@ class PerformanceItem extends LocalizedComponent {
                     </View>
                     <View style={styles.detailsContainer}>
                         <Text style={styles.additionalInfo}>
-                            {this.t('Beginning')}:
+                            {this.t('Beginning')}: {this.convertToReadableTime(this.props.performance.beginning)}
                         </Text>
-                        <TouchableOpacity>
-                            <Text
-                                style={[styles.additionalInfo, { borderBottomWidth: 2, borderBottomColor: '#7154b8' }]}
-                            >
-                                {this.convertToReadableTime(this.props.performance.beginning)}
-                            </Text>
-                        </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <UniformButton
