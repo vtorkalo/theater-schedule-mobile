@@ -11,6 +11,8 @@ import {
 import { connect } from 'react-redux';
 import { isBase64 } from 'is-base64';
 
+import CustomText from '../Components/CustomText'
+
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import UniformButton from "../Components/UniformButton"
 
@@ -46,7 +48,7 @@ class PerformanceItem extends LocalizedComponent {
                     />
                 </View>
                 <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{this.props.performance.title}</Text>
+                    <CustomText style={styles.title}>{this.props.performance.title}</CustomText>
                     <View style={styles.detailsContainer}>
                         <Text style={styles.additionalInfo}>
                             {this.t('Date')}: {this.convertToReadableDate(this.props.performance.beginning)}
@@ -85,7 +87,7 @@ const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
 
 const styles = StyleSheet.create({
     container: {
-        margin: 15,
+        marginBottom: 15,
         height: 50,
     },
     performanceContainer: {
@@ -131,7 +133,6 @@ const styles = StyleSheet.create({
         color: '#7154b8',
         textAlign: 'center',
         fontSize: 20,
-        margin: 4,
         borderBottomWidth: 2,
         borderBottomColor: '#7154b8',
     },

@@ -17,10 +17,12 @@ import DeviceInfo from "react-native-device-info";
 import performanceReducer from "./Reducers/PerformanceReducer";
 import AppNavigator from "./AppNavigatorComponent";
 import registerForNotification from "./services/pushNotification";
-import { Notifications } from "expo";
+import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import { Root } from "native-base";
+import { fontLoadingBegin, fontLoadingSuccess } from './Actions/AppActions/AppActionCreators';
+import { connect } from 'react-redux';
 
 const appReducer = combineReducers({
   i18nState,
@@ -43,7 +45,7 @@ let deviceId =
       ? Expo.Constants.deviceId
       : DeviceInfo.getUniqueID();
 
-export default class App extends Component {
+class App extends Component {
   componentDidMount() {
     store.dispatch(loadSettings(deviceId));
 
@@ -57,11 +59,22 @@ export default class App extends Component {
   }
 
   async loadFonts() {
-    await Expo.Font.loadAsync({
+    this.props.fontLoadingBegin();
+
+    await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
+      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf"),
+      // 'Comfortaa-Bold': require('./assets/fonts/Comfortaa-Bold.ttf'),
+      // 'Comfortaa-Light': require('./assets/fonts/Comfortaa-Light.ttf'),
+      'Comfortaa-Regular': require('./assets/fonts/Comfortaa-Regular.ttf'),
+      'Arsenal-Bold': require('./assets/fonts/Arsenal-Bold.ttf'),
+      'Arsenal-Italic': require('./assets/fonts/Arsenal-Italic.ttf'),
+      'Arsenal-BoldItalic': require('./assets/fonts/Arsenal-BoldItalic.ttf'),
+      'Arsenal-Regular': require('./assets/fonts/Arsenal-Regular.ttf')
     });
+
+    this.props.fontLoadingSuccess();
   }
 
   render() {
@@ -76,3 +89,10 @@ export default class App extends Component {
     );
   }
 }
+
+const mapDispatchToProps = {
+  fontLoadingBegin,
+  fontLoadingSuccess,
+}
+
+export default connect(null, mapDispatchToProps)(App);
