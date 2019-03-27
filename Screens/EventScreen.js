@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Container, Content } from 'native-base';
-import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
+import DrawerMenuIcon from '../Navigation/DrawerMenuIcon';
 import { Entypo } from '@expo/vector-icons';
-import Header from './EventScreenComponents/Header';
 import EventList from './EventScreenComponents/EventList';
 import { loadEvents } from '../Actions/eventActions';
 import { connect } from 'react-redux';
 import { BallIndicator } from 'react-native-indicators';
+import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 
-
-class EventScreen extends Component {   
-    static navigationOptions = ({screenProps})=> {
+class EventScreen extends LocalizedComponent {
+    static navigationOptions = ({ screenProps }) => {
         return {
             drawerIcon: (<Entypo name='new' size={25} />),
             title: screenProps.EventScreenTitle,
         }
-    }  
+    }
 
     componentDidMount() {
         if (this.props.languageCode) {
@@ -35,7 +34,9 @@ class EventScreen extends Component {
         if (this.props.isEventLoading || this.props.isLanguageLoading) {
             return (
                 <Container style={styles.container}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('EventScreenTitle')} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <BallIndicator color="#aaa" />
                     </Content>
@@ -45,14 +46,13 @@ class EventScreen extends Component {
         else {
             return (
                 <Container style={styles.container}>
-                    <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('EventScreenTitle')} />
                     <Content contentContainerStyle={styles.contentContainer}>
-                    <View style={styles.headerContainer}>
-                        <Header/>
-                    </View>
-                    <View style={styles.eventsContainer}>
-                        <EventList navigation={this.props.navigation}/>
-                    </View>            
+                        <View style={styles.eventsContainer}>
+                            <EventList navigation={this.props.navigation} />
+                        </View>
                     </Content>
                 </Container>
             )
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         borderRadius: 30,
         backgroundColor: '#fff',
-    },      
+    },
 });
 
 const mapStateToProps = state => {
