@@ -38,11 +38,12 @@ export default class AboutTheaterScreen extends LocalizedComponent {
     render() {
         return (
             <Container style={{ flex: 1 }}>
-                <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                <DrawerMenucIcon
+                    onPressMenuIcon={() => this.props.navigation.openDrawer()} 
+                    text={this.t("AboutTheater")} />
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{ uri: 'https://lvivpuppet.com/wp-content/themes/puppets/img/theatre-hero.png' }} />
                 </View>
-                <View><Text style={styles.title}>{this.t("AboutTheater")}</Text></View>
                 <Segment style={{backgroundColor:'white'}}>
                     <Button first active onPress={this.selectPage(1)} style={styles.button}><Text style={styles.text}>{this.t("Theater history")}</Text></Button>
                     <Button onPress={this.selectPage(2)} style={styles.button}><Text style={styles.text}>{this.t("Contacts")}</Text></Button>
@@ -56,7 +57,7 @@ export default class AboutTheaterScreen extends LocalizedComponent {
 }
 
 const { height: viewportHeight } = Dimensions.get('window');
-const imageHeight = viewportHeight*0.21;
+const imageHeight = viewportHeight * 0.21;
 const styles = StyleSheet.create({
     imageContainer: {
         height: imageHeight,
