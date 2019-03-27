@@ -22,7 +22,7 @@ export const loadEventsBegin = () => ({
     return dispatch => {
         dispatch(loadEventsBegin());
 
-        let url = `${BASE_URL}Event/${languageCode}/LoadAvailable`;
+        let url = `${BASE_URL}Event/${languageCode}/LoadEvents`;
 
         fetch(url)
             .then(response => {
