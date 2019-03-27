@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
@@ -47,7 +47,9 @@ class WishListScreen extends LocalizeComponent {
         if (this.props.isLoading || this.props.isLanguageLoading) {
             return (
                 <Container style={styles.container}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('Favourite')} />
                     <Content contentContainerStyle={styles.contentContainerLoading}>
                         <View style={styles.performancesContainer}>
                             <View style={styles.indicator}>
@@ -67,7 +69,9 @@ class WishListScreen extends LocalizeComponent {
         else {
             return (
                 <Container style={styles.container}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('Favourite')} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.performancesContainer}>
                             <WishList navigation={this.props.navigation} />

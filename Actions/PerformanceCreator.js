@@ -28,7 +28,7 @@ export const loadPerformanceFailure = (error) => ({
 export const loadPerformance = (deviceId, performanceId, languageCode) => {
     return dispatch => {
         dispatch(loadPerformanceBegin());
-        let url = `${BASE_URL}PerformanceDetails/${deviceId}/${languageCode}/GetInfo?id=${performanceId}`;
+        let url = `${BASE_URL}PerformanceDetails/${deviceId}/${languageCode}/GetInfo/${performanceId}`;
         fetch(url)
             .then(response => response.json())
             .then(responseJson => {

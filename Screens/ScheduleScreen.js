@@ -41,14 +41,16 @@ class ScheduleScreen extends LocalizeComponent {
             this.props.navigation.setParams({ scheduleScreenTitle: this.t("ScheduleScreenTitle") });
         }
         
-        //registerForNotification(this.props.deviceId); //temporary, needs to be called after settings loaded
+        registerForNotification(this.props.deviceId); //temporary, needs to be called after settings loaded
     }
 
     render() {
         if (this.props.isScheduleLoading || this.props.isLanguageLoading) {
             return (
                 <Container style={styles.container}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('Schedule')} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.filterContainer}>
                             <DateFilter disabled={true} />
@@ -68,7 +70,9 @@ class ScheduleScreen extends LocalizeComponent {
         else {
             return (
                 <Container style={styles.container}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('Schedule')} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <View style={styles.filterContainer}>
                             <DateFilter disabled={false} />
