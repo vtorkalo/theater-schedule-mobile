@@ -96,7 +96,7 @@ class PerformanceScreen extends LocalizeComponent {
                                             <Card style={styles.card}>
                                                 <CardItem>
                                                     <Left>
-                                                        <Thumbnail source={require('../img/puppet1.png')} />
+                                                        <Thumbnail source={require('../img/logo.png')} />
                                                         <Body>
                                                             <Text style={{ fontSize: 18 }}>{this.props.performance.title}</Text>
                                                             <Text note style={{ fontStyle: 'italic' }}>{this.t("Lviv Puppet Theater")}</Text>
