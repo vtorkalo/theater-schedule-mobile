@@ -20,6 +20,7 @@ import {
   sendMessage
 } from "../Actions/messageActions";
 import LocalizeComponent from "../Localization/LocalizedComponent";
+import UniformButton from "../Screens/Components/UniformButton"
 
 class MessageScreen extends LocalizeComponent {
   static navigationOptions = ({ screenProps }) => {
@@ -96,9 +97,11 @@ class MessageScreen extends LocalizeComponent {
             />
             {textError ? <Text style={styles.error}>{this.t("textError")}</Text> : null}
           </View>
-          <View style={styles.buttonContainer}>
-            <Button onPress={this.onSendMessage} title={this.t("send")} />
-          </View>
+            <UniformButton
+                            text={this.t("send")}
+                            style={styles.button}                     
+                            onPress={this.onSendMessage}
+                        />
         </Content>
       </Container>
     );
@@ -126,6 +129,12 @@ export default connect(
 )(MessageScreen);
 
 const styles = StyleSheet.create({
+  button: {
+    alignSelf: "center",
+    margin:20,
+    width: "65%",
+      justifyContent: 'center',
+},
   contentContainer: {
     flex: 1,
     alignItems: "center",

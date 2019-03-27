@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import { isBase64 } from "is-base64";
+import UniformButton from "../../Screens/Components/UniformButton";
 
 class WishListItem extends LocalizedComponent {
     constructor(props) {
@@ -43,20 +44,16 @@ class WishListItem extends LocalizedComponent {
                 <View style={styles.infoContainer}>
                     <Text style={styles.title}>{this.props.chosenperformance.title}</Text>
                     <View style={styles.detailsContainer}>
-                        <TouchableOpacity onPress={this.pressedDetailsHandler}>
-                            <View style={styles.detailsButton}>
-                                <Text style={styles.buttonText}>
-                                    {this.t('Details')}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.deletefromWishlist}>
-                            <View style={styles.detailsButton}>
-                                <Text style={styles.buttonText}>
-                                    {this.t('Remove from favourites')}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                        <UniformButton
+                            text={this.t('Details')}
+                            style={styles.button}
+                            onPress={this.pressedDetailsHandler}
+                        />
+                        <UniformButton
+                            text={this.t('Remove from favourites')}
+                            style={styles.button}
+                            onPress={this.deletefromWishlist}
+                        />
                     </View>
                 </View>
             </View >
@@ -67,6 +64,12 @@ class WishListItem extends LocalizedComponent {
 const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
 
 const styles = StyleSheet.create({
+    button: {
+        margin: 6,
+        minWidth:"78%",
+        alignSelf: "center",
+        justifyContent:"center"
+    },
     performanceContainer: {
         height: QUARTER_OF_WINDOW_HEIGHT,
         flexDirection: 'row',
