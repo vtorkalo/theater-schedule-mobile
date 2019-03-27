@@ -65,7 +65,7 @@ class SettingsScreen extends LocalizeComponent {
       <Container>
         <DrawerMenucIcon
           onPressMenuIcon={() => this.props.navigation.openDrawer()}
-        />
+          text={this.t('Settings')} />
         <Content contentContainerStyle={styles.contentContainer}>
           <ListItem>
             <Left>
