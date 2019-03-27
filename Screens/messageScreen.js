@@ -64,7 +64,7 @@ class MessageScreen extends LocalizeComponent {
       <Container>
         <DrawerMenucIcon
           onPressMenuIcon={() => this.props.navigation.openDrawer()}
-        />
+          text={this.t('Message')} />
         <Content contentContainerStyle={styles.contentContainer}>
           <Text style={styles.header}>{this.t("messageScreenHeader")}</Text>
           <View style={styles.inputContainer}>

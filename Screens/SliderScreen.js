@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { Container, Content } from 'native-base';
-import DrawerMenucIcon from '../Navigation/DrawerMenuIcon';
+import DrawerMenuIcon from '../Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PostersSlider from './SliderScreenComponents/postersSlider';
 import { connect } from 'react-redux';
@@ -40,10 +40,12 @@ class SliderScreen extends LocalizedComponent {
     }
 
     render() {
-        if(this.props.isRepertoireLoading | this.props.isLanguageLoading){
+        if (this.props.isRepertoireLoading | this.props.isLanguageLoading) {
             return (
                 <Container style={{ flex: 1 }}>
-                    <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('Repertoire')} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <BallIndicator color="#aaa" />
                     </Content>
@@ -53,7 +55,9 @@ class SliderScreen extends LocalizedComponent {
         else {
             return (
                 <Container style={{ flex: 1 }}>
-                    <DrawerMenucIcon onPressMenuIcon={() => this.props.navigation.openDrawer()} />
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('Repertoire')} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <SafeAreaView style={styles.safeArea}>
                             <View style={styles.container}>
