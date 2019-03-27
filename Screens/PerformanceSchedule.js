@@ -32,7 +32,7 @@ class PerformanceSchedule extends LocalizedComponent {
             );
         }
         else {
-            if(this.props.schedule.scheduleList==null)
+            if(this.props.schedule.scheduleList==null || !this.props.schedule.scheduleList.length)
             {
                 return(
                     <Container>
@@ -102,7 +102,7 @@ class PerformanceSchedule extends LocalizedComponent {
                                 <View style={{ flex: 1, backgroundColor: '#F5F5F5', marginHorizontal: 7 }}>
                                     <FlatList
                                         data={this.props.schedule.scheduleList}
-                                        keyExtractor={(item) => item.toString()}
+                                        keyExtractor={(item) => item.day.toString()}
                                         renderItem={({ item }) => <ScheduleItem data={item} />}
                                     />
                                 </View>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         height: imageHeight,
         width: imageWidth,
         zIndex: 1,
-        bottom: 227,//195
+        bottom: imageContainerHeight,
         shadowColor: '#1a1917',
         shadowOpacity: 0.6,
         shadowOffset: { width: 0, height: 2 },
