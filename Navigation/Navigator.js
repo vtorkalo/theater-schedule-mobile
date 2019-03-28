@@ -18,11 +18,11 @@ import EventDetailScreen from '../Screens/EventDetailScreen';
 const DrawerStack = createDrawerNavigator(
   {
     Schedule: { screen: ScheduleScreen },
-    Settings: { screen: SettingsScreen },
     Repertoire: { screen: SliderScreen },
     WishList: { screen: WishListScreen },
-    Message: { screen: MessageScreen },
     Event: { screen: EventScreen}, 
+    Message: { screen: MessageScreen },
+    Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
   },
   {
