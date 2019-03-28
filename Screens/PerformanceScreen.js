@@ -13,7 +13,7 @@ import { Card, CardItem, Left, Body, Thumbnail } from 'native-base';
 import ImageGallery from './PerformanceDetailsComponents/ImageGallery';
 import { isBase64 } from 'is-base64';
 import _ from 'lodash';
-
+import UniformButton from "../Screens/Components/UniformButton"
 import ImageLoad from 'react-native-image-placeholder';
 
 class PerformanceScreen extends LocalizeComponent {
@@ -59,23 +59,16 @@ class PerformanceScreen extends LocalizeComponent {
                             <View style={styles.textContainer} >
                                 <Text style={styles.textTitle} >{this.props.performance.title} ({this.props.performance.minimumAge}+)</Text>
                             </View>
-
-                            <View style={styles.ButtonContainer} >
-                                <TouchableOpacity onPress={() => this.toggleWishlist(performanceId)}>
-                                    <View style={styles.detailsButton}>
-                                        {this.props.isChecked ?
-                                            <Text style={styles.buttonText}>{this.t("Remove from favourites")}</Text> :
-                                            <Text style={styles.buttonText}>{this.t("Add to favourites")}</Text>}
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.ButtonContainer}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate("PerformanceSchedule", { performance: performanceId })}>
-                                    <View style={styles.detailsButton}>
-                                        <Text style={styles.buttonText}>{this.t("Show schedule")}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
+                            <UniformButton
+                                text={this.props.isChecked ? this.t("Remove from favourites") : this.t("Add to favourites")}
+                                style={styles.button}
+                                onPress={() => this.toggleWishlist(performanceId)}
+                            />
+                            <UniformButton
+                                text={this.t("Show schedule")}
+                                style={styles.button}
+                                onPress={() => this.props.navigation.navigate("PerformanceSchedule", { performance: performanceId })}
+                            />
 
                             <View style={styles.textContainer} >
                                 <Text style={styles.textSubtitle}>{this.t("description")}</Text>
@@ -127,6 +120,12 @@ class PerformanceScreen extends LocalizeComponent {
 }
 
 const styles = StyleSheet.create({
+    button: {
+        margin: 5,
+        alignSelf: "center",
+        minWidth: "65%",
+        justifyContent: "center"
+    },
     contentContainer: {
         flex: 1,
         flexDirection: 'column',
@@ -172,6 +171,7 @@ const styles = StyleSheet.create({
         height: null
     },
     textContainer: {
+        marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
     },
