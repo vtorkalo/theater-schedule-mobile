@@ -21,8 +21,6 @@ import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import { Root } from "native-base";
-import { fontLoadingBegin, fontLoadingSuccess } from './Actions/AppActions/AppActionCreators';
-import { connect } from 'react-redux';
 
 const appReducer = combineReducers({
   i18nState,
