@@ -8,7 +8,6 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { setLanguage } from "redux-i18n";
 import UniformButton from "../Screens/Components/UniformButton"
 import {
-
   Container,
   Content,
   Picker,
@@ -160,7 +159,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   optionTitle: {
-    color: "#fff",
+    color: "#000",
     fontSize: 20,
   },
   picker: {

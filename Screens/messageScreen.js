@@ -3,7 +3,6 @@ import {
   TextInput,
   StyleSheet,
   View,
-  Button,
   ActivityIndicator,
   Alert
 } from "react-native";
@@ -20,6 +19,7 @@ import {
 } from "../Actions/messageActions";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import UniformButton from "../Screens/Components/UniformButton"
+import Text from './Components/CustomText';
 
 class MessageScreen extends LocalizeComponent {
   static navigationOptions = ({ screenProps }) => {
