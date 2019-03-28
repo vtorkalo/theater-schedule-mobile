@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styles from './indexStyles';
 import { sliderWidth, itemWidth } from './SliderEntryStyles';
 import Carousel from 'react-native-snap-carousel';
 
+import Text from '../Components/CustomText';
+
 export default PostersSlider = (props) => {
     return (
         <View style={styles.postersContainer}>
-            <Text style={styles.title}>{props.title}</Text>
-            <Text style={styles.title}>{props.text}</Text>
+            <Text type="bold" style={styles.title}>{props.title}</Text>
             <Carousel
                 data={props.posters}
                 renderItem={props.renderItemWithParallax}

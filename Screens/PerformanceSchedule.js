@@ -1,13 +1,14 @@
 import React from 'react';
 import LocalizedComponent from '../Localization/LocalizedComponent';
 import { NavigationActions } from 'react-navigation';
-import { Text, FlatList, StyleSheet, Dimensions, Image, ScrollView} from 'react-native';
+import { FlatList, StyleSheet, Dimensions, Image, ScrollView} from 'react-native';
 import { Container, Content, View } from 'native-base';
 import { fetchSchedule } from '../Actions/performanceScheduleActions';
 import { connect } from 'react-redux';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { BallIndicator } from 'react-native-indicators';
 import ScheduleItem from './PerformanceScheduleComponents/ScheduleItem';
+import Text from './Components/CustomText';
 
 class PerformanceSchedule extends LocalizedComponent {
 

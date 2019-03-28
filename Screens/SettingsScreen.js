@@ -8,21 +8,17 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import { setLanguage } from "redux-i18n";
 import UniformButton from "../Screens/Components/UniformButton"
 import {
-
   Container,
   Content,
   Picker,
   ListItem,
   Left,
-  Body,
   Right,
   Switch,
-  Button,
-  Text,
   Separator,
   Toast,
-  View,
 } from "native-base";
+import Text from './Components/CustomText';
 
 class SettingsScreen extends LocalizeComponent {
   static navigationOptions = ({ screenProps }) => {
@@ -69,7 +65,7 @@ class SettingsScreen extends LocalizeComponent {
         <Content contentContainerStyle={styles.contentContainer}>
           <ListItem>
             <Left>
-              <Text>{this.t("Set language")}:</Text>
+              <Text style={styles.optionTitle}>{this.t("Set language")}:</Text>
             </Left>
 
             <Right>
@@ -97,7 +93,7 @@ class SettingsScreen extends LocalizeComponent {
 
           <ListItem>
             <Left>
-              <Text>{this.t("Push notifications")}</Text>
+              <Text style={styles.optionTitle}>{this.t("Push notifications")}:</Text>
             </Left>
 
             <Right>
@@ -119,7 +115,7 @@ class SettingsScreen extends LocalizeComponent {
 
           <ListItem>
             <Left>
-              <Text>{this.t("Notify in")}:</Text>
+              <Text style={styles.optionTitle}>{this.t("Notify in")}:</Text>
             </Left>
 
             <Right>
@@ -162,10 +158,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
   },
-  text: {
-    color: "#fff",
-    fontSize: 15,
-
+  optionTitle: {
+    color: "#000",
+    fontSize: 20,
   },
   picker: {
     height: 30,

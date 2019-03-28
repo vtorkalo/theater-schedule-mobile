@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './SliderEntryStyles'
 import { withNavigation } from 'react-navigation';
 import { isBase64 } from 'is-base64'
+import Text from '../Components/CustomText';
 
 class SliderEntry extends Component {
 

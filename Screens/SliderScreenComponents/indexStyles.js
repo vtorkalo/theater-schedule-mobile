@@ -25,7 +25,6 @@ export default StyleSheet.create({
         backgroundColor: 'transparent',
         color: 'black',
         fontSize: 25,
-        fontWeight: 'bold',
         textAlign: 'center',
     },
     slider: {

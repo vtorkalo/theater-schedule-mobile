@@ -3,7 +3,6 @@ import {
     View,
     StyleSheet,
     Image,
-    Text,
     TouchableOpacity,
     Dimensions,
 } from 'react-native';
@@ -11,6 +10,7 @@ import { connect } from 'react-redux';
 import { SaveOrDeletePerformance, deleteFromWishlist } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import { isBase64 } from "is-base64";
+import Text from '../Components/CustomText';
 import UniformButton from "../../Screens/Components/UniformButton";
 
 class WishListItem extends LocalizedComponent {
@@ -42,7 +42,7 @@ class WishListItem extends LocalizedComponent {
                     />
                 </View>
                 <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{this.props.chosenperformance.title}</Text>
+                    <Text type="bold" style={styles.title}>{this.props.chosenperformance.title}</Text>
                     <View style={styles.detailsContainer}>
                         <UniformButton
                             text={this.t('Details')}

@@ -1,32 +1,33 @@
 import React from 'react';
 import LocalizedComponent from '../../Localization/LocalizedComponent';
-import {View,Text,StyleSheet,Linking} from 'react-native';
+import {View,StyleSheet,Linking} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
+import Text from '../Components/CustomText';
 
 export default class Contacts extends LocalizedComponent{
     render() {
         return(
             <View>
                 <View style={styles.textContainer}>
-                    <Text style={{fontSize:15}}>{this.t("Address:")}</Text>
+                    <Text style={{fontSize:20}}>{this.t("Address:")}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>{this.t("TheaterAddress")}</Text>                 
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={{fontSize:15}}>{this.t("Waiting room:")}</Text>
+                    <Text style={{fontSize:20}}>{this.t("Waiting room:")}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>+38 (032) 235-47-73</Text>                 
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={{fontSize:15}}>{this.t("Pay office:")}</Text>
+                    <Text style={{fontSize:20}}>{this.t("Pay office:")}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>+38 (032) 235-58-32</Text>                 
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={{fontSize:15}}>E-mail:</Text>
+                    <Text style={{fontSize:20}}>E-mail:</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>info@lvivpuppet.com</Text>                 

@@ -17,7 +17,7 @@ import DeviceInfo from "react-native-device-info";
 import performanceReducer from "./Reducers/PerformanceReducer";
 import AppNavigator from "./AppNavigatorComponent";
 import registerForNotification from "./services/pushNotification";
-import { Notifications } from "expo";
+import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import { Root } from "native-base";
@@ -57,10 +57,14 @@ export default class App extends Component {
   }
 
   async loadFonts() {
-    await Expo.Font.loadAsync({
+    await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
+      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf"),
+      'Arsenal-Bold': require('./assets/fonts/Arsenal-Bold.ttf'),
+      'Arsenal-Italic': require('./assets/fonts/Arsenal-Italic.ttf'),
+      'Arsenal-BoldItalic': require('./assets/fonts/Arsenal-BoldItalic.ttf'),
+      'Arsenal-Regular': require('./assets/fonts/Arsenal-Regular.ttf')
     });
   }
 

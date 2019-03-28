@@ -124,7 +124,7 @@ export const translations = {
         "PAINTER": "PAINTER",
         "AUTHOR": "AUTHOR",
         "COMPOSER": "COMPOSER",
-        'WishlistScreenTitle': 'WishList',
+        'WishlistScreenTitle': 'Wishlist',
         "Add to favourites": "Add to favourites",
         "Remove from favourites": "Remove from favourites",
         "Performance Image Gallery: ": "Performance Image Gallery: ",

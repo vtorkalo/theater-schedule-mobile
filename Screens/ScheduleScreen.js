@@ -45,7 +45,7 @@ class ScheduleScreen extends LocalizeComponent {
     }
 
     render() {
-        if (this.props.isScheduleLoading || this.props.isLanguageLoading) {
+        if (this.props.isScheduleLoading || this.props.isLanguageLoading || this.props.isFontLoading) {
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon
@@ -124,7 +124,8 @@ const mapStateToProps = state => {
         isLanguageLoading: state.settings.loading,
         languageCode: state.settings.settings.languageCode,
         isScheduleEmpty: state.scheduleReducer.schedule.length == 0,
-        deviceId: state.settings.deviceId
+        deviceId: state.settings.deviceId,
+        isFontLoading: state.defaultReducer.isFontLoading,
     }
 }
 

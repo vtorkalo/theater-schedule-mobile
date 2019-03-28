@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, LayoutAnimation, UIManager,Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, LayoutAnimation, UIManager } from 'react-native';
 import { Container,Content} from 'native-base';
 import LocalizedComponent from '../../Localization/LocalizedComponent';
+import Text from '../Components/CustomText';
 
 export default class TheaterHistory extends LocalizedComponent {
     constructor(props) {
@@ -21,15 +22,15 @@ export default class TheaterHistory extends LocalizedComponent {
                 <Container>
                     <Content padder >
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{this.t("Building")}</Text>
+                            <Text type="bold" style={styles.title}>{this.t("Building")}</Text>
                         </View>
                         <View style={styles.textContainer}>
                             <TouchableOpacity onPress={this.showDetails}>
-                                <Text >{this.t("BuildingDescription")}</Text>
+                                <Text>{this.t("BuildingDescription")}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{this.t("Founders")}</Text>
+                            <Text type="bold" style={styles.title}>{this.t("Founders")}</Text>
                         </View>
                         <View style={styles.textContainer}>
                             <TouchableOpacity onPress={this.showDetails}>
@@ -37,7 +38,7 @@ export default class TheaterHistory extends LocalizedComponent {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{this.t("Today")}</Text>
+                            <Text type="bold" style={styles.title}>{this.t("Today")}</Text>
                         </View>
                         <View style={styles.textContainer}>
                             <Text>{this.t("TodayHistory")}</Text>
@@ -51,7 +52,7 @@ export default class TheaterHistory extends LocalizedComponent {
                 <Container>
                     <Content padder >
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{this.t("Building")}</Text>
+                            <Text type="bold" style={styles.title}>{this.t("Building")}</Text>
                         </View>
                         <View style={styles.textContainer}>
                             <TouchableOpacity onPress={this.showDetails}>
@@ -59,7 +60,7 @@ export default class TheaterHistory extends LocalizedComponent {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{this.t("Founders")}</Text>
+                            <Text type="bold" style={styles.title}>{this.t("Founders")}</Text>
                         </View>
                         <View style={styles.textContainer}>
                             <TouchableOpacity onPress={this.showDetails}>
@@ -67,7 +68,7 @@ export default class TheaterHistory extends LocalizedComponent {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{this.t("Today")}</Text>
+                            <Text type="bold" style={styles.title}>{this.t("Today")}</Text>
                         </View>
                         <View style={styles.textContainer}>
                             <Text>{this.t("TodayHistory")}</Text>
@@ -96,6 +97,5 @@ const styles = StyleSheet.create({
     title:{
         fontSize: 20, 
         color: 'white', 
-        fontWeight: '500'
     }
 })

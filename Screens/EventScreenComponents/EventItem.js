@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import { connect } from 'react-redux';
+import Text from '../Components/CustomText';
 import UniformButton from "../../Screens/Components/UniformButton";
 
 class EventItem extends LocalizedComponent {

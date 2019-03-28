@@ -6,6 +6,7 @@ import {
 const initialState = {
     isAppReady: false,
     isLoggedIn: false,
+    isFontLoading: false,
 };
 
 export default function defaultReducer(state = initialState, action) {
