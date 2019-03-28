@@ -87,11 +87,11 @@ class PerformanceSchedule extends LocalizedComponent {
                             <View style={styles.detailsContainer}>
                                 <View style={styles.priceContainer}>
                                     <Text style={styles.detailName}>{this.t("Duration")}</Text>
-                                    <Text style={styles.detailValue}>{this.props.schedule.duration + this.t("min")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.duration} {this.t("min")}</Text>
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <Text style={styles.detailName}>{this.t("Cost")}</Text>
-                                    <Text style={styles.detailValue}>{this.props.schedule.price + this.t("uah")}</Text>
+                                    <Text style={styles.detailValue}>{this.props.schedule.price} {this.t("uah")}</Text>
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <Text style={styles.detailName}>{this.t("Age")}</Text>
