@@ -66,7 +66,7 @@ class SettingsScreen extends LocalizeComponent {
         <Content contentContainerStyle={styles.contentContainer}>
           <ListItem>
             <Left>
-              <Text style={{fontSize: 20}}>{this.t("Set language")}:</Text>
+              <Text style={styles.optionTitle}>{this.t("Set language")}:</Text>
             </Left>
 
             <Right>
@@ -94,7 +94,7 @@ class SettingsScreen extends LocalizeComponent {
 
           <ListItem>
             <Left>
-              <Text style={{fontSize: 20}}>{this.t("Push notifications")}:</Text>
+              <Text style={styles.optionTitle}>{this.t("Push notifications")}:</Text>
             </Left>
 
             <Right>
@@ -116,7 +116,7 @@ class SettingsScreen extends LocalizeComponent {
 
           <ListItem>
             <Left>
-              <Text style={{fontSize: 20}}>{this.t("Notify in")}:</Text>
+              <Text style={styles.optionTitle}>{this.t("Notify in")}:</Text>
             </Left>
 
             <Right>
@@ -159,10 +159,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
   },
-  text: {
+  optionTitle: {
     color: "#fff",
-    fontSize: 15,
-
+    fontSize: 20,
   },
   picker: {
     height: 30,

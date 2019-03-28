@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Dimensions, Image, ScrollView } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
@@ -15,6 +15,7 @@ import { isBase64 } from 'is-base64';
 import _ from 'lodash';
 import UniformButton from "../Screens/Components/UniformButton"
 import ImageLoad from 'react-native-image-placeholder';
+import Text from './Components/CustomText';
 
 class PerformanceScreen extends LocalizeComponent {
     componentDidMount() {
