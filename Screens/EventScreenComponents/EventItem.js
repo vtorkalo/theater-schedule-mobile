@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-nat
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import { connect } from 'react-redux';
 import Text from '../Components/CustomText';
+import UniformButton from "../../Screens/Components/UniformButton";
 
 class EventItem extends LocalizedComponent {
     constructor(props) {
@@ -37,7 +38,7 @@ class EventItem extends LocalizedComponent {
                     <View style={styles.detailsContainer}>
                         <Text style={styles.additionalInfo}>{this.t("Date")}: {this.convertToReadableDate(this.props.event.date)}</Text>
                     </View>
-                    <View style={styles.buttonContainer}>
+                    {/* <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={this.pressedDetailsHandler}>
                             <View style={styles.detailsButton}>
                                 <Text style={styles.buttonText}>
@@ -45,7 +46,12 @@ class EventItem extends LocalizedComponent {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
+                    <UniformButton
+                            text={this.t('Details')}
+                            style={styles.button}
+                            onPress={this.pressedDetailsHandler}
+                        />
                 </View>
             </View>
         );
@@ -55,6 +61,12 @@ class EventItem extends LocalizedComponent {
 const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
 
 const styles = StyleSheet.create({
+    button: {
+        minWidth:"65%",
+        margin: 5,
+        alignSelf: "center",
+        justifyContent: 'center',
+    },
     eventContainer: {
         height: QUARTER_OF_WINDOW_HEIGHT,
         flexDirection: 'row',
