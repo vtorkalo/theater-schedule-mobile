@@ -21,6 +21,7 @@ import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import { Root } from "native-base";
+import { AppLoading } from 'expo';
 
 const appReducer = combineReducers({
   i18nState,
@@ -38,23 +39,15 @@ const appReducer = combineReducers({
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
 
-let deviceId = 
+let deviceId =
   Expo.Constants.appOwnership == "expo"
-      ? Expo.Constants.deviceId
-      : DeviceInfo.getUniqueID();
+    ? Expo.Constants.deviceId
+    : DeviceInfo.getUniqueID();
 
 export default class App extends Component {
-  componentDidMount() {
-    store.dispatch(loadSettings(deviceId));
-
-    Notifications.addListener(notification => {
-      //TODO: handle notification
-    });
-  }
-
-  componentWillMount() {
-    this.loadFonts();
-  }
+  state = {
+    fontsLoaded: false,
+  };
 
   async loadFonts() {
     await Font.loadAsync({
@@ -68,7 +61,26 @@ export default class App extends Component {
     });
   }
 
+  afterFontsLoaded() {
+    store.dispatch(loadSettings(deviceId));
+    Notifications.addListener(notification => {
+      //TODO: handle notification
+    });
+  }
+
   render() {
+    if (!this.state.fontsLoaded) {
+      return (
+        <AppLoading
+          startAsync={this.loadFonts}
+          onFinish={() => {
+            this.afterFontsLoaded();
+            this.setState({ fontsLoaded: true })
+          }}
+          onError={console.warn}
+        />
+      );
+    }
     return (
       <Provider store={store}>
         <I18n translations={translations} initialLang="uk" fallbackLang="en">
