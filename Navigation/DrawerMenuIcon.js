@@ -27,20 +27,20 @@ class DrawerMenuIcon extends LocalizeComponent {
                         ref={this.setMenuRef}
                         button={<Ionicons name='ios-settings' color='white' size={32} onPress={this.showMenu} />}>
                         <MenuItem
-                            onPress={() => { this.hideMenu(); this.props.itemsClicks.editItemClick(); }}
+                            onPress={() => { this.hideMenu(); this.props.items.item1.click(); }}
                             textStyle={{ color: 'black', fontSize: 16 }}>
-                            {this.t("Edit profile")}
+                            {this.t(this.props.items.item1.text)}
                         </MenuItem>
                         <MenuItem 
-                            onPress={() => { this.hideMenu(); this.props.itemsClicks.changePasswordItemClick(); }}
+                            onPress={() => { this.hideMenu(); this.props.items.item2.click(); }}
                             textStyle={{ color: 'black', fontSize: 16 }}>
-                            {this.t("Change password")}
+                            {this.t(this.props.items.item2.text)}
                         </MenuItem>
                         <MenuDivider />
                         <MenuItem 
-                            onPress={() => { this.hideMenu(); this.props.itemsClicks.logoutItemClick(); }}
+                            onPress={() => { this.hideMenu(); this.props.items.item3.click(); }}
                             textStyle={{ color: 'red', fontSize: 16 }}>
-                            {this.t("Logout")}
+                            {this.t(this.props.items.item3.text)}
                         </MenuItem>
                     </Menu>
                 </Right>

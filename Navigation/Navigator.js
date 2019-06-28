@@ -15,6 +15,8 @@ import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 import EventDetailScreen from '../Screens/EventDetailScreen';
 import UserProfileScreen from '../Screens/UserProfileScreen';
+import EditProfileScreen from '../Screens/EditProfileScreen';
+import ChangePasswordScreen from '../Screens/ChangePasswordScreen';
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -62,16 +64,20 @@ export const AppNavigator = createStackNavigator(
     ChooseLanguage: { screen: LanguageScreen },
     PerformanceSchedule: {screen : PerformanceScheduleScreen},
     eventDetailScreen: { screen: EventDetailScreen },
+    EditProfile: { screen: EditProfileScreen },
+    ChangePassword: { screen: ChangePasswordScreen },
   },
   {
     headerMode: "none",
     initialRouteName: "Splash"
   }
 );
+
 export const middleware = createReactNavigationReduxMiddleware(
   "root",
   state => state.navigation
 );
+
 const Apps = reduxifyNavigator(AppNavigator, "root");
 const mapStateToProps = state => ({
   state: state.navigation

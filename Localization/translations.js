@@ -183,6 +183,6 @@ export const translations = {
         "Birth Date": "Birth Date",
         "Edit profile": "Edit profile",
         "Change password": "Change password",
-        "Logout": "Logout",
+        "Logout": "Log out",
     },
 }

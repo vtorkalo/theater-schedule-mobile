@@ -38,21 +38,30 @@ class UserProfileScreen extends LocalizeComponent {
     }
 
     editProfileItemClick = () => { 
-        //TODO: Navigate to EditProfileScreen
+        this.props.navigation.navigate('EditProfile')
     }
 
     changePasswordItemClick = () => {
-        //TODO: Navigate to ChangePasswordScreen
+        this.props.navigation.navigate('ChangePassword')
     }
 
     logoutItemClick = () => {
         //TODO: Delete current user from local storage, navigate to LoginScreen
     }
 
-    settingsMenuItemsClicks = {
-        editItemClick: this.editProfileItemClick,
-        changePasswordItemClick: this.changePasswordItemClick,
-        logoutItemClick: this.logoutItemClick,
+    settingsMenuItems = {
+        item1: {
+            text: 'Edit profile', 
+            click: this.editProfileItemClick,
+        },
+        item2: {
+            text: 'Change password',
+            click: this.changePasswordItemClick,
+        },
+        item3: {
+            text: 'Logout',
+            click: this.logoutItemClick,
+        }
     }
 
     render() {
@@ -62,7 +71,7 @@ class UserProfileScreen extends LocalizeComponent {
                     onPressMenuIcon={() => this.props.navigation.openDrawer()}
                     text={this.t('Profile')}
                     showSettingsIcon={true}
-                    itemsClicks={this.settingsMenuItemsClicks}
+                    items={this.settingsMenuItems}
                 />
                 <Header style={styles.headerContainer}>
                     <FontAwesome name='user-circle' style={styles.iconsContainer} />
