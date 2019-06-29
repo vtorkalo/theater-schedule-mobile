@@ -21,7 +21,7 @@ class ReturnMenuIcon extends LocalizeComponent {
                     <Body style={styles.bodyContainer}>
                         <Text type="bold" style={styles.text}>{this.t(this.props.text)}</Text>
                     </Body>
-                    <Right />
+                    <Right style={styles.rightContainer} />
                 </Header>
             )
         }
@@ -37,7 +37,7 @@ class ReturnMenuIcon extends LocalizeComponent {
                         </Left>
                     </TouchableOpacity>
                     <Body style={styles.bodyContainer} />
-                    <Right />
+                    <Right style={styles.rightContainer} />
                 </Header>
             )
         }
@@ -60,12 +60,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         flex: 1,
     },
+    rightContainer: {
+        width: 50,
+        flex: 1,
+    },
     touchableContainer: {
         justifyContent: "center",
     },
     bodyContainer: {
         flex: 8,
         alignItems: 'center',
+        justifyContent: "center",
     },
     text: {
         color: '#fff',

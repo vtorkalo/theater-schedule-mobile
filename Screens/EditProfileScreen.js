@@ -16,10 +16,6 @@ import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
 
 class EditProfileScreen extends LocalizeComponent {
-    static navigationOptions = {
-        drawerLabel: () => null
-    }
-
     state = {
         currentUser: {
             firstName: "Stepan",
