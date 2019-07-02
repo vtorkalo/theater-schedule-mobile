@@ -5,7 +5,7 @@
     "name": "TheaterSchedule",
     "slug": "TheaterSchedule",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "33.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.lv410dotnet.lvivpuppet",
+      "supportsTablet": true,
+      "infoPlist":{
+        "UIBackgroundModes":["audio"] 
+      }
     },
     "androidStatusBarColor": "#334393",
     "androidStatusBar": {
@@ -22,7 +26,7 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "package": "com.lv375dotnet.lvivpuppet"
+      "package": "com.lv410dotnet.lvivpuppet"
     }
   }
 }

@@ -14,16 +14,23 @@ import EventScreen from "../Screens/EventScreen";
 import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 import EventDetailScreen from '../Screens/EventDetailScreen';
+import StreamScreen from '../Screens/StreamScreen'
+import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
+import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
 
 const DrawerStack = createDrawerNavigator(
   {
     Schedule: { screen: ScheduleScreen },
     Repertoire: { screen: SliderScreen },
+    Stream: { screen: StreamScreen },
     WishList: { screen: WishListScreen },
-    Event: { screen: EventScreen}, 
+    Event: { screen: EventScreen },
+
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
+
+
   },
   {
     drawerPosition: "left",
@@ -52,14 +59,26 @@ const PerformanceStack = createStackNavigator(
     headerMode: 'none',
   })
 
+
+const StreamStack = createStackNavigator(
+  {
+    streamLanguageScreen: { screen: StreamLanguageScreen }
+  },
+  {
+    headerMode: 'none',
+  }
+)
+
 export const AppNavigator = createStackNavigator(
   {
     drawerStack: { screen: DrawerNavigation },
     performanceStack: { screen: PerformanceStack },
     Splash: { screen: SplashScreen },
     ChooseLanguage: { screen: LanguageScreen },
-    PerformanceSchedule: {screen : PerformanceScheduleScreen},
+    PerformanceSchedule: { screen: PerformanceScheduleScreen },
     eventDetailScreen: { screen: EventDetailScreen },
+    streamLanguageScreen: { screen: StreamLanguageScreen },
+    streamConnectingScreen:{screen:StreamConnectingScreen}
   },
   {
     headerMode: "none",
