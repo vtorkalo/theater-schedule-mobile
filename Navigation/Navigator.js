@@ -14,7 +14,7 @@ import EventScreen from "../Screens/EventScreen";
 import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 import EventDetailScreen from '../Screens/EventDetailScreen';
-
+import RegistrationScreen from '../Screens/RegistrationScreen';
 const DrawerStack = createDrawerNavigator(
   {
     Schedule: { screen: ScheduleScreen },
@@ -44,6 +44,16 @@ const DrawerNavigation = createStackNavigator(
   }
 );
 
+const RegistrationStack = createStackNavigator(
+  {
+    registrationScreen:{screen: RegistrationScreen}
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
+
 const PerformanceStack = createStackNavigator(
   {
     performanceScreen: { screen: PerformanceScreen }
@@ -60,6 +70,7 @@ export const AppNavigator = createStackNavigator(
     ChooseLanguage: { screen: LanguageScreen },
     PerformanceSchedule: {screen : PerformanceScheduleScreen},
     eventDetailScreen: { screen: EventDetailScreen },
+    registrationScreen:{screen :RegistrationStack}
   },
   {
     headerMode: "none",
