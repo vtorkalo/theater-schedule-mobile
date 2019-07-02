@@ -45,12 +45,14 @@ const scaleVertical = size => (height / guidelineBaseHeight) * size;
 
 class RegistrationScreen extends LocalizeComponent {
 
-  ValidateForm(){
-    if (this.props.registration.sendingError === null && this.props.registration.FirstNameError === null && this.props.registration.CityError === null && this.props.registration.TelephoneError === null && this.props.registration.BirthDateError === null
-      && this.props.registration.EmailError && this.props.registration.PasswordError){
-        return true
-      }else 
-        return false;     
+  ValidateForm() {
+    return (this.props.registration.sendingError === null
+      && this.props.registration.FirstNameError === null
+      && this.props.registration.CityError === null
+      && this.props.registration.TelephoneError === null
+      && this.props.registration.BirthDateError === null
+      && this.props.registration.EmailError === null
+      && this.props.registration.PasswordError === null);
   }
 
   onSendMessage = () => {
