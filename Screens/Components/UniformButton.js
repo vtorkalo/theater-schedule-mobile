@@ -16,7 +16,7 @@ export default UniformButton = (props) => {
     });
 
     return (
-        <Button rounded style={[styles.button, { ...props.style }]} onPress={props.onPress} >
+        <Button rounded style={[styles.button, { ...props.style }]} onPress={props.onPress} disabled={props.disabled}>
             <Text uppercase={false} style={[styles.buttonText, { ...props.buttonText }]}>{props.text}</Text>
         </Button>
     );

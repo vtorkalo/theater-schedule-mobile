@@ -102,6 +102,8 @@ export const translations = {
         "Age": "Вік",
         "No performance schedule": "На жаль, на даний період вистав немає",
         "Buy ticket":"Купити квиток",
+        "Stream":"Дубляж",
+        "StreamScreenTitle":"Дубляж"
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -206,5 +208,7 @@ export const translations = {
         "Age": "Age",
         "No performance schedule" : "We are sorry, this performance will be perform soon",
         "Buy ticket":"Buy ticket",
+        "Stream":"Stream",
+        "StreamScreenTitle":"Stream"
     },
 }
