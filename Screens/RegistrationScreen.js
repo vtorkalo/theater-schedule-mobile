@@ -62,7 +62,8 @@ class RegistrationScreen extends LocalizeComponent {
       Password: this.props.registration.Password,
       PhoneIdentifier: this.props.deviceId
     });
-    if (this.props.registration.sendingError === null) {
+    if (this.props.registration.sendingError === null && this.props.registration.FirstNameError === null && this.props.registration.CityError === null && this.props.registration.TelephoneError === null && this.props.registration.BirthDateError === null
+      && this.props.registration.EmailError && this.props.registration.PasswordError) {
       this.props.navigation.navigate("drawerStack");
     } else {
       alert("There was a problem during registration");
