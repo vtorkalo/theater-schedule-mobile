@@ -17,6 +17,7 @@ import EventDetailScreen from '../Screens/EventDetailScreen';
 import StreamScreen from '../Screens/StreamScreen'
 import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
 import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
+import RegistrationScreen from '../Screens/RegistrationScreen';
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -51,6 +52,16 @@ const DrawerNavigation = createStackNavigator(
   }
 );
 
+const RegistrationStack = createStackNavigator(
+  {
+    registrationScreen:{screen: RegistrationScreen}
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
+
 const PerformanceStack = createStackNavigator(
   {
     performanceScreen: { screen: PerformanceScreen }
@@ -78,7 +89,8 @@ export const AppNavigator = createStackNavigator(
     PerformanceSchedule: { screen: PerformanceScheduleScreen },
     eventDetailScreen: { screen: EventDetailScreen },
     streamLanguageScreen: { screen: StreamLanguageScreen },
-    streamConnectingScreen:{screen:StreamConnectingScreen}
+    streamConnectingScreen:{screen:StreamConnectingScreen},
+    registrationScreen:{screen :RegistrationStack}
   },
   {
     headerMode: "none",

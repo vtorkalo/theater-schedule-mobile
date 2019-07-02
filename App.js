@@ -11,6 +11,7 @@ import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n";
 import sliderReducer from "./Reducers/SliderReducer";
 import wishListReducer from "./Reducers/WishListReducer";
+import registration from "./Reducers/RegistrationReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -36,7 +37,8 @@ const appReducer = combineReducers({
   defaultReducer,
   navigation,
   performanceSchedule: performanceScheduleReducer,
-  streamReducer
+  streamReducer,
+  registration,
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
