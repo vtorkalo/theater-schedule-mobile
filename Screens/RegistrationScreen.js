@@ -43,16 +43,6 @@ const guidelineBaseHeight = 680;
 const scale = size => (width / guidelineBaseWidth) * size;
 const scaleVertical = size => (height / guidelineBaseHeight) * size;
 
-function validateEmail(email) {
-  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return email.match(mailformat) ? true : false;
-}
-
-function validatePhoneNumber(phone) {
-  var phoneFormat = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-  return phone.match(phoneFormat) ? true : false;
-}
-
 class RegistrationScreen extends LocalizeComponent {
 
   onSendMessage = () => {
