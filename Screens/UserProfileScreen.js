@@ -19,25 +19,24 @@ class UserProfileScreen extends LocalizeComponent {
     }
 
     state = {
-        currentUser: {
-            firstName: "Stepan",
-            lastName: "Popidsrachenko",
-            email: "testuser@gmail.com",
-            birthDate: "2019-06-26T15:27:31.2278615+03:00",
-            city: "Lviv",
-            country: "Ukraine",
-        }
+        firstName: "Denys",
+        lastName: "Shourek",
+        email: "test@gmail.com",
+        phone: "+380973122522",
+        birthDate: "1992-11-03T15:27:31.2278615+03:00",
+        city: "Lviv",
+        country: "Ukraine",
     }
 
     convertBirthDate() {
-        var dt = new Date(this.state.currentUser.birthDate);
-        var day = dt.getDate(),
-            month = dt.getMonth() + 1,
-            year = dt.getFullYear();
-        return `${day}-${month}-${year}`
+        var date = new Date(this.state.birthDate);
+        var stringDate = ('0' + date.getDate()).slice(-2) + '/'
+            + ('0' + (date.getMonth() + 1)).slice(-2) + '/'
+            + date.getFullYear();
+        return stringDate
     }
 
-    editProfileItemClick = () => { 
+    editProfileItemClick = () => {
         this.props.navigation.navigate('EditProfile')
     }
 
@@ -51,7 +50,7 @@ class UserProfileScreen extends LocalizeComponent {
 
     settingsMenuItems = {
         item1: {
-            text: 'Edit profile', 
+            text: 'Edit profile',
             click: this.editProfileItemClick,
         },
         item2: {
@@ -76,8 +75,8 @@ class UserProfileScreen extends LocalizeComponent {
                 <Header style={styles.headerContainer}>
                     <FontAwesome name='user-circle' style={styles.iconsContainer} />
                     <Text style={styles.optionTitleWhite}>
-                        {`${this.state.currentUser.firstName}` + 
-                        `${this.state.currentUser.lastName !== null ? ` ${this.state.currentUser.lastName}` : ""}`}
+                        {`${this.state.firstName}` +
+                            `${this.state.lastName !== null ? ` ${this.state.lastName}` : ""}`}
                     </Text>
                 </Header>
                 <Content contentContainerStyle={styles.contentContainer}>
@@ -86,7 +85,15 @@ class UserProfileScreen extends LocalizeComponent {
                             <Text style={styles.optionTitleBlack}>{this.t("Email")}</Text>
                         </Left>
                         <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>{this.state.currentUser.email}</Text>
+                            <Text style={styles.optionTitleBlack}>{this.state.email}</Text>
+                        </Right>
+                    </ListItem>
+                    <ListItem>
+                        <Left style={{ flex: 0.4 }}>
+                            <Text style={styles.optionTitleBlack}>{this.t("Phone")}</Text>
+                        </Left>
+                        <Right style={{ flex: 0.6 }}>
+                            <Text style={styles.optionTitleBlack}>{this.state.phone}</Text>
                         </Right>
                     </ListItem>
                     <ListItem>
@@ -104,7 +111,7 @@ class UserProfileScreen extends LocalizeComponent {
                             <Text style={styles.optionTitleBlack}>{this.t("City")}</Text>
                         </Left>
                         <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>{this.state.currentUser.city}</Text>
+                            <Text style={styles.optionTitleBlack}>{this.state.city}</Text>
                         </Right>
                     </ListItem>
                     <ListItem>
@@ -112,7 +119,7 @@ class UserProfileScreen extends LocalizeComponent {
                             <Text style={styles.optionTitleBlack}>{this.t("Country")}</Text>
                         </Left>
                         <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>{this.state.currentUser.country}</Text>
+                            <Text style={styles.optionTitleBlack}>{this.state.country}</Text>
                         </Right>
                     </ListItem>
                 </Content>

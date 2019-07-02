@@ -27,10 +27,8 @@ class ChangePasswordScreen extends LocalizeComponent {
         this.confirmPasswordRef = this.updateRef.bind(this, 'confirmPassword');
 
         this.state = {
-            currentUser: {
-                firstName: "Stepan",
-                lastName: "Popidsrachenko",
-            },
+            firstName: "Denys",
+            lastName: "Shourek",
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
@@ -70,6 +68,14 @@ class ChangePasswordScreen extends LocalizeComponent {
         this.confirmPassword.blur();
     }
 
+    isEmpty(obj) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
+
     onSubmit() {
         let errors = {};
         ['oldPassword', 'newPassword', 'confirmPassword']
@@ -78,17 +84,18 @@ class ChangePasswordScreen extends LocalizeComponent {
                 if (!value) {
                     errors[name] = this.t('Should not be empty');
                 } else {
-                    if (value.length < 6) {
-                        errors[name] = this.t('Too short');
-                    }
                     if (name === 'confirmPassword' && value !== this.state.newPassword) {
                         errors[name] = this.t('Wrong password');
+                    }
+                    if (value.length < 6) {
+                        errors[name] = this.t('Too short');
                     }
                 }
             });
         this.setState({ errors });
-        if (!errors || errors === null) {
+        if (this.isEmpty(errors)) {
             // TODO: fetch password update to server
+            alert('FETCH');
         }
     }
 
@@ -108,8 +115,8 @@ class ChangePasswordScreen extends LocalizeComponent {
                 <Header style={styles.headerContainer}>
                     <FontAwesome name='user-circle' style={styles.iconsContainer} />
                     <Text style={styles.optionTitleWhite}>
-                        {`${this.state.currentUser.firstName}` +
-                            `${this.state.currentUser.lastName !== null ? ` ${this.state.currentUser.lastName}` : ""}`}
+                        {`${this.state.firstName}` +
+                            `${this.state.lastName !== null ? ` ${this.state.lastName}` : ""}`}
                     </Text>
                 </Header>
                 <Content contentContainerStyle={styles.contentContainer} style={styles.container}>
@@ -120,7 +127,6 @@ class ChangePasswordScreen extends LocalizeComponent {
                         autoCapitalize='none'
                         autoCorrect={false}
                         enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={true}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
                         onSubmitEditing={this.onSubmitOldPassword}
@@ -129,7 +135,7 @@ class ChangePasswordScreen extends LocalizeComponent {
                         error={errors.oldPassword}
                         tintColor={'#7154b8'}
                         fontSize={18}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 30 }}
+                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
                         titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
                     <TextField
@@ -139,7 +145,6 @@ class ChangePasswordScreen extends LocalizeComponent {
                         autoCapitalize='none'
                         autoCorrect={false}
                         enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={true}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
                         onSubmitEditing={this.onSubmitNewPassword}
@@ -148,7 +153,7 @@ class ChangePasswordScreen extends LocalizeComponent {
                         error={errors.newPassword}
                         tintColor={'#7154b8'}
                         fontSize={18}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 30 }}
+                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
                         titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
                     <TextField
@@ -158,7 +163,6 @@ class ChangePasswordScreen extends LocalizeComponent {
                         autoCapitalize='none'
                         autoCorrect={false}
                         enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={true}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
                         onSubmitEditing={this.onSubmitConfirmPassword}
@@ -167,7 +171,7 @@ class ChangePasswordScreen extends LocalizeComponent {
                         error={errors.confirmPassword}
                         tintColor={'#7154b8'}
                         fontSize={18}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 30 }}
+                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
                         titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
                     <UniformButton onPress={this.onSubmit} text={this.t("Save")} style={styles.button} />
@@ -201,7 +205,6 @@ const styles = StyleSheet.create({
     },
     container: {
         margin: 8,
-        marginTop: 24,
     },
     optionTitleWhite: {
         color: 'white',
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     button: {
-        margin: 20,
+        marginTop: 20,
         alignSelf: "flex-end"
     },
 });

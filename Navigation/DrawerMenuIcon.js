@@ -38,7 +38,7 @@ class DrawerMenuIcon extends LocalizeComponent {
                         </MenuItem>
                         <MenuDivider />
                         <MenuItem 
-                            onPress={() => { this.hideMenu(); this.props.items.item3.click(); }}
+                            onPress={() => { this.props.items.item3.click(); }}
                             textStyle={{ color: 'red', fontSize: 16 }}>
                             {this.t(this.props.items.item3.text)}
                         </MenuItem>
