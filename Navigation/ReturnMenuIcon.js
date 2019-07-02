@@ -7,40 +7,28 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 
 class ReturnMenuIcon extends LocalizeComponent {
     render() {
-        if (this.props.showBody) {
-            return (
-                <Header style={styles.headerContainer} >
-                    <TouchableOpacity
-                        onPress={this.props.onPressMenuIcon}
-                        style={styles.touchableContainer}
-                    >
-                        <Left style={styles.leftContainer} >
-                            <Ionicons name='md-arrow-round-back' color='white' size={32} />
-                        </Left>
-                    </TouchableOpacity>
-                    <Body style={styles.bodyContainer}>
-                        <Text type="bold" style={styles.text}>{this.t(this.props.text)}</Text>
-                    </Body>
-                    <Right style={styles.rightContainer} />
-                </Header>
-            )
-        }
-        else {
-            return (
-                <Header style={styles.headerContainer} >
-                    <TouchableOpacity
-                        onPress={this.props.onPressMenuIcon}
-                        style={styles.touchableContainer}
-                    >
-                        <Left style={styles.leftContainer} >
-                            <Ionicons name='md-arrow-round-back' color='white' size={32} />
-                        </Left>
-                    </TouchableOpacity>
-                    <Body style={styles.bodyContainer} />
-                    <Right style={styles.rightContainer} />
-                </Header>
-            )
-        }
+        return (
+            <Header style={styles.headerContainer} >
+                <TouchableOpacity
+                    onPress={this.props.onPressMenuIcon}
+                    style={styles.touchableContainer}
+                >
+                    <Left style={styles.leftContainer} >
+                        <Ionicons name='md-arrow-round-back' color='white' size={32} />
+                    </Left>
+                </TouchableOpacity>
+                {
+                    this.props.showBody
+                        ?
+                        <Body style={styles.bodyContainer}>
+                            <Text type="bold" style={styles.text}>{this.t(this.props.text)}</Text>
+                        </Body>
+                        :
+                        <Body style={styles.bodyContainer} />
+                }
+                <Right style={styles.rightContainer} />
+            </Header>
+        )
     }
 }
 

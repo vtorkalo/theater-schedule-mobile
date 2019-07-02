@@ -5,13 +5,11 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
     Container,
     Content,
-    Left,
-    Right,
-    ListItem,
     Header
 } from "native-base";
 import Text from './Components/CustomText';
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons';
+import UserProfileItem from './UserProfileComponents/UserProfileItem';
 
 class UserProfileScreen extends LocalizeComponent {
     static navigationOptions = {
@@ -28,8 +26,8 @@ class UserProfileScreen extends LocalizeComponent {
         country: "Ukraine",
     }
 
-    convertBirthDate() {
-        var date = new Date(this.state.birthDate);
+    convertBirthDate(dateToConvert) {
+        var date = new Date(dateToConvert);
         var stringDate = ('0' + date.getDate()).slice(-2) + '/'
             + ('0' + (date.getMonth() + 1)).slice(-2) + '/'
             + date.getFullYear();
@@ -80,48 +78,11 @@ class UserProfileScreen extends LocalizeComponent {
                     </Text>
                 </Header>
                 <Content contentContainerStyle={styles.contentContainer}>
-                    <ListItem>
-                        <Left style={{ flex: 0.4 }}>
-                            <Text style={styles.optionTitleBlack}>{this.t("Email")}</Text>
-                        </Left>
-                        <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>{this.state.email}</Text>
-                        </Right>
-                    </ListItem>
-                    <ListItem>
-                        <Left style={{ flex: 0.4 }}>
-                            <Text style={styles.optionTitleBlack}>{this.t("Phone")}</Text>
-                        </Left>
-                        <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>{this.state.phone}</Text>
-                        </Right>
-                    </ListItem>
-                    <ListItem>
-                        <Left style={{ flex: 0.4 }}>
-                            <Text style={styles.optionTitleBlack}>{this.t("Birth Date")}</Text>
-                        </Left>
-                        <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>
-                                {this.convertBirthDate()}
-                            </Text>
-                        </Right>
-                    </ListItem>
-                    <ListItem>
-                        <Left style={{ flex: 0.4 }}>
-                            <Text style={styles.optionTitleBlack}>{this.t("City")}</Text>
-                        </Left>
-                        <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>{this.state.city}</Text>
-                        </Right>
-                    </ListItem>
-                    <ListItem>
-                        <Left style={{ flex: 0.4 }}>
-                            <Text style={styles.optionTitleBlack}>{this.t("Country")}</Text>
-                        </Left>
-                        <Right style={{ flex: 0.6 }}>
-                            <Text style={styles.optionTitleBlack}>{this.state.country}</Text>
-                        </Right>
-                    </ListItem>
+                    <UserProfileItem text={this.t("Email")} value={this.state.email} />
+                    <UserProfileItem text={this.t("Phone")} value={this.state.phone} />
+                    <UserProfileItem text={this.t("Birth Date")} value={this.convertBirthDate(this.state.birthDate)} />
+                    <UserProfileItem text={this.t("City")} value={this.state.city} />
+                    <UserProfileItem text={this.t("Country")} value={this.state.country} />
                 </Content>
             </Container>
         );
@@ -151,10 +112,6 @@ const styles = StyleSheet.create({
     },
     optionTitleWhite: {
         color: 'white',
-        fontSize: 20,
-    },
-    optionTitleBlack: {
-        color: 'black',
         fontSize: 20,
     },
 });

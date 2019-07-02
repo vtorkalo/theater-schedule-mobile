@@ -10,8 +10,8 @@ import Text from './Components/CustomText';
 import { FontAwesome } from '@expo/vector-icons'
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
-import { TextField } from 'react-native-material-textfield';
-import UniformButton from "../Screens/Components/UniformButton"
+import UniformButton from '../Screens/Components/UniformButton';
+import PasswordTextField from './UserProfileComponents/PasswordTextField'
 
 class ChangePasswordScreen extends LocalizeComponent {
     constructor(props) {
@@ -76,12 +76,12 @@ class ChangePasswordScreen extends LocalizeComponent {
         return true;
     }
 
-    onSubmit() {
+    isFieldsValid() {
         let errors = {};
         ['oldPassword', 'newPassword', 'confirmPassword']
             .forEach((name) => {
                 let value = this[name].value();
-                if (!value) {
+                if (!value || value.replace(/\s/g, '').length < 1) {
                     errors[name] = this.t('Should not be empty');
                 } else {
                     if (name === 'confirmPassword' && value !== this.state.newPassword) {
@@ -92,10 +92,19 @@ class ChangePasswordScreen extends LocalizeComponent {
                     }
                 }
             });
-        this.setState({ errors });
         if (this.isEmpty(errors)) {
+            return true;
+        }
+        else {
+            this.setState({errors});
+            return false;
+        }  
+    }
+
+    onSubmit() {
+        if (this.isFieldsValid()) {
             // TODO: fetch password update to server
-            alert('FETCH');
+            alert('Fetching data to backend');
         }
     }
 
@@ -120,59 +129,32 @@ class ChangePasswordScreen extends LocalizeComponent {
                     </Text>
                 </Header>
                 <Content contentContainerStyle={styles.contentContainer} style={styles.container}>
-                    <TextField
-                        ref={this.oldPasswordRef}
+                    <PasswordTextField 
+                        label={this.t('Password')}
+                        reference={this.oldPasswordRef}
                         value={this.state.oldPassword}
-                        secureTextEntry={true}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
                         onSubmitEditing={this.onSubmitOldPassword}
-                        returnKeyType='next'
-                        label={this.t('Password')}
                         error={errors.oldPassword}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
-                    <TextField
-                        ref={this.newPasswordRef}
+                    <PasswordTextField 
+                        label={this.t('New Password')}
+                        reference={this.newPasswordRef}
                         value={this.state.newPassword}
-                        secureTextEntry={true}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
                         onSubmitEditing={this.onSubmitNewPassword}
-                        returnKeyType='next'
-                        label={this.t('New Password')}
                         error={errors.newPassword}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
-                    <TextField
-                        ref={this.confirmPasswordRef}
+                    <PasswordTextField 
+                        label={this.t('Confirm Password')}
+                        reference={this.confirmPasswordRef}
                         value={this.state.confirmPassword}
-                        secureTextEntry={true}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
                         onSubmitEditing={this.onSubmitConfirmPassword}
-                        returnKeyType='done'
-                        label={this.t('Confirm Password')}
                         error={errors.confirmPassword}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
                     <UniformButton onPress={this.onSubmit} text={this.t("Save")} style={styles.button} />
                 </Content>

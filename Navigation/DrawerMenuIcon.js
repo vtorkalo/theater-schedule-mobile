@@ -13,7 +13,6 @@ class DrawerMenuIcon extends LocalizeComponent {
     showMenu = () => { this._menu.show(); };
 
     render() {
-    if (this.props.showSettingsIcon) {
         return (
             <Header style={styles.headerContainer} >
                 <Left style={styles.leftContainer}>
@@ -22,44 +21,37 @@ class DrawerMenuIcon extends LocalizeComponent {
                 <Body style={styles.bodyContainer}>
                     <Text type="bold" style={styles.text}>{this.props.text}</Text>
                 </Body>
-                <Right style={styles.rightContainer}>
-                    <Menu
-                        ref={this.setMenuRef}
-                        button={<Ionicons name='ios-settings' color='white' size={32} onPress={this.showMenu} />}>
-                        <MenuItem
-                            onPress={() => { this.hideMenu(); this.props.items.item1.click(); }}
-                            textStyle={{ color: 'black', fontSize: 16 }}>
-                            {this.t(this.props.items.item1.text)}
-                        </MenuItem>
-                        <MenuItem 
-                            onPress={() => { this.hideMenu(); this.props.items.item2.click(); }}
-                            textStyle={{ color: 'black', fontSize: 16 }}>
-                            {this.t(this.props.items.item2.text)}
-                        </MenuItem>
-                        <MenuDivider />
-                        <MenuItem 
-                            onPress={() => { this.props.items.item3.click(); }}
-                            textStyle={{ color: 'red', fontSize: 16 }}>
-                            {this.t(this.props.items.item3.text)}
-                        </MenuItem>
-                    </Menu>
-                </Right>
+                {
+                    this.props.showSettingsIcon
+                        ?
+                        <Right style={styles.rightContainer}>
+                            <Menu
+                                ref={this.setMenuRef}
+                                button={<Ionicons name='ios-settings' color='white' size={32} onPress={this.showMenu} />}>
+                                <MenuItem
+                                    onPress={() => { this.hideMenu(); this.props.items.item1.click(); }}
+                                    textStyle={{ color: 'black', fontSize: 16 }}>
+                                    {this.t(this.props.items.item1.text)}
+                                </MenuItem>
+                                <MenuItem
+                                    onPress={() => { this.hideMenu(); this.props.items.item2.click(); }}
+                                    textStyle={{ color: 'black', fontSize: 16 }}>
+                                    {this.t(this.props.items.item2.text)}
+                                </MenuItem>
+                                <MenuDivider />
+                                <MenuItem
+                                    onPress={() => { this.props.items.item3.click(); }}
+                                    textStyle={{ color: 'red', fontSize: 16 }}>
+                                    {this.t(this.props.items.item3.text)}
+                                </MenuItem>
+                            </Menu>
+                        </Right>
+                        :
+                        <Right style={styles.rightContainer} />
+                }
             </Header>
         )
     }
-    else {
-        return (
-            <Header style={styles.headerContainer} >
-                <Left style={styles.leftContainer}>
-                    <Ionicons name='ios-menu' color='white' size={32} onPress={this.props.onPressMenuIcon} />
-                </Left>
-                <Body style={styles.bodyContainer}>
-                    <Text type="bold" style={styles.text}>{this.props.text}</Text>
-                </Body>
-                <Right style={styles.rightContainer} />
-            </Header>
-        )
-    }}
 }
 
 export default DrawerMenuIcon;

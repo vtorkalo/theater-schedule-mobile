@@ -17,6 +17,7 @@ import { TextField } from 'react-native-material-textfield';
 import UniformButton from "../Screens/Components/UniformButton";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
+import CustomTextField from './UserProfileComponents/CustomTextField';
 
 class EditProfileScreen extends LocalizeComponent {
     constructor(props) {
@@ -39,7 +40,7 @@ class EditProfileScreen extends LocalizeComponent {
             birthDate: "1992-11-03T15:27:31.2278615+03:00",
             city: "Lviv",
             country: "Ukraine",
-            isDateTimePickerVisible: false
+            isDateTimePickerVisible: false,
         };
     }
 
@@ -82,12 +83,12 @@ class EditProfileScreen extends LocalizeComponent {
         return true;
     }
 
-    onSubmit() {
+    isFieldsValid() {
         let errors = {};
         ['firstName', 'lastName', 'email', 'city', 'country', 'phone']
             .forEach((name) => {
                 let value = this[name].value();
-                if (!value) {
+                if (!value || value.replace(/\s/g, '').length < 1) {
                     errors[name] = this.t('Should not be empty');
                 } else {
                     if ('email' === name && !this.validateEmail(value)) {
@@ -98,10 +99,19 @@ class EditProfileScreen extends LocalizeComponent {
                     }
                 }
             });
-        this.setState({ errors });
         if (this.isEmpty(errors)) {
+            return true;
+        }
+        else {
+            this.setState({ errors });
+            return false;
+        }
+    }
+
+    onSubmit() {
+        if (this.isFieldsValid()) {
             // TODO: fetch password update to server
-            alert('FETCH');
+            alert('Fetching data to backend');
         }
     }
 
@@ -109,8 +119,8 @@ class EditProfileScreen extends LocalizeComponent {
         this[name] = ref;
     }
 
-    convertBirthDate() {
-        var date = new Date(this.state.birthDate);
+    convertBirthDate(dateToConvert) {
+        var date = new Date(dateToConvert);
         var stringDate = ('0' + date.getDate()).slice(-2) + '/'
             + ('0' + (date.getMonth() + 1)).slice(-2) + '/'
             + date.getFullYear();
@@ -147,91 +157,44 @@ class EditProfileScreen extends LocalizeComponent {
                     </Text>
                 </Header>
                 <Content contentContainerStyle={styles.contentContainer} style={styles.container}>
-                    <TextField
-                        ref={this.firstNameRef}
-                        value={this.state.firstName}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={false}
-                        onFocus={this.onFocus}
-                        onChangeText={this.onChangeText}
-                        returnKeyType='done'
+                    <CustomTextField
                         label={this.t('First Name')}
+                        reference={this.firstNameRef}
+                        value={this.state.firstName}
+                        onFocus={this.onFocus}
+                        onChangeText={this.onChangeText}
                         error={errors.firstName}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        style={{ fontFamily: 'Arsenal-Regular' }}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
-                    <TextField
-                        ref={this.lastNameRef}
-                        value={this.state.lastName !== null ? this.state.lastName : ''}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={false}
-                        onFocus={this.onFocus}
-                        onChangeText={this.onChangeText}
-                        returnKeyType='done'
+                    <CustomTextField
                         label={this.t('Last Name')}
+                        reference={this.lastNameRef}
+                        value={this.state.lastName !== null ? this.state.lastName : ''}
+                        onFocus={this.onFocus}
+                        onChangeText={this.onChangeText}
                         error={errors.lastName}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        style={{ fontFamily: 'Arsenal-Regular' }}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
-                    <TextField
-                        ref={this.emailRef}
-                        value={this.state.email}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={false}
-                        onFocus={this.onFocus}
-                        onChangeText={this.onChangeText}
-                        keyboardType={"email-address"}
-                        returnKeyType='done'
+                    <CustomTextField
                         label={this.t('Email')}
-                        error={errors.email}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        style={{ fontFamily: 'Arsenal-Regular' }}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
-                    />
-                    <TextField
-                        ref={this.phoneRef}
-                        value={this.state.phone}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={false}
+                        reference={this.emailRef}
+                        value={this.state.email}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
-                        keyboardType={"phone-pad"}
-                        returnKeyType='done'
+                        error={errors.email}
+                        keyboardType={"email-address"}
+                    />
+                    <CustomTextField
                         label={this.t('Phone')}
+                        reference={this.phoneRef}
+                        value={this.state.phone}
+                        onFocus={this.onFocus}
+                        onChangeText={this.onChangeText}
                         error={errors.phone}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        style={{ fontFamily: 'Arsenal-Regular' }}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
                     <TouchableOpacity onPress={this.showDateTimePicker}>
-                        <TextField
-                            value={this.convertBirthDate()}
-                            autoCapitalize='none'
+                        <CustomTextField
                             label={this.t('Birth Date')}
+                            value={this.convertBirthDate(this.state.birthDate)}
                             editable={false}
-                            tintColor={'#7154b8'}
-                            fontSize={18}
-                            style={{ fontFamily: 'Arsenal-Regular' }}
-                            labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                            titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                         />
                         <DateTimePicker
                             locale={this.props.languageCode}
@@ -247,41 +210,21 @@ class EditProfileScreen extends LocalizeComponent {
                             maximumDate={new Date()}
                         />
                     </TouchableOpacity>
-                    <TextField
-                        ref={this.cityRef}
-                        value={this.state.city}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={false}
-                        onFocus={this.onFocus}
-                        onChangeText={this.onChangeText}
-                        returnKeyType='done'
+                    <CustomTextField
                         label={this.t('City')}
-                        error={errors.city}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        style={{ fontFamily: 'Arsenal-Regular' }}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
-                    />
-                    <TextField
-                        ref={this.countryRef}
-                        value={this.state.country}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        enablesReturnKeyAutomatically={true}
-                        clearTextOnFocus={false}
+                        reference={this.cityRef}
+                        value={this.state.city}
                         onFocus={this.onFocus}
                         onChangeText={this.onChangeText}
-                        returnKeyType='done'
+                        error={errors.city}
+                    />
+                    <CustomTextField
                         label={this.t('Country')}
+                        reference={this.countryRef}
+                        value={this.state.country}
+                        onFocus={this.onFocus}
+                        onChangeText={this.onChangeText}
                         error={errors.country}
-                        tintColor={'#7154b8'}
-                        fontSize={18}
-                        style={{ fontFamily: 'Arsenal-Regular' }}
-                        labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
-                        titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
                     />
                     <UniformButton onPress={this.onSubmit} text={this.t("Save")} style={styles.button} />
                 </Content>
