@@ -12,7 +12,8 @@ class LanguageScreen extends Component {
             doesNotify: true,
             notificationFrequency: 7
         });
-        this.props.navigation.navigate("drawerStack");
+
+        this.props.navigation.navigate("registrationScreen");
     }
 
     render() {
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
+        settings:state.settings,
         deviceId: state.settings.deviceId
     };
 }
