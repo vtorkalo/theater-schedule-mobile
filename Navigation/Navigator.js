@@ -14,6 +14,7 @@ import EventScreen from "../Screens/EventScreen";
 import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 import EventDetailScreen from '../Screens/EventDetailScreen';
+import AuthorizationScreen from '../Screens/AuthorizationScreen';
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -24,6 +25,7 @@ const DrawerStack = createDrawerNavigator(
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
+    Authorization: { screen: AuthorizationScreen },
   },
   {
     drawerPosition: "left",
