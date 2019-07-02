@@ -90,7 +90,6 @@ export const sendRegistration = (FirstName, City, PnoneNumber, DateOfBirth, Emai
         const { firstnameError, cityError, telephoneError, birthdateError, emailError, passwordError } = getState().registration;
         if (firstnameError || cityError || telephoneError || birthdateError || emailError || passwordError) return;
         let dataJson = JSON.stringify(FirstName, City, PnoneNumber, DateOfBirth, Email, Password);
-        alert(dataJson);
         dispatch(sendRegistrationBegin());
         return fetch(`${BASE_URL}Registration/CreateUser/`, {
             method: 'POST',
