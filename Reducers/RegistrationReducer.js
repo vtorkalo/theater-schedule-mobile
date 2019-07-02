@@ -1,16 +1,16 @@
 import {
     ENTER_REGISTRATION_FIRSTNAME,
-    ENTER_REGISTRATION_BirthDate,
+    ENTER_REGISTRATION_BIRTHDATE,
     ENTER_REGISTRATION_CITY,
-    ENTER_REGISTRATION_Email,
-    ENTER_REGISTRATION_Password,
-    ENTER_REGISTRATION_Telephone,
-    VALIDATE_REGISTRATION_BirthDate,
+    ENTER_REGISTRATION_EMAIL,
+    ENTER_REGISTRATION_PASSWORD,
+    ENTER_REGISTRATION_TELEPHONE,
+    VALIDATE_REGISTRATION_BIRTHDATE,
     VALIDATE_REGISTRATION_CITY,
-    VALIDATE_REGISTRATION_Email,
+    VALIDATE_REGISTRATION_EMAIL,
     VALIDATE_REGISTRATION_FIRSTNAME,
     VALIDATE_REGISTRATION_PASSWORD,
-    VALIDATE_REGISTRATION_Telephone,
+    VALIDATE_REGISTRATION_TELEPHONE,
     SEND_REGISTRATION_BEGIN,
     SEND_REGISTRATION_FAILURE,
     SEND_REGISTRATION_SUCCESS
@@ -40,22 +40,22 @@ export default function registrationReducer(state = initialState, action) {
         case ENTER_REGISTRATION_FIRSTNAME:
             return { ...state, FirstName: action.payload.firstname };
 
-        case ENTER_REGISTRATION_BirthDate:
+        case ENTER_REGISTRATION_BIRTHDATE:
             return { ...state, BirthDate: action.payload.birthdate };
 
         case ENTER_REGISTRATION_CITY:
             return { ...state, City: action.payload.city }
 
-        case ENTER_REGISTRATION_Email:
+        case ENTER_REGISTRATION_EMAIL:
             return { ...state, Email: action.payload.email }
 
-        case ENTER_REGISTRATION_Password:
+        case ENTER_REGISTRATION_PASSWORD:
             return { ...state, Password: action.payload.password }
 
-        case ENTER_REGISTRATION_Telephone:
+        case ENTER_REGISTRATION_TELEPHONE:
             return { ...state, Telephone: action.payload.telephone }
 
-        case VALIDATE_REGISTRATION_BirthDate: {
+        case VALIDATE_REGISTRATION_BIRTHDATE: {
             return { ...state, BirthDateError: error }
         }
 
@@ -64,9 +64,9 @@ export default function registrationReducer(state = initialState, action) {
             return { ...state, CityError: error }
         }
 
-        case VALIDATE_REGISTRATION_Email: {
+        case VALIDATE_REGISTRATION_EMAIL: {
             emailNotSet = state.Email.trim() === "" ? "Please enter the Email" : "";
-            emailNotMatch = state.Email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that match pattern";
+            emailNotMatch = state.Email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that matches the pattern";
             if (emailNotSet)
                 return { ...state, EmailError: emailNotSet }
             else if (emailNotMatch)
@@ -85,9 +85,9 @@ export default function registrationReducer(state = initialState, action) {
             return { ...state, PasswordError: error }
         }
 
-        case VALIDATE_REGISTRATION_Telephone: {
-            numberNotSet = state.Telephone.trim() === "" ? "Please enter the Telephone" : "";
-            numberNotMatch = state.Telephone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/) ? "" : "Set phone number that match pattern";
+        case VALIDATE_REGISTRATION_TELEPHONE: {
+            numberNotSet = state.Telephone.trim() === "" ? "Please enter the Phone number" : "";
+            numberNotMatch = state.Telephone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/) ? "" : "Set phone number that matches the pattern";
             if (numberNotSet)
                 return { ...state, TelephoneError: numberNotSet }
             else if (numberNotMatch)
