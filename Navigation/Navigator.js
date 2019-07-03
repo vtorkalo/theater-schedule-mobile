@@ -15,17 +15,26 @@ import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 import EventDetailScreen from '../Screens/EventDetailScreen';
 import AuthorizationScreen from '../Screens/AuthorizationScreen';
+import UserProfileScreen from '../Screens/UserProfileScreen';
+import EditProfileScreen from '../Screens/EditProfileScreen';
+import ChangePasswordScreen from '../Screens/ChangePasswordScreen';
+import StreamScreen from '../Screens/StreamScreen'
+import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
+import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
+import RegistrationScreen from '../Screens/RegistrationScreen';
 
 const DrawerStack = createDrawerNavigator(
   {
     Schedule: { screen: ScheduleScreen },
     Repertoire: { screen: SliderScreen },
+    Stream: { screen: StreamScreen },
     WishList: { screen: WishListScreen },
-    Event: { screen: EventScreen}, 
+    Event: { screen: EventScreen },
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
     Authorization: { screen: AuthorizationScreen },
+    UserProfile: { screen: UserProfileScreen, },
   },
   {
     drawerPosition: "left",
@@ -36,7 +45,7 @@ const DrawerStack = createDrawerNavigator(
 
 const DrawerNavigation = createStackNavigator(
   {
-    DrawerStack: { screen: DrawerStack }
+    DrawerStack: { screen: DrawerStack },
   },
   {
     headerMode: "none",
@@ -46,6 +55,16 @@ const DrawerNavigation = createStackNavigator(
   }
 );
 
+const RegistrationStack = createStackNavigator(
+  {
+    registrationScreen:{screen: RegistrationScreen}
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
+
 const PerformanceStack = createStackNavigator(
   {
     performanceScreen: { screen: PerformanceScreen }
@@ -54,24 +73,41 @@ const PerformanceStack = createStackNavigator(
     headerMode: 'none',
   })
 
+
+const StreamStack = createStackNavigator(
+  {
+    streamLanguageScreen: { screen: StreamLanguageScreen }
+  },
+  {
+    headerMode: 'none',
+  }
+)
+
 export const AppNavigator = createStackNavigator(
   {
     drawerStack: { screen: DrawerNavigation },
     performanceStack: { screen: PerformanceStack },
     Splash: { screen: SplashScreen },
     ChooseLanguage: { screen: LanguageScreen },
-    PerformanceSchedule: {screen : PerformanceScheduleScreen},
+    PerformanceSchedule: { screen: PerformanceScheduleScreen },
     eventDetailScreen: { screen: EventDetailScreen },
+    EditProfile: { screen: EditProfileScreen },
+    ChangePassword: { screen: ChangePasswordScreen },
+    streamLanguageScreen: { screen: StreamLanguageScreen },
+    streamConnectingScreen:{screen: StreamConnectingScreen},
+    registrationScreen:{screen: RegistrationStack}
   },
   {
     headerMode: "none",
     initialRouteName: "Splash"
   }
 );
+
 export const middleware = createReactNavigationReduxMiddleware(
   "root",
   state => state.navigation
 );
+
 const Apps = reduxifyNavigator(AppNavigator, "root");
 const mapStateToProps = state => ({
   state: state.navigation

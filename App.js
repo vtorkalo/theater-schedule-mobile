@@ -11,6 +11,7 @@ import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n";
 import sliderReducer from "./Reducers/SliderReducer";
 import wishListReducer from "./Reducers/WishListReducer";
+import registration from "./Reducers/RegistrationReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -21,6 +22,7 @@ import registerForNotification from "./services/pushNotification";
 import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
+import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
 import { notification } from "expo/build/Haptic/Haptic";
 import {AppLoading} from 'expo';
@@ -38,17 +40,18 @@ const appReducer = combineReducers({
   navigation,
   performanceSchedule: performanceScheduleReducer,
   authorization
+  streamReducer,
+  registration,
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
 
-let deviceId = 
+let deviceId =
   Expo.Constants.appOwnership == "expo"
-      ? Expo.Constants.deviceId
-      : DeviceInfo.getUniqueID();
+    ? Expo.Constants.deviceId
+    : DeviceInfo.getUniqueID();
 
 export default class App extends Component {
-
   state = {
     fontsLoaded: false,
   };
@@ -79,9 +82,10 @@ export default class App extends Component {
           startAsync={this.loadFonts}
           onFinish={() => {
             this.afterFontsLoaded();
-            this.setState({fontsLoaded: true})
+            this.setState({ fontsLoaded: true })
           }}
-          onError={console.warn} />
+          onError={console.warn}
+        />
       );
     }
     return (
@@ -94,16 +98,4 @@ export default class App extends Component {
       </Provider>
     );
   }
-
-  /* render() {
-    return (
-      <Provider store={store}>
-        <I18n translations={translations} initialLang="uk" fallbackLang="en">
-          <Root>
-            <AppNavigator />
-          </Root>
-        </I18n>
-      </Provider>
-    );
-  } */
 }
