@@ -1,13 +1,18 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { DrawerItems } from 'react-navigation';
+import {
+    StyleSheet,
+    TouchableOpacity
+} from 'react-native';
+import { DrawerItems, DrawerItem } from 'react-navigation';
 import { Container, Header, Content } from 'native-base';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 
 const CustomDrawerContent = (props) => (
     <Container>
         <Header style={styles.headerContainer}>
-            <FontAwesome name='user-circle' style={styles.iconscontainer} />
+            <TouchableOpacity onPress={ () => { props.navigation.navigate('UserProfile'); props.navigation.closeDrawer() } }>
+                <FontAwesome name='user-circle' style={styles.iconscontainer} />
+            </TouchableOpacity>
             <MaterialIcons name='notifications-active' style={styles.iconscontainer} />
         </Header>
         <Content style={{ backgroundColor: 'white' }}>
@@ -19,7 +24,7 @@ const CustomDrawerContent = (props) => (
 export default CustomDrawerContent;
 
 const styles = StyleSheet.create({
-    headerContainer: {
+    headerContainer: {        
         height: 100,
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -30,4 +35,3 @@ const styles = StyleSheet.create({
         color: 'black'
     }
 })
-
