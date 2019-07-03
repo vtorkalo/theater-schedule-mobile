@@ -11,6 +11,7 @@ import { translations } from "./Localization/translations";
 import I18n, { i18nState } from "redux-i18n";
 import sliderReducer from "./Reducers/SliderReducer";
 import wishListReducer from "./Reducers/WishListReducer";
+import registration from "./Reducers/RegistrationReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -20,6 +21,7 @@ import registerForNotification from "./services/pushNotification";
 import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
+import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
 import { AppLoading } from 'expo';
 
@@ -34,7 +36,9 @@ const appReducer = combineReducers({
   message,
   defaultReducer,
   navigation,
-  performanceSchedule: performanceScheduleReducer
+  performanceSchedule: performanceScheduleReducer,
+  streamReducer,
+  registration,
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
