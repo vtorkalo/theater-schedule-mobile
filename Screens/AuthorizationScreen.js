@@ -2,8 +2,23 @@ import React, { Component } from 'react';
 import DrawerMenucIcon from "../Navigation/DrawerMenuIcon";
 import { connect } from "react-redux";
 import { storeSettings } from "../Actions/settingsActions";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LocalizeComponent from "../Localization/LocalizedComponent";
+import {NavigationActions} from 'react-navigation';
+import {Constants} from 'expo';
+import {FontAwesome} from '@expo/vector-icons';
+import TextError from './Components/CustomText';
+
+import {
+  enterAuthLogin,
+  enterAuthPass,
+  validateLogin,
+  sendAuthBegin,
+  sendAuthSuccess,
+  sendAuthFailure,
+  sendAuthorization
+} from '../Actions/authorizationActions';
+import {Content, Container} from 'native-base';
+
 import {
   StyleSheet,
   Text,
@@ -11,19 +26,27 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  Image,
-  Alert,
-  AsyncStorage
+  AsyncStorage,
+  Dimensions
 } from 'react-native';
 import jwt_decode from 'jwt-decode';
+import UniformButton from './Components/UniformButton';
 
-export default class LoginView extends LocalizeComponent {
-    static navigationOptions = ({screenProps}) => {
+const {width, height} = Dimensions.get('window');
+const guidelineBaseWidth = 350;
+const guidelineBaseHeight = 680;
+
+const scale = size => (width / guidelineBaseWidth) * size;
+const scaleVertical = size => (height / guidelineBaseHeight) * size;
+
+
+class AuthorizationScreen extends LocalizeComponent {
+    /* static navigationOptions = ({screenProps}) => {
         return {
             drawerIcon: <MaterialCommunityIcons name="settings-box" size={25} />,
             title: screenProps.AuthorizationScreenTitle
         };
-    };
+    }; */
 
   constructor(props) {
     super(props);
@@ -37,132 +60,182 @@ export default class LoginView extends LocalizeComponent {
     }
   }
 
-  submitLogin = async () => {
-    fetch("http://192.168.103.28:5000/api/Authorization",
-      {method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify({
-          Email: this.state.email,
-          PasswordHash: this.state.password,
-        })
-      })
-      .then((response) => response.json())
-      .then((res) => {
-        this.setState({accessToken: res.accessToken, expires: res.expiresTime, refreshToken: res.refreshToken});
-        this.setState({decoded: jwt_decode(res.accessToken)});
-        console.log("access: " + this.state.accessToken + " expires: " + this.state.expires + " refresh: " + this.state.refreshToken);
-        console.log(this.state.decoded)
-      })
-      .then(async () => {
-        await AsyncStorage.setItem('FirstName', this.state.decoded.firstName);
-        await AsyncStorage.setItem('LastName', this.state.decoded.lastName);
-        await AsyncStorage.setItem('UserId', this.state.decoded.userId);
-        await AsyncStorage.setItem('Email', this.state.decoded.email);
-        await AsyncStorage.setItem('DateOfBirth', this.state.decoded.dateOfBirth);
-        await AsyncStorage.setItem('Country', this.state.decoded.country);
-        await AsyncStorage.setItem('City', this.state.decoded.city);
-        await AsyncStorage.setItem('AccessToken', this.state.accessToken);
-        await AsyncStorage.setItem('RefreshToken', this.state.refreshToken);
-        await AsyncStorage.setItem('ExpiresDate', this.state.expires);
-      })
-  }
+  onSendMessage = () => {
+    this.props.validateLogin();
+    this.props.sendAuthorization({
+      Email: this.props.authorization.Login,
+      PasswordHash: this.props.authorization.PasswordHash,
+    }).then((res) => {
+      console.log(res);
+    let data = JSON.parse(res._bodyInit);
+    this.setState({
+      accessToken: data.accessToken, 
+      expires: data.expires, 
+      refreshToken: data.refreshToken, 
+      decoded: jwt_decode(data.accessToken)});
+    })
+    .then(async () => {
+      await AsyncStorage.setItem('FirstName', this.state.decoded.firstName);
+      await AsyncStorage.setItem('LastName', this.state.decoded.lastName);
+      await AsyncStorage.setItem('UserId', this.state.decoded.userId);
+      await AsyncStorage.setItem('Email', this.state.decoded.email);
+      await AsyncStorage.setItem('DateOfBirth', this.state.decoded.dateOfBirth);
+      await AsyncStorage.setItem('Country', this.state.decoded.country);
+      await AsyncStorage.setItem('City', this.state.decoded.city);
+      await AsyncStorage.setItem('AccessToken', this.state.accessToken);
+      await AsyncStorage.setItem('RefreshToken', this.state.refreshToken);
+      await AsyncStorage.setItem('ExpiresDate', this.state.expires);
+    })
+    .then(() => this.props.enterAuthPass(""))
+    .catch((error) => console.error(error));
 
-  /* onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
-  } */
+    if (this.props.authorization.sendingError === null) {
+      this.props.navigation.navigate("drawerStack");
+    } else {
+      alert("There was a problem during registration");
+    }
+
+  };
 
   render() {
     return (
-      <View style={styles.container}>
-          <DrawerMenuIcon onPressMenuIcon={() => this.props.navigation.openDrawer()}
-          text={this.t('Settings')} />
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
-              placeholder="Email"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              value={this.state.email}
-              onChangeText={(email) => this.setState({email})}/>
-        </View>
-        
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
-              placeholder="Password"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              value={this.state.password}
-              onChangeText={(password) => this.setState({password})}/>
-        </View>
+      <Container contentContainerStyle={styles.all}>
+        <View style={styles.screen}>
+          <View style={styles.header}>
+            <FontAwesome
+              name="sign-in"
+              size={scale(50)}
+              style={{color: "#4A4A4A"}}/>
+              <Text style={{fontSize: scale(28), fontWeight: "800", color: "#4A4A4A"}}>
+                Authorization</Text>
+            </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.submitLogin()}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
+            <Content >
+              <View style={styles.content}>
+                <TextInput
+                  textContentType="username"
+                  placeholder="LOGIN"
+                  placeholderTextColor="#707070"
+                  style={styles.input}
+                  onChangeText={(txt) => this.props.enterAuthLogin(txt)}
+                  onBlur={this.props.validateLogin} />
+                  {this.props.authorization.LoginError ? 
+                    (<Text style={styles.error}>{this.t(this.props.authorization.LoginError)}</Text>) : null}
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
-            <Text>Forgot your password?</Text>
-        </TouchableHighlight>
+                  <TextInput
+                    textContentType="password"
+                    secureTextEntry={true}
+                    placeholder="PASSWORD"
+                    placeholderTextColor="#707070"
+                    style={styles.input}
+                    onChangeText={(txt) => this.props.enterAuthPass(txt)} />
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>Register</Text>
-        </TouchableHighlight>
+                    <UniformButton text="Send" style={styles.button} onPress={this.onSendMessage} />
 
-        <TouchableHighlight style={styles.buttonContainer}>
-          <Text>Continue as Guest</Text>
-        </TouchableHighlight>
+                </View>
+              </Content>
 
-      </View>
-    );
+              <View>
+                <View style={styles.textRow}>
+                  <UniformButton text="Forgot password?" onPress={() => this.props.navigation.navigate("ForgotPassword")} />
+                </View>
+              </View>
+
+              <View>
+                <View style={styles.textRow}>
+                  <UniformButton text="Continue as Guest" onPress={() => this.props.navigation.navigate("drawerStack")} />
+                </View>
+              </View>
+
+              <View>
+                <View style={styles.textRow}>
+                  <UniformButton text="Registration" onPress={() => this.props.navigation.navigate("registrationScreen")} />
+                </View>
+              </View>
+
+              <TouchableHighlight style={styles.back} onPress={() => this.props.navigation.dispatch(NavigationActions.back())}>
+                <FontAwesome name="chevron-left" size={27} style={{color: "#4A4A4A"}} />
+              </TouchableHighlight>
+            </View>
+          </Container>
+    )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
+    paddingTop: Constants.statusBarHeight,
+    paddingBottom: scaleVertical(28),
+    paddingHorizontal: scale(16),
     flex: 1,
+    backgroundColor: "rgb(245, 245, 245)"
+  },
+  button: {
+    alignSelf: "center",
+    margin: 20,
+    width: "65%",
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    marginTop: 8
   },
-  inputContainer: {
-      borderBottomColor: '#F5FCFF',
-      backgroundColor: '#FFFFFF',
-      borderRadius:30,
-      borderBottomWidth: 1,
-      width:250,
-      height:45,
-      marginBottom:20,
-      flexDirection: 'row',
-      alignItems:'center'
+  back: {
+    position: "absolute",
+    top: Constants.statusBarHeight + 8,
+    left: 16,
+    zIndex: 1
   },
-  inputs:{
-      height:45,
-      marginLeft:16,
-      borderBottomColor: '#FFFFFF',
-      flex:1,
+  header: {
+    marginTop: scaleVertical(36),
+    alignItems: "center",
+    justifyContent: "center"
   },
-  inputIcon:{
-    width:30,
-    height:30,
-    marginLeft:15,
-    justifyContent: 'center'
+  all: {
+    flex: 1,
+    justifyContent: "space-evenly"
   },
-  buttonContainer: {
-    height:45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30,
+  image: {
+    height: scaleVertical(70),
+    resizeMode: "contain"
   },
-  loginButton: {
-    backgroundColor: "#00b5ec",
+  content: {
+    justifyContent: "space-between",
+    paddingHorizontal: 8,
+    paddingVertical: scaleVertical(12)
   },
-  loginText: {
-    color: 'white',
+  input: {
+    borderWidth: 0.5,
+    borderColor: "#D3D3D3",
+    borderRadius: 50,
+    padding: 18,
+    marginVertical: scaleVertical(6),
+    fontWeight: "bold"
+  },
+  textRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: scaleVertical(20),
+    marginBottom: scaleVertical(8),
+    paddingHorizontal: 8
+  },
+  error: {
+    color: "red"
+    //fontWeight: 'bold',
+    //fontSize: 30,
   }
 });
+
+const mapStateToProps = (state) => ({
+  authorization: state.authorization,
+  languageCode: state.settings.settings.languageCode,
+  deviceId: state.settings.deviceId,
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    enterAuthLogin: txt => dispatch(enterAuthLogin(txt)),
+    enterAuthPass: txt => dispatch(enterAuthPass(txt)),
+    validateLogin: () => dispatch(validateLogin()),
+    sendAuthorization: authorization => dispatch(sendAuthorization(authorization))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthorizationScreen);
