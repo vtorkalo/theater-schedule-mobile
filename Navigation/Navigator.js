@@ -14,6 +14,7 @@ import EventScreen from "../Screens/EventScreen";
 import AboutTheaterScreen from '../Screens/AboutTheaterScreen';
 import PerformanceScheduleScreen from '../Screens/PerformanceSchedule';
 import EventDetailScreen from '../Screens/EventDetailScreen';
+import AuthorizationScreen from '../Screens/AuthorizationScreen';
 import UserProfileScreen from '../Screens/UserProfileScreen';
 import EditProfileScreen from '../Screens/EditProfileScreen';
 import ChangePasswordScreen from '../Screens/ChangePasswordScreen';
@@ -32,6 +33,7 @@ const DrawerStack = createDrawerNavigator(
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
+    Authorization: { screen: AuthorizationScreen },
     UserProfile: { screen: UserProfileScreen, },
   },
   {
