@@ -72,11 +72,7 @@ class RegistrationScreen extends LocalizeComponent {
       Password: this.props.registration.Password,
       PhoneIdentifier: this.props.deviceId
     });
-    if (this.ValidateForm()) {
-      this.props.navigation.navigate("drawerStack");
-    } else {
-      alert("There was a problem during registration");
-    }
+    this.props.navigation.navigate("drawerStack");
   };
 
 

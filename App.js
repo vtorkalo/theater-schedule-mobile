@@ -24,7 +24,7 @@ import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
-import { notification } from "expo/build/Haptic/Haptic";
+//import { notification } from "expo/build/Haptic/Haptic";
 import {AppLoading} from 'expo';
 
 const appReducer = combineReducers({
@@ -39,7 +39,7 @@ const appReducer = combineReducers({
   defaultReducer,
   navigation,
   performanceSchedule: performanceScheduleReducer,
-  authorization
+  authorization,
   streamReducer,
   registration,
 });

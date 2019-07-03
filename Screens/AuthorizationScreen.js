@@ -60,6 +60,43 @@ class AuthorizationScreen extends LocalizeComponent {
     }
   }
 
+  submitLogin = async () => {
+    fetch("http://192.168.103.121:50/api/Authorization",
+      {method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify({
+          Email: this.state.email,
+          PasswordHash: this.state.password,
+        })
+      })
+      .then((response) => response.json())
+      .then((res) => {
+        this.setState({accessToken: res.accessToken, expires: res.expiresTime, refreshToken: res.refreshToken});
+        this.setState({decoded: jwt_decode(res.accessToken)});
+        console.log("access: " + this.state.accessToken + " expires: " + this.state.expires + " refresh: " + this.state.refreshToken);
+        console.log(this.state.decoded);
+      })
+      .then(async () => {
+        await AsyncStorage.setItem('FirstName', this.state.decoded.firstName);
+        await AsyncStorage.setItem('LastName', this.state.decoded.lastName);
+        await AsyncStorage.setItem('UserId', this.state.decoded.userId);
+        await AsyncStorage.setItem('Email', this.state.decoded.email);
+        await AsyncStorage.setItem('DateOfBirth', this.state.decoded.dateOfBirth);
+        await AsyncStorage.setItem('Country', this.state.decoded.country);
+        await AsyncStorage.setItem('City', this.state.decoded.city);
+        await AsyncStorage.setItem('AccessToken', this.state.accessToken);
+        await AsyncStorage.setItem('RefreshToken', this.state.refreshToken);
+        await AsyncStorage.setItem('ExpiresDate', this.state.expires);
+      })
+      .then(() => {
+        this.setState({password: ''});
+      })
+      .catch((error) => console.log(error));
+  }
+
   onSendMessage = () => {
     this.props.validateLogin();
     this.props.sendAuthorization({
@@ -117,7 +154,7 @@ class AuthorizationScreen extends LocalizeComponent {
                   placeholder="LOGIN"
                   placeholderTextColor="#707070"
                   style={styles.input}
-                  onChangeText={(txt) => this.props.enterAuthLogin(txt)}
+                  onChangeText={(txt) => this.setState({email: txt}) }
                   onBlur={this.props.validateLogin} />
                   {this.props.authorization.LoginError ? 
                     (<Text style={styles.error}>{this.t(this.props.authorization.LoginError)}</Text>) : null}
@@ -128,9 +165,9 @@ class AuthorizationScreen extends LocalizeComponent {
                     placeholder="PASSWORD"
                     placeholderTextColor="#707070"
                     style={styles.input}
-                    onChangeText={(txt) => this.props.enterAuthPass(txt)} />
+                    onChangeText={(txt) => this.setState({password: txt})} />
 
-                    <UniformButton text="Send" style={styles.button} onPress={this.onSendMessage} />
+                    <UniformButton text="Send" style={styles.button} onPress={this.submitLogin} />
 
                 </View>
               </Content>
