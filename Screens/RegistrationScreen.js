@@ -66,7 +66,7 @@ class RegistrationScreen extends LocalizeComponent {
     this.props.sendRegistration({
       FirstName: this.props.registration.FirstName,
       City: this.props.registration.City,
-      PnoneNumber: this.props.registration.Telephone,
+      PhoneNumber: this.props.registration.Telephone,
       DateOfBirth: this.props.registration.BirthDate,
       Email: this.props.registration.Email,
       Password: this.props.registration.Password,

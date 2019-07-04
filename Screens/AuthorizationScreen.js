@@ -70,7 +70,7 @@ class AuthorizationScreen extends LocalizeComponent {
       console.log(res);
       this.setState({
         accessToken: res.accessToken, 
-        expires: res.expires, 
+        expires: res.expiresTime, 
         refreshToken: res.refreshToken, 
         decoded: jwt_decode(res.accessToken)});
     })
@@ -82,6 +82,7 @@ class AuthorizationScreen extends LocalizeComponent {
       await AsyncStorage.setItem('DateOfBirth', this.state.decoded.dateOfBirth);
       await AsyncStorage.setItem('Country', this.state.decoded.country);
       await AsyncStorage.setItem('City', this.state.decoded.city);
+      await AsyncStorage.setItem('PhoneNumber', this.state.decoded.phoneNumber);
       await AsyncStorage.setItem('AccessToken', this.state.accessToken);
       await AsyncStorage.setItem('RefreshToken', this.state.refreshToken);
       await AsyncStorage.setItem('ExpiresDate', this.state.expires);
