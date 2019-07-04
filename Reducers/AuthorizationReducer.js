@@ -25,13 +25,13 @@ export default function authorizationReducer(state = initialState, action) {
 
         case VALIDATE_LOGIN: {
             loginNotSet = state.Login.trim() === "" ? "Please enter Login" : "";
-            //loginNotMatch = state.Login.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that match pattern";
+            loginNotMatch = state.Login.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that match pattern";
             if (loginNotSet){
                 return {...state, LoginError: loginNotSet};
             }
-            /* else if (loginNotMatch) {
+            else if (loginNotMatch) {
                 return {...state, LoginError: loginNotMatch};
-            } */
+            }
             return {...state, LoginError: ""};
         }
         case SEND_AUTHORIZATION_BEGIN:
