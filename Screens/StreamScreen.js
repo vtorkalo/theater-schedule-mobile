@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
+        alignItems: 'center'
     },
     contentContainer: {
         flex: 1,

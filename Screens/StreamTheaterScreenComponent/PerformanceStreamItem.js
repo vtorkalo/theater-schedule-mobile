@@ -24,7 +24,7 @@ class PerformanceStreamItem extends LocalizedComponent {
     render() {
         return (
             <View style={styles.container}>
-                <UniformButton style={{ flex: 1,flexDirection: 'row', justifyContent: 'center',alignSelf: 'stretch',}}
+                <UniformButton style={{ flex: 1,flexDirection: 'row', justifyContent: 'center',alignSelf: 'stretch',width:'100%'}}
                     text={this.props.performance.title}
                     onPress={()=>this.CombineFunction(this.props.performance.id)}
                 />
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         marginBottom: 15,
-        height: 50,
     },
 });
 
