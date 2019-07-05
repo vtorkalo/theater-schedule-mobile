@@ -24,8 +24,10 @@ import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
-//import { notification } from "expo/build/Haptic/Haptic";
 import {AppLoading} from 'expo';
+
+
+
 
 const appReducer = combineReducers({
   i18nState,
@@ -42,6 +44,7 @@ const appReducer = combineReducers({
   authorization,
   streamReducer,
   registration,
+  streamReducer
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));

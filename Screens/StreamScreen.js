@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
+        
     },
     contentContainer: {
         flex: 1,

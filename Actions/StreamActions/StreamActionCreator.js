@@ -7,6 +7,15 @@ export const fetchPerfomancesFailure = (bool) => {
     };
 };
 
+
+export const toogleConnection = (connection)=>{
+    return{
+        type:ActionTypes.TOGGLE_CONNECTION,
+        connection
+    }
+}
+
+
 export const togglePerf = (choosenPerf) => {
 
     return {
