@@ -22,9 +22,6 @@ import StreamScreen from '../Screens/StreamScreen'
 import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
 import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
 import RegistrationScreen from '../Screens/RegistrationScreen';
-import StreamScreen from '../Screens/StreamScreen'
-import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
-import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
 
 
 const DrawerStack = createDrawerNavigator(
