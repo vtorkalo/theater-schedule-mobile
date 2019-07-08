@@ -49,7 +49,6 @@ class PerformanceScreen extends LocalizeComponent {
                     <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} />
                     <Content contentContainerStyle={styles.contentContainer}>
                         <ScrollView>
-
                             <View style={styles.imageContainer} >
                                 <Image
                                     style={styles.image}
@@ -75,15 +74,13 @@ class PerformanceScreen extends LocalizeComponent {
                                 <Text style={styles.textSubtitle}>{this.t("description")}</Text>
                                 <Text style={styles.testStyle}>{this.props.performance.description}</Text>
                                 <Text style={styles.textSubtitle}>{this.t("price")}</Text>
-                                <Text style={styles.testStyle}>{this.props.performance.minPrice} - {this.props.performance.maxPrice} {this.t("uah")}</Text>
+                                <Text style={styles.testStyle}></Text>
                                 <Text style={styles.textSubtitle}>{this.t("hashtags")}:</Text>
                                 <Text style={styles.testStyle}>{_.join(this.props.performance.hashTag, ', ')}</Text>
                             </View>
 
-                            <View style={{ flex: 1, marginBottom: 25 }}>
-                                <ImageGallery
-                                    images={this.props.performance.galleryImage}
-                                    galleryTitle={this.t("Performance Image Gallery: ")}
+                            <View style={{ flex: 1, marginBottom: 25 }}>{this.props.performance.galleryImage == null ? <Text style={[styles.textContainer, styles.textSubtitle]}>{this.t("The performance galary is not available")}</Text> : 
+                            <ImageGallery images={this.props.performance.galleryImage}  galleryTitle={this.t("Performance Image Gallery: ")}
                                     keyExtractor={(item) => item.uri}
                                     showImage={({ item }) =>
                                         <View style={styles.cardContainer}>
@@ -110,7 +107,8 @@ class PerformanceScreen extends LocalizeComponent {
                                             </Card>
                                         </View>
                                     }
-                                />
+                                />}
+                             
                             </View>
                         </ScrollView>
                     </Content>
