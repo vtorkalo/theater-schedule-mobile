@@ -18,7 +18,7 @@ import {
   sendAuthFailure,
   sendAuthorization
 } from '../Actions/authorizationActions';
-import {Content, Container} from 'native-base';
+import {Content, Container, Input} from 'native-base';
 
 import {
   StyleSheet,
@@ -28,7 +28,9 @@ import {
   Button,
   TouchableHighlight,
   AsyncStorage,
-  Dimensions
+  Dimensions,
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import jwt_decode from 'jwt-decode';
 import UniformButton from './Components/UniformButton';
@@ -74,6 +76,8 @@ class AuthorizationScreen extends LocalizeComponent {
         refreshToken: res.refreshToken, 
         decoded: jwt_decode(res.accessToken)});
     })
+    .then(() => console.log(this.state.decoded))
+    .then(() => console.log(this.state.decoded))
     .then(async () => {
       await AsyncStorage.setItem('FirstName', this.state.decoded.firstName);
       await AsyncStorage.setItem('LastName', this.state.decoded.lastName);
@@ -100,22 +104,23 @@ class AuthorizationScreen extends LocalizeComponent {
 
   render() {
     return (
-      <Container contentContainerStyle={styles.all}>
+      <ScrollView contentContainerStyle={styles.all}>
         <View style={styles.screen}>
           <View style={styles.header}>
             <FontAwesome
               name="sign-in"
-              size={scale(50)}
+              size={scale(40)}
               style={{color: "#4A4A4A"}}/>
-              <Text style={{fontSize: scale(28), fontWeight: "800", color: "#4A4A4A"}}>
-                Authorization</Text>
+              <Text style={{fontSize: scale(24), fontWeight: "800", color: "#4A4A4A"}}>
+                {this.t('Authorization')}}</Text>
             </View>
 
-            <Content >
+            <Content>
               <View style={styles.content}>
+                <KeyboardAvoidingView behavior="padding">
                 <TextInput
                   textContentType="username"
-                  placeholder="LOGIN"
+                  placeholder={this.t("LOGIN")}
                   placeholderTextColor="#707070"
                   style={styles.input}
                   onChangeText={(txt) => this.props.enterAuthLogin(txt)}
@@ -126,39 +131,37 @@ class AuthorizationScreen extends LocalizeComponent {
                   <TextInput
                     textContentType="password"
                     secureTextEntry={true}
-                    placeholder="PASSWORD"
+                    placeholder={this.t("PASSWORD")}
                     placeholderTextColor="#707070"
                     style={styles.input}
                     onChangeText={(txt) => this.props.enterAuthPass(txt)} />
 
-                    <UniformButton text="Send" style={styles.button} onPress={this.onSendMessage} />
-
+                  <View style={{alignItems: "center", marginTop: 10}}>
+                    <Text onPress={() => this.props.navigation.navigate("ForgotPasswordScreen")} 
+                      style={{color: "blue", textDecorationLine: "underline", fontFamily: "Arsenal-Bold"}}>{this.t("Forgot password?")}</Text>
+                  </View>
+                  </KeyboardAvoidingView>
                 </View>
+
+                <View style={styles.textRow}>
+                  <UniformButton text={this.t("Login")} style={styles.button} onPress={this.onSendMessage} />
+                </View>
+
+                <View style={styles.textRow}>
+                  <UniformButton text={this.t("Registration")} style={styles.button} onPress={() => this.props.navigation.navigate("registrationScreen")} />
+                </View>
+
+                <View style={styles.guestBtn}>
+                  <Text style={{color: "black", fontSize: 14}} onPress={() => this.props.navigation.navigate("drawerStack")}>{this.t("Continue without registration")}</Text>
+                </View>
+
               </Content>
-
-              <View>
-                <View style={styles.textRow}>
-                  <UniformButton text="Forgot password?" onPress={() => this.props.navigation.navigate("ForgotPassword")} />
-                </View>
-              </View>
-
-              <View>
-                <View style={styles.textRow}>
-                  <Button title="Continue as Guest" onPress={() => this.props.navigation.navigate("drawerStack")} />
-                </View>
-              </View>
-
-              <View>
-                <View style={styles.textRow}>
-                  <UniformButton text="Registration" onPress={() => this.props.navigation.navigate("registrationScreen")} />
-                </View>
-              </View>
 
               <TouchableHighlight style={styles.back} onPress={() => this.props.navigation.dispatch(NavigationActions.back())}>
                 <FontAwesome name="chevron-left" size={27} style={{color: "#4A4A4A"}} />
               </TouchableHighlight>
             </View>
-          </Container>
+          </ScrollView>
     )
   }
 }
@@ -173,7 +176,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
-    margin: 20,
+    marginBottom: 10,
     width: "65%",
     justifyContent: 'center',
     marginTop: 8
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   header: {
-    marginTop: scaleVertical(36),
+    marginTop: scaleVertical(28),
     alignItems: "center",
     justifyContent: "center"
   },
@@ -213,9 +216,20 @@ const styles = StyleSheet.create({
   textRow: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: scaleVertical(20),
-    marginBottom: scaleVertical(8),
-    paddingHorizontal: 8
+    marginTop: scaleVertical(5),
+    marginBottom: scaleVertical(5),
+    paddingHorizontal: 8,
+  },
+  guestBtn: {
+    flexDirection: "row",
+    justifyContent: "center",
+    borderRadius: 15,
+    borderColor: "black",
+    borderWidth: 2,
+    alignSelf: "center",
+    margin: 10,
+    padding: 10,
+    width: "65%"
   },
   error: {
     color: "red"
