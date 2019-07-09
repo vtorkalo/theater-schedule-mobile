@@ -1,7 +1,8 @@
 import React from "react";
 import {
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage,
 } from "react-native";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
@@ -13,7 +14,6 @@ import Text from './Components/CustomText';
 import { FontAwesome } from '@expo/vector-icons'
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
-import { TextField } from 'react-native-material-textfield';
 import UniformButton from "../Screens/Components/UniformButton";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
@@ -33,15 +33,34 @@ class EditProfileScreen extends LocalizeComponent {
         this.phoneRef = this.updateRef.bind(this, 'phone');
 
         this.state = {
-            firstName: "Denys",
-            lastName: "Shourek",
-            email: "test@gmail.com",
-            phone: "+380973122522",
-            birthDate: "1992-11-03T15:27:31.2278615+03:00",
-            city: "Lviv",
-            country: "Ukraine",
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            birthDate: '',
+            city: '',
+            country: '',
             isDateTimePickerVisible: false,
         };
+    }
+
+    async componentDidMount() {
+        await this.getValuesFromStorage();
+    }
+
+    getValuesFromStorage = () => {
+        let keys = ['FirstName', 'LastName', 'Email', 'PhoneNumber', 'DateOfBirth', 'City', 'Country'];
+        AsyncStorage.multiGet(keys).then(result => {
+          this.setState({
+            firstName: result[0][1].trim(),
+            lastName: result[1][1].trim(),
+            email: result[2][1].trim(),
+            phone: result[3][1].trim(),
+            birthDate: result[4][1],
+            city: result[5][1].trim(),
+            country: result[6][1].trim()
+          });
+        });
     }
 
     onFocus() {

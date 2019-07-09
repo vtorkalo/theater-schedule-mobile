@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, AsyncStorage } from "react-native";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
     Container,
@@ -27,12 +27,26 @@ class ChangePasswordScreen extends LocalizeComponent {
         this.confirmPasswordRef = this.updateRef.bind(this, 'confirmPassword');
 
         this.state = {
-            firstName: "Denys",
-            lastName: "Shourek",
+            firstName: '',
+            lastName: '',
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
         };
+    }
+
+    async componentDidMount() {
+        await this.getValuesFromStorage();
+    }
+
+    getValuesFromStorage = () => {
+        let keys = ['FirstName', 'LastName'];
+        AsyncStorage.multiGet(keys).then(result => {
+          this.setState({
+            firstName: result[0][1].trim(),
+            lastName: result[1][1].trim(),
+          });
+        });
     }
 
     onFocus() {
