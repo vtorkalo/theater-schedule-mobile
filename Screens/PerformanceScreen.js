@@ -44,7 +44,40 @@ class PerformanceScreen extends LocalizeComponent {
                 ? `data:image/png;base64,${this.props.performance.mainImage}`
                 : this.props.performance.mainImage;
 
-              const priceOfPerformance = `${this.props.performance.minPrice}` == `${this.props.performance.maxPrice}` ? `${this.props.performance.minPrice} ${this.t("uah")}` : `${this.props.performance.minPrice} - ${this.props.performance.maxPrice} ${this.t("uah")}`;
+              const priceOfPerformance = this.props.performance.minPrice == this.props.performance.maxPrice ? 
+              `${this.props.performance.minPrice} ${this.t("uah")}` : `${this.props.performance.minPrice} - ${this.props.performance.maxPrice} 
+              ${this.t("uah")}`;
+
+              const galleryOfImages = this.props.performance.galleryImage ? <Text style={[styles.textContainer, styles.textSubtitle]}>
+              {this.t("The performance galary is not available")}</Text> : 
+                                    <ImageGallery images={this.props.performance.galleryImage} galleryTitle={this.t("Performance Image Gallery: ")}
+                         keyExtractor={(item) => item.uri}
+                         showImage={({ item }) =>
+                             <View style={styles.cardContainer}>
+                                 <Card style={styles.card}>
+                                     <CardItem>
+                                         <Left>
+                                             <Thumbnail source={require('../img/logo.png')} />
+                                             <Body>
+                                                 <Text style={{ fontSize: 18 }}>{this.props.performance.title}</Text>
+                                                 <Text note style={{ fontStyle: 'italic' }}>{this.t("Lviv Puppet Theater")}</Text>
+                                             </Body>
+                                         </Left>
+                                     </CardItem>
+                                     <CardItem cardBody>
+                                         <ImageLoad
+                                             source={{ uri: `${item}` }}
+                                             style={styles.galleryImage}
+                                             placeholderSource={require('../img/logo.png')}
+                                             placeholderStyle={styles.placeholderStyle}
+                                         />
+                                     </CardItem>
+                                     <CardItem>
+                                     </CardItem>
+                                 </Card>
+                             </View>
+                         }
+                     />;
               
               return (
                 <Container>
@@ -81,36 +114,7 @@ class PerformanceScreen extends LocalizeComponent {
                                 <Text style={styles.testStyle}>{_.join(this.props.performance.hashTag, ', ')}</Text>
                             </View>
 
-            <View style={{ flex: 1, marginBottom: 25 }}>{this.props.performance.galleryImage == null ? <Text style={[styles.textContainer, styles.textSubtitle]}>{this.t("The performance galary is not available")}</Text> : 
-            <ImageGallery images={this.props.performance.galleryImage} galleryTitle={this.t("Performance Image Gallery: ")}
-                       keyExtractor={(item) => item.uri}
-                       showImage={({ item }) =>
-                           <View style={styles.cardContainer}>
-                               <Card style={styles.card}>
-                                   <CardItem>
-                                       <Left>
-                                           <Thumbnail source={require('../img/logo.png')} />
-                                           <Body>
-                                               <Text style={{ fontSize: 18 }}>{this.props.performance.title}</Text>
-                                               <Text note style={{ fontStyle: 'italic' }}>{this.t("Lviv Puppet Theater")}</Text>
-                                           </Body>
-                                       </Left>
-                                   </CardItem>
-                                   <CardItem cardBody>
-                                       <ImageLoad
-                                           source={{ uri: `${item}` }}
-                                           style={styles.galleryImage}
-                                           placeholderSource={require('../img/logo.png')}
-                                           placeholderStyle={styles.placeholderStyle}
-                                       />
-                                   </CardItem>
-                                   <CardItem>
-                                   </CardItem>
-                               </Card>
-                           </View>
-                       }
-                   />}
-                            </View>
+            <View style={{ flex: 1, marginBottom: 25 }}>{galleryOfImages}</View>
                         </ScrollView>
                     </Content>
                 </Container>
