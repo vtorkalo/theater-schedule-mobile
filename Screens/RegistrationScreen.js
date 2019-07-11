@@ -195,7 +195,7 @@ class RegistrationScreen extends LocalizeComponent {
               </Text>
               <Button
                 title={this.t("Sign in now.")}
-                onPress={() => this.props.navigation.navigate("Authoriza")}
+                onPress={() => this.props.navigation.navigate("Authorization")}
               />
             </View>
           </View>
