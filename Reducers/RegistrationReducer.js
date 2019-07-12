@@ -56,7 +56,7 @@ export default function registrationReducer(state = initialState, action) {
             return { ...state, Telephone: action.payload.telephone }
 
         case VALIDATE_REGISTRATION_BIRTHDATE: {
-            return { ...state, BirthDateError: error }
+            return { ...state, BirthDateError: "" }
         }
 
         case VALIDATE_REGISTRATION_CITY: {
@@ -81,8 +81,15 @@ export default function registrationReducer(state = initialState, action) {
         }
 
         case VALIDATE_REGISTRATION_PASSWORD: {
-            error = state.Password.trim() === "" ? "Please enter the Password" : "";
-            return { ...state, PasswordError: error }
+            passwordNotSet = state.Password.trim() === "" ? "Please enter the Password" : "";
+            passwordTooShort = state.Password.length <6  ? "Too short" : "";
+
+            if (passwordNotSet)
+                return { ...state, PasswordError: passwordNotSet }
+            else if (passwordTooShort)
+                return { ...state, PasswordError: passwordTooShort }
+
+            return { ...state, PasswordError: "" }
         }
 
         case VALIDATE_REGISTRATION_TELEPHONE: {

@@ -93,7 +93,7 @@ export const sendRegistration = (FirstName, City, PhoneNumber, DateOfBirth, Emai
         dispatch(sendRegistrationBegin());
         return fetch(`${BASE_URL}Registration/CreateUser/`, {
             method: 'POST',
-            headers: {
+            headers: { 
                 Accept: 'application/json', 'Content-Type': 'application/json',
             },
             body: dataJson
