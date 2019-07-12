@@ -130,7 +130,7 @@ class ChangePasswordScreen extends LocalizeComponent {
                 this.props.navigation.dispatch(NavigationActions.back())
             }
             else {
-                alert("Update profile failed");
+                alert("Update password failed");
             }
         })
     }
@@ -240,7 +240,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    updateUserPassword: (id, oldPassword, newPassword) => dispatch(updateUserPassword(id, oldPassword, newPassword)),
+    updateUserPassword: (params) => dispatch(updateUserPassword(params)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePasswordScreen);

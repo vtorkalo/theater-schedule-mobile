@@ -332,8 +332,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateUserProfile: (id, firstName, lastName, email, phone, birthDate, city, country) =>
-        dispatch(updateUserProfile(id, firstName, lastName, email, phone, birthDate, city, country)),
+    updateUserProfile: (params) => dispatch(updateUserProfile(params)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen);
