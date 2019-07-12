@@ -18,6 +18,7 @@ import UniformButton from "../Screens/Components/UniformButton";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
 import CustomTextField from './UserProfileComponents/CustomTextField';
+import { updateUserProfile } from '../Actions/EditUserActions/EditUserActionCreators';
 
 class EditProfileScreen extends LocalizeComponent {
     constructor(props) {
@@ -33,6 +34,7 @@ class EditProfileScreen extends LocalizeComponent {
         this.phoneRef = this.updateRef.bind(this, 'phone');
 
         this.state = {
+            id: '',
             firstName: '',
             lastName: '',
             email: '',
@@ -49,17 +51,18 @@ class EditProfileScreen extends LocalizeComponent {
     }
 
     getValuesFromStorage = () => {
-        let keys = ['FirstName', 'LastName', 'Email', 'PhoneNumber', 'DateOfBirth', 'City', 'Country'];
+        let keys = ['FirstName', 'LastName', 'Email', 'PhoneNumber', 'DateOfBirth', 'City', 'Country', 'UserId'];
         AsyncStorage.multiGet(keys).then(result => {
-          this.setState({
-            firstName: result[0][1].trim(),
-            lastName: result[1][1].trim(),
-            email: result[2][1].trim(),
-            phone: result[3][1].trim(),
-            birthDate: result[4][1],
-            city: result[5][1].trim(),
-            country: result[6][1].trim()
-          });
+            this.setState({
+                firstName: result[0][1].trim(),
+                lastName: result[1][1].trim(),
+                email: result[2][1].trim(),
+                phone: result[3][1].trim(),
+                birthDate: result[4][1],
+                city: result[5][1].trim(),
+                country: result[6][1].trim(),
+                id: result[7][1].trim(),
+            });
         });
     }
 
@@ -127,10 +130,42 @@ class EditProfileScreen extends LocalizeComponent {
         }
     }
 
+    sendData() {
+        this.props.updateUserProfile({
+            Id: this.state.id,
+            FirstName: this.state.firstName,
+            LastName: this.state.lastName,
+            Email: this.state.email,
+            PhoneNumber: this.state.phone,
+            DateOfBirth: this.state.birthDate,
+            City: this.state.city,
+            Country: this.state.country
+        })
+        .then(async (result) => {
+            console.log(result);
+            await AsyncStorage.setItem('FirstName', result.firstName);
+            await AsyncStorage.setItem('LastName', result.lastName);
+            await AsyncStorage.setItem('Email', result.email);
+            await AsyncStorage.setItem('DateOfBirth', result.dateOfBirth);
+            await AsyncStorage.setItem('Country', result.country);
+            await AsyncStorage.setItem('City', result.city);
+            await AsyncStorage.setItem('PhoneNumber', result.phoneNumber);
+        })
+        .then(() => {
+            if (this.props.editUser.error === null) {
+                this.props.navigation.state.params.onNavigateBack(this.state);
+                this.props.navigation.dispatch(NavigationActions.back())
+            }
+            else {
+                alert("Update profile failed");
+            }
+        })
+        .catch((error) => console.error(error));
+    }
+
     onSubmit() {
         if (this.isFieldsValid()) {
-            // TODO: fetch password update to server
-            alert('Fetching data to backend');
+            this.sendData();
         }
     }
 
@@ -292,7 +327,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    languageCode: state.settings.settings.languageCode
+    languageCode: state.settings.settings.languageCode,
+    editUser: state.editUser,
 });
 
-export default connect(mapStateToProps)(EditProfileScreen);
+const mapDispatchToProps = dispatch => ({
+    updateUserProfile: (id, firstName, lastName, email, phone, birthDate, city, country) =>
+        dispatch(updateUserProfile(id, firstName, lastName, email, phone, birthDate, city, country)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen);

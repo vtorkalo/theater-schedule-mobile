@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
+import { connect } from "react-redux";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
     Container,
@@ -11,7 +12,8 @@ import { FontAwesome } from '@expo/vector-icons'
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
 import UniformButton from '../Screens/Components/UniformButton';
-import PasswordTextField from './UserProfileComponents/PasswordTextField'
+import PasswordTextField from './UserProfileComponents/PasswordTextField';
+import { updateUserPassword } from '../Actions/EditUserActions/EditUserActionCreators';
 
 class ChangePasswordScreen extends LocalizeComponent {
     constructor(props) {
@@ -27,6 +29,7 @@ class ChangePasswordScreen extends LocalizeComponent {
         this.confirmPasswordRef = this.updateRef.bind(this, 'confirmPassword');
 
         this.state = {
+            id: '',
             firstName: '',
             lastName: '',
             oldPassword: '',
@@ -40,11 +43,12 @@ class ChangePasswordScreen extends LocalizeComponent {
     }
 
     getValuesFromStorage = () => {
-        let keys = ['FirstName', 'LastName'];
+        let keys = ['UserId', 'FirstName', 'LastName'];
         AsyncStorage.multiGet(keys).then(result => {
           this.setState({
-            firstName: result[0][1].trim(),
-            lastName: result[1][1].trim(),
+            id: result[0][1].trim(),
+            firstName: result[1][1].trim(),
+            lastName: result[2][1].trim(),
           });
         });
     }
@@ -115,10 +119,25 @@ class ChangePasswordScreen extends LocalizeComponent {
         }  
     }
 
+    sendData() {
+        this.props.updateUserPassword({
+            Id: this.state.id,
+            OldPassword: this.state.oldPassword,
+            NewPassword: this.state.newPassword
+        })
+        .then(() => {
+            if (this.props.editUser.error === null) {
+                this.props.navigation.dispatch(NavigationActions.back())
+            }
+            else {
+                alert("Update profile failed");
+            }
+        })
+    }
+
     onSubmit() {
         if (this.isFieldsValid()) {
-            // TODO: fetch password update to server
-            alert('Fetching data to backend');
+            this.sendData();
         }
     }
 
@@ -216,4 +235,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ChangePasswordScreen;
+const mapStateToProps = (state) => ({
+    editUser: state.editUser,
+})
+
+const mapDispatchToProps = dispatch => ({
+    updateUserPassword: (id, oldPassword, newPassword) => dispatch(updateUserPassword(id, oldPassword, newPassword)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePasswordScreen);

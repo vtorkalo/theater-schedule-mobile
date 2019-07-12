@@ -53,8 +53,22 @@ class UserProfileScreen extends LocalizeComponent {
         return stringDate;
     }
 
+    handleOnNavigateBack = (data) => {
+        this.setState({ 
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            birthDate: data.birthDate,
+            city: data.city,
+            country: data.country,
+        })
+    }
+
     editProfileItemClick = () => {
-        this.props.navigation.navigate('EditProfile')
+        this.props.navigation.navigate('EditProfile', {
+            onNavigateBack: this.handleOnNavigateBack
+          })
     }
 
     changePasswordItemClick = () => {
