@@ -34,7 +34,6 @@ const DrawerStack = createDrawerNavigator(
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
-    Authorization: { screen: AuthorizationScreen },
     UserProfile: { screen: UserProfileScreen, },
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
@@ -68,6 +67,14 @@ const RegistrationStack = createStackNavigator(
   }
 );
 
+const AuthorizationStack = createStackNavigator(
+  {
+    AuthorizationScreen:{screen: AuthorizationScreen}
+  },
+  {
+    headerMode: 'none',
+  }
+);
 
 const PerformanceStack = createStackNavigator(
   {
@@ -101,7 +108,8 @@ export const AppNavigator = createStackNavigator(
     streamConnectingScreen:{screen: StreamConnectingScreen},
     registrationScreen:{screen: RegistrationStack},
     streamLanguageScreen: { screen: StreamLanguageScreen },
-    streamConnectingScreen:{screen:StreamConnectingScreen}
+    streamConnectingScreen:{screen:StreamConnectingScreen},
+    Authorization: { screen: AuthorizationStack },
   },
   {
     headerMode: "none",
