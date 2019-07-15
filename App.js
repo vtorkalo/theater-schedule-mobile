@@ -12,6 +12,7 @@ import I18n, { i18nState } from "redux-i18n";
 import sliderReducer from "./Reducers/SliderReducer";
 import wishListReducer from "./Reducers/WishListReducer";
 import registration from "./Reducers/RegistrationReducer";
+import poll from "./Reducers/PollReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -44,8 +45,7 @@ const appReducer = combineReducers({
   authorization,
   streamReducer,
   registration,
-  streamReducer,
-  pollReducer
+  poll
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));

@@ -39,7 +39,7 @@ const DrawerStack = createDrawerNavigator(
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
-    Poll:{screen:PollScreen}
+    Poll:{screen: PollScreen},
   },
   {
     drawerPosition: "left",
