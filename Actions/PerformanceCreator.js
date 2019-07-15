@@ -29,7 +29,7 @@ export const loadPerformance = (deviceId, performanceId, languageCode) => {
     return dispatch => {
         dispatch(loadPerformanceBegin());
         let url = `${BASE_URL}PerformanceDetails/${deviceId}/${languageCode}/GetInfo/${performanceId}`;
-        fetch(url)
+        return fetch(url)
             .then(response => response.json())
             .then(responseJson => {
                 dispatch(loadPerformanceSuccess(responseJson));
