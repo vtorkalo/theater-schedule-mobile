@@ -1,6 +1,5 @@
 import { Permissions, Notifications } from "expo";
 import { AsyncStorage} from "react-native";
-
 import BASE_URL from "../baseURL";
 
 export default async deviceId => {
