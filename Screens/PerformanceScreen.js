@@ -15,7 +15,7 @@ import UniformButton from '../Screens/Components/UniformButton';
 import Text from './Components/CustomText';
 import GalleryOfImages from './PerformanceDetailsComponents/GalleryOfImages';
 
-class PerformanceScreen extends LocalizeComponent {
+class PerformanceScreen extends LocalizedComponent {
   componentDidMount() {
     this.props.loadPerformance(
       this.props.deviceId,
