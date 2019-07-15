@@ -5,7 +5,7 @@ import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { loadPerformance } from '../Actions/PerformanceCreator';
-import LocalizeComponent from '../Localization/LocalizedComponent';
+import LocalizedComponent from '../Localization/LocalizedComponent';
 import { BallIndicator } from 'react-native-indicators';
 import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
