@@ -22,7 +22,7 @@ import StreamScreen from '../Screens/StreamScreen'
 import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
 import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
 import RegistrationScreen from '../Screens/RegistrationScreen';
-
+import PollScreen from '../Screens/PollScreen';
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -39,6 +39,7 @@ const DrawerStack = createDrawerNavigator(
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
+    Poll:{screen:PollScreen}
   },
   {
     drawerPosition: "left",
@@ -100,7 +101,7 @@ export const AppNavigator = createStackNavigator(
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen: StreamConnectingScreen},
     registrationScreen:{screen: RegistrationStack},
-    authorizationScreen:{screen: AuthorizationScreen}
+    authorizationScreen:{screen: AuthorizationScreen},
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen:StreamConnectingScreen}
   },

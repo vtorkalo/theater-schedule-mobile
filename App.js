@@ -25,7 +25,7 @@ import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
-
+import pollReducer from "./Reducers/PollReducer";
 
 
 
@@ -44,7 +44,8 @@ const appReducer = combineReducers({
   authorization,
   streamReducer,
   registration,
-  streamReducer
+  streamReducer,
+  pollReducer
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
