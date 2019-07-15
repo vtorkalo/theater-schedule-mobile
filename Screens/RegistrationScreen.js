@@ -98,7 +98,7 @@ class RegistrationScreen extends LocalizeComponent {
                 <CustomTextField
                   // textContentType="name"
                   label={this.t("FIRSTNAME")}
-                  labelTextStyle={{color:"#707070"}}
+                  labelTextStyle={{}}
                   onChangeText={(txt) => this.props.enterRegistrationFirstName(txt)}
                   onBlur={this.props.validateRegistrationFirstName}
                 />
@@ -108,7 +108,7 @@ class RegistrationScreen extends LocalizeComponent {
 
                 <CustomTextField
                   label={this.t("CITY")}
-                  labelTextStyle={{color:"#707070"}}
+                  labelTextStyle={styles.labelColor}
                   onChangeText={(txt) => this.props.enterRegistrationCity(txt)}
                   onBlur={this.props.validateRegistrationCity}
                 />
@@ -118,7 +118,7 @@ class RegistrationScreen extends LocalizeComponent {
 
                 <CustomTextField 
                   label={this.t("TELEPHONE")}
-                  labelTextStyle={{color:"#707070"}}
+                  labelTextStyle={styles.labelColor}
                   onChangeText={(txt) => this.props.enterRegistrationTelephone(txt)}
                   onBlur={this.props.validateRegistrationTelephone}
                 />
@@ -136,9 +136,7 @@ class RegistrationScreen extends LocalizeComponent {
                     androidMode={"default"}
                     placeHolderText={this.t("SELECT DATE OF BIRTH")}
                     textStyle={{ color: "green" }}
-                    placeHolderTextStyle={{
-                      color: "#707070", fontWeight: "bold"
-                    }}
+                    placeHolderTextStyle={styles.labelColor}
                     onDateChange={(txt) => { this.props.enterRegistrationBirthdate(txt); }}
                     disabled={false}
                   />
@@ -158,7 +156,7 @@ class RegistrationScreen extends LocalizeComponent {
                 <CustomTextField
                   secureTextEntry={true}
                   label={this.t("PASSWORD")}
-                  labelTextStyle={{color:"#707070"}}
+                  labelTextStyle={styles.labelColor}
                   onChangeText={(txt) => this.props.enterRegistrationPassword(txt)}
                   onBlur={this.props.validateRegistrationPassword}
                 />
@@ -266,6 +264,9 @@ const styles = StyleSheet.create({
   },
   headerText:{
     fontSize: scale(28), fontWeight: "800", color: "#4A4A4A"
+  },
+  labelColor:{
+    color:"#707070"
   }
 });
 
