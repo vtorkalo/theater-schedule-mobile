@@ -116,7 +116,7 @@ class RegistrationScreen extends LocalizeComponent {
                   <TextError style={styles.error}>{this.t(this.props.registration.CityError)}</TextError>
                 ) : null}
 
-                <CustomTextField
+                <CustomTextField 
                   label={this.t("TELEPHONE")}
                   labelTextStyle={{color:"#707070"}}
                   onChangeText={(txt) => this.props.enterRegistrationTelephone(txt)}
