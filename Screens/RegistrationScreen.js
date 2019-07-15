@@ -2,7 +2,6 @@ import React from "react";
 import {
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Dimensions,
@@ -32,6 +31,7 @@ import {
 } from "../Actions/RegistrationActions";
 import { DatePicker } from 'native-base';
 import { Content, Container } from 'native-base';
+import CustomTextField from './UserProfileComponents/CustomTextField';
 
 const { width, height } = Dimensions.get('window');
 
@@ -95,11 +95,10 @@ class RegistrationScreen extends LocalizeComponent {
           <Content >
             <View >
               <KeyboardAvoidingView behavior='padding'>
-                <TextInput
-                  textContentType="name"
-                  placeholder={this.t("FIRSTNAME")}
-                  placeholderTextColor="#707070"
-                  style={styles.input}
+                <CustomTextField
+                  // textContentType="name"
+                  label={this.t("FIRSTNAME")}
+                  labelTextStyle={{color:"#707070"}}
                   onChangeText={(txt) => this.props.enterRegistrationFirstName(txt)}
                   onBlur={this.props.validateRegistrationFirstName}
                 />
@@ -107,11 +106,9 @@ class RegistrationScreen extends LocalizeComponent {
                   <TextError style={styles.error}>{this.t(this.props.registration.FirstNameError)}</TextError>
                 ) : null}
 
-                <TextInput
-                  textContentType="addressCity"
-                  placeholder={this.t("CITY")}
-                  placeholderTextColor="#707070"
-                  style={styles.input}
+                <CustomTextField
+                  label={this.t("CITY")}
+                  labelTextStyle={{color:"#707070"}}
                   onChangeText={(txt) => this.props.enterRegistrationCity(txt)}
                   onBlur={this.props.validateRegistrationCity}
                 />
@@ -119,11 +116,9 @@ class RegistrationScreen extends LocalizeComponent {
                   <TextError style={styles.error}>{this.t(this.props.registration.CityError)}</TextError>
                 ) : null}
 
-                <TextInput
-                  textContentType="telephoneNumber"
-                  placeholder={this.t("TELEPHONE")}
-                  placeholderTextColor="#707070"
-                  style={styles.input}
+                <CustomTextField
+                  label={this.t("TELEPHONE")}
+                  labelTextStyle={{color:"#707070"}}
                   onChangeText={(txt) => this.props.enterRegistrationTelephone(txt)}
                   onBlur={this.props.validateRegistrationTelephone}
                 />
@@ -131,7 +126,7 @@ class RegistrationScreen extends LocalizeComponent {
                   <TextError style={styles.error}>{this.t(this.props.registration.TelephoneError)}</TextError>
                 ) : null}
                   <DatePicker
-                    style={styles.input}
+                    style ={{marginTop:15}}
                     androidMode='spinner'
                     defaultDate={new Date(2018, 4, 4)}
                     locale={this.props.languageCode}
@@ -151,11 +146,8 @@ class RegistrationScreen extends LocalizeComponent {
                     <TextError style={styles.error}>{this.t(this.props.registration.BirthDateError)}</TextError>
                   ) : null}
 
-                <TextInput
-                  textContentType="emailAddress"
-                  placeholder={this.t("EMAIL")}
-                  placeholderTextColor="#707070"
-                  style={styles.input}
+                <CustomTextField
+                  label={this.t("EMAIL")}
                   onChangeText={(txt) => this.props.enterRegistrationEmail(txt)}
                   onBlur={this.props.validateRegistrationEmail}
                 />
@@ -163,12 +155,10 @@ class RegistrationScreen extends LocalizeComponent {
                   <TextError style={styles.error}>{this.t(this.props.registration.EmailError)}</TextError>
                 ) : null}
 
-                <TextInput
-                  textContentType="password"
+                <CustomTextField
                   secureTextEntry={true}
-                  placeholder={this.t("PASSWORD")}
-                  placeholderTextColor="#707070"
-                  style={styles.input}
+                  label={this.t("PASSWORD")}
+                  labelTextStyle={{color:"#707070"}}
                   onChangeText={(txt) => this.props.enterRegistrationPassword(txt)}
                   onBlur={this.props.validateRegistrationPassword}
                 />
@@ -204,9 +194,6 @@ class RegistrationScreen extends LocalizeComponent {
               </View>
             </View>
           </Content>
-
-
-
 
           <TouchableOpacity
             style={styles.back}
@@ -266,14 +253,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: scaleVertical(12)
   },
-  input: {
-    borderWidth: 0.5,
-    borderColor: "#D3D3D3",
-    borderRadius: 50,
-    padding: 18,
-    marginVertical: scaleVertical(6),
-    fontWeight: "bold"
-  },
+
   textRow: {
     flexDirection: "row",
     justifyContent: "center",
