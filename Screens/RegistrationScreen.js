@@ -68,7 +68,7 @@ class RegistrationScreen extends LocalizeComponent {
         Password: this.props.registration.Password,
         PhoneIdentifier: this.props.deviceId
       });
-      this.props.navigation.navigate("drawerStack");
+      this.props.navigation.navigate("authorizationScreen");
     } else {
       alert("Fill the form");
     }
@@ -176,7 +176,7 @@ class RegistrationScreen extends LocalizeComponent {
                     {this.t("Already have an account?")}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("AuthorizationScreen")}>
+                    onPress={() => this.props.navigation.navigate("authorizationScreen")}>
                     <Text style={styles.textRowContinue}> {this.t("Sign in now.")} </Text>
                   </TouchableOpacity>
                 </View>
@@ -242,16 +242,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly"
   },
-  image: {
-    height: scaleVertical(70),
-    resizeMode: "contain"
-  },
-  content: {
-    justifyContent: "space-between",
-    paddingHorizontal: 8,
-    paddingVertical: scaleVertical(12)
-  },
-
   textRow: {
     flexDirection: "row",
     justifyContent: "center",
