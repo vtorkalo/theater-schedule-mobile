@@ -27,8 +27,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         flex: 1,
         flexDirection: 'column',
-        alignSelf: 'center'
-    }
+        alignSelf: 'center',    }
 });
 
 const mapStateToProps = (state) => {

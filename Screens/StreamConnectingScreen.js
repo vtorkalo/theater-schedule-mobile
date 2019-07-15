@@ -1,20 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, BackHandler, Animated, Easing } from 'react-native';
+import { StyleSheet, View, Dimensions, BackHandler, Animated, Easing, ImageBackground, SafeAreaView, Image } from 'react-native';
 import { Container } from 'native-base';
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import { connect } from 'react-redux'
 import UniformButton from "../Screens/Components/UniformButton"
 import BASE_URL from 'TheaterSchedule/BaseURLDubbing'
 import { Audio } from 'expo-av';
-import { toogleIsConnect } from "../Actions/StreamActions/StreamActionCreator"
+import { toogleIsConnect, toogleConnection } from "../Actions/StreamActions/StreamActionCreator"
 const signalR = require("@aspnet/signalr");
-import ReturnMenuIcon from 'TheaterSchedule/Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
-import { Overlay } from 'react-native-maps';
+
+
+
 
 
 let currentAudioLink;
 
+const { height: viewportHeight, width: viewprotWidth } = Dimensions.get('window');
 
 
 class StreamConnectingScreen extends LocalizeComponent {
@@ -23,11 +25,20 @@ class StreamConnectingScreen extends LocalizeComponent {
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }
 
+    static navigationOptions = ({ screenProps }) => {
+        return {
+            gestureResponseDistance: {
+                horizontal: 10,
+                vertical: 10,
+            },
+        };
+    };
+
     componentWillMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-        this._animatedWave = new Animated.Value(-100);
-        this._moveAnimation = new Animated.Value(-50);
-        this._moveWomen = new Animated.Value(-50);
+        this._animatedWave = new Animated.Value(0);
+        this._moveAnimation = new Animated.Value(0);
+        this._moveWomen = new Animated.Value(-30);
         this._moveLeftImage = new Animated.Value(0)
     }
 
@@ -40,45 +51,29 @@ class StreamConnectingScreen extends LocalizeComponent {
         return true;
     }
 
-
-
-
-
     componentDidMount() {
         Animated.loop(
             Animated.parallel([Animated.sequence([
-                Animated.timing(this._animatedWave, {
-                    toValue: 100,
-                    duration: 6000,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(this._animatedWave, {
-                    toValue: -100,
-                    duration: 6000,
-                    useNativeDriver: true,
-                })
-            ]),
-            Animated.sequence([
                 Animated.timing(this._moveAnimation, {
-                    toValue: 0,
+                    toValue: 50,
                     duration: 5000,
                     useNativeDriver: true,
                 }),
                 Animated.timing(this._moveAnimation, {
-                    toValue: -50,
+                    toValue: 0,
                     duration: 5000,
                     useNativeDriver: true,
                 }),
             ]),
             Animated.sequence([
                 Animated.timing(this._moveWomen, {
-                    toValue: 0,
+                    toValue: 20,
                     duration: 5000,
                     easing: Easing.out(Easing.poly(4)),
                     useNativeDriver: true,
                 }),
                 Animated.timing(this._moveWomen, {
-                    toValue: -50,
+                    toValue: -30,
                     duration: 5000,
                     easing: Easing.out(Easing.poly(4)),
                     useNativeDriver: true,
@@ -86,13 +81,15 @@ class StreamConnectingScreen extends LocalizeComponent {
             ]),
             Animated.sequence([
                 Animated.timing(this._moveLeftImage, {
-                    toValue: 300,
+                    toValue: 30,
                     duration: 5000,
+                    easing: Easing.out(Easing.poly(4)),
                     useNativeDriver: true,
                 }),
                 Animated.timing(this._moveLeftImage, {
-                    toValue: 0,
+                    toValue: -30,
                     duration: 5000,
+                    easing: Easing.out(Easing.poly(4)),
                     useNativeDriver: true,
                 }),
             ]),
@@ -120,40 +117,35 @@ class StreamConnectingScreen extends LocalizeComponent {
     render() {
         return (
             <Container style={{ flex: 1 }}>
-                <View style={styles.container}>
-            
-                    <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back())} style={{
-                        position: 'absolute'}} />
-                
 
-                    <Animated.Image style={[styles.backgroundImage, { transform: [{ translateX: this._moveAnimation }] }]}
-                        source={require("TheaterSchedule/img/StreamImg/img_3.png")}
-                    />
-
-                    <Animated.Image style={[styles.image4, { transform: [{ translateX: this._moveAnimation }] }]}
-                        source={require("TheaterSchedule/img/StreamImg/img_1.png")}
-                    />
-
-                    <Animated.Image style={[styles.leftImage, { transform: [{ translateX: this._moveLeftImage }] }]}
-                        source={require("TheaterSchedule/img/StreamImg/img_2.png")}
-                    />
-                    <Animated.Image style={[styles.wave, { transform: [{ translateX: this._animatedWave }] }]
-                    }
-                        source={require("TheaterSchedule/img/StreamImg/img_0.png")}
-                    />
-
-                    <Animated.Image style={[styles.moveWomen, { transform: [{ translateX: this._moveWomen }] }]}
-                        source={require("TheaterSchedule/img/StreamImg/img_37.png")}
-                    />
-                    <Animated.Image style={[styles.wave, { transform: [{ translateX: this._animatedWave }] }]}
-                        source={require("TheaterSchedule/img/StreamImg/img_4.png")}
-                    />
-                    <View style={{ marginBottom: 100 }}>
-                        <UniformButton style={styles.button} text={this.props.isConnected ? "You are connected" : "Connect to stream"}
-                            onPress={() => this.connectToHub()} disabled={this.props.isConnected}
+                <ImageBackground style={{ width: '100%', height: '100%' }} source={require('../img/StreamImg/img_3.png')}>
+                    <View style={styles.container}>
+                        <Animated.Image style={[styles.image4, { transform: [{ translateX: this._moveAnimation }] }]}
+                            source={require("TheaterSchedule/img/StreamImg/img_1.png")}
                         />
+
+                        <Image style={styles.wave} source={require("TheaterSchedule/img/StreamImg/img_0.png")} />
+
+                        <Animated.Image style={[styles.moveWomen, { transform: [{ translateX: this._moveWomen }] }]}
+                            source={require("TheaterSchedule/img/StreamImg/img_37.png")}
+                        />
+
+                        <Animated.Image style={[styles.moveWomen, { transform: [{ translateX: this._moveLeftImage }] }]}
+                            source={require("TheaterSchedule/img/StreamImg/img_24.png")} />
+
+                        <Animated.Image style={[styles.moveWomen, { transform: [{ translateX: this._moveLeftImage }] }]}
+                            source={require("TheaterSchedule/img/StreamImg/img_23.png")} />
+
+                        <Image style={styles.wave} source={require("TheaterSchedule/img/StreamImg/img_4.png")} />
+
+                        <View style={{ marginBottom: 100 }}>
+                            <UniformButton style={styles.button} text={this.props.isConnected ? "You are connected" : "Connect to stream"}
+                                onPress={() => this.connectToHub()} disabled={this.props.isConnected}
+                            />
+                        </View>
                     </View>
-                </View>
+                </ImageBackground>
+
             </Container>
         );
     }
@@ -193,6 +185,8 @@ class StreamConnectingScreen extends LocalizeComponent {
         const connection = new signalR.HubConnectionBuilder()
             .withUrl(hubUrl)
             .build();
+        this.props.ChangeConnection(connection)
+
         connection.on("ReceiveMessage", (message, time) => {
             this.handleMessage(message, time);
         });
@@ -200,8 +194,6 @@ class StreamConnectingScreen extends LocalizeComponent {
         connection.start().catch(function (err) {
             return console.error(err.toString());
         });
-
-
     }
 
     async startStream() {
@@ -220,6 +212,8 @@ class StreamConnectingScreen extends LocalizeComponent {
         await this.soundObject.stopAsync();
         await this.soundObject.unloadAsync();
 
+        this.props.connectionHub.stop();
+        this.props.Connected(false);
     }
 
     async pauseStream() {
@@ -255,7 +249,6 @@ class StreamConnectingScreen extends LocalizeComponent {
 }
 
 
-const { height: viewportHeight, width: viewprotWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
     button: {
         flex: 1,
@@ -271,26 +264,24 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center',
+
     },
     wave: {
         position: 'absolute',
-        width: viewprotWidth * 3,
+        width: viewprotWidth,
         height: viewportHeight,
-        
-
     },
     moveWomen: {
         position: 'absolute',
         width: viewprotWidth,
         height: viewportHeight,
-        
 
     },
     backgroundImage: {
         position: 'absolute',
-        width: viewprotWidth * 2,
+        width: viewprotWidth,
         height: viewportHeight,
-       
+
 
     },
     leftImage: {
@@ -298,8 +289,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: viewprotWidth * 3,
         height: viewportHeight,
-        
-
     }
 
 })
@@ -308,13 +297,15 @@ const mapStateToProps = (state) => {
 
     return {
         langId: state.streamReducer.choosenLang,
-        isConnected: state.streamReducer.isConnected
+        isConnected: state.streamReducer.isConnected,
+        connectionHub: state.streamReducer.connection
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        Connected: (bool) => dispatch(toogleIsConnect(bool))
+        Connected: (bool) => dispatch(toogleIsConnect(bool)),
+        ChangeConnection: (connection) => dispatch(toogleConnection(connection))
     };
 }
 

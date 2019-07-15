@@ -7,6 +7,7 @@ import {NavigationActions} from 'react-navigation';
 import {Constants} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
 import TextError from './Components/CustomText';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 import {
   enterAuthLogin,
@@ -41,12 +42,12 @@ const scaleVertical = size => (height / guidelineBaseHeight) * size;
 
 
 class AuthorizationScreen extends LocalizeComponent {
-    /* static navigationOptions = ({screenProps}) => {
+    static navigationOptions = ({screenProps}) => {
         return {
-            drawerIcon: <MaterialCommunityIcons name="settings-box" size={25} />,
+            drawerIcon: <MaterialCommunityIcons name="arrow-right-bold-box" size={25} />,
             title: screenProps.AuthorizationScreenTitle
         };
-    }; */
+    };
 
   constructor(props) {
     super(props);
@@ -67,12 +68,11 @@ class AuthorizationScreen extends LocalizeComponent {
       PasswordHash: this.props.authorization.PasswordHash,
     }).then((res) => {
       console.log(res);
-    let data = JSON.parse(res._bodyInit);
-    this.setState({
-      accessToken: data.accessToken, 
-      expires: data.expires, 
-      refreshToken: data.refreshToken, 
-      decoded: jwt_decode(data.accessToken)});
+      this.setState({
+        accessToken: res.accessToken, 
+        expires: res.expiresTime, 
+        refreshToken: res.refreshToken, 
+        decoded: jwt_decode(res.accessToken)});
     })
     .then(async () => {
       await AsyncStorage.setItem('FirstName', this.state.decoded.firstName);
@@ -82,6 +82,7 @@ class AuthorizationScreen extends LocalizeComponent {
       await AsyncStorage.setItem('DateOfBirth', this.state.decoded.dateOfBirth);
       await AsyncStorage.setItem('Country', this.state.decoded.country);
       await AsyncStorage.setItem('City', this.state.decoded.city);
+      await AsyncStorage.setItem('PhoneNumber', this.state.decoded.phoneNumber);
       await AsyncStorage.setItem('AccessToken', this.state.accessToken);
       await AsyncStorage.setItem('RefreshToken', this.state.refreshToken);
       await AsyncStorage.setItem('ExpiresDate', this.state.expires);
@@ -143,7 +144,7 @@ class AuthorizationScreen extends LocalizeComponent {
 
               <View>
                 <View style={styles.textRow}>
-                  <UniformButton text="Continue as Guest" onPress={() => this.props.navigation.navigate("drawerStack")} />
+                  <Button title="Continue as Guest" onPress={() => this.props.navigation.navigate("drawerStack")} />
                 </View>
               </View>
 

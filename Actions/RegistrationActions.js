@@ -85,11 +85,11 @@ export const sendRegistrationFailure = (error) => ({
     payload: { error }
 })
 
-export const sendRegistration = (FirstName, City, PnoneNumber, DateOfBirth, Email, Password, ) => {
+export const sendRegistration = (FirstName, City, PhoneNumber, DateOfBirth, Email, Password, ) => {
     return (dispatch, getState) => {
         const { firstnameError, cityError, telephoneError, birthdateError, emailError, passwordError } = getState().registration;
         if (firstnameError || cityError || telephoneError || birthdateError || emailError || passwordError) return;
-        let dataJson = JSON.stringify(FirstName, City, PnoneNumber, DateOfBirth, Email, Password);
+        let dataJson = JSON.stringify(FirstName, City, PhoneNumber, DateOfBirth, Email, Password);
         dispatch(sendRegistrationBegin());
         return fetch(`${BASE_URL}Registration/CreateUser/`, {
             method: 'POST',

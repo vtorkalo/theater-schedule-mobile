@@ -126,6 +126,8 @@ export const translations = {
         "Cancel": "Відхилити",
         "Stream":"Дубляж",
         "StreamScreenTitle":"Дубляж",
+        "Stream":"Дубляж",
+        "StreamScreenTitle":"Дубляж"
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -253,5 +255,7 @@ export const translations = {
         "Cancel": "Cancel",
         "Stream":"Stream",
         "StreamScreenTitle":"Stream",
+        "Stream":"Stream",
+        "StreamScreenTitle":"Stream"
     },
 }

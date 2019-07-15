@@ -26,6 +26,9 @@ import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
 
+
+
+
 const appReducer = combineReducers({
   i18nState,
   performanceReducer,
@@ -41,6 +44,7 @@ const appReducer = combineReducers({
   authorization,
   streamReducer,
   registration,
+  streamReducer
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));

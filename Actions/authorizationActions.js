@@ -53,7 +53,7 @@ export const sendAuthorization = (Params) => {
                 if (!response.ok) {
                     throw new Error(response.statusText);
                 }
-                return response;
+                return response.json();
             })
             .catch(error => {
                 dispatch(sendAuthFailure(error));

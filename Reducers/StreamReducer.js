@@ -7,8 +7,8 @@ const initialState = {
     choosenLang: 0,
     hasErrored: false,
     isFetching: false,
-    isConnected: false
-
+    isConnected: false,
+    connection: Object
 }
 
 export default function streamReducer(state = initialState, action) {
@@ -17,6 +17,13 @@ export default function streamReducer(state = initialState, action) {
             return {
                 ...state,
                 performances: action.performances,
+            }
+        }
+        case ActionTypes.TOGGLE_CONNECTION:{
+            console.log(action.connection)
+            return{
+                ...state,
+                connection:action.connection
             }
         }
         case ActionTypes.FETCH_LANGUAGES_SUCCESS: {
