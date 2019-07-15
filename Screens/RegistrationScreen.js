@@ -1,12 +1,11 @@
 import React from "react";
 import {
-  Button,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
-  Dimensions
+  Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -32,6 +31,7 @@ import {
 } from "../Actions/RegistrationActions";
 import { DatePicker } from 'native-base';
 import { Content, Container } from 'native-base';
+import CustomTextField from './UserProfileComponents/CustomTextField';
 
 const { width, height } = Dimensions.get('window');
 
@@ -45,34 +45,33 @@ const scaleVertical = size => (height / guidelineBaseHeight) * size;
 
 class RegistrationScreen extends LocalizeComponent {
 
+
   ValidateForm() {
-    return (this.props.registration.sendingError === null
-      && this.props.registration.FirstNameError === null
-      && this.props.registration.CityError === null
-      && this.props.registration.TelephoneError === null
-      && this.props.registration.BirthDateError === null
-      && this.props.registration.EmailError === null
-      && this.props.registration.PasswordError === null);
+    return (
+      this.props.registration.FirstNameError === ""
+      && this.props.registration.CityError === ""
+      && this.props.registration.TelephoneError === ""
+      && this.props.registration.EmailError === ""
+      && this.props.registration.BirthDate != ""
+      && this.props.registration.PasswordError === ""
+      );
   }
 
   onSendMessage = () => {
-    this.props.validateRegistrationFirstName();
-    this.props.validateRegistrationCity();
-    this.props.validateRegistrationTelephone();
-    this.props.validateRegistrationBirthdate();
-    this.props.validateRegistrationEmail();
-    this.props.validateRegistrationPassword();
-
-    this.props.sendRegistration({
-      FirstName: this.props.registration.FirstName,
-      City: this.props.registration.City,
-      PhoneNumber: this.props.registration.Telephone,
-      DateOfBirth: this.props.registration.BirthDate,
-      Email: this.props.registration.Email,
-      Password: this.props.registration.Password,
-      PhoneIdentifier: this.props.deviceId
-    });
-    this.props.navigation.navigate("drawerStack");
+    if (this.ValidateForm()){
+      this.props.sendRegistration({
+        FirstName: this.props.registration.FirstName,
+        City: this.props.registration.City,
+        PhoneNumber: this.props.registration.Telephone,
+        DateOfBirth: this.props.registration.BirthDate,
+        Email: this.props.registration.Email,
+        Password: this.props.registration.Password,
+        PhoneIdentifier: this.props.deviceId
+      });
+      this.props.navigation.navigate("drawerStack");
+    } else {
+      alert("Fill the form");
+    }
   };
 
 
@@ -87,124 +86,112 @@ class RegistrationScreen extends LocalizeComponent {
               style={{ color: "#4A4A4A" }}
             />
             <Text
-              style={{ fontSize: scale(28), fontWeight: "800", color: "#4A4A4A" }}
+              style={styles.headerText}
             >
               {this.t("Registration")}
             </Text>
           </View>
 
           <Content >
-            <View style={styles.content}>
-              <TextInput
-                textContentType="name"
-                placeholder={this.t("FIRSTNAME")}
-                placeholderTextColor="#707070"
-                style={styles.input}
-                onChangeText={(txt) => this.props.enterRegistrationFirstName(txt)}
-                onBlur={this.props.validateRegistrationFirstName}
-              />
-              {this.props.registration.FirstNameError ? (
-                <TextError style={styles.error}>{this.t(this.props.registration.FirstNameError)}</TextError>
-              ) : null}
+            <View >
+              <KeyboardAvoidingView behavior='padding'>
+                <CustomTextField
+                  // textContentType="name"
+                  label={this.t("FIRSTNAME")}
+                  labelTextStyle={{}}
+                  onChangeText={(txt) => this.props.enterRegistrationFirstName(txt)}
+                  onBlur={this.props.validateRegistrationFirstName}
+                />
+                {this.props.registration.FirstNameError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.FirstNameError)}</TextError>
+                ) : null}
 
-              <TextInput
-                textContentType="addressCity"
-                placeholder={this.t("CITY")}
-                placeholderTextColor="#707070"
-                style={styles.input}
-                onChangeText={(txt) => this.props.enterRegistrationCity(txt)}
-                onBlur={this.props.validateRegistrationCity}
-              />
-              {this.props.registration.CityError ? (
-                <TextError style={styles.error}>{this.t(this.props.registration.CityError)}</TextError>
-              ) : null}
+                <CustomTextField
+                  label={this.t("CITY")}
+                  labelTextStyle={styles.labelColor}
+                  onChangeText={(txt) => this.props.enterRegistrationCity(txt)}
+                  onBlur={this.props.validateRegistrationCity}
+                />
+                {this.props.registration.CityError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.CityError)}</TextError>
+                ) : null}
 
-              <TextInput
-                textContentType="telephoneNumber"
-                placeholder={this.t("TELEPHONE")}
-                placeholderTextColor="#707070"
-                style={styles.input}
-                onChangeText={(txt) => this.props.enterRegistrationTelephone(txt)}
-                onBlur={this.props.validateRegistrationTelephone}
-              />
-              {this.props.registration.TelephoneError ? (
-                <TextError style={styles.error}>{this.t(this.props.registration.TelephoneError)}</TextError>
-              ) : null}
+                <CustomTextField 
+                  label={this.t("TELEPHONE")}
+                  labelTextStyle={styles.labelColor}
+                  onChangeText={(txt) => this.props.enterRegistrationTelephone(txt)}
+                  onBlur={this.props.validateRegistrationTelephone}
+                />
+                {this.props.registration.TelephoneError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.TelephoneError)}</TextError>
+                ) : null}
+                  <DatePicker
+                    style ={{marginTop:15}}
+                    androidMode='spinner'
+                    defaultDate={new Date(2018, 4, 4)}
+                    locale={this.props.languageCode}
+                    timeZoneOffsetInMinutes={120}
+                    modalTransparent={false}
+                    animationType={"fade"}
+                    androidMode={"default"}
+                    placeHolderText={this.t("SELECT DATE OF BIRTH")}
+                    textStyle={{ color: "green" }}
+                    placeHolderTextStyle={styles.labelColor}
+                    onDateChange={(txt) => { this.props.enterRegistrationBirthdate(txt); }}
+                    disabled={false}
+                  />
+                  {this.props.registration.BirthDateError ? (
+                    <TextError style={styles.error}>{this.t(this.props.registration.BirthDateError)}</TextError>
+                  ) : null}
 
-              <DatePicker
-                defaultDate={new Date(2018, 4, 4)}
-                locale={this.props.languageCode}
-                timeZoneOffsetInMinutes={120}
-                modalTransparent={false}
-                animationType={"fade"}
-                androidMode={"default"}
-                placeHolderText={this.t("SELECT DATE")}
-                textStyle={{ color: "green" }}
-                placeHolderTextStyle={{
-                  color: "#707070", fontWeight: "bold"
-                }}
-                onDateChange={(txt) => { this.props.enterRegistrationBirthdate(txt); }}
-                disabled={false}
-              />
-              {this.props.registration.BirthDateError ? (
-                <TextError style={styles.error}>{this.t(this.props.registration.BirthDateError)}</TextError>
-              ) : null}
+                <CustomTextField
+                  label={this.t("EMAIL")}
+                  onChangeText={(txt) => this.props.enterRegistrationEmail(txt)}
+                  onBlur={this.props.validateRegistrationEmail}
+                />
+                {this.props.registration.EmailError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.EmailError)}</TextError>
+                ) : null}
 
+                <CustomTextField
+                  secureTextEntry={true}
+                  label={this.t("PASSWORD")}
+                  labelTextStyle={styles.labelColor}
+                  onChangeText={(txt) => this.props.enterRegistrationPassword(txt)}
+                  onBlur={this.props.validateRegistrationPassword}
+                />
+                {this.props.registration.PasswordError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.PasswordError)}</TextError>
+                ) : null}
 
-              <TextInput
-                textContentType="emailAddress"
-                placeholder={this.t("EMAIL")}
-                placeholderTextColor="#707070"
-                style={styles.input}
-                onChangeText={(txt) => this.props.enterRegistrationEmail(txt)}
-                onBlur={this.props.validateRegistrationEmail}
-              />
-              {this.props.registration.EmailError ? (
-                <TextError style={styles.error}>{this.t(this.props.registration.EmailError)}</TextError>
-              ) : null}
+                <UniformButton
+                  text={this.t("send")}
+                  style={styles.button}
+                  onPress={this.onSendMessage}
+                />
+              </KeyboardAvoidingView>
+              <View>
+                <View style={styles.textRow}>
+                  <Text style={styles.textRowContinue}>
+                    {this.t("Already have an account?")}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("AuthorizationScreen")}>
+                    <Text style={styles.textRowContinue}> {this.t("Sign in now.")} </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
 
-              <TextInput
-                textContentType="password"
-                secureTextEntry={true}
-                placeholder={this.t("PASSWORD")}
-                placeholderTextColor="#707070"
-                style={styles.input}
-                onChangeText={(txt) => this.props.enterRegistrationPassword(txt)}
-                onBlur={this.props.validateRegistrationPasswordß}
-              />
-              {this.props.registration.PasswordError ? (
-                <TextError style={styles.error}>{this.t(this.props.registration.PasswordError)}</TextError>
-              ) : null}
-
-              <UniformButton
-                text={this.t("send")}
-                style={styles.button}
-                onPress={this.onSendMessage}
-              />
+              <View>
+                <View style={styles.textRow}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("drawerStack")}>
+                    <Text style={styles.textRowContinue}> {this.t("Continue without registration")} </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
           </Content>
-
-          <View>
-            <View style={styles.textRow}>
-              <Text style={{ color: "#484848", fontSize: 18, marginTop: 8 }}>
-                {this.t("Already have an account?")}
-              </Text>
-              <Button
-                title={this.t("Sign in now.")}
-                onPress={() => this.props.navigation.navigate("Authorization")}
-              />
-            </View>
-          </View>
-
-          <View>
-            <View style={styles.textRow}>
-              <Button
-                title={this.t("Continue without registration")}
-                onPress={() => this.props.navigation.navigate("drawerStack")}
-              />
-            </View>
-          </View>
-
 
           <TouchableOpacity
             style={styles.back}
@@ -229,6 +216,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(16),
     flex: 1,
     backgroundColor: "rgb(245, 245, 245)"
+  },
+  textRowContinue:{
+    color: "#3B4EFE", fontSize: 18, marginTop: 8
   },
   button: {
     alignSelf: "center",
@@ -261,14 +251,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: scaleVertical(12)
   },
-  input: {
-    borderWidth: 0.5,
-    borderColor: "#D3D3D3",
-    borderRadius: 50,
-    padding: 18,
-    marginVertical: scaleVertical(6),
-    fontWeight: "bold"
-  },
+
   textRow: {
     flexDirection: "row",
     justifyContent: "center",
@@ -278,8 +261,12 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red"
-    //fontWeight: 'bold',
-    //fontSize: 30,
+  },
+  headerText:{
+    fontSize: scale(28), fontWeight: "800", color: "#4A4A4A"
+  },
+  labelColor:{
+    color:"#707070"
   }
 });
 
