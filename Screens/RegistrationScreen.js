@@ -86,7 +86,7 @@ class RegistrationScreen extends LocalizeComponent {
               style={{ color: "#4A4A4A" }}
             />
             <Text
-              style={{ fontSize: scale(28), fontWeight: "800", color: "#4A4A4A" }}
+              style={styles.headerText}
             >
               {this.t("Registration")}
             </Text>
@@ -184,12 +184,12 @@ class RegistrationScreen extends LocalizeComponent {
               </KeyboardAvoidingView>
               <View>
                 <View style={styles.textRow}>
-                  <Text style={{ color: "#484848", fontSize: 18, marginTop: 8 }}>
+                  <Text style={styles.textRowContinue}>
                     {this.t("Already have an account?")}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("SignIn")}>
-                    <Text style={{ color: "#3B4EFE", fontSize: 18, marginTop: 8 }}> {this.t("Sign in now.")} </Text>
+                    onPress={() => this.props.navigation.navigate("AuthorizationScreen")}>
+                    <Text style={styles.textRowContinue}> {this.t("Sign in now.")} </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -198,7 +198,7 @@ class RegistrationScreen extends LocalizeComponent {
                 <View style={styles.textRow}>
                   <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("drawerStack")}>
-                    <Text style={{ color: "#3B4EFE", fontSize: 18, marginTop: 8 }}> {this.t("Continue without registration")} </Text>
+                    <Text style={styles.textRowContinue}> {this.t("Continue without registration")} </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -231,6 +231,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(16),
     flex: 1,
     backgroundColor: "rgb(245, 245, 245)"
+  },
+  textRowContinue:{
+    color: "#3B4EFE", fontSize: 18, marginTop: 8
   },
   button: {
     alignSelf: "center",
@@ -280,8 +283,9 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red"
-    //fontWeight: 'bold',
-    //fontSize: 30,
+  },
+  headerText:{
+    fontSize: scale(28), fontWeight: "800", color: "#4A4A4A"
   }
 });
 
