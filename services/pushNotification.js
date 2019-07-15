@@ -7,14 +7,10 @@ export default async deviceId => {
   
   let previousToken = await AsyncStorage.getItem("pushtoken");
   
-  
   if (previousToken) {
-   
-    let token=previousToken;
-   
-
-    
-  } else {
+    let token=previousToken;  
+  } 
+  else {
     const { status: existingStatus } = await Permissions.getAsync(
       Permissions.NOTIFICATIONS
     );
