@@ -205,9 +205,6 @@ class RegistrationScreen extends LocalizeComponent {
             </View>
           </Content>
 
-
-
-
           <TouchableOpacity
             style={styles.back}
             onPress={() => this.props.navigation.dispatch(NavigationActions.back())}

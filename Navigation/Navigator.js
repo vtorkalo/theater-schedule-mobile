@@ -100,6 +100,7 @@ export const AppNavigator = createStackNavigator(
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen: StreamConnectingScreen},
     registrationScreen:{screen: RegistrationStack},
+    authorizationScreen:{screen: AuthorizationScreen}
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen:StreamConnectingScreen}
   },
