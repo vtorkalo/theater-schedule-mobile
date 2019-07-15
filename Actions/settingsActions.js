@@ -41,7 +41,7 @@ export const storeSettingsFailure = error => ({
 export const loadSettings = deviceId => {
   return dispatch => {
     dispatch(loadSettingsBegin());
-    return fetch(`${BASE_URL}settings/${deviceId}`)
+    return fetch(`${BASE_URL}Settings/${deviceId}`)
       .then(res => {
         return res.json();
       })

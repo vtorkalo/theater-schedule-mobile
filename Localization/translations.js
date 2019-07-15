@@ -12,6 +12,7 @@ export const translations = {
         'Success!': 'Успіх!',
         'Settings saved': 'Налаштування збережено',
         'Date': 'Дата',
+        'The performance galary is not available':'Галерея недоступна',
         'Beginning': 'Початок',
         'Details': 'Деталі',
         'From': 'Від',
