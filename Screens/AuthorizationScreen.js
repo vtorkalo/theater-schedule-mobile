@@ -137,7 +137,7 @@ class AuthorizationScreen extends LocalizeComponent {
                     onChangeText={(txt) => this.props.enterAuthPass(txt)} />
 
                   <View style={{alignItems: "center", marginTop: 10}}>
-                    <Text onPress={() => this.props.navigation.navigate("ForgotPasswordScreen")} 
+                    <Text onPress={() => this.props.navigation.navigate("forgotPasswordScreen")} 
                       style={{color: "blue", textDecorationLine: "underline", fontFamily: "Arsenal-Bold"}}>{this.t("Forgot password?")}</Text>
                   </View>
                   </KeyboardAvoidingView>
