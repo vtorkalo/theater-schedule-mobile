@@ -8,7 +8,8 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
     Container,
     Content,
-    Header
+    Header,
+    Toast,
 } from "native-base";
 import Text from './Components/CustomText';
 import { FontAwesome } from '@expo/vector-icons'
@@ -157,7 +158,12 @@ class EditProfileScreen extends LocalizeComponent {
                 this.props.navigation.dispatch(NavigationActions.back())
             }
             else {
-                alert("Update profile failed");
+                Toast.show({
+                    text: this.t("Something went wrong"),
+                    buttonText: "Okay",
+                    type: "danger",
+                    duration: 3000
+                });
             }
         })
         .catch((error) => console.error(error));
