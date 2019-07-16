@@ -12,6 +12,7 @@ import I18n, { i18nState } from "redux-i18n";
 import sliderReducer from "./Reducers/SliderReducer";
 import wishListReducer from "./Reducers/WishListReducer";
 import registration from "./Reducers/RegistrationReducer";
+import poll from "./Reducers/PollReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -25,8 +26,8 @@ import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
+import pollReducer from "./Reducers/PollReducer";
 import editUser from './Reducers/EditUserReducer';
-
 
 
 
@@ -45,6 +46,7 @@ const appReducer = combineReducers({
   authorization,
   streamReducer,
   registration,
+  poll
   editUser,
 });
 
