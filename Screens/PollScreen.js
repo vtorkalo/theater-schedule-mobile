@@ -131,7 +131,7 @@ class PollScreen extends LocalizeComponent {
 
                     onPress={onPress}
                     disabled={!enabled}
-                    title={'Previous'}
+                    title={this.t('Previous')}
                 />
             </View>
         );
@@ -146,7 +146,7 @@ class PollScreen extends LocalizeComponent {
                     backgroundColor='rgba(141,196,63,1)'
                     onPress={onPress}
                     disabled={!enabled}
-                    title={'Next'}
+                    title={this.t('Next')}
                 />
             </View>
         );
@@ -163,7 +163,7 @@ class PollScreen extends LocalizeComponent {
                     spinnerType='DotIndicator'
                     animationType={'flipInX'}
                     onPress={onPress}>
-                    <Text style={styles.buttonText}>Finish</Text>
+                    <Text style={styles.buttonText}>{this.t('Finish')}</Text>
                 </SpinnerButton>
             </View>
         );
@@ -276,7 +276,7 @@ class PollScreen extends LocalizeComponent {
                             <View style={{ flex: 1, alignItems: 'center',
                             justifyContent: 'center', backgroundColor:'#BFD0D670'   }}>
                                 <View style={styles.textContainer}>
-                                    <Text style={styles.textTitle}>Thank you for response!</Text>
+                                    <Text style={styles.textTitle}>{this.t('Thank you for response!')}</Text>
                                 </View>
                                 <UniformButton
                   text={this.t("Go Home")}
