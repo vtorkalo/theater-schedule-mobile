@@ -129,7 +129,8 @@ export const translations = {
         "Stream":"Дубляж",
         "StreamScreenTitle":"Дубляж",
         "Stream":"Дубляж",
-        "StreamScreenTitle":"Дубляж"
+        "StreamScreenTitle":"Дубляж",
+        "Something went wrong": "Щось пішло не так"
     },
     'en': {
         'Hello world!': 'Hello world!',
@@ -260,6 +261,7 @@ export const translations = {
         "StreamScreenTitle":"Stream",
         "Stream":"Stream",
         "StreamScreenTitle":"Stream",
-        "Poll screen":"Poll screen"
+        "Poll screen":"Poll screen",
+        "Something went wrong": "Something went wrong"
     },
 }
