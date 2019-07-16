@@ -74,9 +74,8 @@ export default class App extends Component {
 
   afterFontsLoaded() {
     store.dispatch(loadSettings(deviceId));
-    Notifications.addListener(notification => {
-      //TODO: handle notification
-    });
+    registerForNotification(deviceId);
+    Notifications.addListener(notification => {});
   }
 
   render() {
