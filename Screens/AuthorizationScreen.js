@@ -4,19 +4,15 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import {NavigationActions} from 'react-navigation';
 import {Constants} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
-import TextError from './Components/CustomText';
 
 import {
   enterAuthLogin,
   enterAuthPass,
   validateLogin,
-  sendAuthBegin,
-  sendAuthSuccess,
-  sendAuthFailure,
   sendAuthorization,
   validatePassword
 } from '../Actions/authorizationActions';
-import {Content, Container} from 'native-base';
+import {Content, Container, Toast} from 'native-base';
 import CustomTextField from './UserProfileComponents/CustomTextField';
 
 import {
@@ -94,9 +90,13 @@ class AuthorizationScreen extends LocalizeComponent {
       })
       .catch((error) => console.error(error));
     } else {
-      alert(this.t("Fill the form correctly"));
-    }
-    
+      Toast.show({
+        text: this.t("Fill the form correctly"),
+        buttonText: "Okay",
+        type: "danger",
+        duration: 3000
+      })
+    } 
   };
 
   render() {
@@ -141,7 +141,7 @@ class AuthorizationScreen extends LocalizeComponent {
                   <View style={styles.textRow}>
                     <TouchableOpacity
                       onPress={() => this.props.navigation.navigate("forgotPasswordScreen")}>
-                      <Text style={styles.textRowContinue}> {this.t("Forgot password")} </Text>
+                      <Text style={styles.textRowContinue}> {this.t("Forgot password?")} </Text>
                     </TouchableOpacity>
                   </View>
               </View>

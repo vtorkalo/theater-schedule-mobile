@@ -30,7 +30,7 @@ import {
   sendRegistration
 } from "../Actions/RegistrationActions";
 import { DatePicker } from 'native-base';
-import { Content, Container } from 'native-base';
+import { Content, Container, Toast } from 'native-base';
 import CustomTextField from './UserProfileComponents/CustomTextField';
 
 const { width, height } = Dimensions.get('window');
@@ -70,7 +70,12 @@ class RegistrationScreen extends LocalizeComponent {
       });
       this.props.navigation.navigate("authorizationScreen");
     } else {
-      alert("Fill the form");
+      Toast.show({
+        text:this.t("Fill the form correctly"),
+        buttonText: "Okay",
+        type: "danger",
+        duration: 3000
+      })
     }
   };
 
