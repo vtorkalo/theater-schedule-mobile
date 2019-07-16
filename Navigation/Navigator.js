@@ -37,7 +37,6 @@ const DrawerStack = createDrawerNavigator(
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
-    Authorization: { screen: AuthorizationScreen },
     UserProfile: { screen: UserProfileScreen, },
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
@@ -85,6 +84,15 @@ const ResetPasswordStack = createStackNavigator(
     resetPasswordScreen:{screen: ResetPasswordScreen}
   },
   {
+    headerLayoutPreset: 'none',
+  }
+);
+
+const AuthorizationStack = createStackNavigator(
+  {
+    authorizationScreen:{screen: AuthorizationScreen}
+  },
+  {
     headerMode: 'none',
   }
 );
@@ -122,6 +130,7 @@ export const AppNavigator = createStackNavigator(
     registrationScreen:{screen: RegistrationStack},
     forgotPasswordScreen:{screen: ForgotPasswordStack},
     resetPasswordScreen:{screen: ResetPasswordStack},
+    authorizationScreen:{screen: AuthorizationStack},
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen:StreamConnectingScreen}
   },
