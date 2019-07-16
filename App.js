@@ -27,6 +27,7 @@ import streamReducer from "./Reducers/StreamReducer"
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
 import pollReducer from "./Reducers/PollReducer";
+import editUser from './Reducers/EditUserReducer';
 
 
 
@@ -46,6 +47,7 @@ const appReducer = combineReducers({
   streamReducer,
   registration,
   poll
+  editUser,
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
@@ -74,9 +76,8 @@ export default class App extends Component {
 
   afterFontsLoaded() {
     store.dispatch(loadSettings(deviceId));
-    Notifications.addListener(notification => {
-      //TODO: handle notification
-    });
+    registerForNotification(deviceId);
+    Notifications.addListener(notification => {});
   }
 
   render() {

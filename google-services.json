@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "579503981284",
-    "firebase_url": "https://puppet-theater.firebaseio.com",
-    "project_id": "puppet-theater",
-    "storage_bucket": "puppet-theater.appspot.com"
+    "project_number": "750148341562",
+    "firebase_url": "https://theaterscheduleapp.firebaseio.com",
+    "project_id": "theaterscheduleapp",
+    "storage_bucket": "theaterscheduleapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:579503981284:android:8ef51cbb056ac689",
+        "mobilesdk_app_id": "1:750148341562:android:149471981eee7c2e",
         "android_client_info": {
-          "package_name": "com.lv375dotnet.lvivpuppet"
+          "package_name": "com.lv410dotnet.lvivpuppet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "579503981284-iqc0cdj1p1nr9f06voij4bed82eibtbm.apps.googleusercontent.com",
+          "client_id": "750148341562-sk95m8df2qp4d2506ra0l2b918h7639q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBhPHpR4wSWTBJCK7fqByfjUXGMeP_LgK0"
+          "current_key": "AIzaSyAg7jurteWBGiHP_UBYDHVbbTfwW8Lf4wA"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "750148341562-sk95m8df2qp4d2506ra0l2b918h7639q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

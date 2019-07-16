@@ -1,6 +1,7 @@
 import {ENTER_LOGIN,
         ENTER_PASSWORD,
         VALIDATE_LOGIN,
+        VALIDATE_PASSWORD,
         SEND_AUTHORIZATION_BEGIN,
         SEND_AUTHORIZATION_SUCCESS,
         SEND_AUTHORIZATION_FAILURE
@@ -11,6 +12,7 @@ const initialState = {
     PasswordHash: '',
     isLoading: false,
     LoginError: '',
+    PasswordError: '',
     sendingError: null,
 }
 
@@ -25,7 +27,7 @@ export default function authorizationReducer(state = initialState, action) {
 
         case VALIDATE_LOGIN: {
             loginNotSet = state.Login.trim() === "" ? "Please enter Login" : "";
-            loginNotMatch = state.Login.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that match pattern";
+            loginNotMatch = state.Login.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that matches the pattern";
             if (loginNotSet){
                 return {...state, LoginError: loginNotSet};
             }
@@ -34,6 +36,16 @@ export default function authorizationReducer(state = initialState, action) {
             }
             return {...state, LoginError: ""};
         }
+
+        case VALIDATE_PASSWORD: {
+            passwordNotSet = state.PasswordHash.trim() === "" ? "Please enter the Password" : "";
+
+            if (passwordNotSet)
+                return { ...state, PasswordError: passwordNotSet }
+
+            return { ...state, PasswordError: "" }
+        }
+
         case SEND_AUTHORIZATION_BEGIN:
             return {...state, isLoading: true, sendingError: null};
 
