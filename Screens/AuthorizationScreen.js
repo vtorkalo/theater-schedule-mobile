@@ -137,18 +137,12 @@ class AuthorizationScreen extends LocalizeComponent {
                     {this.props.authorization.PasswordError ? 
                     (<Text style={styles.error}>{this.t(this.props.authorization.PasswordError)}</Text>) : null}
 
-<<<<<<< HEAD
-                  <View style={{alignItems: "center", marginTop: 10}}>
-                    <Text onPress={() => this.props.navigation.navigate("forgotPasswordScreen")} 
-                      style={{color: "blue", textDecorationLine: "underline", fontFamily: "Arsenal-Bold"}}>{this.t("Forgot password?")}</Text>
-=======
                 <View>
                   <View style={styles.textRow}>
                     <TouchableOpacity
                       onPress={() => this.props.navigation.navigate("forgotPasswordScreen")}>
                       <Text style={styles.textRowContinue}> {this.t("Forgot password?")} </Text>
                     </TouchableOpacity>
->>>>>>> YuriAntoniuk-LVNETA-130-Fix-UI-issues
                   </View>
               </View>
 
