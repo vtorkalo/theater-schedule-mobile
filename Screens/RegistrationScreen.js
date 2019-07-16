@@ -30,7 +30,7 @@ import {
   sendRegistration
 } from "../Actions/RegistrationActions";
 import { DatePicker } from 'native-base';
-import { Content, Container } from 'native-base';
+import { Content, Container, Toast } from 'native-base';
 import CustomTextField from './UserProfileComponents/CustomTextField';
 
 const { width, height } = Dimensions.get('window');
@@ -68,9 +68,14 @@ class RegistrationScreen extends LocalizeComponent {
         Password: this.props.registration.Password,
         PhoneIdentifier: this.props.deviceId
       });
-      this.props.navigation.navigate("drawerStack");
+      this.props.navigation.navigate("authorizationScreen");
     } else {
-      alert("Fill the form");
+      Toast.show({
+        text:this.t("Fill the form correctly"),
+        buttonText: "Okay",
+        type: "danger",
+        duration: 3000
+      })
     }
   };
 
@@ -176,7 +181,7 @@ class RegistrationScreen extends LocalizeComponent {
                     {this.t("Already have an account?")}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("AuthorizationScreen")}>
+                    onPress={() => this.props.navigation.navigate("authorizationScreen")}>
                     <Text style={styles.textRowContinue}> {this.t("Sign in now.")} </Text>
                   </TouchableOpacity>
                 </View>
@@ -242,16 +247,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly"
   },
-  image: {
-    height: scaleVertical(70),
-    resizeMode: "contain"
-  },
-  content: {
-    justifyContent: "space-between",
-    paddingHorizontal: 8,
-    paddingVertical: scaleVertical(12)
-  },
-
   textRow: {
     flexDirection: "row",
     justifyContent: "center",

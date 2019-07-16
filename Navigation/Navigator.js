@@ -69,7 +69,7 @@ const RegistrationStack = createStackNavigator(
 
 const AuthorizationStack = createStackNavigator(
   {
-    AuthorizationScreen:{screen: AuthorizationScreen}
+    authorizationScreen:{screen: AuthorizationScreen}
   },
   {
     headerMode: 'none',
@@ -107,7 +107,7 @@ export const AppNavigator = createStackNavigator(
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen: StreamConnectingScreen},
     registrationScreen:{screen: RegistrationStack},
-    authorizationScreen:{screen: AuthorizationScreen},
+    authorizationScreen:{screen: AuthorizationStack},
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen:StreamConnectingScreen},
     Authorization: { screen: AuthorizationStack },
