@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
   },
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
@@ -41,7 +42,8 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "jest-expo": "^33.0.2"
   },
   "jest": {
     "preset": "react-native"
