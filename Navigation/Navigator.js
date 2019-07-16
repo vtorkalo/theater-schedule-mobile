@@ -109,7 +109,8 @@ export const AppNavigator = createStackNavigator(
     registrationScreen:{screen: RegistrationStack},
     authorizationScreen:{screen: AuthorizationStack},
     streamLanguageScreen: { screen: StreamLanguageScreen },
-    streamConnectingScreen:{screen:StreamConnectingScreen}
+    streamConnectingScreen:{screen:StreamConnectingScreen},
+    Authorization: { screen: AuthorizationStack },
   },
   {
     headerMode: "none",

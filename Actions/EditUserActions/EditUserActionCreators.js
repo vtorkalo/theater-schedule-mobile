@@ -35,11 +35,11 @@ export const storePasswordUpdateFailure = error => ({
     payload: { error }
 })
 
-export const updateUserPassword = (id, oldPassword, newPassword) => {
+export const updateUserPassword = (params) => {
     return dispatch => {
-        let dataJson = JSON.stringify({ id: id, oldPassword: oldPassword, newPassword: newPassword })
+        let dataJson = JSON.stringify(params);
         dispatch(storePasswordUpdateBegin());
-        fetch(`${BASE_URL}User/UpdatePassword`, {
+        return fetch(`${BASE_URL}User/UpdatePassword`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -47,8 +47,14 @@ export const updateUserPassword = (id, oldPassword, newPassword) => {
             body: dataJson
         })
             .then(response => {
+                console.log(response);
                 if (!response.ok) {
-                    throw new Error(response.statusText);
+                    if (response.status === 400) {
+                        throw new Error('Wrong user password');
+                    }
+                    
+                    if (response.status === 404)
+                        throw new Error('Wrong user id');
                 }
                 return response;
             })
@@ -61,20 +67,11 @@ export const updateUserPassword = (id, oldPassword, newPassword) => {
     };
 };
 
-export const updateUserProfile = (id, firstName, lastName, email, phone, birthDate, city, country) => {
+export const updateUserProfile = (params) => {
     return dispatch => {
-        let dataJson = JSON.stringify({
-            Id: id,
-            FirstName: firstName,
-            LastName: lastName,
-            Email: email,
-            PhoneIdentifier: phone,
-            DateOfBirth: birthDate,
-            City: city,
-            Country: country
-        })
+        let dataJson = JSON.stringify(params);
         dispatch(storeProfileUpdatesBegin);
-        fetch(`${BASE_URL}User/UpdateProfile`, {
+        return fetch(`${BASE_URL}User/UpdateProfile`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -82,10 +79,10 @@ export const updateUserProfile = (id, firstName, lastName, email, phone, birthDa
             body: dataJson
         })
             .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
                 return response.json();
-            })
-            .then(responseJson => {
-                dispatch(storeProfileUpdatesSuccess(responseJson));
             })
             .catch(error => {
                 dispatch(storeProfileUpdatesFailure(error));

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, AsyncStorage } from "react-native";
 import DrawerMenucIcon from "../Navigation/DrawerMenuIcon";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
@@ -10,6 +10,7 @@ import {
 import Text from './Components/CustomText';
 import { FontAwesome } from '@expo/vector-icons';
 import UserProfileItem from './UserProfileComponents/UserProfileItem';
+import BASE_URL from 'TheaterSchedule/baseURL';
 
 class UserProfileScreen extends LocalizeComponent {
     static navigationOptions = {
@@ -17,13 +18,32 @@ class UserProfileScreen extends LocalizeComponent {
     }
 
     state = {
-        firstName: "Denys",
-        lastName: "Shourek",
-        email: "test@gmail.com",
-        phone: "+380973122522",
-        birthDate: "1992-11-03T15:27:31.2278615+03:00",
-        city: "Lviv",
-        country: "Ukraine",
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        birthDate: '',
+        city: '',
+        country: '',
+    }
+
+    async componentDidMount() {
+        await this.getValuesFromStorage();
+    }
+
+    getValuesFromStorage = () => {
+        let keys = ['FirstName', 'LastName', 'Email', 'PhoneNumber', 'DateOfBirth', 'City', 'Country'];
+        AsyncStorage.multiGet(keys).then(result => {
+            this.setState({
+                firstName: result[0][1].trim(),
+                lastName: result[1][1].trim(),
+                email: result[2][1].trim(),
+                phone: result[3][1].trim(),
+                birthDate: result[4][1],
+                city: result[5][1].trim(),
+                country: result[6][1].trim()
+            });
+        });
     }
 
     convertBirthDate(dateToConvert) {
@@ -31,19 +51,58 @@ class UserProfileScreen extends LocalizeComponent {
         var stringDate = ('0' + date.getDate()).slice(-2) + '/'
             + ('0' + (date.getMonth() + 1)).slice(-2) + '/'
             + date.getFullYear();
-        return stringDate
+        return stringDate;
+    }
+
+    handleOnNavigateBack = (data) => {
+        this.setState({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            birthDate: data.birthDate,
+            city: data.city,
+            country: data.country,
+        })
     }
 
     editProfileItemClick = () => {
-        this.props.navigation.navigate('EditProfile')
+        this.props.navigation.navigate('EditProfile', {
+            onNavigateBack: this.handleOnNavigateBack
+        })
     }
 
     changePasswordItemClick = () => {
         this.props.navigation.navigate('ChangePassword')
     }
 
-    logoutItemClick = () => {
-        //TODO: Delete current user from local storage, navigate to LoginScreen
+    logoutItemClick = async () => {
+        await AsyncStorage.getItem('RefreshToken')
+            .then((token) => {
+                let dataJson = JSON.stringify({ RefreshToken: token });
+                return fetch(`${BASE_URL}RefreshToken`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: dataJson
+                })
+            })
+            .then(async () => await AsyncStorage.multiRemove([
+                'AccessToken',
+                'City',
+                'Country',
+                'DateOfBirth',
+                'Email',
+                'ExpiresDate',
+                'FirstName',
+                'LastName',
+                'PhoneNumber',
+                'RefreshToken',
+                'UserId'
+            ]).then(() => console.log("Async Storage keys deleted")))
+            .then(() => this.props.navigation.navigate("Authorization"))
+            .catch((error) => console.error(error));
     }
 
     settingsMenuItems = {

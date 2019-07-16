@@ -1,23 +1,25 @@
 import React from "react";
 import {
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage,
 } from "react-native";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
     Container,
     Content,
-    Header
+    Header,
+    Toast,
 } from "native-base";
 import Text from './Components/CustomText';
 import { FontAwesome } from '@expo/vector-icons'
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
-import { TextField } from 'react-native-material-textfield';
 import UniformButton from "../Screens/Components/UniformButton";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
 import CustomTextField from './UserProfileComponents/CustomTextField';
+import { updateUserProfile } from '../Actions/EditUserActions/EditUserActionCreators';
 
 class EditProfileScreen extends LocalizeComponent {
     constructor(props) {
@@ -33,15 +35,36 @@ class EditProfileScreen extends LocalizeComponent {
         this.phoneRef = this.updateRef.bind(this, 'phone');
 
         this.state = {
-            firstName: "Denys",
-            lastName: "Shourek",
-            email: "test@gmail.com",
-            phone: "+380973122522",
-            birthDate: "1992-11-03T15:27:31.2278615+03:00",
-            city: "Lviv",
-            country: "Ukraine",
+            id: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            birthDate: '',
+            city: '',
+            country: '',
             isDateTimePickerVisible: false,
         };
+    }
+
+    async componentDidMount() {
+        await this.getValuesFromStorage();
+    }
+
+    getValuesFromStorage = () => {
+        let keys = ['FirstName', 'LastName', 'Email', 'PhoneNumber', 'DateOfBirth', 'City', 'Country', 'UserId'];
+        AsyncStorage.multiGet(keys).then(result => {
+            this.setState({
+                firstName: result[0][1].trim(),
+                lastName: result[1][1].trim(),
+                email: result[2][1].trim(),
+                phone: result[3][1].trim(),
+                birthDate: result[4][1],
+                city: result[5][1].trim(),
+                country: result[6][1].trim(),
+                id: result[7][1].trim(),
+            });
+        });
     }
 
     onFocus() {
@@ -108,10 +131,47 @@ class EditProfileScreen extends LocalizeComponent {
         }
     }
 
+    sendData() {
+        this.props.updateUserProfile({
+            Id: this.state.id,
+            FirstName: this.state.firstName,
+            LastName: this.state.lastName,
+            Email: this.state.email,
+            PhoneNumber: this.state.phone,
+            DateOfBirth: this.state.birthDate,
+            City: this.state.city,
+            Country: this.state.country
+        })
+        .then(async (result) => {
+            console.log(result);
+            await AsyncStorage.setItem('FirstName', result.firstName);
+            await AsyncStorage.setItem('LastName', result.lastName);
+            await AsyncStorage.setItem('Email', result.email);
+            await AsyncStorage.setItem('DateOfBirth', result.dateOfBirth);
+            await AsyncStorage.setItem('Country', result.country);
+            await AsyncStorage.setItem('City', result.city);
+            await AsyncStorage.setItem('PhoneNumber', result.phoneNumber);
+        })
+        .then(() => {
+            if (this.props.editUser.error === null) {
+                this.props.navigation.state.params.onNavigateBack(this.state);
+                this.props.navigation.dispatch(NavigationActions.back())
+            }
+            else {
+                Toast.show({
+                    text: this.t("Something went wrong"),
+                    buttonText: "Okay",
+                    type: "danger",
+                    duration: 3000
+                });
+            }
+        })
+        .catch((error) => console.error(error));
+    }
+
     onSubmit() {
         if (this.isFieldsValid()) {
-            // TODO: fetch password update to server
-            alert('Fetching data to backend');
+            this.sendData();
         }
     }
 
@@ -273,7 +333,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    languageCode: state.settings.settings.languageCode
+    languageCode: state.settings.settings.languageCode,
+    editUser: state.editUser,
 });
 
-export default connect(mapStateToProps)(EditProfileScreen);
+const mapDispatchToProps = dispatch => ({
+    updateUserProfile: (params) => dispatch(updateUserProfile(params)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen);
