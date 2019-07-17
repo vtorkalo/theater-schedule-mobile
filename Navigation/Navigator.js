@@ -23,6 +23,7 @@ import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
 import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
 import RegistrationScreen from '../Screens/RegistrationScreen';
 import MessagesScreen from '../Screens/MessagesScreen';
+import PollScreen from '../Screens/PollScreen';
 
 
 const DrawerStack = createDrawerNavigator(
@@ -35,12 +36,12 @@ const DrawerStack = createDrawerNavigator(
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
-    Authorization: { screen: AuthorizationScreen },
     UserProfile: { screen: UserProfileScreen, },
     Messages:{screen:MessagesScreen},
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
+    Poll:{screen: PollScreen},
   },
   {
     drawerPosition: "left",
@@ -70,6 +71,14 @@ const RegistrationStack = createStackNavigator(
   }
 );
 
+const AuthorizationStack = createStackNavigator(
+  {
+    authorizationScreen:{screen: AuthorizationScreen}
+  },
+  {
+    headerMode: 'none',
+  }
+);
 
 const PerformanceStack = createStackNavigator(
   {
@@ -102,8 +111,10 @@ export const AppNavigator = createStackNavigator(
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen: StreamConnectingScreen},
     registrationScreen:{screen: RegistrationStack},
+    authorizationScreen:{screen: AuthorizationStack},
     streamLanguageScreen: { screen: StreamLanguageScreen },
-    streamConnectingScreen:{screen:StreamConnectingScreen}
+    streamConnectingScreen:{screen:StreamConnectingScreen},
+    Authorization: { screen: AuthorizationStack },
   },
   {
     headerMode: "none",

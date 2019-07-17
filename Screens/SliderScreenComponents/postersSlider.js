@@ -7,7 +7,8 @@ import Carousel from 'react-native-snap-carousel';
 import Text from '../Components/CustomText';
 
 export default PostersSlider = (props) => {
-    return (
+ 
+    return (      
         <View style={styles.postersContainer}>
             <Text type="bold" style={styles.title}>{props.title}</Text>
             <Carousel

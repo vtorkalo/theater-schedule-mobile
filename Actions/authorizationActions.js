@@ -4,6 +4,7 @@ export const ENTER_LOGIN = "ENTER_LOGIN";
 export const ENTER_PASSWORD = "ENTER_PASSWORD";
 
 export const VALIDATE_LOGIN = "VALIDATE_LOGIN";
+export const VALIDATE_PASSWORD = "VALIDATE_PASSWORD";
 
 export const SEND_AUTHORIZATION_BEGIN = "SEND_AUTHORIZATION_BEGIN";
 export const SEND_AUTHORIZATION_SUCCESS = "SEND_AUTHORIZATION_SUCCESS";
@@ -23,6 +24,10 @@ export const validateLogin = () => ({
     type: VALIDATE_LOGIN
 })
 
+export const validatePassword = () => ({
+    type: VALIDATE_PASSWORD
+})
+
 export const sendAuthBegin = () => ({
     type: SEND_AUTHORIZATION_BEGIN
 })
@@ -38,8 +43,8 @@ export const sendAuthFailure = (error) => ({
 
 export const sendAuthorization = (Params) => {
     return (dispatch, getState) => {
-        const {loginError} = getState().authorization;
-        if (loginError) return;
+        const {loginError, passwordError} = getState().authorization;
+        if (loginError || passwordError) return;
         let dataJson = JSON.stringify(Params);
         dispatch(sendAuthBegin());
         return fetch(`${BASE_URL}Authorization`, {

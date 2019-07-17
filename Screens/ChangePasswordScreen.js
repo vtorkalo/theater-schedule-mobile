@@ -1,17 +1,20 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, AsyncStorage } from "react-native";
+import { connect } from "react-redux";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import {
     Container,
     Content,
-    Header
+    Header,
+    Toast,
 } from "native-base";
 import Text from './Components/CustomText';
 import { FontAwesome } from '@expo/vector-icons'
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
 import UniformButton from '../Screens/Components/UniformButton';
-import PasswordTextField from './UserProfileComponents/PasswordTextField'
+import PasswordTextField from './UserProfileComponents/PasswordTextField';
+import { updateUserPassword } from '../Actions/EditUserActions/EditUserActionCreators';
 
 class ChangePasswordScreen extends LocalizeComponent {
     constructor(props) {
@@ -27,12 +30,28 @@ class ChangePasswordScreen extends LocalizeComponent {
         this.confirmPasswordRef = this.updateRef.bind(this, 'confirmPassword');
 
         this.state = {
-            firstName: "Denys",
-            lastName: "Shourek",
+            id: '',
+            firstName: '',
+            lastName: '',
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
         };
+    }
+
+    async componentDidMount() {
+        await this.getValuesFromStorage();
+    }
+
+    getValuesFromStorage = () => {
+        let keys = ['UserId', 'FirstName', 'LastName'];
+        AsyncStorage.multiGet(keys).then(result => {
+          this.setState({
+            id: result[0][1].trim(),
+            firstName: result[1][1].trim(),
+            lastName: result[2][1].trim(),
+          });
+        });
     }
 
     onFocus() {
@@ -101,10 +120,30 @@ class ChangePasswordScreen extends LocalizeComponent {
         }  
     }
 
+    sendData() {
+        this.props.updateUserPassword({
+            Id: this.state.id,
+            OldPassword: this.state.oldPassword,
+            NewPassword: this.state.newPassword
+        })
+        .then(() => {
+            if (this.props.editUser.error === null) {
+                this.props.navigation.dispatch(NavigationActions.back())
+            }
+            else {
+                Toast.show({
+                    text: this.t("Wrong password"),
+                    buttonText: "Okay",
+                    type: "danger",
+                    duration: 3000
+                });
+            }
+        })
+    }
+
     onSubmit() {
         if (this.isFieldsValid()) {
-            // TODO: fetch password update to server
-            alert('Fetching data to backend');
+            this.sendData();
         }
     }
 
@@ -202,4 +241,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ChangePasswordScreen;
+const mapStateToProps = (state) => ({
+    editUser: state.editUser,
+})
+
+const mapDispatchToProps = dispatch => ({
+    updateUserPassword: (params) => dispatch(updateUserPassword(params)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePasswordScreen);

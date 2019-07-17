@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage,
 } from 'react-native';
 import { DrawerItems, DrawerItem } from 'react-navigation';
 import { Container, Header, Content } from 'native-base';
@@ -10,7 +11,19 @@ import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 const CustomDrawerContent = (props) => (
     <Container>
         <Header style={styles.headerContainer}>
-            <TouchableOpacity onPress={ () => { props.navigation.navigate('UserProfile'); props.navigation.closeDrawer() } }>
+            <TouchableOpacity onPress={ async () => {
+                await AsyncStorage.getItem("RefreshToken")
+                .then((token) => { 
+                    if (token === null) {
+                        props.navigation.navigate('Authorization');
+                        props.navigation.closeDrawer();
+                    }
+                    else {
+                        props.navigation.navigate('UserProfile');
+                        props.navigation.closeDrawer(); 
+                    }
+                })                  
+            }}>
                 <FontAwesome name='user-circle' style={styles.iconscontainer} />
             </TouchableOpacity>
             <TouchableOpacity onPress={ () => { props.navigation.navigate('Messages'); props.navigation.closeDrawer() } }>

@@ -5,6 +5,8 @@ class PasswordTextField extends Component {
     render() {
         return (
             <TextField
+                secureTextEntry={this.props.secureTextEntry}
+                onBlur={this.props.onBlur}
                 label={this.props.label}
                 ref={this.props.reference}
                 value={this.props.value}
@@ -20,7 +22,7 @@ class PasswordTextField extends Component {
                 returnKeyType='done'
                 tintColor={'#7154b8'}
                 fontSize={18}
-                style={{ fontFamily: 'Arsenal-Regular' }}
+                style={[{ fontFamily: 'Arsenal-Regular' }, this.props.style]}
                 labelTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 18 }}
                 titleTextStyle={{ fontFamily: 'Arsenal-Regular', fontSize: 14 }}
             />
