@@ -1,5 +1,6 @@
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import React from 'react';
+import {ImageBackground} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { StyleSheet, View, Text,AsyncStorage,FlatList } from 'react-native';
@@ -23,67 +24,131 @@ class MessagesScreen extends LocalizeComponent
     }
     static navigationOptions = ({ screenProps }) => {
         return {
-            drawerIcon: (<MaterialCommunityIcons name="message" size={25} />),
+            drawerLabel: () => null,
             title: screenProps.MessagesScreenTitle,
         };
     };
-    async fetchMessages()
+    async fetchMessages(isPublic)
     {
-        if (this.state.currentPublic)
+        this.setState({isLoaded:false});
+        if (!isPublic)
         {
-            let messages;
+            
             fetch(`${BASE_URL}AdminsPost`).then(response=>{
                 return response.json();
-                //console.log(response);
-               // console.log(messages);
             }).then((msgs)=>{
                 console.log(msgs);
-                this.setState({publicMessages:msgs, isLoaded:true});
+                this.setState({publicMessages:msgs, isLoaded:true,currentPublic:true});
             })
         }
-
+        else
+        {  
+           //let Accountid= await AsyncStorage.getItem('UserId');
+           //should be uncommented when userid will correctly store after authorization
+           let Accountid=91;
+           console.log(`${BASE_URL}AdminsPost/${Accountid}`);
+            fetch(`${BASE_URL}AdminsPost/${Accountid}`).then(response=>{
+                return response.json();
+            }).then((msgs)=>{
+                console.log(msgs);
+                this.setState({privateMessages:msgs, isLoaded:true,currentPublic:false});
+            })
+        }
     }
     componentDidMount() {
-       //this.props.fetchAllMessages(BASE_URL + 'api/performance')
+      
        this.fetchMessages();
+    }
+    pickedPublic()
+    {
+       
+        if(this.state.currentPublic){
+            
+            
+            this.fetchMessages(true);
+        }
+    }
+    pickedPrivate()
+    {
+      
+        if(!this.state.currentPublic){
+          
+            
+            this.fetchMessages(false);
+        } 
+    }
+    changeTypeOfMessages=
+    {
+    
+        public:{
+            text:'public messages',
+            click:()=>{
+                console.log(this.state.currentPublic)
+                if(!this.state.currentPublic){
+                    
+                    this.fetchMessages(false);
+                } 
+            }
+        },
+        private:{
+            text:'private messages',
+            click:()=>
+            {
+                console.log(this.state.currentPublic)
+                if(this.state.currentPublic){
+                    console.log("picckedd");
+            
+                    this.fetchMessages(true);
+        } 
+            }
+        }
+        
     }
     render(){
         if(!this.state.isLoaded){
             return(
                 <Container style={{ flex: 1,backgroundColor:'#BFD0D670' }}>
-                   
+                   <ImageBackground style={{ width: '100%', height: '100%' }} source={require('../img/StreamImg/img_3.png')}>
                     <DrawerMenuIcon
                             onPressMenuIcon={() => this.props.navigation.openDrawer()}
-                            text={"Messages"} />
+                            text={"Messages"}
+                            showMessageTypeIcon={true}
+                            items={this.changeTypeOfMessages}
+                            />
                             
                                 <View style={styles.container}>
                                     <BallIndicator color="#aaa" />
                                 </View>
+                                </ImageBackground>
                     </Container>
                     )
         }
         else{
+            
         return(
             <Container style={{ flex: 1,backgroundColor:'#BFD0D670' }}>
-               
+               <ImageBackground style={{ width: '100%', height: '100%' }} source={require('../img/StreamImg/img_3.png')}>
                 <DrawerMenuIcon
                         onPressMenuIcon={() => this.props.navigation.openDrawer()}
-                        text={"Messages"} />
+                        text={"Messages"}
+                        showMessageTypeIcon={true}
+                        items={this.changeTypeOfMessages}
+                        />
                         
                             <View style={styles.container}>
                                 <FlatList
-                                data={this.state.publicMessages}
+                                data={this.state.currentPublic?this.state.publicMessages:this.state.privateMessages}
                                 renderItem={({item})=>
                                 <View style={styles.title}>
                                     <Text style={{fontSize:20,fontStyle:'italic',color:'white'}}>{item.subject}</Text>
                                     <View style={styles.message}>
-                                    <Text style={{fontSize:15,fontStyle:'italic'}}>{item.postText}</Text>
+                                    <Text style={{marginLeft:5, fontSize:15,fontStyle:'italic'}}>{item.postText}</Text>
                                 </View>
                                 </View>
                                 }
                                 />
                             </View>
-                        
+                        </ImageBackground>
             </Container>
         );
     }
@@ -102,7 +167,7 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         marginTop:10,
         width:'99%',
-        borderRadius:15,
+        borderRadius:5,
         backgroundColor: '#7154b8',
         alignItems:'center'
     },
@@ -111,10 +176,10 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         marginTop:10,
         width:'100%',
-        borderBottomEndRadius:15,
-        borderBottomStartRadius:15,
+        borderBottomEndRadius:5,
+        borderBottomStartRadius:5,
         backgroundColor: '#5E459B',
-        alignItems:'center'
+        alignItems:'flex-start'
     }
     
 })
