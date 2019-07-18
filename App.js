@@ -22,7 +22,9 @@ import registerForNotification from "./services/pushNotification";
 import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
-import streamReducer from "./Reducers/StreamReducer"
+import streamReducer from "./Reducers/StreamReducer";
+import forgotPassword from './Reducers/ForgotPasswordReducer';
+import resetPassword from './Reducers/ResetPasswordReducer';
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
 
@@ -44,7 +46,8 @@ const appReducer = combineReducers({
   authorization,
   streamReducer,
   registration,
-  streamReducer
+  forgotPassword,
+  resetPassword
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));

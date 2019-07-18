@@ -84,7 +84,7 @@ const ResetPasswordStack = createStackNavigator(
     resetPasswordScreen:{screen: ResetPasswordScreen}
   },
   {
-    headerLayoutPreset: 'none',
+    headerMode: 'none',
   }
 );
 
