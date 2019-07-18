@@ -40,14 +40,40 @@ class DrawerMenuIcon extends LocalizeComponent {
                                 </MenuItem>
                                 <MenuDivider />
                                 <MenuItem
-                                    onPress={() => { this.props.items.item3.click(); }}
+                                    onPress={() => { this.hideMenu(); this.props.items.item3.click(); }}
                                     textStyle={{ color: 'red', fontSize: 16 }}>
                                     {this.t(this.props.items.item3.text)}
                                 </MenuItem>
                             </Menu>
                         </Right>
                         :
-                        <Right style={styles.rightContainer} />
+                        <Right style={styles.rightContainer} />}
+                        {
+                        this.props.showMessageTypeIcon
+                        ?
+                        <Right style={styles.rightContainer}>
+                        <Menu
+                        ref={this.setMenuRef}
+                        button={<Ionicons name='ios-chatbubbles' color='white' size={32} onPress={this.showMenu}/>}
+                        >
+                            <MenuItem
+                            onPress={()=>{ this.hideMenu(); this.props.items.public.click();}}
+                            textStyle={{color:'black',fontSize:16}}
+                            >
+                                {this.t(this.props.items.public.text)}
+                            </MenuItem>
+                            <MenuDivider/>
+                            <MenuItem
+                            onPress={()=>{ this.hideMenu(); this.props.items.private.click();}}
+                            textStyle={{color:'black',fontSize:16}}
+                            >
+                                {this.t(this.props.items.private.text)}
+                            </MenuItem>
+                        </Menu>
+                            
+                        </Right>
+                        :
+                        <Right style={styles.rightContainer}/>
                 }
             </Header>
         )

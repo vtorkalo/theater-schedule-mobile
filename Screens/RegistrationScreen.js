@@ -20,7 +20,11 @@ import {
   enterRegistrationBirthdate,
   enterRegistrationEmail,
   enterRegistrationPassword,
+  enterRegistrationCountry,
+  enterRegistrationLastName,
 
+  validateRegistrationCountry,
+  validateRegistrationLastName,
   validateRegistrationFirstName,
   validateRegistrationCity,
   validateRegistrationTelephone,
@@ -54,6 +58,9 @@ class RegistrationScreen extends LocalizeComponent {
       && this.props.registration.EmailError === ""
       && this.props.registration.BirthDate != ""
       && this.props.registration.PasswordError === ""
+      && this.props.registration.LastNameError === ""
+      && this.props.registration.CountryError === ""
+
       );
   }
 
@@ -66,7 +73,9 @@ class RegistrationScreen extends LocalizeComponent {
         DateOfBirth: this.props.registration.BirthDate,
         Email: this.props.registration.Email,
         Password: this.props.registration.Password,
-        PhoneIdentifier: this.props.deviceId
+        PhoneIdentifier: this.props.deviceId,
+        LastName:this.props.registration.LastName,
+        Country:this.props.registration.Country
       });
       this.props.navigation.navigate("authorizationScreen");
     } else {
@@ -112,6 +121,17 @@ class RegistrationScreen extends LocalizeComponent {
                 ) : null}
 
                 <CustomTextField
+                  label={this.t("LASTNAME")}
+                  labelTextStyle={styles.labelColor}
+                  onChangeText={(txt) => this.props.enterRegistrationLastName(txt)}
+                  onBlur={this.props.validateRegistrationLastName}
+                />
+                {this.props.registration.LastNameError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.LastNameError)}</TextError>
+                ) : null}
+
+
+                <CustomTextField
                   label={this.t("CITY")}
                   labelTextStyle={styles.labelColor}
                   onChangeText={(txt) => this.props.enterRegistrationCity(txt)}
@@ -119,6 +139,16 @@ class RegistrationScreen extends LocalizeComponent {
                 />
                 {this.props.registration.CityError ? (
                   <TextError style={styles.error}>{this.t(this.props.registration.CityError)}</TextError>
+                ) : null}
+
+                <CustomTextField
+                  label={this.t("COUNTRY")}
+                  labelTextStyle={styles.labelColor}
+                  onChangeText={(txt) => this.props.enterRegistrationCountry(txt)}
+                  onBlur={this.props.validateRegistrationCountry}
+                />
+                {this.props.registration.CountryError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.CountryError)}</TextError>
                 ) : null}
 
                 <CustomTextField 
@@ -276,11 +306,15 @@ const mapDispatchToProps = dispatch => {
   return {
     enterRegistrationFirstName: txt => dispatch(enterRegistrationFirstName(txt)),
     enterRegistrationCity: txt => dispatch(enterRegistrationCity(txt)),
+    enterRegistrationCountry: txt => dispatch(enterRegistrationCountry(txt)),
+    enterRegistrationLastName:txt => dispatch(enterRegistrationLastName(txt)),
     enterRegistrationTelephone: txt => dispatch(enterRegistrationTelephone(txt)),
     enterRegistrationBirthdate: txt => dispatch(enterRegistrationBirthdate(txt)),
     enterRegistrationEmail: txt => dispatch(enterRegistrationEmail(txt)),
     enterRegistrationPassword: txt => dispatch(enterRegistrationPassword(txt)),
     validateRegistrationFirstName: () => dispatch(validateRegistrationFirstName()),
+    validateRegistrationLastName: () => dispatch(validateRegistrationLastName()),
+    validateRegistrationCountry: ()=> dispatch(validateRegistrationCountry()),
     validateRegistrationCity: () => dispatch(validateRegistrationCity()),
     validateRegistrationTelephone: () => dispatch(validateRegistrationTelephone()),
     validateRegistrationBirthdate: () => dispatch(validateRegistrationBirthdate()),

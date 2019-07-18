@@ -25,6 +25,8 @@ import RegistrationScreen from '../Screens/RegistrationScreen';
 import ForgotPasswordScreen from '../Screens/ForgotPasswordScreen';
 import ResetPasswordScreen from '../Screens/ResetPasswordScreen';
 import { create } from "uuid-js";
+import MessagesScreen from '../Screens/MessagesScreen';
+import PollScreen from '../Screens/PollScreen';
 
 
 const DrawerStack = createDrawerNavigator(
@@ -38,9 +40,11 @@ const DrawerStack = createDrawerNavigator(
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
     UserProfile: { screen: UserProfileScreen, },
+    Messages:{screen:MessagesScreen},
     Message: { screen: MessageScreen },
     Settings: { screen: SettingsScreen },
     AboutTheater: { screen: AboutTheaterScreen },
+    Poll:{screen: PollScreen},
   },
   {
     drawerPosition: "left",
@@ -132,7 +136,8 @@ export const AppNavigator = createStackNavigator(
     resetPasswordScreen:{screen: ResetPasswordStack},
     authorizationScreen:{screen: AuthorizationStack},
     streamLanguageScreen: { screen: StreamLanguageScreen },
-    streamConnectingScreen:{screen:StreamConnectingScreen}
+    streamConnectingScreen:{screen:StreamConnectingScreen},
+    Authorization: { screen: AuthorizationStack },
   },
   {
     headerMode: "none",

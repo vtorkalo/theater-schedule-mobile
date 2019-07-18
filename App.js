@@ -12,6 +12,7 @@ import I18n, { i18nState } from "redux-i18n";
 import sliderReducer from "./Reducers/SliderReducer";
 import wishListReducer from "./Reducers/WishListReducer";
 import registration from "./Reducers/RegistrationReducer";
+import poll from "./Reducers/PollReducer";
 import thunk from "redux-thunk";
 import { loadSettings } from "./Actions/settingsActions";
 import DeviceInfo from "react-native-device-info";
@@ -27,7 +28,8 @@ import forgotPassword from './Reducers/ForgotPasswordReducer';
 import resetPassword from './Reducers/ResetPasswordReducer';
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
-
+import pollReducer from "./Reducers/PollReducer";
+import editUser from './Reducers/EditUserReducer';
 
 
 
@@ -48,6 +50,8 @@ const appReducer = combineReducers({
   registration,
   forgotPassword,
   resetPassword
+  poll,
+  editUser,
 });
 
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
@@ -76,9 +80,8 @@ export default class App extends Component {
 
   afterFontsLoaded() {
     store.dispatch(loadSettings(deviceId));
-    Notifications.addListener(notification => {
-      //TODO: handle notification
-    });
+    registerForNotification(deviceId);
+    Notifications.addListener(notification => {});
   }
 
   render() {

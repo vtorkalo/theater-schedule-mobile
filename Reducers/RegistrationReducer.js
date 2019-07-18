@@ -5,6 +5,10 @@ import {
     ENTER_REGISTRATION_EMAIL,
     ENTER_REGISTRATION_PASSWORD,
     ENTER_REGISTRATION_TELEPHONE,
+    ENTER_REGISTRATION_COUNTRY,
+    ENTER_REGISTRATION_LASTNAME,
+    VALIDATE_REGISTRATION_COUNTRY,
+    VALIDATE_REGISTRATION_LASTNAME,
     VALIDATE_REGISTRATION_BIRTHDATE,
     VALIDATE_REGISTRATION_CITY,
     VALIDATE_REGISTRATION_EMAIL,
@@ -23,6 +27,10 @@ const initialState = {
     BirthDate: "",
     Email: "",
     Password: "",
+    LastName:"",
+    Country:"",
+    LastNameError:"",
+    CountryError:"",
     FirstNameError: "",
     CityError: "",
     TelephoneError: "",
@@ -39,6 +47,12 @@ export default function registrationReducer(state = initialState, action) {
     switch (action.type) {
         case ENTER_REGISTRATION_FIRSTNAME:
             return { ...state, FirstName: action.payload.firstname };
+
+        case ENTER_REGISTRATION_COUNTRY:
+            return {...state, Country:action.payload.country}
+    
+        case ENTER_REGISTRATION_LASTNAME:
+            return {...state, LastName:action.payload.lastname}
 
         case ENTER_REGISTRATION_BIRTHDATE:
             return { ...state, BirthDate: action.payload.birthdate };
@@ -73,6 +87,16 @@ export default function registrationReducer(state = initialState, action) {
                 return { ...state, EmailError: emailNotMatch }
 
             return { ...state, EmailError: "" }
+        }
+
+        case VALIDATE_REGISTRATION_LASTNAME:{
+            lastnameNotSet = state.LastName.trim() === "" ? "Please enter the LastName" : "";
+            return {...state,LastNameError:lastnameNotSet }
+        }
+
+        case VALIDATE_REGISTRATION_COUNTRY:{
+            countryNotSet = state.Country.trim() === "" ? "Please enter the Country" : "";
+            return {...state,CountryError: countryNotSet}
         }
 
         case VALIDATE_REGISTRATION_FIRSTNAME: {
@@ -110,7 +134,7 @@ export default function registrationReducer(state = initialState, action) {
             return { ...state, isSending: false, sendingError: action.payload.error }
 
         case SEND_REGISTRATION_SUCCESS:
-            return { ...state, isSending: false, FirstName: "", City: "", Telephone: "", BirthDate: "", Email: "", Password: "" }
+            return { ...state, isSending: false, FirstName: "", City: "", Telephone: "", BirthDate: "", Email: "", Password: "", LastName:"", Country:"" }
 
         default:
             return state;
