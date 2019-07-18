@@ -113,6 +113,8 @@ export const translations = {
         "Cost": "Ціна",
         "uah": "грн",
         "Age": "Вік",
+        "public messages":"Публічні",
+        "private messages":"Приватні",
         "No performance schedule": "На жаль, на даний період вистав немає",
         "Buy ticket":"Купити квиток",
         "Profile": "Профіль",
@@ -148,6 +150,8 @@ export const translations = {
         "COUNTRY":"Країна",
     },
     'en': {
+        "public messages":"Public",
+        "private messages":"Private",
         'Hello world!': 'Hello world!',
         'Settings': 'Settings',
         "COUNTRY":"COUNTRY",

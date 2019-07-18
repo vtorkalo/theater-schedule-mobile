@@ -26,6 +26,9 @@ const CustomDrawerContent = (props) => (
             }}>
                 <FontAwesome name='user-circle' style={styles.iconscontainer} />
             </TouchableOpacity>
+            <TouchableOpacity onPress={ () => { props.navigation.navigate('Messages'); props.navigation.closeDrawer() } }>
+                <FontAwesome name='envelope-open' style={styles.iconscontainer} />
+            </TouchableOpacity>
             <MaterialIcons name='notifications-active' style={styles.iconscontainer} />
         </Header>
         <Content style={{ backgroundColor: 'white' }}>
