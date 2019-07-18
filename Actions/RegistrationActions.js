@@ -6,7 +6,11 @@ export const ENTER_REGISTRATION_TELEPHONE = "ENTER_REGISTRATION_TELEPHONE";
 export const ENTER_REGISTRATION_BIRTHDATE = "ENTER_REGISTRATION_BIRTHDATE";
 export const ENTER_REGISTRATION_EMAIL = "ENTER_REGISTRATION_EMAIL";
 export const ENTER_REGISTRATION_PASSWORD = "ENTER_REGISTRATION_PASSWORD";
+export const ENTER_REGISTRATION_LASTNAME = "ENTER_REGISTRATION_LASTNAME";
+export const ENTER_REGISTRATION_COUNTRY = "ENTER_REGISTRATION_COUNTRY";
 
+export const VALIDATE_REGISTRATION_LASTNAME="VALIDATE_REGISTRATION_LASTNAME";
+export const VALIDATE_REGISTRATION_COUNTRY="VALIDATE_REGISTRATION_COUNTRY";
 export const VALIDATE_REGISTRATION_FIRSTNAME = "VALIDATE_REGISTRATION_FIRSTNAME";
 export const VALIDATE_REGISTRATION_CITY = "VALIDATE_REGISTRATION_CITY";
 export const VALIDATE_REGISTRATION_TELEPHONE = "VALIDATE_REGISTRATION_TELEPHONE";
@@ -26,6 +30,16 @@ export const enterRegistrationFirstName = firstname => ({
 export const enterRegistrationCity = city => ({
     type: ENTER_REGISTRATION_CITY,
     payload: { city }
+})
+
+export const enterRegistrationLastName = lastname => ({
+    type:ENTER_REGISTRATION_LASTNAME,
+    payload:{lastname}
+})
+
+export const enterRegistrationCountry = country => ({
+    type:ENTER_REGISTRATION_COUNTRY,
+    payload:{country}
 })
 
 export const enterRegistrationTelephone = telephone => ({
@@ -54,6 +68,14 @@ export const validateRegistrationFirstName = () => ({
 
 export const validateRegistrationCity = () => ({
     type: VALIDATE_REGISTRATION_CITY
+})
+
+export const validateRegistrationLastName = () => ({
+    type:VALIDATE_REGISTRATION_LASTNAME
+})
+
+export const validateRegistrationCountry = () => ({
+    type:VALIDATE_REGISTRATION_COUNTRY
 })
 
 export const validateRegistrationTelephone = () => ({
@@ -85,11 +107,11 @@ export const sendRegistrationFailure = (error) => ({
     payload: { error }
 })
 
-export const sendRegistration = (FirstName, City, PhoneNumber, DateOfBirth, Email, Password, ) => {
+export const sendRegistration = (FirstName, City, PhoneNumber, DateOfBirth, Email, Password, LastName, Country ) => {
     return (dispatch, getState) => {
-        const { firstnameError, cityError, telephoneError, birthdateError, emailError, passwordError } = getState().registration;
-        if (firstnameError || cityError || telephoneError || birthdateError || emailError || passwordError) return;
-        let dataJson = JSON.stringify(FirstName, City, PhoneNumber, DateOfBirth, Email, Password);
+        const { firstnameError, cityError, telephoneError, birthdateError, emailError, passwordError, LastNameError, CountryError } = getState().registration;
+        if (firstnameError || cityError || telephoneError || birthdateError || emailError || passwordError || LastNameError || CountryError) return;
+        let dataJson = JSON.stringify(FirstName, City, PhoneNumber, DateOfBirth, Email, Password, LastName, Country);
         dispatch(sendRegistrationBegin());
         return fetch(`${BASE_URL}Registration/CreateUser/`, {
             method: 'POST',

@@ -143,11 +143,15 @@ export const translations = {
         "StreamScreenTitle":"Дубляж",
         "Stream":"Дубляж",
         "StreamScreenTitle":"Дубляж",
-        "Something went wrong": "Щось пішло не так"
+        "Something went wrong": "Щось пішло не так",
+        "LASTNAME":"Прізвище",
+        "COUNTRY":"Країна",
     },
     'en': {
         'Hello world!': 'Hello world!',
         'Settings': 'Settings',
+        "COUNTRY":"COUNTRY",
+        "LASTNAME":"LASTNAME",
         'Set language': 'Set language',
         "Push notifications":"Push notifications",
         "Notify in": "Notify in",
