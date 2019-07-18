@@ -51,9 +51,7 @@ class AuthorizationScreen extends LocalizeComponent {
 
   ValidateForm() {
     return (this.props.authorization.LoginError === ""
-            && this.props.authorization.PasswordError === ""
-            && this.props.authorization.Email === ""
-            && this.authorization.PasswordHash === "");
+            && this.props.authorization.PasswordError === "");
   }
 
   onSendMessage = () => {
@@ -129,6 +127,7 @@ class AuthorizationScreen extends LocalizeComponent {
                     (<Text style={styles.error}>{this.t(this.props.authorization.LoginError)}</Text>) : null}
 
                 <CustomTextField
+                  secureTextEntry = {true}
                   label={this.t("PASSWORD")}
                   labelTextStyle={styles.labelColor}
                   onChangeText={(txt) => this.props.enterAuthPass(txt)}
@@ -226,12 +225,6 @@ const styles = StyleSheet.create({
   },
   textRow: {
     flexDirection: "row",
-    justifyContent: "center",
-    marginTop: scaleVertical(28),
-    marginBottom: scaleVertical(8),
-    paddingHorizontal: 8
-  },
-  forgotRow: {
     justifyContent: "center",
     marginTop: scaleVertical(28),
     marginBottom: scaleVertical(8),

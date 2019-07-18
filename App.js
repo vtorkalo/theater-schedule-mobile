@@ -23,7 +23,9 @@ import registerForNotification from "./services/pushNotification";
 import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
-import streamReducer from "./Reducers/StreamReducer"
+import streamReducer from "./Reducers/StreamReducer";
+import forgotPassword from './Reducers/ForgotPasswordReducer';
+import resetPassword from './Reducers/ResetPasswordReducer';
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
 import pollReducer from "./Reducers/PollReducer";
@@ -46,6 +48,8 @@ const appReducer = combineReducers({
   authorization,
   streamReducer,
   registration,
+  forgotPassword,
+  resetPassword
   poll,
   editUser,
 });
