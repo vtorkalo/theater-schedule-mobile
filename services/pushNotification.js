@@ -35,7 +35,7 @@ export default async deviceId => {
       body: JSON.stringify({ token, deviceId })
     }).then(response=>{
       
-      if(response.status==201)
+      if(response.status===201)
       {
         AsyncStorage.setItem("pushtoken", token);
       }
