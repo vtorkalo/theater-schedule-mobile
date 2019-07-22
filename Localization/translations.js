@@ -155,6 +155,10 @@ export const translations = {
         "Something went wrong": "Щось пішло не так",
         "LASTNAME":"Прізвище",
         "COUNTRY":"Країна",
+        "City":"Місто",
+        "LastName": "Прізвище",
+        "Please enter the LastName": "Будь ласка введіть прізвище",
+        "Please enter the Country": "Будь ласка введіть Країну"
     },
     'en': {
         "public messages":"Public",
@@ -255,6 +259,8 @@ export const translations = {
         "Theater history": "Theater history",
         "Contacts": "Contacts",
         "Today": "Today",
+        "LastName":"LastName",
+        "City":"City",
         "Building": "History of the theater building",
         "BuildingDescription": "\tThe building, which is now the Lviv puppet theater, was built nearly 1914 as the Artisan Chamber."+
         "\n\tBut because of the volatile situation, which occurred due to First World War, after a deep financial crisis, many rooms seemed to be leased. Entrepreneur Marek Parizer leased a large hall of the Artisan Chamber and in 1926 he built cinema named “Shtuka” (there were about 290 spectator seats)."+
@@ -308,6 +314,8 @@ export const translations = {
         "Stream":"Stream",
         "StreamScreenTitle":"Stream",
         "Poll screen":"Poll screen",
-        "Something went wrong": "Something went wrong"
+        "Something went wrong": "Something went wrong",
+        "Please enter the LastName": "Please enter the Lastname",
+        "Please enter the Country": "Please enter the Country"
     },
 }

@@ -4,7 +4,8 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  Alert
+  Alert,
+  AsyncStorage
 } from "react-native";
 import { Container, Content } from "native-base";
 import DrawerMenucIcon from "../Navigation/DrawerMenuIcon";
@@ -22,6 +23,11 @@ import UniformButton from "../Screens/Components/UniformButton"
 import Text from './Components/CustomText';
 
 class MessageScreen extends LocalizeComponent {
+	state = {
+      		'UserID': ''
+   	}
+   componentDidMount = () => AsyncStorage.getItem('UserId').then((value) => this.setState({ 'UserID': value }))
+
   static navigationOptions = ({ screenProps }) => {
     return {
       drawerIcon: (<MaterialCommunityIcons name="message" size={25} />),
@@ -41,12 +47,13 @@ class MessageScreen extends LocalizeComponent {
   }
 
   onSendMessage = () => {
+    console.log(this.state.UserID)
     this.props.validateMessageSubject();
     this.props.validateMessageText();
     this.props.sendMessage({
       subject: this.props.message.subject,
       messageText: this.props.message.text,
-      phoneId: this.props.deviceId
+      AccountId: this.state.UserID
     });
   };
 
