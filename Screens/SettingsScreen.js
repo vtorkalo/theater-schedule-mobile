@@ -19,6 +19,7 @@ import {
   Toast,
 } from "native-base";
 import Text from './Components/CustomText';
+import { NavigationEvents } from 'react-navigation';
 
 class SettingsScreen extends LocalizeComponent {
   static navigationOptions = ({ screenProps }) => {
@@ -30,9 +31,9 @@ class SettingsScreen extends LocalizeComponent {
 
   state = {
     settings: {
-      languageCode: this.props.settings.settings.languageCode,
-      doesNotify: this.props.settings.settings.doesNotify,
-      notificationFrequency: this.props.settings.settings.notificationFrequency
+      languageCode: '',
+      doesNotify: '',
+      notificationFrequency: ''
     }
   };
 
@@ -59,6 +60,24 @@ class SettingsScreen extends LocalizeComponent {
   render() {
     return (
       <Container>
+        <NavigationEvents
+          onWillFocus={() => {
+            this.setState({
+              settings: {
+                languageCode: this.props.settings.settings.languageCode,
+                doesNotify: this.props.settings.settings.doesNotify,
+                notificationFrequency: this.props.settings.settings.notificationFrequency
+              }});
+          }}
+          onDidBlur={() => {
+            this.setState({
+              settings: {
+                languageCode: '',
+                doesNotify: '',
+                notificationFrequency: ''
+              }});
+          }}
+        />
         <DrawerMenucIcon
           onPressMenuIcon={() => this.props.navigation.openDrawer()}
           text={this.t('Settings')} />
