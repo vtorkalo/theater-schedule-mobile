@@ -83,7 +83,7 @@ class EditProfileScreen extends LocalizeComponent {
             .map((name) => ({ name, ref: this[name] }))
             .forEach(({ name, ref }) => {
                 if (ref.isFocused()) {
-                    this.setState({ [name]: text });
+                    this.setState({ [name]: text.trim() });
                 }
             });
     }
@@ -144,13 +144,13 @@ class EditProfileScreen extends LocalizeComponent {
         })
         .then(async (result) => {
             console.log(result);
-            await AsyncStorage.setItem('FirstName', result.firstName);
-            await AsyncStorage.setItem('LastName', result.lastName);
-            await AsyncStorage.setItem('Email', result.email);
+            await AsyncStorage.setItem('FirstName', result.firstName.trim());
+            await AsyncStorage.setItem('LastName', result.lastName.trim());
+            await AsyncStorage.setItem('Email', result.email.trim());
             await AsyncStorage.setItem('DateOfBirth', result.dateOfBirth);
-            await AsyncStorage.setItem('Country', result.country);
-            await AsyncStorage.setItem('City', result.city);
-            await AsyncStorage.setItem('PhoneNumber', result.phoneNumber);
+            await AsyncStorage.setItem('Country', result.country.trim());
+            await AsyncStorage.setItem('City', result.city.trim());
+            await AsyncStorage.setItem('PhoneNumber', result.phoneNumber.trim());
         })
         .then(() => {
             if (this.props.editUser.error === null) {

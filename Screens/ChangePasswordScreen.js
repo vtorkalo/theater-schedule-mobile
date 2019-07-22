@@ -70,7 +70,7 @@ class ChangePasswordScreen extends LocalizeComponent {
             .map((name) => ({ name, ref: this[name] }))
             .forEach(({ name, ref }) => {
                 if (ref.isFocused()) {
-                    this.setState({ [name]: text });
+                    this.setState({ [name]: text.trim() });
                 }
             });
     }
