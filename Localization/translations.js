@@ -8,7 +8,7 @@ export const translations = {
         "days":"дні(в)",
         'Save': 'Зберегти',
         'Error!': 'Помилка!',
-        "Enter your birthday":"Введыть дату народження",
+        "Enter your birthday":"Введіть дату народження",
         'Please try again': 'Будь ласка, спробуйте ще раз',
         'Success!': 'Успіх!',
         'Settings saved': 'Налаштування збережено',
