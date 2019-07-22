@@ -42,13 +42,15 @@ class SettingsScreen extends LocalizeComponent {
       Toast.show({
         text: this.t("Please try again"),
         buttonText: "Okay",
-        type: "danger"
+        type: "danger",
+        duration: 3000,
       });
     } else if (prevState.settings.loading && !this.props.settings.error) {
       Toast.show({
         text: this.t("Settings saved"),
         buttonText: "Okay",
-        type: "success"
+        type: "success",
+        duration: 3000,
       });
     }
   }
