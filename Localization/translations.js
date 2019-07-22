@@ -55,7 +55,7 @@ export const translations = {
         "Poll screen":"Опитування",
         "TELEPHONE":"Мобільний телефон",
         "BIRTHDATE":"Дата народження",
-        "EMAIL":"Поштовий адрес",
+        "EMAIL":"Email",
         "VALIDATION CODE": "КОД ПІДТВЕРДЖЕННЯ",
         "PASSWORD":"ПАРОЛЬ",
         "Finish":"Завершити",
