@@ -39,7 +39,7 @@ const initialState = {
     PasswordError: "",
     sendingError: null,
     isSending: false,
-    PhoneIdentifier:""
+    PhoneIdentifier:"",
 }
 
 export default function registrationReducer(state = initialState, action) {
@@ -80,7 +80,7 @@ export default function registrationReducer(state = initialState, action) {
 
         case VALIDATE_REGISTRATION_EMAIL: {
             emailNotSet = state.Email.trim() === "" ? "Please enter the Email" : "";
-            emailNotMatch = state.Email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that matches the pattern";
+            emailNotMatch = state.Email.trim().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that matches the pattern";
             if (emailNotSet)
                 return { ...state, EmailError: emailNotSet }
             else if (emailNotMatch)
@@ -118,7 +118,7 @@ export default function registrationReducer(state = initialState, action) {
 
         case VALIDATE_REGISTRATION_TELEPHONE: {
             numberNotSet = state.Telephone.trim() === "" ? "Please enter the Phone number" : "";
-            numberNotMatch = state.Telephone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/) ? "" : "Set phone number that matches the pattern";
+            numberNotMatch = state.Telephone.trim().match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/) ? "" : "Set phone number that matches the pattern";
             if (numberNotSet)
                 return { ...state, TelephoneError: numberNotSet }
             else if (numberNotMatch)
