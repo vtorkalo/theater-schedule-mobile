@@ -46,22 +46,22 @@ export default function registrationReducer(state = initialState, action) {
     let error;
     switch (action.type) {
         case ENTER_REGISTRATION_FIRSTNAME:
-            return { ...state, FirstName: action.payload.firstname };
+            return { ...state, FirstName: action.payload.firstname.trim() };
 
         case ENTER_REGISTRATION_COUNTRY:
-            return {...state, Country:action.payload.country}
+            return {...state, Country:action.payload.country.trim()}
     
         case ENTER_REGISTRATION_LASTNAME:
-            return {...state, LastName:action.payload.lastname}
+            return {...state, LastName:action.payload.lastname.trim()}
 
         case ENTER_REGISTRATION_BIRTHDATE:
             return { ...state, BirthDate: action.payload.birthdate };
 
         case ENTER_REGISTRATION_CITY:
-            return { ...state, City: action.payload.city }
+            return { ...state, City: action.payload.city.trim() }
 
         case ENTER_REGISTRATION_EMAIL:
-            return { ...state, Email: action.payload.email }
+            return { ...state, Email: action.payload.email.trim() }
 
         case ENTER_REGISTRATION_PASSWORD:
             return { ...state, Password: action.payload.password }
