@@ -28,7 +28,6 @@ import forgotPassword from './Reducers/ForgotPasswordReducer';
 import resetPassword from './Reducers/ResetPasswordReducer';
 import { Root } from "native-base";
 import {AppLoading} from 'expo';
-import pollReducer from "./Reducers/PollReducer";
 import editUser from './Reducers/EditUserReducer';
 
 
