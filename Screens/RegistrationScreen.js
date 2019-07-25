@@ -10,9 +10,11 @@ import {
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Constants } from "expo";
+import {AsyncStorage} from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import TextError from './Components/CustomText';
+import registerForNotification from "../services/pushNotification";
 import {
   enterRegistrationFirstName,
   enterRegistrationCity,
@@ -36,6 +38,7 @@ import {
 import { DatePicker } from 'native-base';
 import { Content, Container, Toast } from 'native-base';
 import CustomTextField from './UserProfileComponents/CustomTextField';
+import { storePasswordUpdateBegin } from "../Actions/EditUserActions/EditUserActionCreators";
 
 const { width, height } = Dimensions.get('window');
 
@@ -77,6 +80,8 @@ class RegistrationScreen extends LocalizeComponent {
         LastName:this.props.registration.LastName,
         Country:this.props.registration.Country
       });
+      let deviceId=AsyncStorage.getItem("deviceID");
+      registerForNotification(deviceId);
       this.props.navigation.navigate("authorizationScreen");
     } else {
       Toast.show({

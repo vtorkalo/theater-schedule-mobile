@@ -4,6 +4,7 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import {NavigationActions} from 'react-navigation';
 import {Constants} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
+import registerForNotification from "../services/pushNotification";
 
 import {
   enterAuthLogin,
@@ -56,6 +57,8 @@ class AuthorizationScreen extends LocalizeComponent {
 
   onSendMessage = () => {
     if (this.ValidateForm()){
+      let deviceId=AsyncStorage.getItem("deviceID");
+      registerForNotification(deviceId);
       this.props.sendAuthorization({
         Email: this.props.authorization.Login,
         PasswordHash: this.props.authorization.PasswordHash,
