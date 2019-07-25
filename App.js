@@ -81,11 +81,7 @@ export default class App extends Component {
   afterFontsLoaded() {
     AsyncStorage.setItem("deviceID",deviceId);
     store.dispatch(loadSettings(deviceId));
-    Notifications.addListener(notification => {
-      let oldNotifications= AsyncStorage.getItem("notifications");
-      let allNotifications=[...oldNotifications,notification];
-      AsyncStorage.setItem("notifications",allNotifications);
-    });
+    Notifications.addListener(notification => {});
   }
 
   render() {
