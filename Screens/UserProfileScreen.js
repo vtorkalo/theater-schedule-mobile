@@ -88,19 +88,8 @@ class UserProfileScreen extends LocalizeComponent {
                     body: dataJson
                 })
             })
-            .then(async () => await AsyncStorage.multiRemove([
-                'AccessToken',
-                'City',
-                'Country',
-                'DateOfBirth',
-                'Email',
-                'ExpiresDate',
-                'FirstName',
-                'LastName',
-                'PhoneNumber',
-                'RefreshToken',
-                'UserId'
-            ]).then(() => console.log("Async Storage keys deleted")))
+            .then(async () => await AsyncStorage.clear()
+                .then(() => console.log("Async Storage keys deleted")))
             .then(() => this.props.navigation.navigate("Authorization"))
             .catch((error) => console.error(error));
     }
