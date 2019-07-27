@@ -23,7 +23,6 @@ import StreamLanguageScreen from '../Screens/StreamLanguageScreen'
 import StreamConnectingScreen from '../Screens/StreamConnectingScreen'
 import RegistrationScreen from '../Screens/RegistrationScreen';
 import ForgotPasswordScreen from '../Screens/ForgotPasswordScreen';
-import ResetPasswordScreen from '../Screens/ResetPasswordScreen';
 import { create } from "uuid-js";
 import MessagesScreen from '../Screens/MessagesScreen';
 import PollScreen from '../Screens/PollScreen';
@@ -74,24 +73,6 @@ const RegistrationStack = createStackNavigator(
   }
 );
 
-const ForgotPasswordStack = createStackNavigator(
-  {
-    forgotPasswordScreen:{screen: ForgotPasswordScreen}
-  },
-  {
-    headerMode: 'none',
-  }
-);
-
-const ResetPasswordStack = createStackNavigator(
-  {
-    resetPasswordScreen:{screen: ResetPasswordScreen}
-  },
-  {
-    headerMode: 'none',
-  }
-);
-
 const AuthorizationStack = createStackNavigator(
   {
     authorizationScreen:{screen: AuthorizationScreen}
@@ -132,8 +113,7 @@ export const AppNavigator = createStackNavigator(
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen: StreamConnectingScreen},
     registrationScreen:{screen: RegistrationStack},
-    forgotPasswordScreen:{screen: ForgotPasswordStack},
-    resetPasswordScreen:{screen: ResetPasswordStack},
+    forgotPasswordScreen: {screen: ForgotPasswordScreen},
     authorizationScreen:{screen: AuthorizationStack},
     streamLanguageScreen: { screen: StreamLanguageScreen },
     streamConnectingScreen:{screen:StreamConnectingScreen},

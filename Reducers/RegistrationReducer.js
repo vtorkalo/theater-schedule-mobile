@@ -118,7 +118,7 @@ export default function registrationReducer(state = initialState, action) {
 
         case VALIDATE_REGISTRATION_TELEPHONE: {
             numberNotSet = state.Telephone.trim() === "" ? "Please enter the Phone number" : "";
-            numberNotMatch = state.Telephone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/) ? "" : "Set phone number that matches the pattern";
+            numberNotMatch = state.Telephone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/) ? "" : "Invalid email address";
             if (numberNotSet)
                 return { ...state, TelephoneError: numberNotSet }
             else if (numberNotMatch)

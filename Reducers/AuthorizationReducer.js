@@ -27,7 +27,7 @@ export default function authorizationReducer(state = initialState, action) {
 
         case VALIDATE_LOGIN: {
             loginNotSet = state.Login.trim() === "" ? "Please enter Login" : "";
-            loginNotMatch = state.Login.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that matches the pattern";
+            loginNotMatch = state.Login.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Invalid email address";
             if (loginNotSet){
                 return {...state, LoginError: loginNotSet};
             }
@@ -39,9 +39,13 @@ export default function authorizationReducer(state = initialState, action) {
 
         case VALIDATE_PASSWORD: {
             passwordNotSet = state.PasswordHash.trim() === "" ? "Please enter the Password" : "";
+            passwordTooShort = state.PasswordHash.length < 6 ? "Too short" : "";
 
-            if (passwordNotSet)
+            if (passwordNotSet) {
                 return { ...state, PasswordError: passwordNotSet }
+            } else if (passwordTooShort) {
+                return {...state, PasswordError: passwordTooShort}
+            }
 
             return { ...state, PasswordError: "" }
         }

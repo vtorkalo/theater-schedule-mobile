@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
 import LocalizeComponent from "../Localization/LocalizedComponent";
-import {NavigationActions} from 'react-navigation';
 import {Constants} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
+import {BallIndicator} from 'react-native-indicators';
 
 import {
   enterAuthLogin,
@@ -49,42 +49,52 @@ class AuthorizationScreen extends LocalizeComponent {
     }
   }
 
-  ValidateForm() {
-    return (this.props.authorization.LoginError === ""
-            && this.props.authorization.PasswordError === "");
-  }
-
   onSendMessage = () => {
-    if (this.ValidateForm()){
+
+    this.props.validateLogin();
+    this.props.validatePassword();
+
+    if ((this.props.authorization.LoginError === "" && this.props.authorization.PasswordError === "") 
+        && (this.props.authorization.Login !== "" && this.props.authorization.PasswordHash !== "")){
       this.props.sendAuthorization({
         Email: this.props.authorization.Login,
-        PasswordHash: this.props.authorization.PasswordHash,
+        PasswordHash: this.props.authorization.PasswordHash
       }).then((res) => {
-        console.log(res);
-        this.setState({
+        if (this.props.authorization.sendingError === null) {
+          this.setState({
           accessToken: res.accessToken, 
           expires: res.expiresTime, 
           refreshToken: res.refreshToken, 
           decoded: jwt_decode(res.accessToken)});
+        } else {
+          Toast.show({
+            text: this.t(this.props.authorization.sendingError.toString()),
+            buttonText: "Okay",
+            type: "danger",
+            duration: 3000
+          })
+        }
       })
-      .then(() => console.log(this.state.decoded))
-      .then(() => console.log(this.state.decoded))
       .then(async () => {
-        await AsyncStorage.setItem('FirstName', this.state.decoded.firstName);
-        await AsyncStorage.setItem('LastName', this.state.decoded.lastName);
-        await AsyncStorage.setItem('UserId', this.state.decoded.userId);
-        await AsyncStorage.setItem('Email', this.state.decoded.email);
-        await AsyncStorage.setItem('DateOfBirth', this.state.decoded.dateOfBirth);
-        await AsyncStorage.setItem('Country', this.state.decoded.country);
-        await AsyncStorage.setItem('City', this.state.decoded.city);
-        await AsyncStorage.setItem('PhoneNumber', this.state.decoded.phoneNumber);
-        await AsyncStorage.setItem('AccessToken', this.state.accessToken);
-        await AsyncStorage.setItem('RefreshToken', this.state.refreshToken);
-        await AsyncStorage.setItem('ExpiresDate', this.state.expires);
+        if (this.props.authorization.sendingError === null) {
+          await AsyncStorage.setItem('FirstName', this.state.decoded.firstName);
+          await AsyncStorage.setItem('LastName', this.state.decoded.lastName);
+          await AsyncStorage.setItem('UserId', this.state.decoded.userId);
+          await AsyncStorage.setItem('Email', this.state.decoded.email);
+          await AsyncStorage.setItem('DateOfBirth', this.state.decoded.dateOfBirth);
+          await AsyncStorage.setItem('Country', this.state.decoded.country);
+          await AsyncStorage.setItem('City', this.state.decoded.city);
+          await AsyncStorage.setItem('PhoneNumber', this.state.decoded.phoneNumber);
+          await AsyncStorage.setItem('AccessToken', this.state.accessToken);
+          await AsyncStorage.setItem('RefreshToken', this.state.refreshToken);
+          await AsyncStorage.setItem('ExpiresDate', this.state.expires);
+        }
       })
       .then(() => {
-        this.setState({email: "", password: ""});
-        this.props.navigation.navigate("drawerStack");
+        if (this.props.authorization.sendingError === null){
+          this.setState({email: "", password: ""});
+          this.props.navigation.navigate("Schedule");
+        }
       })
       .catch((error) => console.error(error));
     } else {
@@ -120,8 +130,10 @@ class AuthorizationScreen extends LocalizeComponent {
                 <CustomTextField
                   label={this.t("LOGIN")}
                   labelTextStyle={{}}
-                  onChangeText={(txt) => this.props.enterAuthLogin(txt)}
-                  onBlur={this.props.validateLogin}
+                  onChangeText={(txt) => {
+                    this.props.enterAuthLogin(txt);
+                    this.props.validateLogin();
+                  }}
                 />
                 {this.props.authorization.LoginError ? 
                     (<Text style={styles.error}>{this.t(this.props.authorization.LoginError)}</Text>) : null}
@@ -130,8 +142,10 @@ class AuthorizationScreen extends LocalizeComponent {
                   secureTextEntry = {true}
                   label={this.t("PASSWORD")}
                   labelTextStyle={styles.labelColor}
-                  onChangeText={(txt) => this.props.enterAuthPass(txt)}
-                  onBlur={this.props.validatePassword}
+                  onChangeText={(txt) => {
+                    this.props.enterAuthPass(txt);
+                    this.props.validatePassword();
+                  }}
                 />
                     {this.props.authorization.PasswordError ? 
                     (<Text style={styles.error}>{this.t(this.props.authorization.PasswordError)}</Text>) : null}
@@ -145,20 +159,24 @@ class AuthorizationScreen extends LocalizeComponent {
                   </View>
               </View>
 
+              <View style={{display: !this.props.authorization.isLoading ? "flex" : "none"}}>
                 <UniformButton
                   text={this.t("Login")}
                   style={styles.button}
                   onPress={this.onSendMessage}
                 />
+              </View>
+
+              <View style={{...styles.button, display: this.props.authorization.isLoading ? "flex" : "none"}}>
+                <BallIndicator color="#aaa" />
+              </View>
+
               </KeyboardAvoidingView>
               <View>
                 <View style={styles.textRow}>
-                  <Text style={styles.textRowContinue}>
-                    {this.t("Still haven't an account?")}
-                  </Text>
                   <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("registrationScreen")}>
-                    <Text style={styles.textRowContinue}> {this.t("Registration")} </Text>
+                    <Text style={styles.textRowContinue}> {this.t("Still haven't an account?")} </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -166,24 +184,14 @@ class AuthorizationScreen extends LocalizeComponent {
               <View>
                 <View style={styles.textRow}>
                   <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("drawerStack")}>
-                    <Text style={styles.textRowContinue}> {this.t("Continue without registration")} </Text>
+                    onPress={() => this.props.navigation.navigate("Schedule")}>
+                    <Text style={styles.textRowContinue}> {this.t("Continue without authorization")} </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
           </Content>
 
-          <TouchableOpacity
-            style={styles.back}
-            onPress={() => this.props.navigation.dispatch(NavigationActions.back())}
-          >
-            <FontAwesome
-              name="chevron-left"
-              size={27}
-              style={{ color: "#4A4A4A" }}
-            />
-          </TouchableOpacity>
         </View>
       </Container>
     );
@@ -238,7 +246,16 @@ const styles = StyleSheet.create({
   },
   labelColor:{
     color:"#707070"
-  }
+  },
+  indicator: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    zIndex: 10,
+    alignSelf: 'center',
+    //display: this.props.isLoaded ? "flex" : "none"
+  },
 });
 
 const mapStateToProps = (state) => ({
