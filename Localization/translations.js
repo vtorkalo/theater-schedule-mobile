@@ -161,7 +161,8 @@ export const translations = {
         "City":"Місто",
         "LastName": "Прізвище",
         "Please enter the LastName": "Будь ласка введіть прізвище",
-        "Please enter the Country": "Будь ласка введіть Країну"
+        "Please enter the Country": "Будь ласка введіть Країну",
+        "Messages": "Повідомлення",
     },
     'en': {
         "public messages":"Public",
@@ -322,6 +323,7 @@ export const translations = {
         "Poll screen":"Poll screen",
         "Something went wrong": "Something went wrong",
         "Please enter the LastName": "Please enter the Lastname",
-        "Please enter the Country": "Please enter the Country"
+        "Please enter the Country": "Please enter the Country",
+        "Messages": "Messages",
     },
 }
