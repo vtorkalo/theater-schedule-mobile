@@ -234,7 +234,7 @@ class RegistrationScreen extends LocalizeComponent {
                 ) : null}
 
                 <UniformButton
-                  text={this.t("send")}
+                  text={this.t("register")}
                   style={styles.button}
                   onPress={this.onSendMessage}
                 />
