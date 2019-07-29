@@ -72,9 +72,10 @@ export const sendEmail = (email) => {
         })
         .then((response) =>{
             if (!response.ok) {
-                throw new Error(response.statusText)
+                throw new Error("Something went wrong. Try again.")
             }
-            return response;
+            dispatch(sendEmailSuccsess());
+            return response.json();
         })
         .catch((error) => {
             dispatch(sendEmailFailure(error));
@@ -82,13 +83,13 @@ export const sendEmail = (email) => {
     };
 };
 
-export const sendCode = (code) => {
+export const sendCode = (Params) => {
     return (dispatch, getState) => {
         const {codeError} = getState().forgotPassword;
         if (codeError) return;
-        let data = JSON.stringify(code);
+        let data = JSON.stringify(Params);
         dispatch(sendCodeBegin());
-        return fetch(`${BASE_URL}ForgotPassword/ValidateCode`, {
+        return fetch(`${BASE_URL}ForgotPassword/ValidateResetCode`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json', 'Content-Type': 'application/json',
@@ -96,9 +97,13 @@ export const sendCode = (code) => {
             body: data
         })
         .then((response) =>{
-            if (!response.ok) {
-                throw new Error(response.statusText)
+            if (response.status == 410) {
+                throw new Error("This validation code timeout expired!")
             }
+            else if (!response.ok) {
+                throw new Error("Something went wrong. Try again.")
+            }
+            dispatch(sendCodeSuccsess());
             return response;
         })
         .catch((error) => {
