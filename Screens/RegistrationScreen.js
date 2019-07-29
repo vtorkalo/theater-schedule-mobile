@@ -23,6 +23,7 @@ import {
   enterRegistrationPassword,
   enterRegistrationCountry,
   enterRegistrationLastName,
+  enterRegistrationConfirmPassword,
 
   validateRegistrationCountry,
   validateRegistrationLastName,
@@ -32,6 +33,7 @@ import {
   validateRegistrationBirthdate,
   validateRegistrationEmail,
   validateRegistrationPassword,
+  validateRegistrationConfirmPassword,
   sendRegistration
 } from "../Actions/RegistrationActions";
 import { Content, Container, Toast } from 'native-base';
@@ -88,7 +90,7 @@ class RegistrationScreen extends LocalizeComponent {
       && this.props.registration.PasswordError === ""
       && this.props.registration.LastNameError === ""
       && this.props.registration.CountryError === ""
-
+      && this.props.registration.ConfirmPasswordError === ""
     );
   }
 
@@ -233,6 +235,19 @@ class RegistrationScreen extends LocalizeComponent {
                   <TextError style={styles.error}>{this.t(this.props.registration.PasswordError)}</TextError>
                 ) : null}
 
+
+                <CustomTextField
+                  secureTextEntry={true}
+                  label={this.t("CONFIRM PASSWORD")}
+                  labelTextStyle={styles.labelColor}
+                  onChangeText={(txt) => this.props.enterRegistrationConfirmPassword(txt)}
+                  onBlur={this.props.validateRegistrationConfirmPassword}
+                />
+                {this.props.registration.ConfirmPasswordError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.ConfirmPasswordError)}</TextError>
+                ) : null}
+
+
                 <UniformButton
                   text={this.t("send")}
                   style={styles.button}
@@ -346,6 +361,7 @@ const mapDispatchToProps = dispatch => {
     enterRegistrationBirthdate: txt => dispatch(enterRegistrationBirthdate(txt)),
     enterRegistrationEmail: txt => dispatch(enterRegistrationEmail(txt)),
     enterRegistrationPassword: txt => dispatch(enterRegistrationPassword(txt)),
+    enterRegistrationConfirmPassword: txt => dispatch(enterRegistrationConfirmPassword(txt)),
     validateRegistrationFirstName: () => dispatch(validateRegistrationFirstName()),
     validateRegistrationLastName: () => dispatch(validateRegistrationLastName()),
     validateRegistrationCountry: () => dispatch(validateRegistrationCountry()),
@@ -354,6 +370,7 @@ const mapDispatchToProps = dispatch => {
     validateRegistrationBirthdate: () => dispatch(validateRegistrationBirthdate()),
     validateRegistrationEmail: () => dispatch(validateRegistrationEmail()),
     validateRegistrationPassword: () => dispatch(validateRegistrationPassword()),
+    validateRegistrationConfirmPassword: () => dispatch(validateRegistrationConfirmPassword()),
     sendRegistration: registration => dispatch(sendRegistration(registration))
   }
 }

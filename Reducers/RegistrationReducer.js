@@ -4,6 +4,7 @@ import {
     ENTER_REGISTRATION_CITY,
     ENTER_REGISTRATION_EMAIL,
     ENTER_REGISTRATION_PASSWORD,
+    ENTER_REGISTRATION_CONFIRM_PASSWORD,
     ENTER_REGISTRATION_TELEPHONE,
     ENTER_REGISTRATION_COUNTRY,
     ENTER_REGISTRATION_LASTNAME,
@@ -14,6 +15,7 @@ import {
     VALIDATE_REGISTRATION_EMAIL,
     VALIDATE_REGISTRATION_FIRSTNAME,
     VALIDATE_REGISTRATION_PASSWORD,
+    VALIDATE_REGISTRATION_CONFIRM_PASSWORD,
     VALIDATE_REGISTRATION_TELEPHONE,
     SEND_REGISTRATION_BEGIN,
     SEND_REGISTRATION_FAILURE,
@@ -27,6 +29,7 @@ const initialState = {
     BirthDate: "",
     Email: "",
     Password: "",
+    ConfirmPassword: "",
     LastName:"",
     Country:"",
     LastNameError:"",
@@ -37,6 +40,7 @@ const initialState = {
     BirthDateError: "",
     EmailError: "",
     PasswordError: "",
+    ConfirmPasswordError: "",
     sendingError: null,
     isSending: false,
     PhoneIdentifier:"",
@@ -69,6 +73,9 @@ export default function registrationReducer(state = initialState, action) {
         case ENTER_REGISTRATION_TELEPHONE:
             return { ...state, Telephone: action.payload.telephone }
 
+        case ENTER_REGISTRATION_CONFIRM_PASSWORD:
+            return {...state, ConfirmPassword:action.payload.confirmPassword}
+
         case VALIDATE_REGISTRATION_BIRTHDATE: {
             return { ...state, BirthDateError: "" }
         }
@@ -87,6 +94,17 @@ export default function registrationReducer(state = initialState, action) {
                 return { ...state, EmailError: emailNotMatch }
 
             return { ...state, EmailError: "" }
+        }
+
+        case VALIDATE_REGISTRATION_CONFIRM_PASSWORD:{
+            confirmPasswordNotSet = state.ConfirmPassword === "" ? "Please enter Confirm Password" : "";
+            passwordsDoNotMatch = state.ConfirmPassword === state.Password ? "" : "Passwords do not match";
+            if(confirmPasswordNotSet)
+                return {...state, ConfirmPasswordError:confirmPasswordNotSet}
+            else if (passwordsDoNotMatch)
+                return {...state, ConfirmPasswordError: passwordsDoNotMatch}
+
+            return {...state, ConfirmPasswordError: ""}
         }
 
         case VALIDATE_REGISTRATION_LASTNAME:{
