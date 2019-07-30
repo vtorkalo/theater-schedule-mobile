@@ -1,6 +1,5 @@
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import React from 'react';
-import { ImageBackground } from 'react-native';
 import { StyleSheet, View, Text, AsyncStorage, FlatList } from 'react-native';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { Container, Button } from 'native-base';
@@ -33,7 +32,10 @@ class MessagesScreen extends LocalizeComponent {
                 return response.json();
             }).then((msgs) => {
                 console.log(msgs);
-                this.setState({ publicMessages: msgs, isLoaded: true, currentPublic: true });
+                let sortedMessages = msgs.sort(function(a,b){
+                    return new Date(b.postDate) - new Date(a.postDate);
+                  });
+                this.setState({ publicMessages: sortedMessages, isLoaded: true, currentPublic: true });
             })
         }
         else {
@@ -45,7 +47,10 @@ class MessagesScreen extends LocalizeComponent {
                 return response.json();
             }).then((msgs) => {
                 console.log(msgs);
-                this.setState({ privateMessages: msgs, isLoaded: true, currentPublic: false });
+                let sortedMessages = msgs.sort(function(a,b){
+                    return new Date(b.postDate) - new Date(a.postDate);
+                  });
+                this.setState({ privateMessages: sortedMessages, isLoaded: true, currentPublic: false });
             })
         }
     }
@@ -92,44 +97,41 @@ class MessagesScreen extends LocalizeComponent {
         if (!this.state.isLoaded) {
             return (
                 <Container style={{ flex: 1, backgroundColor: '#BFD0D670' }}>
-                    <ImageBackground style={{ width: '100%', height: '100%' }} source={require('../img/StreamImg/img_3.png')}>
-                        <DrawerMenuIcon
-                            onPressMenuIcon={() => this.props.navigation.openDrawer()}
-                            text={this.t("Messages")}
-                            showMessageTypeIcon={true}
-                            items={this.changeTypeOfMessages}
-                        />
-                        <View style={styles.container}>
-                            <BallIndicator color="#aaa" />
-                        </View>
-                    </ImageBackground>
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t("Messages")}
+                        showMessageTypeIcon={true}
+                        items={this.changeTypeOfMessages}
+                    />
+                    <View style={styles.container}>
+                        <BallIndicator color="#aaa" />
+                    </View>
                 </Container>
             )
         }
         else {
             return (
                 <Container style={{ flex: 1, backgroundColor: '#BFD0D670' }}>
-                    <ImageBackground style={{ width: '100%', height: '100%' }} source={require('../img/StreamImg/img_3.png')}>
-                        <DrawerMenuIcon
-                            onPressMenuIcon={() => this.props.navigation.openDrawer()}
-                            text={this.t("Messages")}
-                            showMessageTypeIcon={true}
-                            items={this.changeTypeOfMessages}
-                        />
-                        <View style={styles.container}>
-                            <FlatList
-                                data={this.state.currentPublic ? this.state.publicMessages : this.state.privateMessages}
-                                renderItem={({ item }) =>
-                                    <View style={styles.title}>
-                                        <Text style={{ fontSize: 20, fontStyle: 'italic', color: 'white' }}>{item.subject}</Text>
-                                        <View style={styles.message}>
-                                            <Text style={{ marginLeft: 5, fontSize: 15, fontStyle: 'italic' }}>{item.postText}</Text>
-                                        </View>
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t("Messages")}
+                        showMessageTypeIcon={true}
+                        items={this.changeTypeOfMessages}
+                    />
+                    <View style={styles.container}>
+                        <FlatList
+                            data={this.state.currentPublic ? this.state.publicMessages : this.state.privateMessages}
+                            renderItem={({ item }) =>
+                                <View style={styles.title}>
+                                    <Text style={styles.titleTextStyle}>{item.subject}</Text>
+                                    <View style={styles.message}>
+                                        <Text style={styles.messageTextStyle}>{item.postText}</Text>
                                     </View>
-                                }
-                            />
-                        </View>
-                    </ImageBackground>
+                                </View>
+                            }
+                            keyExtractor={(item, index) => index.toString()}
+                        />
+                    </View>
                 </Container>
             );
         }
@@ -142,6 +144,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
+        marginLeft: 10,
+        marginRight: 10,
     },
     title: {
         alignSelf: 'center',
@@ -149,17 +153,31 @@ const styles = StyleSheet.create({
         width: '99%',
         borderRadius: 5,
         backgroundColor: '#7154b8',
+        borderColor: '#7154b8',
         alignItems: 'center'
     },
     message: {
         alignSelf: 'center',
-        marginTop: 10,
+        padding: 5,
         width: '100%',
         borderBottomEndRadius: 5,
         borderBottomStartRadius: 5,
-        backgroundColor: '#5E459B',
+        backgroundColor: '#b4a5d9',
+        borderColor: '#7154b8',
         alignItems: 'flex-start'
-    }
+    },
+    titleTextStyle: {
+        fontFamily: 'Arsenal-Regular',
+        fontSize: 18,
+        color: 'white',
+        padding: 5,
+        textAlign: 'center',
+    },
+    messageTextStyle: {
+        fontFamily: 'Arsenal-Regular',
+        fontSize: 16,
+        color: 'black',
+    },
 })
 
 export default MessagesScreen
