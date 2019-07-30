@@ -1,11 +1,11 @@
 import BASE_URL from '../baseURL';
 
-export const ENTER_PASSWORD = "ENTER_EMAIL";
-export const VALIDATE_PASSWORD = "VALIDATE_EMAIL";
+export const ENTER_PASSWORD = "ENTER_PASSWORD";
+export const VALIDATE_PASS = "VALIDATE_PASS";
 
-export const SEND_PASSWORD_BEGIN = "SEND_EMAIL_BEGIN";
-export const SEND_PASSWORD_SUCCSESS = "SEND_EMAIL_SUCCESS";
-export const SEND_PASSWORD_FAILURE = "SEND_EMAIL_FAILURE";
+export const SEND_PASSWORD_BEGIN = "SEND_PASSWORD_BEGIN";
+export const SEND_PASSWORD_SUCCSESS = "SEND_PASSWORD_SUCCESS";
+export const SEND_PASSWORD_FAILURE = "SEND_PASSWORD_FAILURE";
 
 export const enterPassword = password => ({
     type: ENTER_PASSWORD,
@@ -13,7 +13,7 @@ export const enterPassword = password => ({
 });
 
 export const validatePassword = () => ({
-    type: VALIDATE_PASSWORD
+    type: VALIDATE_PASS
 });
 
 export const sendPasswordBegin = () => ({
@@ -29,11 +29,11 @@ export const sendPasswordFailure = error => ({
     payload: {error}
 });
 
-export const sendPassword = (password) => {
+export const sendPassword = (Params) => {
     return (dispatch, getState) => {
-        const {passwordError} = getState().resetPassword;
+        const {passwordError} = getState().forgotPassword;
         if (passwordError) return;
-        let data = JSON.stringify(password);
+        let data = JSON.stringify(Params);
         dispatch(sendPasswordBegin());
         return fetch(`${BASE_URL}ForgotPassword/ResetPassword`, {
             method: 'PUT',
@@ -44,8 +44,9 @@ export const sendPassword = (password) => {
         })
         .then((response) =>{
             if (!response.ok) {
-                throw new Error(response.statusText)
+                throw new Error("Something went wrong. Try again.")
             }
+            dispatch(sendPasswordSuccsess());
             return response;
         })
         .catch((error) => {
