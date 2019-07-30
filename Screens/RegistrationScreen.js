@@ -10,9 +10,13 @@ import {
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Constants } from "expo";
+import {AsyncStorage} from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import TextError from './Components/CustomText';
+import registerForNotification from "../services/pushNotification";
+import DateTimePicker from "react-native-modal-datetime-picker";
+
 import {
   enterRegistrationFirstName,
   enterRegistrationCity,
@@ -33,9 +37,9 @@ import {
   validateRegistrationPassword,
   sendRegistration
 } from "../Actions/RegistrationActions";
-import { DatePicker } from 'native-base';
 import { Content, Container, Toast } from 'native-base';
 import CustomTextField from './UserProfileComponents/CustomTextField';
+import { storePasswordUpdateBegin } from "../Actions/EditUserActions/EditUserActionCreators";
 
 const { width, height } = Dimensions.get('window');
 
@@ -48,7 +52,35 @@ const scale = size => (width / guidelineBaseWidth) * size;
 const scaleVertical = size => (height / guidelineBaseHeight) * size;
 
 class RegistrationScreen extends LocalizeComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDateTimePickerVisible: false,
+    };
+  }
 
+  showDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: true });
+  };
+
+  hideDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: false });
+  };
+
+  handleDatePicked = date => {
+    this.props.enterRegistrationBirthdate(date);
+    this.hideDateTimePicker();
+  };
+
+  convertBirthDate() {
+    if(this.props.registration.BirthDate !== ""){
+      var date = new Date(this.props.registration.BirthDate);
+      var stringDate = ('0' + date.getDate()).slice(-2) + '/'
+          + ('0' + (date.getMonth() + 1)).slice(-2) + '/'
+          + date.getFullYear();
+      return stringDate
+    }
+}
 
   ValidateForm() {
     return (
@@ -61,11 +93,11 @@ class RegistrationScreen extends LocalizeComponent {
       && this.props.registration.LastNameError === ""
       && this.props.registration.CountryError === ""
 
-      );
+    );
   }
 
   onSendMessage = () => {
-    if (this.ValidateForm()){
+    if (this.ValidateForm()) {
       this.props.sendRegistration({
         FirstName: this.props.registration.FirstName,
         City: this.props.registration.City,
@@ -74,13 +106,15 @@ class RegistrationScreen extends LocalizeComponent {
         Email: this.props.registration.Email,
         Password: this.props.registration.Password,
         PhoneIdentifier: this.props.deviceId,
-        LastName:this.props.registration.LastName,
-        Country:this.props.registration.Country
+        LastName: this.props.registration.LastName,
+        Country: this.props.registration.Country
       });
+      let deviceId=AsyncStorage.getItem("deviceID");
+      registerForNotification(deviceId);
       this.props.navigation.navigate("authorizationScreen");
     } else {
       Toast.show({
-        text:this.t("Fill the form correctly"),
+        text: this.t("Fill the form correctly"),
         buttonText: "Okay",
         type: "danger",
         duration: 3000
@@ -151,7 +185,7 @@ class RegistrationScreen extends LocalizeComponent {
                   <TextError style={styles.error}>{this.t(this.props.registration.CountryError)}</TextError>
                 ) : null}
 
-                <CustomTextField 
+                <CustomTextField
                   label={this.t("TELEPHONE")}
                   labelTextStyle={styles.labelColor}
                   onChangeText={(txt) => this.props.enterRegistrationTelephone(txt)}
@@ -160,24 +194,30 @@ class RegistrationScreen extends LocalizeComponent {
                 {this.props.registration.TelephoneError ? (
                   <TextError style={styles.error}>{this.t(this.props.registration.TelephoneError)}</TextError>
                 ) : null}
-                  <DatePicker
-                    style ={{marginTop:15}}
-                    androidMode='spinner'
-                    defaultDate={new Date(2018, 4, 4)}
-                    locale={this.props.languageCode}
-                    timeZoneOffsetInMinutes={120}
-                    modalTransparent={false}
-                    animationType={"fade"}
-                    androidMode={"default"}
-                    placeHolderText={this.t("SELECT DATE OF BIRTH")}
-                    textStyle={{ color: "green" }}
-                    placeHolderTextStyle={styles.labelColor}
-                    onDateChange={(txt) => { this.props.enterRegistrationBirthdate(txt); }}
-                    disabled={false}
+
+                <TouchableOpacity onPress={this.showDateTimePicker}>
+                  <CustomTextField
+                    label={this.t('BIRTHDATE')}
+                    value={this.convertBirthDate()}
+                    editable={false}
                   />
-                  {this.props.registration.BirthDateError ? (
-                    <TextError style={styles.error}>{this.t(this.props.registration.BirthDateError)}</TextError>
-                  ) : null}
+                  <DateTimePicker
+                    locale={this.props.languageCode}
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm={this.handleDatePicked}
+                    onCancel={this.hideDateTimePicker}
+                    date={new Date()}
+                    titleIOS={this.t('BIRTHDATE')}
+                    confirmTextIOS={this.t('Confirm')}
+                    cancelTextIOS={this.t('Cancel')}
+                    datePickerModeAndroid={'spinner'}
+                    minimumDate={new Date('1900-01-01')}
+                    maximumDate={new Date()}
+                  />
+                </TouchableOpacity>
+                {this.props.registration.BirthDateError ? (
+                  <TextError style={styles.error}>{this.t(this.props.registration.BirthDateError)}</TextError>
+                ) : null}
 
                 <CustomTextField
                   label={this.t("EMAIL")}
@@ -252,7 +292,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgb(245, 245, 245)"
   },
-  textRowContinue:{
+  textRowContinue: {
     color: "#3B4EFE", fontSize: 18, marginTop: 8
   },
   button: {
@@ -287,11 +327,11 @@ const styles = StyleSheet.create({
   error: {
     color: "red"
   },
-  headerText:{
+  headerText: {
     fontSize: scale(28), fontWeight: "800", color: "#4A4A4A"
   },
-  labelColor:{
-    color:"#707070"
+  labelColor: {
+    color: "#707070"
   }
 });
 
@@ -307,14 +347,14 @@ const mapDispatchToProps = dispatch => {
     enterRegistrationFirstName: txt => dispatch(enterRegistrationFirstName(txt)),
     enterRegistrationCity: txt => dispatch(enterRegistrationCity(txt)),
     enterRegistrationCountry: txt => dispatch(enterRegistrationCountry(txt)),
-    enterRegistrationLastName:txt => dispatch(enterRegistrationLastName(txt)),
+    enterRegistrationLastName: txt => dispatch(enterRegistrationLastName(txt)),
     enterRegistrationTelephone: txt => dispatch(enterRegistrationTelephone(txt)),
     enterRegistrationBirthdate: txt => dispatch(enterRegistrationBirthdate(txt)),
     enterRegistrationEmail: txt => dispatch(enterRegistrationEmail(txt)),
     enterRegistrationPassword: txt => dispatch(enterRegistrationPassword(txt)),
     validateRegistrationFirstName: () => dispatch(validateRegistrationFirstName()),
     validateRegistrationLastName: () => dispatch(validateRegistrationLastName()),
-    validateRegistrationCountry: ()=> dispatch(validateRegistrationCountry()),
+    validateRegistrationCountry: () => dispatch(validateRegistrationCountry()),
     validateRegistrationCity: () => dispatch(validateRegistrationCity()),
     validateRegistrationTelephone: () => dispatch(validateRegistrationTelephone()),
     validateRegistrationBirthdate: () => dispatch(validateRegistrationBirthdate()),

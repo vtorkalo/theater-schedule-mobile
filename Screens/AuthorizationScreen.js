@@ -4,6 +4,7 @@ import LocalizeComponent from "../Localization/LocalizedComponent";
 import {Constants} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
 import {BallIndicator} from 'react-native-indicators';
+import registerForNotification from "../services/pushNotification";
 
 import {
   enterAuthLogin,
@@ -56,6 +57,8 @@ class AuthorizationScreen extends LocalizeComponent {
 
     if ((this.props.authorization.LoginError === "" && this.props.authorization.PasswordError === "") 
         && (this.props.authorization.Login !== "" && this.props.authorization.PasswordHash !== "")){
+      let deviceId=AsyncStorage.getItem("deviceID");
+      registerForNotification(deviceId);
       this.props.sendAuthorization({
         Email: this.props.authorization.Login,
         PasswordHash: this.props.authorization.PasswordHash

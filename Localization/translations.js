@@ -8,6 +8,7 @@ export const translations = {
         "days":"дні(в)",
         'Save': 'Зберегти',
         'Error!': 'Помилка!',
+        "Enter your birthday":"Введіть дату народження",
         'Please try again': 'Будь ласка, спробуйте ще раз',
         'Success!': 'Успіх!',
         'Settings saved': 'Налаштування збережено',
@@ -36,6 +37,8 @@ export const translations = {
         "Set phone number that matches the pattern": "Номер телефону не співпадає з патерном",
         "Please enter the Email": "Введіть електронну пошту",
         "Please enter a birthdate":"Введіть дату народження",
+        "Please enter the Country":"Введіть країну",
+        "Please enter the LastName":"Введіть прізвище",
         "Please enter the City":"Введіть місто",
         "Please enter the Country": "Введіть країну",
         "Please enter the FirstName":"Введіть Ваше ім'я",
@@ -162,6 +165,10 @@ export const translations = {
         "Something went wrong": "Щось пішло не так",
         "LASTNAME":"Прізвище",
         "COUNTRY":"Країна",
+        "City":"Місто",
+        "LastName": "Прізвище",
+        "Please enter the LastName": "Будь ласка введіть прізвище",
+        "Please enter the Country": "Будь ласка введіть Країну"
     },
     'en': {
         "public messages":"Public",
@@ -205,6 +212,7 @@ export const translations = {
         "Registration":"Registration",
         "EMAIL":"EMAIL",
         "PASSWORD":"PASSWORD",
+        "Enter your birthday":"Enter your birthday",
         "SELECT DATE OF BIRTH":"SELECT DATE OF BIRTH",
         "Continue without registration": "Continue without registration",
         "Contniue without authorization": "Continue without authorization",
@@ -220,6 +228,8 @@ export const translations = {
         "Sign in now.":"Sign in now.",
         "Confirmed!": "Confirmed!",
         "send": "Send",
+        "Please enter the LastName":"Please enter the LastName",
+        "Please enter the Country":"Please enter the Country",
         "sendingError": "Error!",
         "sendingSuccess": "Thank you!",
         "errorMessage": "Please try again",
@@ -271,6 +281,8 @@ export const translations = {
         "Theater history": "Theater history",
         "Contacts": "Contacts",
         "Today": "Today",
+        "LastName":"LastName",
+        "City":"City",
         "Building": "History of the theater building",
         "BuildingDescription": "\tThe building, which is now the Lviv puppet theater, was built nearly 1914 as the Artisan Chamber."+
         "\n\tBut because of the volatile situation, which occurred due to First World War, after a deep financial crisis, many rooms seemed to be leased. Entrepreneur Marek Parizer leased a large hall of the Artisan Chamber and in 1926 he built cinema named “Shtuka” (there were about 290 spectator seats)."+
@@ -324,6 +336,8 @@ export const translations = {
         "Stream":"Stream",
         "StreamScreenTitle":"Stream",
         "Poll screen":"Poll screen",
-        "Something went wrong": "Something went wrong"
+        "Something went wrong": "Something went wrong",
+        "Please enter the LastName": "Please enter the Lastname",
+        "Please enter the Country": "Please enter the Country"
     },
 }
