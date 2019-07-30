@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import {AsyncStorage} from 'react-native';
 import defaultReducer from "./Reducers/Reducer";
 import navigation from "./Reducers/NavigationReducer";
 import scheduleReducer from "./Reducers/ScheduleReducer";
@@ -19,7 +20,6 @@ import DeviceInfo from "react-native-device-info";
 import performanceReducer from "./Reducers/PerformanceReducer";
 import authorization from "./Reducers/AuthorizationReducer.js";
 import AppNavigator from "./AppNavigatorComponent";
-import registerForNotification from "./services/pushNotification";
 import { Notifications, Font } from "expo";
 import eventReducer from "./Reducers/eventReducer";
 import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
@@ -76,8 +76,8 @@ export default class App extends Component {
   }
 
   afterFontsLoaded() {
+    AsyncStorage.setItem("deviceID",deviceId);
     store.dispatch(loadSettings(deviceId));
-    registerForNotification(deviceId);
     Notifications.addListener(notification => {});
   }
 

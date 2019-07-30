@@ -1,15 +1,8 @@
 import { Permissions, Notifications } from "expo";
-import { AsyncStorage} from "react-native";
 import BASE_URL from "../baseURL";
 
 export default async deviceId => {
-  
-  let previousToken = await AsyncStorage.getItem("pushtoken");
-  
-  if (previousToken) {
-    let token=previousToken;  
-  } 
-  else {
+
     const { status: existingStatus } = await Permissions.getAsync(
       Permissions.NOTIFICATIONS
     );
@@ -33,15 +26,8 @@ export default async deviceId => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ token, deviceId })
-    }).then(response=>{
-      
-      if(response.status==201)
-      {
-        AsyncStorage.setItem("pushtoken", token);
-      }
-
     });
 
     
-  }
+  
 };

@@ -39,29 +39,29 @@ const initialState = {
     PasswordError: "",
     sendingError: null,
     isSending: false,
-    PhoneIdentifier:""
+    PhoneIdentifier:"",
 }
 
 export default function registrationReducer(state = initialState, action) {
     let error;
     switch (action.type) {
         case ENTER_REGISTRATION_FIRSTNAME:
-            return { ...state, FirstName: action.payload.firstname };
+            return { ...state, FirstName: action.payload.firstname.trim() };
 
         case ENTER_REGISTRATION_COUNTRY:
-            return {...state, Country:action.payload.country}
+            return {...state, Country:action.payload.country.trim()}
     
         case ENTER_REGISTRATION_LASTNAME:
-            return {...state, LastName:action.payload.lastname}
+            return {...state, LastName:action.payload.lastname.trim()}
 
         case ENTER_REGISTRATION_BIRTHDATE:
             return { ...state, BirthDate: action.payload.birthdate };
 
         case ENTER_REGISTRATION_CITY:
-            return { ...state, City: action.payload.city }
+            return { ...state, City: action.payload.city.trim() }
 
         case ENTER_REGISTRATION_EMAIL:
-            return { ...state, Email: action.payload.email }
+            return { ...state, Email: action.payload.email.trim() }
 
         case ENTER_REGISTRATION_PASSWORD:
             return { ...state, Password: action.payload.password }
@@ -80,7 +80,7 @@ export default function registrationReducer(state = initialState, action) {
 
         case VALIDATE_REGISTRATION_EMAIL: {
             emailNotSet = state.Email.trim() === "" ? "Please enter the Email" : "";
-            emailNotMatch = state.Email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that matches the pattern";
+            emailNotMatch = state.Email.trim().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Set email that matches the pattern";
             if (emailNotSet)
                 return { ...state, EmailError: emailNotSet }
             else if (emailNotMatch)
