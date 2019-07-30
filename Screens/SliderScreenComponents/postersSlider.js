@@ -26,8 +26,6 @@ export default PostersSlider = (props) => {
                 onSnapToItem={props.setActiveSlide}
                 removeClippedSubviews={false}
                 enableMomentum={true}
-                //pagingEnabled={true}
-                //enableSnap={true}
             />            
         </View>
     );
