@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, AsyncStorage, View } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { BallIndicator } from 'react-native-indicators';
-import { loadWishList } from 'TheaterSchedule/Actions/WishListActions/WishListActionCreators';
+import { loadWishList } from '../Actions/WishListActions/WishListActionCreators';
 import WishList from 'TheaterSchedule/Screens/WishListComponents/WishList'
 import LocalizeComponent from "../Localization/LocalizedComponent";
 
@@ -19,12 +19,22 @@ class WishListScreen extends LocalizeComponent {
     };
 
 
-    componentDidMount() {
+    componentDidMount = () => {
         if (this.props.deviceId && this.props.languageCode) {
             this.subs = [
-                this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
-            ];
+                this.props.navigation.addListener('willFocus', () => { 
+                  this.props.loadWishList(this.props.deviceId, this.props.languageCode)               
+                }),
+            ];  
+            
+        console.log("dfsfsf");
+           // if(this.props.sendingError !== null)
+          //  {
+             // console.log("dsf");
+             // this.props.navigation.navigate('Authorization');
+           // }          
         }
+            
     }
 
     componentWillUnmount() {
@@ -33,18 +43,19 @@ class WishListScreen extends LocalizeComponent {
         });
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate = (prevProps) => {
         if ((!prevProps.languageCode && this.props.languageCode) ||
             (prevProps.languageCode !== this.props.languageCode)) {
             this.subs = [
                 this.props.navigation.addListener('willFocus', () => { this.props.loadWishList(this.props.deviceId, this.props.languageCode) }),
-            ];
-        }
+            ];   
+        }        
     }
 
     render() {
 
-        if (this.props.isLoading || this.props.isLanguageLoading) {
+        if (this.props.isLoading || this.props.isLanguageLoading ) {
+          if(`${this.props.sendingError}` == null){
             return (
                 <Container style={styles.container}>
                     <DrawerMenuIcon
@@ -65,6 +76,20 @@ class WishListScreen extends LocalizeComponent {
                     </Content>
                 </Container>
             );
+                              }
+            else{
+            return (
+                <Container style={styles.container}>
+                    <DrawerMenuIcon
+                        onPressMenuIcon={() => this.props.navigation.openDrawer()}
+                        text={this.t('Favourite')} />
+                    <Content contentContainerStyle={styles.contentContainer}>
+                        <View style={styles.performancesContainer}>
+                            <WishList navigation={this.props.navigation} />
+                        </View>
+                    </Content>
+                </Container>
+            )}
         }
         else {
             return (
@@ -126,15 +151,18 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         isLoading: state.wishListReducer.loading,
-        isLanguageLoading: state.settings.loading,
+        isLanguageLoading: state.settings.loading,        
+        sendingError: state.wishListReducer.error,        
         chosenPerformances: state.wishListReducer.chosenPerformances,
         deviceId: state.settings.deviceId,
         languageCode: state.settings.settings.languageCode,
     }
 }
 
-const mapDispatchToProps = {
-    loadWishList
+const mapDispatchToProps = (dispatch) => {
+    return {       
+      loadWishList: (accessToken, deviceId, languageCode) => dispatch(loadWishList(accessToken, deviceId, languageCode))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WishListScreen);

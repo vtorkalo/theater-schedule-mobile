@@ -1,5 +1,6 @@
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import React from 'react';
+import {Toast} from 'native-base';
 import {ImageBackground} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -43,17 +44,39 @@ class MessagesScreen extends LocalizeComponent
         }
         else
         {  
-           //let Accountid= await AsyncStorage.getItem('UserId');
+           let Accountid= await AsyncStorage.getItem('UserId');
            //should be uncommented when userid will correctly store after authorization
-           let Accountid=91;
-           console.log(`${BASE_URL}AdminsPost/${Accountid}`);
-            fetch(`${BASE_URL}AdminsPost/${Accountid}`).then(response=>{
-                return response.json();
+           console.log(`${BASE_URL}AdminsPost/${Accountid}`);           
+            var accessToken = await AsyncStorage.getItem('AccessToken'); 
+            fetch(`${BASE_URL}AdminsPost/${Accountid}`,{
+              method: "GET",
+              headers: {
+              'Authorization': 'Bearer ' + accessToken,
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            }}).then( async (response) =>{
+              if (!response.ok) {
+                throw new Error("Some problems!!!");
+            }     
+            const headersAccessToken = response.headers.get('newaccess_token');
+
+            if(headersAccessToken != null)
+            {
+              await AsyncStorage.setItem('AccessToken', headersAccessToken); 
+            }     
+              return response.json();
             }).then((msgs)=>{
                 console.log(msgs);
                 this.setState({privateMessages:msgs, isLoaded:true,currentPublic:false});
-            })
-        }
+            }).catch(error => {
+              Toast.show({
+                text: this.t("Please log in"),
+                buttonText: "Okay",
+                type: "warning",
+                duration: 3000
+              })
+            });
+        };
     }
     componentDidMount() {
       

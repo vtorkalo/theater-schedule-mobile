@@ -1,3 +1,7 @@
+import BASE_URL from "../../baseURL";
+import {
+  AsyncStorage
+} from "react-native";
 import {
   LOAD_WISHLIST_BEGIN,
   LOAD_WISHLIST_SUCCESS,
@@ -24,7 +28,7 @@ export const loadWishListSuccess = (performances, deviceId, languageCode) => ({
   payload: { performances, deviceId, languageCode }
 });
 
-export const loadWishListFailure = error => ({
+export const loadWishListFailure = (error) => ({
   type: LOAD_WISHLIST_FAILURE,
   payload: { error }
 });
@@ -38,27 +42,35 @@ export const storePerformanceToWishListSuccess = performanceId => ({
   payload: { performanceId }
 });
 
-export const storePerformanceToWishListFailure = error => ({
+export const storePerformanceToWishListFailure = (error) => ({
   type: STORE_PERFORMANCE_FAILURE,
   payload: { error }
 });
 
 export const SaveOrDeletePerformance = (deviceId, performanceId) => {
-  return dispatch => {
+  return async dispatch => {     
     dispatch(storePerformanceToWishListBegin());
+    var accessToken = await AsyncStorage.getItem('AccessToken');
     fetch(`${BASE_URL}wishlist/${deviceId}?performanceId=${performanceId}`, {
       method: "POST",
       headers: {
+        'Authorization': 'Bearer ' + `${accessToken}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify(performanceId)
     })
-      .then(res => {
-        if (!res.ok) {
-          throw Error(res.statusText);
-        }
-        return res;
+      .then( async(response) => {
+        if (!response.ok) {
+          throw new Error("Some problems!!!");
+      }     
+        const headersAccessToken = response.headers.get('newaccess_token');
+
+        if(headersAccessToken != null)
+        {
+          await AsyncStorage.setItem('AccessToken', headersAccessToken); 
+        }     
+        return response;
       })
       .then(() => {
         dispatch(storePerformanceToWishListSuccess(performanceId));
@@ -66,19 +78,36 @@ export const SaveOrDeletePerformance = (deviceId, performanceId) => {
       .catch(error => dispatch(storePerformanceToWishListFailure(error)));
   };
 };
-
-export const loadWishList = (deviceId, languageCode) => {
-  return dispatch => {
-    dispatch(loadWishListBegin());
+ 
+export const loadWishList = (deviceId, languageCode) => {     
+    return async dispatch => {        
+    dispatch(loadWishListBegin());      
+    var accessToken = await AsyncStorage.getItem('AccessToken'); 
     let url = `${BASE_URL}wishlist/${deviceId}/${languageCode}`;
-    fetch(url)
-      .then(response => {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer ' + `${accessToken}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then( async (response) => {
+        if (!response.ok) {
+          throw new Error("Some problems!!!");
+      }     
+        const headersAccessToken = response.headers.get('newaccess_token');
+
+        if(headersAccessToken != null)
+        {
+          await AsyncStorage.setItem('AccessToken', headersAccessToken); 
+        }     
         return response.json();
       })
-      .then(responseJson => {
+      .then(responseJson => {        
         dispatch(loadWishListSuccess(responseJson, deviceId, languageCode));
       })
-      .catch(error => {
+      .catch(error => {    
         dispatch(loadWishListFailure(error));
       });
   };

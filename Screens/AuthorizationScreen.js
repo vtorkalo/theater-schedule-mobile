@@ -166,7 +166,7 @@ class AuthorizationScreen extends LocalizeComponent {
               <View>
                 <View style={styles.textRow}>
                   <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("drawerStack")}>
+                    onPress={() => this.props.navigation.navigate("Schedule")}>
                     <Text style={styles.textRowContinue}> {this.t("Continue without registration")} </Text>
                   </TouchableOpacity>
                 </View>

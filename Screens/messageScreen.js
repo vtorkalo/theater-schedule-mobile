@@ -1,10 +1,12 @@
 import React from "react";
+import {Toast} from 'native-base';
 import {
   TextInput,
   StyleSheet,
   View,
   ActivityIndicator,
-  Alert
+  Alert,
+  AsyncStorage
 } from "react-native";
 import { Container, Content } from "native-base";
 import DrawerMenucIcon from "../Navigation/DrawerMenuIcon";
@@ -22,6 +24,11 @@ import UniformButton from "../Screens/Components/UniformButton"
 import Text from './Components/CustomText';
 
 class MessageScreen extends LocalizeComponent {
+	state = {
+      		'UserID': ''
+   	}
+   componentDidMount = () => AsyncStorage.getItem('UserId').then((value) => this.setState({ 'UserID': value }))
+
   static navigationOptions = ({ screenProps }) => {
     return {
       drawerIcon: (<MaterialCommunityIcons name="message" size={25} />),
@@ -31,7 +38,14 @@ class MessageScreen extends LocalizeComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.message.sendingError && this.props.message.sendingError) {
-      Alert.alert(this.t("sendingError"), this.t("errorMessage"));
+      Toast.show({
+        text: this.t("Please log in"),
+        buttonText: "Okay",
+        type: "warning",
+        duration: 3000
+      })
+      this.props.enterMessageSubject("");
+      this.props.enterMessageText("");
     } else if (
       prevProps.message.isSending &&
       !this.props.message.sendingError
@@ -40,14 +54,18 @@ class MessageScreen extends LocalizeComponent {
     }
   }
 
-  onSendMessage = () => {
+  onSendMessage = async () => {
+    if(this.state.UserID == null)
+    {
+      await AsyncStorage.getItem('UserId').then((value) => this.setState({ 'UserID': value }))
+    }
     this.props.validateMessageSubject();
     this.props.validateMessageText();
     this.props.sendMessage({
       subject: this.props.message.subject,
       messageText: this.props.message.text,
-      phoneId: this.props.deviceId
-    });
+      AccountId: this.state.UserID
+    });    
   };
 
   render() {
