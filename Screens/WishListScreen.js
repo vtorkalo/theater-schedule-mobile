@@ -25,14 +25,7 @@ class WishListScreen extends LocalizeComponent {
                 this.props.navigation.addListener('willFocus', () => { 
                   this.props.loadWishList(this.props.deviceId, this.props.languageCode)               
                 }),
-            ];  
-            
-        console.log("dfsfsf");
-           // if(this.props.sendingError !== null)
-          //  {
-             // console.log("dsf");
-             // this.props.navigation.navigate('Authorization');
-           // }          
+            ];           
         }
             
     }

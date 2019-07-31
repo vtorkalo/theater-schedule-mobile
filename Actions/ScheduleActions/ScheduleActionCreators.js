@@ -28,7 +28,7 @@ export const loadSchedule = (endDate, languageCode) => {
     return dispatch => {
         dispatch(loadScheduleBegin());
 
-        startDate = new Date(2019,4,1);
+        startDate = new Date();
         let dayAfterEndDate = new Date(
             endDate.getFullYear(),
             endDate.getMonth(),
