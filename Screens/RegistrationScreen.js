@@ -10,10 +10,13 @@ import {
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Constants } from "expo";
+import {AsyncStorage} from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import TextError from './Components/CustomText';
+import registerForNotification from "../services/pushNotification";
 import DateTimePicker from "react-native-modal-datetime-picker";
+
 import {
   enterRegistrationFirstName,
   enterRegistrationCity,
@@ -36,6 +39,7 @@ import {
 } from "../Actions/RegistrationActions";
 import { Content, Container, Toast } from 'native-base';
 import CustomTextField from './UserProfileComponents/CustomTextField';
+import { storePasswordUpdateBegin } from "../Actions/EditUserActions/EditUserActionCreators";
 
 const { width, height } = Dimensions.get('window');
 
@@ -105,8 +109,11 @@ class RegistrationScreen extends LocalizeComponent {
         LastName: this.props.registration.LastName,
         Country: this.props.registration.Country
       }).then(() => {
-        if (this.props.registration.sendingError === null)
+        if (this.props.registration.sendingError === null){
+           let deviceId=AsyncStorage.getItem("deviceID");
+           registerForNotification(deviceId);
           this.props.navigation.navigate("authorizationScreen");
+        }
         else if (this.props.registration.sendingError == "Error: 422") {
           Toast.show({
             text: this.t("Such user already exists"),
@@ -123,6 +130,7 @@ class RegistrationScreen extends LocalizeComponent {
           })
         }
       })
+      });
     } else {
       Toast.show({
         text: this.t("Fill the form correctly"),
@@ -251,7 +259,7 @@ class RegistrationScreen extends LocalizeComponent {
                 ) : null}
 
                 <UniformButton
-                  text={this.t("send")}
+                  text={this.t("register")}
                   style={styles.button}
                   onPress={this.onSendMessage}
                 />
