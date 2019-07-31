@@ -26,7 +26,11 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "package": "com.lv410dotnet.lvivpuppet"
+      "package": "com.lv410dotnet.lvivpuppet",
+
+      "permissions": [
+        "RECORD_AUDIO"
+      ]
     }
   }
 }

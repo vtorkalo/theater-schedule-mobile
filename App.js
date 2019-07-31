@@ -56,7 +56,7 @@ const appReducer = combineReducers({
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
 
 let deviceId =
-  Expo.Constants.appOwnership == "expo"
+  Expo.Constants.appOwnership == "standalone"
     ? Expo.Constants.deviceId
     : DeviceInfo.getUniqueID();
 
