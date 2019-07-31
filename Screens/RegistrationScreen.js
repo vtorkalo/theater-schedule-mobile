@@ -69,14 +69,14 @@ class RegistrationScreen extends LocalizeComponent {
   };
 
   convertBirthDate() {
-    if(this.props.registration.BirthDate !== ""){
+    if (this.props.registration.BirthDate !== "") {
       var date = new Date(this.props.registration.BirthDate);
       var stringDate = ('0' + date.getDate()).slice(-2) + '/'
-          + ('0' + (date.getMonth() + 1)).slice(-2) + '/'
-          + date.getFullYear();
+        + ('0' + (date.getMonth() + 1)).slice(-2) + '/'
+        + date.getFullYear();
       return stringDate
     }
-}
+  }
 
   ValidateForm() {
     return (
@@ -104,8 +104,25 @@ class RegistrationScreen extends LocalizeComponent {
         PhoneIdentifier: this.props.deviceId,
         LastName: this.props.registration.LastName,
         Country: this.props.registration.Country
-      });
-      this.props.navigation.navigate("authorizationScreen");
+      }).then(() => {
+        if (this.props.registration.sendingError === null)
+          this.props.navigation.navigate("authorizationScreen");
+        else if (this.props.registration.sendingError == "Error: 422") {
+          Toast.show({
+            text: this.t("Such user already exists"),
+            buttonText: "Okay",
+            type: "danger",
+            duration: 6000
+          })
+        } else {
+          Toast.show({
+            text: this.t("There was a problem during registration"),
+            buttonText: "Okay",
+            type: "danger",
+            duration: 6000
+          })
+        }
+      })
     } else {
       Toast.show({
         text: this.t("Fill the form correctly"),

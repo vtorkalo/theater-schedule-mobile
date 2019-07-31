@@ -27,19 +27,19 @@ const initialState = {
     BirthDate: "",
     Email: "",
     Password: "",
-    LastName:"",
-    Country:"",
-    LastNameError:"",
-    CountryError:"",
+    LastName: "",
+    Country: "",
+    LastNameError: "",
+    CountryError: "",
     FirstNameError: "",
     CityError: "",
     TelephoneError: "",
     BirthDateError: "",
     EmailError: "",
     PasswordError: "",
-    sendingError: null,
+    sendingError: "",
     isSending: false,
-    PhoneIdentifier:"",
+    PhoneIdentifier: "",
 }
 
 export default function registrationReducer(state = initialState, action) {
@@ -49,10 +49,10 @@ export default function registrationReducer(state = initialState, action) {
             return { ...state, FirstName: action.payload.firstname.trim() };
 
         case ENTER_REGISTRATION_COUNTRY:
-            return {...state, Country:action.payload.country.trim()}
-    
+            return { ...state, Country: action.payload.country.trim() }
+
         case ENTER_REGISTRATION_LASTNAME:
-            return {...state, LastName:action.payload.lastname.trim()}
+            return { ...state, LastName: action.payload.lastname.trim() }
 
         case ENTER_REGISTRATION_BIRTHDATE:
             return { ...state, BirthDate: action.payload.birthdate };
@@ -89,14 +89,14 @@ export default function registrationReducer(state = initialState, action) {
             return { ...state, EmailError: "" }
         }
 
-        case VALIDATE_REGISTRATION_LASTNAME:{
+        case VALIDATE_REGISTRATION_LASTNAME: {
             lastnameNotSet = state.LastName.trim() === "" ? "Please enter the LastName" : "";
-            return {...state,LastNameError:lastnameNotSet }
+            return { ...state, LastNameError: lastnameNotSet }
         }
 
-        case VALIDATE_REGISTRATION_COUNTRY:{
+        case VALIDATE_REGISTRATION_COUNTRY: {
             countryNotSet = state.Country.trim() === "" ? "Please enter the Country" : "";
-            return {...state,CountryError: countryNotSet}
+            return { ...state, CountryError: countryNotSet }
         }
 
         case VALIDATE_REGISTRATION_FIRSTNAME: {
@@ -106,7 +106,7 @@ export default function registrationReducer(state = initialState, action) {
 
         case VALIDATE_REGISTRATION_PASSWORD: {
             passwordNotSet = state.Password.trim() === "" ? "Please enter the Password" : "";
-            passwordTooShort = state.Password.length <6  ? "Too short" : "";
+            passwordTooShort = state.Password.length < 6 ? "Too short" : "";
 
             if (passwordNotSet)
                 return { ...state, PasswordError: passwordNotSet }
@@ -134,7 +134,7 @@ export default function registrationReducer(state = initialState, action) {
             return { ...state, isSending: false, sendingError: action.payload.error }
 
         case SEND_REGISTRATION_SUCCESS:
-            return { ...state, isSending: false, FirstName: "", City: "", Telephone: "", BirthDate: "", Email: "", Password: "", LastName:"", Country:"" }
+            return { ...state, isSending: false, FirstName: "", City: "", Telephone: "", BirthDate: "", Email: "", Password: "", LastName: "", Country: "" }
 
         default:
             return state;
