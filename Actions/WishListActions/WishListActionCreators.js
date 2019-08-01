@@ -11,6 +11,7 @@ import {
   STORE_PERFORMANCE_FAILURE,
   DELETE_FROM_WISHLIST,
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
+import BASE_URL from 'TheaterSchedule/baseURL';
 
 export const deleteFromWishlist = (performanceId) => ({
   type: DELETE_FROM_WISHLIST,

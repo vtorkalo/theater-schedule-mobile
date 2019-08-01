@@ -8,7 +8,7 @@ import { StyleSheet, View, Text,AsyncStorage,FlatList } from 'react-native';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { Container, Button } from 'native-base';
 import { BallIndicator } from 'react-native-indicators';
-import BASE_URL from 'TheaterSchedule/BaseURLDubbing'
+import BASE_URL from 'TheaterSchedule/baseURL';
 
 class MessagesScreen extends LocalizeComponent
 {
@@ -36,6 +36,7 @@ class MessagesScreen extends LocalizeComponent
         {
             
             fetch(`${BASE_URL}AdminsPost`).then(response=>{
+                console.log(`${BASE_URL}AdminsPost`)
                 return response.json();
             }).then((msgs)=>{
                 console.log(msgs);

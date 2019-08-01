@@ -1,14 +1,13 @@
 import React from 'react';
-import {Text, View, KeyboardAvoidingView, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, KeyboardAvoidingView, Dimensions, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import LocalizeComponent from '../Localization/LocalizedComponent';
-import {NavigationActions} from 'react-navigation';
 import {Constants} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
 import UniformButton from './Components/UniformButton';
 import CustomTextField from './UserProfileComponents/CustomTextField';
 import {Content, Container, Toast} from 'native-base';
-import { Entypo } from '@expo/vector-icons';
+import {BallIndicator} from 'react-native-indicators';
 
 import {
     enterCode,
@@ -18,6 +17,12 @@ import {
     sendCode,
     sendEmail,
 } from '../Actions/forgotPasswordActions';
+
+import {
+  enterPassword,
+  validatePassword,
+  sendPassword
+} from '../Actions/resetPasswordActions';
 
 const {width, height} = Dimensions.get('window');
 const guidelineBaseWidth = 350;
@@ -30,72 +35,117 @@ class ForgotPasswordScreen extends LocalizeComponent {
 
     state = {
         confirmed: false,
-    }
-
-    ValidateEmail(){
-        return this.props.forgotPassword.EmailError === "";
-    }
-
-    ValidateCode(){
-        return this.props.forgotPassword.CodeError === "";
-    }
-
-    ValidatePassword(){
-      return this.props.forgotPassword.PasswordError === "";
+        codeConfirmed: false,
+        userId: 0
     }
 
     onSendEmail = () => {
-        if (this.ValidateEmail()){
+
+      this.props.validateEmail();
+
+        if (this.props.forgotPassword.EmailError === "" && this.props.forgotPassword.Email !== "") {
           this.props.sendEmail({
             Email: this.props.forgotPassword.Email
-          }).then((response) => {
-            console.log(response);
-            if (response.status == 201) {
+          }).then((res) => {
+            if (this.props.forgotPassword.emailSendingError === null) {
               Toast.show({
                 text: this.t("Code sended!"),
-                buttonText: "Okay",
+                buttonText: this.t("Okay"),
                 type: "success",
                 duration: 30000
+              });
+              this.setState({confirmed: true, userId: res});
+            } else {
+              Toast.show({
+                text: this.t(this.props.forgotPassword.emailSendingError.toString()),
+                buttonText: this.t("Okay"),
+                type: "danger",
+                duration: 5000
               })
             }
           })
-          .then(() => this.setState({confirmed: true}))
           .catch((error) => console.error(error));
         } else {
             Toast.show({
                 text: this.t("Fill the field correctly"),
-                buttonText: "Okay",
+                buttonText: this.t("Okay"),
                 type: "danger",
-                duration: 3000
+                duration: 5000
             })
         }
     }
 
     onSendCode = () => {
-        if (this.ValidateCode()){
+
+      this.props.validateCode();
+
+          if (this.props.forgotPassword.CodeError === "" && this.props.forgotPassword.Code !== ""){
           this.props.sendCode({
-            Code: this.props.forgotPassword.Code
-          }).then((response) => {
-            console.log(response);
-            if (response.status == 200) {
+            Id: this.state.userId,
+            ValidationCode: this.props.forgotPassword.Code
+          }).then(() => {
+            if (this.props.forgotPassword.codeSendingError === null) {
               Toast.show({
                 text: this.t("Code confirmed!"),
-                buttonText: "Okay",
+                buttonText: this.t("Okay"),
                 type: "success",
-                duration: 3000
+                duration: 5000
+              });
+              this.setState({codeConfirmed: true});
+            } else {
+              Toast.show({
+                text: this.t(this.props.forgotPassword.codeSendingError.toString()),
+                buttonText: this.t("Okay"),
+                type: "danger",
+                duration: 5000
               })
             }            
           })
-          .then(() => this.props.navigation.navigate("resetPasswordScreen"))
           .catch((error) => console.log(error));
         } else {
             Toast.show({
                 text: this.t("Fill the field correctly"),
-                buttonText: "Okay",
+                buttonText: this.t("Okay"),
                 type: "danger",
-                duration: 3000
+                duration: 5000
             })
         }
+    }
+
+    onSendPassword = () => {
+      this.props.validatePassword();
+      if (this.props.forgotPassword.PasswordError === "" && this.props.forgotPassword.Password !== ""){
+        this.props.sendPassword({
+          Id: this.state.userId,
+          Password: this.props.forgotPassword.Password
+        }).then(() => {
+          if (this.props.forgotPassword.passSendingError === null){
+            Toast.show({
+              text: this.t("Confirmed!"),
+              buttonText: this.t("Okay"),
+              type: "success",
+              duration: 5000
+            });
+            this.setState({confirmed: false, codeConfirmed: false, userId: 0});
+            this.props.navigation.navigate("authorizationScreen");
+          } else {
+            Toast.show({
+              text: this.t(this.props.forgotPassword.passSendingError.toString()),
+              buttonText: this.t("Okay"),
+              type: "danger",
+              duration: 5000
+            })
+          }
+        })
+        .catch((error) => console.log(error))
+      } else {
+        Toast.show({
+          text: this.t("Fill the field correctly"),
+          buttonText: this.t("Okay"),
+          type: "danger",
+          duration: 5000
+        })
+      }
     }
 
     render() {
@@ -120,45 +170,69 @@ class ForgotPasswordScreen extends LocalizeComponent {
                   <KeyboardAvoidingView behavior='padding'>
                     
                     <View style={{display: this.state.confirmed ? "none" : "flex"}}>
-                    <CustomTextField
-                      label={this.t("LOGIN")}
-                      labelTextStyle={{}}
-                      onChangeText={(txt) => this.props.enterEmail(txt)}
-                      onBlur={this.props.validateEmail}
-                    />
-                    {this.props.forgotPassword.EmailError ? 
-                        (<Text style={styles.error}>{this.t(this.props.forgotPassword.EmailError)}</Text>) : null}
+                      <CustomTextField
+                        label={this.t("EMAIL")}
+                        labelTextStyle={{}}
+                        onChangeText={(txt) => {
+                          this.props.enterEmail(txt);
+                          this.props.validateEmail();
+                        }}
+                      />
+                      {this.props.forgotPassword.EmailError ? 
+                          (<Text style={styles.error}>{this.t(this.props.forgotPassword.EmailError)}</Text>) : null}
 
                     </View>
-                    <View style={{display: this.state.confirmed ? "flex" : "none"}}>
+                    <View style={{display: (this.state.confirmed && !this.state.codeConfirmed) ? "flex" : "none"}}>
                       <CustomTextField
                         label={this.t("VALIDATION CODE")}
                         labelTextStyle={{}}
-                        onChangeText={(txt) => this.props.enterCode(txt)}
-                        onBlur={this.props.validateCode}
+                        onChangeText={(txt) => {
+                          this.props.enterCode(txt);
+                          this.props.validateCode();
+                        }}
                       />
                       {this.props.forgotPassword.CodeError ? 
                           (<Text style={styles.error}>{this.t(this.props.forgotPassword.CodeError)}</Text>) : null}
                     </View>
+                    
+                    <View style={{display: this.state.codeConfirmed ? "flex" : "none"}}>
+                      <CustomTextField
+                        secureTextEntry={true}
+                        label={this.t("PASSWORD")}
+                        labelTextStyle={{}}
+                        onChangeText={(txt) => {
+                          this.props.enterPassword(txt);
+                          this.props.validatePassword();
+                        }}
+                        />
 
+                        {this.props.forgotPassword.PasswordError ? 
+                          <Text style={styles.error}>{this.t(this.props.forgotPassword.PasswordError)}</Text> : null}
+                    </View>
+
+                    <View style={{...styles.button, display: this.props.forgotPassword.isLoaded ? "flex" : "none"}}>
+                      <BallIndicator color="#aaa" />
+                    </View>
+
+                    <View style={{display: this.state.codeConfirmed ? "none": "flex"}}>
                       <UniformButton
                         text={this.t("send")}
-                        style={styles.button}
+                        style={{...styles.button, display: this.props.forgotPassword.isLoaded ? "none" : "flex"}}
                         onPress={!this.state.confirmed ? this.onSendEmail : this.onSendCode}
                       />
+                    </View>
+
+                    <View style={{display: (this.state.codeConfirmed && this.state.confirmed) ? "flex": "none"}}>
+                      <UniformButton
+                        text={this.t("Submit")}
+                        style={{...styles.button, display: !this.props.forgotPassword.isLoaded ? "flex" : "none"}}
+                        onPress={this.onSendPassword} />
+                    </View>
+
                   </KeyboardAvoidingView>                
                 </View>
               </Content>
     
-              <TouchableOpacity
-                style={styles.back}
-                onPress={() => this.props.navigation.dispatch(NavigationActions.back())}>
-                <FontAwesome
-                  name="chevron-left"
-                  size={27}
-                  style={{ color: "#4A4A4A" }}
-                />
-              </TouchableOpacity>
             </View>
           </Container>
         );
@@ -217,6 +291,9 @@ const mapDispatchToProps = dispatch => {
         validateEmail: () => dispatch(validateEmail()),
         sendEmail: mail => dispatch(sendEmail(mail)),
         sendCode: resetCode => dispatch(sendCode(resetCode)),
+        enterPassword: pass => dispatch(enterPassword(pass)),
+        validatePassword: () => dispatch(validatePassword()),
+        sendPassword: password => dispatch(sendPassword(password))
     }
 }
 
