@@ -43,7 +43,7 @@ export default function forgotPasswordReducer(state = initialState, action){
             return {...state, Password: action.payload.password};
         case VALIDATE_EMAIL: {
             emailNotSet = state.Email.trim() === "" ? "Please enter Login" : "";
-            mailNotMatch = state.Email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Invalid email address";
+            mailNotMatch = state.Email.trim().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Invalid email address";
             if (emailNotSet){
                  return {...state, EmailError: emailNotSet};
             }
