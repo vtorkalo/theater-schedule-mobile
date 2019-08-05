@@ -11,9 +11,6 @@ import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 import { isBase64 } from 'is-base64';
 import _ from 'lodash';
-import {
-  AsyncStorage
-} from "react-native";
 import {Toast} from 'native-base';
 import UniformButton from '../Screens/Components/UniformButton';
 import Text from './Components/CustomText';
@@ -21,13 +18,12 @@ import GalleryOfImages from './PerformanceDetailsComponents/GalleryOfImages';
 
 class PerformanceScreen extends LocalizedComponent {
   componentDidMount() {
-    this.props.loadPerformance(
+      this.props.loadPerformance(
       this.props.deviceId,
       this.props.navigation.getParam('performance', 'NO-ID'),
       this.props.languageCode
     );
-  }  
-
+  } 
   toggleWishlist = performanceId => {
 
     this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
@@ -128,7 +124,7 @@ class PerformanceScreen extends LocalizedComponent {
               </View>
 
               <View style={{ flex: 1, marginBottom: 25 }}>
-                <GalleryOfImages performance={this.props.performance} />
+                <GalleryOfImages performance= {this.props.performance}/>
               </View>
             </ScrollView>
           </Content>
@@ -150,25 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     backgroundColor: '#BFD0D670'
-  },
-  cardContainer: {
-    marginVertical: 10,
-    marginHorizontal: 5,
-    shadowColor: '#1a1917',
-    shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 5
-  },
-  card: {
-    minHeight: 300,
-    minWidth: 300
-  },
-  galleryImage: {
-    height: 200,
-    width: null,
-    flex: 1,
-    resizeMode: 'cover'
-  },
+  },  
   placeholderStyle: {
     height: 200,
     width: 300,

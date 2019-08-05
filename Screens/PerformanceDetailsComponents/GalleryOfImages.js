@@ -1,19 +1,20 @@
 import React from 'react';
 import ImageGallery from './ImageGallery';
+import { StyleSheet, View} from 'react-native';
 import LocalizedComponent from '../../Localization/LocalizedComponent';
 import ImageLoad from 'react-native-image-placeholder';
 import { Card, CardItem, Left, Body, Thumbnail } from 'native-base';
-import { StyleSheet, View } from 'react-native';
 import Text from '../Components/CustomText';
+import _ from 'lodash';
 
-class GalleryOfImages extends LocalizedComponent {
+export default class GalleryOfImages extends LocalizedComponent {
 
   render()
   {
     return (
                 this.props.performance.galleryImage == null ? <Text style={[styles.textContainer, styles.textSubtitle]}>
                 {this.t("The performance galary is not available")}</Text> : 
-                           <ImageGallery images={this.props.performance.galleryImage} galleryTitle={this.t("Performance Image Gallery: ")}
+                <ImageGallery images={this.props.performance.galleryImage} galleryTitle={this.t("Performance Image Gallery: ")}
                 keyExtractor={(item) => item.uri}
                 showImage={({ item }) =>
                     <View style={styles.cardContainer}>
@@ -40,17 +41,34 @@ class GalleryOfImages extends LocalizedComponent {
                         </Card>
                     </View>
                 }
-            />  );
+            />
+             );
   }
 }
-
-export default GalleryOfImages
 
 const styles = StyleSheet.create({
   textContainer: {
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10
+  }, 
+  galleryImage: {
+    height: 200,
+    width: null,
+    flex: 1,
+    resizeMode: 'cover'
+  }, 
+  cardContainer: {
+    marginVertical: 10,
+    marginHorizontal: 5,
+    shadowColor: '#1a1917',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 5
+  },
+  card: {
+    minHeight: 300,
+    minWidth: 300
   },
     textSubtitle: {
       fontWeight: "bold",

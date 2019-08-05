@@ -65,13 +65,13 @@ const QUARTER_OF_WINDOW_HEIGHT = Dimensions.get('window').height * 0.25;
 
 const styles = StyleSheet.create({
     button: {
-        margin: 6,
         minWidth:"78%",
+        margin: 6,
         alignSelf: "center",
         justifyContent:"center"
     },
     performanceContainer: {
-        height: QUARTER_OF_WINDOW_HEIGHT,
+        height: QUARTER_OF_WINDOW_HEIGHT + 45,
         flexDirection: 'row',
         backgroundColor: '#fff',
         borderColor: '#7154b8',
@@ -83,14 +83,13 @@ const styles = StyleSheet.create({
         flex: 2,
         justifyContent: 'space-around',
     },
-    imageContainer: {
-        flex: 1,
-        margin: 2,
+    imageContainer: {       
+        flex:1
     },
-    image: {
-        flex: 1,
+    image: {      
+        flex: 1,       
         width: null,
-        height: null,
+        height: null,    
         borderRadius: 20,
     },
     infoContainer: {
@@ -102,8 +101,9 @@ const styles = StyleSheet.create({
     detailsContainer: {
         flex: 2,
         flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'stretch',
         width: '100%',
-
         borderTopWidth: 2,
         borderTopColor: '#7154b8',
     },
