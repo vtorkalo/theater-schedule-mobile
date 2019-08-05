@@ -143,7 +143,7 @@ class AuthorizationScreen extends LocalizeComponent {
 
                 <CustomTextField
                   secureTextEntry = {true}
-                  label={this.t("PASSWORD")}
+                  label={this.t("Password")}
                   labelTextStyle={styles.labelColor}
                   onChangeText={(txt) => {
                     this.props.enterAuthPass(txt);
