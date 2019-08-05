@@ -7,6 +7,7 @@ import {
     STORE_PASSWORD_UPDATE_SUCCESS,
     STORE_PASSWORD_UPDATE_FAILURE,
 } from 'TheaterSchedule/Actions/EditUserActions/EditUserActionTypes';
+import { AsyncStorage } from "react-native";
 
 export const storeProfileUpdatesBegin = () => ({
     type: STORE_PROFILE_UPDATES_BEGIN
@@ -36,25 +37,31 @@ export const storePasswordUpdateFailure = error => ({
 })
 
 export const updateUserPassword = (params) => {
-    return dispatch => {
+    return async dispatch => {
         let dataJson = JSON.stringify(params);
+        let token = await AsyncStorage.getItem('AccessToken');
         dispatch(storePasswordUpdateBegin());
         return fetch(`${BASE_URL}User/UpdatePassword`, {
             method: "PUT",
             headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             body: dataJson
         })
-            .then(response => {
-                console.log(response);
+            .then(async response => {
+                let headersAccessToken = response.headers.get('newaccess_token');
+                if (headersAccessToken != null) {
+                    await AsyncStorage.setItem('AccessToken', headersAccessToken);
+                }
                 if (!response.ok) {
-                    if (response.status === 400) {
+                    if (response.status === 400)
                         throw new Error('Wrong user password');
-                    }
-                    
                     if (response.status === 404)
                         throw new Error('Wrong user id');
+                    if (response.status === 401)
+                        throw new Error('Unauthorized');
                 }
                 return response;
             })
@@ -68,19 +75,32 @@ export const updateUserPassword = (params) => {
 };
 
 export const updateUserProfile = (params) => {
-    return dispatch => {
+    return async dispatch => {
         let dataJson = JSON.stringify(params);
-        dispatch(storeProfileUpdatesBegin);
+        let token = await AsyncStorage.getItem('AccessToken');
+        dispatch(storeProfileUpdatesBegin());
         return fetch(`${BASE_URL}User/UpdateProfile`, {
             method: "PUT",
             headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             body: dataJson
         })
-            .then(response => {
+            .then(async response => {
+                console.log(response);
+                let headersAccessToken = response.headers.get('newaccess_token');
+                if (headersAccessToken != null) {
+                    await AsyncStorage.setItem('AccessToken', headersAccessToken);
+                }
                 if (!response.ok) {
-                    throw new Error(response.statusText);
+                    if (response.status === 400)
+                        throw new Error('Not valid model');
+                    if (response.status === 404)
+                        throw new Error('Wrong user');
+                    if (response.status === 401)
+                        throw new Error('Unauthorized');
                 }
                 return response.json();
             })

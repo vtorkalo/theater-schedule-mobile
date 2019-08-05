@@ -144,18 +144,19 @@ class EditProfileScreen extends LocalizeComponent {
         })
         .then(async (result) => {
             console.log(result);
-            await AsyncStorage.setItem('FirstName', result.firstName.trim());
-            await AsyncStorage.setItem('LastName', result.lastName.trim());
-            await AsyncStorage.setItem('Email', result.email.trim());
-            await AsyncStorage.setItem('DateOfBirth', result.dateOfBirth);
-            await AsyncStorage.setItem('Country', result.country.trim());
-            await AsyncStorage.setItem('City', result.city.trim());
-            await AsyncStorage.setItem('PhoneNumber', result.phoneNumber.trim());
-        })
-        .then(() => {
             if (this.props.editUser.error === null) {
+                await AsyncStorage.setItem('FirstName', result.firstName.trim());
+                await AsyncStorage.setItem('LastName', result.lastName.trim());
+                await AsyncStorage.setItem('Email', result.email.trim());
+                await AsyncStorage.setItem('DateOfBirth', result.dateOfBirth);
+                await AsyncStorage.setItem('Country', result.country.trim());
+                await AsyncStorage.setItem('City', result.city.trim());
+                await AsyncStorage.setItem('PhoneNumber', result.phoneNumber.trim());
                 this.props.navigation.state.params.onNavigateBack(this.state);
-                this.props.navigation.dispatch(NavigationActions.back())
+                this.props.navigation.dispatch(NavigationActions.back());
+            }
+            else if (this.props.editUser.error === 'Unauthorized') {
+                this.props.navigation.navigate('authorizationScreen');
             }
             else {
                 Toast.show({
