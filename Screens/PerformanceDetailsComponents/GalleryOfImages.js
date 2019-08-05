@@ -3,7 +3,7 @@ import ImageGallery from './ImageGallery';
 import LocalizedComponent from '../../Localization/LocalizedComponent';
 import ImageLoad from 'react-native-image-placeholder';
 import { Card, CardItem, Left, Body, Thumbnail } from 'native-base';
-import { ScrollView, StyleSheet, FlatList, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Text from '../Components/CustomText';
 
 class GalleryOfImages extends LocalizedComponent {

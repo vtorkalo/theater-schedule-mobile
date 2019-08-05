@@ -11,6 +11,10 @@ import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 import { isBase64 } from 'is-base64';
 import _ from 'lodash';
+import {
+  AsyncStorage
+} from "react-native";
+import {Toast} from 'native-base';
 import UniformButton from '../Screens/Components/UniformButton';
 import Text from './Components/CustomText';
 import GalleryOfImages from './PerformanceDetailsComponents/GalleryOfImages';
@@ -22,10 +26,22 @@ class PerformanceScreen extends LocalizedComponent {
       this.props.navigation.getParam('performance', 'NO-ID'),
       this.props.languageCode
     );
-  }
+  }  
 
   toggleWishlist = performanceId => {
+
     this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
+
+    if(this.props.sendingError != null)
+    {
+      Toast.show({
+        text: this.t("Please log in"),
+        buttonText: "Okay",
+        type: "warning",
+        duration: 3000
+      })
+      this.props.isChecked = this.props.isChecked == this.t('Remove from favourites') ? this.t('Add to favourites') : this.t('Remove from favourites');
+    }
     this.props.changeStatusPerformance(this.props.isChecked);
   };
 
@@ -217,6 +233,7 @@ const mapStateToProps = state => {
   return {
     languageCode: state.settings.settings.languageCode,
     performance: state.performanceReducer.performance,
+    sendingError: state.wishListReducer.error, 
     isLoading: state.performanceReducer.loading,
     deviceId: state.settings.deviceId,
     isChecked: state.performanceReducer.isChecked

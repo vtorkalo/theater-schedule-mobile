@@ -1,6 +1,10 @@
 import LocalizeComponent from "../Localization/LocalizedComponent";
 import React from 'react';
-import { StyleSheet, View, Text, AsyncStorage, FlatList } from 'react-native';
+import {Toast} from 'native-base';
+import {ImageBackground} from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { StyleSheet, View, Text,AsyncStorage,FlatList } from 'react-native';
 import DrawerMenuIcon from 'TheaterSchedule/Navigation/DrawerMenuIcon';
 import { Container, Button } from 'native-base';
 import { BallIndicator } from 'react-native-indicators';
@@ -38,21 +42,41 @@ class MessagesScreen extends LocalizeComponent {
                 this.setState({ publicMessages: sortedMessages, isLoaded: true, currentPublic: true });
             })
         }
-        else {
-            let Accountid = await AsyncStorage.getItem('UserId');
-            //should be uncommented when userid will correctly store after authorization
-            //let Accountid=91;
-            console.log(`${BASE_URL}AdminsPost/${Accountid}`);
-            fetch(`${BASE_URL}AdminsPost/${Accountid}`).then(response => {
-                return response.json();
-            }).then((msgs) => {
+        else
+        {  
+           let Accountid= await AsyncStorage.getItem('UserId');
+           //should be uncommented when userid will correctly store after authorization
+           console.log(`${BASE_URL}AdminsPost/${Accountid}`);           
+            var accessToken = await AsyncStorage.getItem('AccessToken'); 
+            fetch(`${BASE_URL}AdminsPost/${Accountid}`,{
+              method: "GET",
+              headers: {
+              'Authorization': 'Bearer ' + accessToken,
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            }}).then( async (response) =>{
+              if (!response.ok) {
+                throw new Error("Some problems!!!");
+            }     
+            const headersAccessToken = response.headers.get('newaccess_token');
+
+            if(headersAccessToken != null)
+            {
+              await AsyncStorage.setItem('AccessToken', headersAccessToken); 
+            }     
+              return response.json();
+            }).then((msgs)=>{
                 console.log(msgs);
-                let sortedMessages = msgs.sort(function(a,b){
-                    return new Date(b.postDate) - new Date(a.postDate);
-                  });
-                this.setState({ privateMessages: sortedMessages, isLoaded: true, currentPublic: false });
-            })
-        }
+                this.setState({privateMessages:msgs, isLoaded:true,currentPublic:false});
+            }).catch(error => {
+              Toast.show({
+                text: this.t("Please log in"),
+                buttonText: "Okay",
+                type: "warning",
+                duration: 3000
+              })
+            });
+        };
     }
 
     componentDidMount() {

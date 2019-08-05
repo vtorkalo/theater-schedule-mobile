@@ -6,14 +6,15 @@ import WishListItem from 'TheaterSchedule/Screens/WishListComponents/WishListIte
 import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent';
 import ListEmpty from '../ScheduleScreenComponents/ListEmpty';
 
-class WishList extends LocalizedComponent {
+class WishList extends LocalizedComponent {  
     render() {
-        return (
+      const bodyText = this.props.sendingError == null  ? `${this.t("emptyWishlistMessage")}` :  `${this.t("To view your favorite list please log in")}` ;
+      return (
             <FlatList
                 style={styles.WishList}
                 data={this.props.chosenPerformances}
                 keyExtractor={item => item.performanceId.toString()}
-                ListEmptyComponent={<ListEmpty text={this.t("emptyWishlistMessage")}/>}
+                ListEmptyComponent={<ListEmpty text = {bodyText}/>}
                 contentContainerStyle={styles.contentContainer}
                 renderItem={({ item }) => (
                     <WishListItem chosenperformance={item} navigation={this.props.navigation}/>
@@ -33,7 +34,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    return {
+    return {             
+        sendingError: state.wishListReducer.error,   
         chosenPerformances: state.wishListReducer.chosenPerformances,
     }
 }
