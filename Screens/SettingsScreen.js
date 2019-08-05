@@ -153,10 +153,10 @@ class SettingsScreen extends LocalizeComponent {
                   }))
                 }
               >
-                <Picker.Item label={`3 ${this.t("days")}`} value={3} />
-                <Picker.Item label={`7 ${this.t("days")}`} value={7} />
-                <Picker.Item label={`14 ${this.t("days")}`} value={14} />
-                <Picker.Item label={`30 ${this.t("days")}`} value={30} />
+                <Picker.Item label={`${this.t("3 days")}`} value={3} />
+                <Picker.Item label={`${this.t("7 days")}`} value={7} />
+                <Picker.Item label={`${this.t("14 days")}`} value={14} />
+                <Picker.Item label={`${this.t("30 days")}`} value={30} />
               </Picker>
             </Right>
           </ListItem>

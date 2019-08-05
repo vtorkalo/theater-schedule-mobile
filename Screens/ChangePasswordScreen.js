@@ -130,6 +130,9 @@ class ChangePasswordScreen extends LocalizeComponent {
             if (this.props.editUser.error === null) {
                 this.props.navigation.dispatch(NavigationActions.back())
             }
+            else if (this.props.editUser.error === 'Unauthorized') {
+                this.props.navigation.navigate('authorizationScreen');
+            }
             else {
                 Toast.show({
                     text: this.t("Wrong password"),
