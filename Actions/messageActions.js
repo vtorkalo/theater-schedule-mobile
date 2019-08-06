@@ -1,5 +1,7 @@
 import BASE_URL from 'TheaterSchedule/baseURL';
-
+import {
+  AsyncStorage
+} from "react-native";
 export const ENTER_MESSAGE_SUBJECT = "ENTER_MESSAGE_SUBJECT";
 export const ENTER_MESSAGE_TEXT = "ENTER_MESSAGE_TEXT";
 
@@ -42,23 +44,31 @@ export const sendMessageFailure = error => ({
 });
 
 export const sendMessage = message => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { subjectError, textError } = getState().message;
-
     if (subjectError || textError) return;
 
     dispatch(sendMessageBegin());
-    fetch(`${BASE_URL}message`, {
+    var accessToken = await AsyncStorage.getItem('AccessToken'); 
+    fetch(`${BASE_URL}Message`, {
       method: "POST",
       headers: {
+        'Authorization': 'Bearer ' + accessToken,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(message)
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
+      .then( async (response) => {
+      if (!response.ok) {
+          throw new Error("Some problems!!!");
+        }     
+
+        const headersAccessToken = response.headers.get('newaccess_token');
+
+        if(headersAccessToken != null)
+        {
+          await AsyncStorage.setItem('AccessToken', headersAccessToken); 
+        }     
         return response;
       })
       .then(() => {

@@ -11,21 +11,33 @@ import { SaveOrDeletePerformance } from 'TheaterSchedule/Actions/WishListActions
 import { changeStatusPerformance } from 'TheaterSchedule/Actions/PerformanceCreator';
 import { isBase64 } from 'is-base64';
 import _ from 'lodash';
+import {Toast} from 'native-base';
 import UniformButton from '../Screens/Components/UniformButton';
 import Text from './Components/CustomText';
 import GalleryOfImages from './PerformanceDetailsComponents/GalleryOfImages';
 
 class PerformanceScreen extends LocalizedComponent {
   componentDidMount() {
-    this.props.loadPerformance(
+      this.props.loadPerformance(
       this.props.deviceId,
       this.props.navigation.getParam('performance', 'NO-ID'),
       this.props.languageCode
     );
-  }
-
+  } 
   toggleWishlist = performanceId => {
+
     this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
+
+    if(this.props.sendingError != null)
+    {
+      Toast.show({
+        text: this.t("Please log in"),
+        buttonText: "Okay",
+        type: "warning",
+        duration: 3000
+      })
+      this.props.isChecked = this.props.isChecked == this.t('Remove from favourites') ? this.t('Add to favourites') : this.t('Remove from favourites');
+    }
     this.props.changeStatusPerformance(this.props.isChecked);
   };
 
@@ -112,7 +124,7 @@ class PerformanceScreen extends LocalizedComponent {
               </View>
 
               <View style={{ flex: 1, marginBottom: 25 }}>
-                <GalleryOfImages performance={this.props.performance} />
+                <GalleryOfImages performance= {this.props.performance}/>
               </View>
             </ScrollView>
           </Content>
@@ -134,25 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     backgroundColor: '#BFD0D670'
-  },
-  cardContainer: {
-    marginVertical: 10,
-    marginHorizontal: 5,
-    shadowColor: '#1a1917',
-    shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 5
-  },
-  card: {
-    minHeight: 300,
-    minWidth: 300
-  },
-  galleryImage: {
-    height: 200,
-    width: null,
-    flex: 1,
-    resizeMode: 'cover'
-  },
+  },  
   placeholderStyle: {
     height: 200,
     width: 300,
@@ -217,6 +211,7 @@ const mapStateToProps = state => {
   return {
     languageCode: state.settings.settings.languageCode,
     performance: state.performanceReducer.performance,
+    sendingError: state.wishListReducer.error, 
     isLoading: state.performanceReducer.loading,
     deviceId: state.settings.deviceId,
     isChecked: state.performanceReducer.isChecked

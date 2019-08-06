@@ -23,8 +23,7 @@ import {
     setPollJson,
     sendPoll,
 } from "../Actions/PollActions";
-import { SimpleSurvey } from "react-native-simple-survey"
-
+import { SimpleSurvey } from "react-native-simple-survey";
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 let mySurvey = [];
@@ -56,7 +55,6 @@ class PollScreen extends LocalizeComponent {
     }
 
     setSurveyJson = () => {
-        console.log(this.props.poll);
         for (let elem of this.props.poll.Data.Multiple) {
             let choiseListForMultiple = [];
             for (const choise of elem.choises) {
@@ -123,12 +121,11 @@ class PollScreen extends LocalizeComponent {
 
     renderPreviousButton(onPress, enabled) {
         return (
-            <View style={styles.renderButtons}>
+            <View style={styles.renderButtonsPrevious}>
                 <Button
-                    style={styles.buttonStyle}
+                    style={styles.buttonStylePrevious}
                     color='rgba(141,196,63,1)'
                     backgroundColor='rgba(141,196,63,1)'
-
                     onPress={onPress}
                     disabled={!enabled}
                     title={this.t('Previous')}
@@ -139,9 +136,9 @@ class PollScreen extends LocalizeComponent {
 
     renderNextButton(onPress, enabled) {
         return (
-            <View style={styles.renderButtons}>
+            <View style={styles.renderButtonsNext}>
                 <Button
-                    style={styles.buttonStyle}
+                    style={styles.buttonStyleNext}
                     color='rgba(141,196,63,1)'
                     backgroundColor='rgba(141,196,63,1)'
                     onPress={onPress}
@@ -158,12 +155,13 @@ class PollScreen extends LocalizeComponent {
                 <SpinnerButton
                     buttonStyle={styles.buttonStyle}
                     isLoading={this.props.poll.isSending}
+                    
                     indicatorCount={4}
                     size={7}
                     spinnerType='DotIndicator'
                     animationType={'flipInX'}
                     onPress={onPress}>
-                    <Text style={styles.buttonText}>{this.t('Finish')}</Text>
+                    <Text style={styles.buttonText}>{this.t('FINISH')}</Text>
                 </SpinnerButton>
             </View>
         );
@@ -375,17 +373,36 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     buttonText: {
-        fontSize: 20,
-        textAlign: 'center',
+        fontSize: 15,
+        // textAlign: 'center',
         color: 'white',
+        fontWeight:"500"
     },
     buttonStyle: {
-        height: 0.06 * deviceHeight,
+        height: 36,
         width: 0.3 * deviceWidth,
-        borderRadius: 10
+        borderRadius: 10,
+        alignItems:'center',
+        alignContent:'center',
+        alignSelf:'center'
+    },
+    buttonStyleNext:{
+        height: 36,
+        width: 0.3 * deviceWidth,
+    },
+    buttonStylePrevious:{
+        height: 36,
+        width: 0.3 * deviceWidth,
     },
     renderButtons:{
-        flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10
+        flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10, marginRight:12, borderRadius:10, overflow: 'hidden'
+    },
+    renderButtonsNext:{
+        flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10, marginRight:12, borderRadius:10, overflow: 'hidden'
+    },
+    renderButtonsPrevious:{
+        flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10, marginLeft:12, borderRadius:10, overflow: 'hidden'
+
     },
     renderChoiseButtons:{
         marginTop: 5, marginBottom: 5, justifyContent: 'flex-start', marginHorizontal: 0.09 * deviceWidth 

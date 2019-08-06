@@ -25,6 +25,7 @@ export default PostersSlider = (props) => {
                 loop={false}
                 onSnapToItem={props.setActiveSlide}
                 removeClippedSubviews={false}
+                enableMomentum={true}
             />            
         </View>
     );
