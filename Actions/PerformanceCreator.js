@@ -5,6 +5,9 @@ import {
     CNANGE_STATUS_PERFORMANCE,
 } from "./PerformanceTypes";
 import BASE_URL from 'TheaterSchedule/baseURL';
+import {
+    AsyncStorage
+  } from "react-native";
 
 export const changeStatusPerformance = (isChecked) => ({
     type: CNANGE_STATUS_PERFORMANCE,
@@ -26,9 +29,11 @@ export const loadPerformanceFailure = (error) => ({
 });
 
 export const loadPerformance = (deviceId, performanceId, languageCode) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(loadPerformanceBegin());
-        let url = `${BASE_URL}PerformanceDetails/${deviceId}/${languageCode}/GetInfo/${performanceId}`;
+        let Accountid= await AsyncStorage.getItem('UserId');
+        console.log(Accountid);
+        let url = `${BASE_URL}PerformanceDetails/${Accountid}/${languageCode}/GetInfo/${performanceId}`;
         return fetch(url)
             .then(response => response.json())
             .then(responseJson => {

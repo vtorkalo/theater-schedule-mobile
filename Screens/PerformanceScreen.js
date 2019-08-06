@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Dimensions, Image, ScrollView, AsyncStorage } from 'react-native';
 import { Container, Content } from 'native-base';
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
@@ -24,9 +24,8 @@ class PerformanceScreen extends LocalizedComponent {
       this.props.languageCode
     );
   } 
-  toggleWishlist = performanceId => {
-
-    this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
+  toggleWishlist = (Accountid,performanceId) => {
+    this.props.SaveOrDeletePerformance(Accountid, performanceId);
 
     if(this.props.sendingError != null)
     {
