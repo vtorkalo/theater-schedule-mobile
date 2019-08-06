@@ -55,6 +55,7 @@ class MessageScreen extends LocalizeComponent {
       messageText: this.props.message.text,
       AccountId: this.state.UserID
     });
+    console.log(this.state.UserID)
   };
 
   render() {

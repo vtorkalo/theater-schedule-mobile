@@ -1,1 +1,1 @@
-export default BASE_URL = "http://192.168.103.52:51/";
+export default BASE_URL = "http://192.168.103.77:50/";

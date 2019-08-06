@@ -3,7 +3,7 @@ import * as ActionTypes from './StreamActionTypes'
 export const fetchPerfomancesFailure = (bool) => {
     return {
         type: ActionTypes.FETCH_PERFORMANCE_FAILURE,
-        hasErrored: bool
+        hasErrored: bool,
     };
 };
 
@@ -82,7 +82,7 @@ export function getData(url) {
                 }
             )
             .then((performances) => dispatch(fetchPerfomancesSuccess(performances)))
-            .catch(error => dispatch(fetchPerfomancesFailure(true)));
+            .catch(error => {dispatch(fetchPerfomancesRequest(false)),dispatch(fetchPerfomancesFailure(true))});
     }
 }
 
