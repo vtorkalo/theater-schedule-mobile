@@ -11,7 +11,6 @@ import {
   STORE_PERFORMANCE_FAILURE,
   DELETE_FROM_WISHLIST,
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
-import BASE_URL from 'TheaterSchedule/baseURL';
 
 export const deleteFromWishlist = (performanceId) => ({
   type: DELETE_FROM_WISHLIST,
@@ -48,11 +47,12 @@ export const storePerformanceToWishListFailure = (error) => ({
   payload: { error }
 });
 
-export const SaveOrDeletePerformance = (deviceId, performanceId) => {
+export const SaveOrDeletePerformance = (Accountid, performanceId) => {
   return async dispatch => {     
     dispatch(storePerformanceToWishListBegin());
+    let Accountid= await AsyncStorage.getItem('UserId');
     var accessToken = await AsyncStorage.getItem('AccessToken');
-    fetch(`${BASE_URL}wishlist/${deviceId}?performanceId=${performanceId}`, {
+    fetch(`${BASE_URL}wishlist/${Accountid}?performanceId=${performanceId}`, {
       method: "POST",
       headers: {
         'Authorization': 'Bearer ' + `${accessToken}`,
@@ -80,11 +80,12 @@ export const SaveOrDeletePerformance = (deviceId, performanceId) => {
   };
 };
  
-export const loadWishList = (deviceId, languageCode) => {     
+export const loadWishList = (Accountid, languageCode) => {     
     return async dispatch => {        
     dispatch(loadWishListBegin());      
     var accessToken = await AsyncStorage.getItem('AccessToken'); 
-    let url = `${BASE_URL}wishlist/${deviceId}/${languageCode}`;
+    let Accountid= await AsyncStorage.getItem('UserId');
+    let url = `${BASE_URL}wishlist/${Accountid}/${languageCode}`;
     fetch(url, {
       method: "GET",
       headers: {
