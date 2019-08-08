@@ -7,14 +7,29 @@ import LocalizedComponent from 'TheaterSchedule/Localization/LocalizedComponent'
 import ListEmpty from '../ScheduleScreenComponents/ListEmpty';
 
 class WishList extends LocalizedComponent {  
+  
     render() {
-      const bodyText = this.props.sendingError == null  ? `${this.t("emptyWishlistMessage")}` :  `${this.t("To view your favorite list please log in")}` ;
+      if(`${this.props.sendingError}` === "Error: Unauthorized")
+      {
+        this.bodyText = `${this.t("To view your favorite list please log in")}`;
+      }
+
+      if(`${this.props.sendingError}` === "Error: Some problems!!!")
+      {
+        this.bodyText = `${this.t("There was a problem during the operation. Please try again or log in")}`;
+      }
+
+      if(this.props.sendingError === null)
+      {
+        this.bodyText = `${this.t("emptyWishlistMessage")}`;
+      }
+      this.props.sendingError == null;
       return (
             <FlatList
                 style={styles.WishList}
                 data={this.props.chosenPerformances}
                 keyExtractor={item => item.performanceId.toString()}
-                ListEmptyComponent={<ListEmpty text = {bodyText}/>}
+                ListEmptyComponent={<ListEmpty text = {this.bodyText}/>}
                 contentContainerStyle={styles.contentContainer}
                 renderItem={({ item }) => (
                     <WishListItem chosenperformance={item} navigation={this.props.navigation}/>

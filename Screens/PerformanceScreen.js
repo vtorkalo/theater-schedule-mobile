@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Image, ScrollView } from 'react-native';
+import { StyleSheet,  AsyncStorage,
+  View, Dimensions, Image, ScrollView } from 'react-native';
 import { Container, Content } from 'native-base';
+import DrawerMenuIcon from "../Navigation/DrawerMenuIcon";
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -17,28 +19,38 @@ import Text from './Components/CustomText';
 import GalleryOfImages from './PerformanceDetailsComponents/GalleryOfImages';
 
 class PerformanceScreen extends LocalizedComponent {
-  componentDidMount() {
+  async componentDidMount() {   
+      this.props.sendingError = null;   
       this.props.loadPerformance(
       this.props.deviceId,
       this.props.navigation.getParam('performance', 'NO-ID'),
       this.props.languageCode
     );
-  } 
-  toggleWishlist = performanceId => {
 
+  } 
+
+  toggleWishlist = performanceId => {
     this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
 
-    if(this.props.sendingError != null)
-    {
-      Toast.show({
-        text: this.t("Please log in"),
-        buttonText: "Okay",
-        type: "warning",
-        duration: 3000
-      })
-      this.props.isChecked = this.props.isChecked == this.t('Remove from favourites') ? this.t('Add to favourites') : this.t('Remove from favourites');
-    }
-    this.props.changeStatusPerformance(this.props.isChecked);
+      if(`${this.props.sendingError}` === "Error: Unauthorized")
+      {
+        Toast.show({
+          text: this.t("Please log in"),
+          buttonText: "Okay",
+          type: "warning",
+          duration: 3000 })                
+      }
+
+      if(`${this.props.sendingError}` === "Error: Some problems!!!")
+      {
+        Toast.show({
+          text: this.t("There was a problem during the operation. Please try again or log in"),
+          buttonText: "Okay",
+          type: "warning",
+          duration: 3000 })        
+               
+      }          
+        this.props.changeStatusPerformance(this.props.isChecked);    
   };
 
   render() {
@@ -60,6 +72,19 @@ class PerformanceScreen extends LocalizedComponent {
         </Container>
       );
     } else {
+      if (this.props.isLoadNow) {
+        return (
+          <View style={{ flex: 1 }}>
+                     <ReturnMenuIcon onPressMenuIcon={() => this.props.navigation.dispatch(NavigationActions.back()) } />
+                      <View style={styles.contentContainer}>
+                          <View style={styles.indicator}>
+                              <BallIndicator color="#aaa" />
+                          </View>
+                      </View>
+                  </View>
+              
+        );
+      }
       let base64Image = isBase64(this.props.performance.mainImage)
         ? `data:image/png;base64,${this.props.performance.mainImage}`
         : this.props.performance.mainImage;
@@ -90,14 +115,14 @@ class PerformanceScreen extends LocalizedComponent {
                   {this.props.performance.title} (
                   {this.props.performance.minimumAge}+)
                 </Text>
-              </View>
+              </View>                          
               <UniformButton
                 text={
-                  this.props.isChecked
+                 this.props.isChecked && this.props.sendingError === null
                     ? this.t('Remove from favourites')
                     : this.t('Add to favourites')
-                }
-                style={styles.button}
+               }
+              style={{...styles.button}}
                 onPress={() => this.toggleWishlist(performanceId)}
               />
               <UniformButton
@@ -130,6 +155,7 @@ class PerformanceScreen extends LocalizedComponent {
           </Content>
         </Container>
       );
+              
     }
   }
 }
@@ -157,6 +183,14 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height * 0.6,
     alignItems: 'center'
   },
+  indicator: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    zIndex: 10,
+    alignSelf: 'center'
+},
   image: {
     flex: 1,
     marginTop: 10,
@@ -213,6 +247,7 @@ const mapStateToProps = state => {
     performance: state.performanceReducer.performance,
     sendingError: state.wishListReducer.error, 
     isLoading: state.performanceReducer.loading,
+    isLoadNow: state.wishListReducer.isLoadNow,
     deviceId: state.settings.deviceId,
     isChecked: state.performanceReducer.isChecked
   };

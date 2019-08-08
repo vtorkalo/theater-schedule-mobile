@@ -32,10 +32,8 @@ class MessagesScreen extends LocalizeComponent {
         this.setState({ isLoaded: false });
         if (!isPublic) {
             fetch(`${BASE_URL}AdminsPost`).then(response => {
-                console.log(`${BASE_URL}AdminsPost`)
                 return response.json();
             }).then((msgs) => {
-                console.log(msgs);
                 let sortedMessages = msgs.sort(function(a,b){
                     return new Date(b.postDate) - new Date(a.postDate);
                   });
@@ -45,8 +43,7 @@ class MessagesScreen extends LocalizeComponent {
         else
         {  
            let Accountid= await AsyncStorage.getItem('UserId');
-           //should be uncommented when userid will correctly store after authorization
-           console.log(`${BASE_URL}AdminsPost/${Accountid}`);           
+           //should be uncommented when userid will correctly store after authorization        
             var accessToken = await AsyncStorage.getItem('AccessToken'); 
             fetch(`${BASE_URL}AdminsPost/${Accountid}`,{
               method: "GET",
@@ -66,7 +63,6 @@ class MessagesScreen extends LocalizeComponent {
             }     
               return response.json();
             }).then((msgs)=>{
-                console.log(msgs);
                 this.setState({privateMessages:msgs, isLoaded:true,currentPublic:false});
             }).catch(error => {
               Toast.show({
@@ -99,7 +95,6 @@ class MessagesScreen extends LocalizeComponent {
         public: {
             text: 'public messages',
             click: () => {
-                console.log(this.state.currentPublic)
                 if (!this.state.currentPublic) {
                     this.fetchMessages(false);
                 }
@@ -108,9 +103,7 @@ class MessagesScreen extends LocalizeComponent {
         private: {
             text: 'private messages',
             click: () => {
-                console.log(this.state.currentPublic)
                 if (this.state.currentPublic) {
-                    console.log("picckedd");
                     this.fetchMessages(true);
                 }
             }

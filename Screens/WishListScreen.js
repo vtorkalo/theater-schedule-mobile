@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.wishListReducer.loading,
+        isLoading: state.wishListReducer.isLoadNow,
         isLanguageLoading: state.settings.loading,        
         sendingError: state.wishListReducer.error,        
         chosenPerformances: state.wishListReducer.chosenPerformances,
@@ -154,7 +154,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {       
-      loadWishList: (accessToken, deviceId, languageCode) => dispatch(loadWishList(accessToken, deviceId, languageCode))
+      loadWishList: (deviceId, languageCode) => dispatch(loadWishList(deviceId, languageCode))
     }
 }
 

@@ -131,7 +131,6 @@ class RegistrationScreen extends LocalizeComponent {
             duration: 6000
           })
         }
-      })
       });
     } else {
       Toast.show({

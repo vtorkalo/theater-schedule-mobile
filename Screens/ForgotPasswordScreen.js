@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, KeyboardAvoidingView, Dimensions, StyleSheet} from 'react-native';
+import {Text, View, KeyboardAvoidingView, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import LocalizeComponent from '../Localization/LocalizedComponent';
 import {Constants} from 'expo';
@@ -8,6 +8,7 @@ import UniformButton from './Components/UniformButton';
 import CustomTextField from './UserProfileComponents/CustomTextField';
 import {Content, Container, Toast} from 'native-base';
 import {BallIndicator} from 'react-native-indicators';
+import { NavigationActions } from 'react-navigation';
 
 import {
     enterCode,
@@ -233,6 +234,17 @@ class ForgotPasswordScreen extends LocalizeComponent {
                 </View>
               </Content>
     
+              <TouchableOpacity
+                style={styles.back}
+                onPress={() => this.props.navigation.dispatch(NavigationActions.back())}
+              >
+                <FontAwesome
+                  name="chevron-left"
+                  size={27}
+                  style={{ color: "#4A4A4A" }}
+                />
+              </TouchableOpacity>
+
             </View>
           </Container>
         );

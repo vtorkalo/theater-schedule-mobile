@@ -143,7 +143,6 @@ class EditProfileScreen extends LocalizeComponent {
             Country: this.state.country
         })
         .then(async (result) => {
-            console.log(result);
             if (this.props.editUser.error === null) {
                 await AsyncStorage.setItem('FirstName', result.firstName.trim());
                 await AsyncStorage.setItem('LastName', result.lastName.trim());

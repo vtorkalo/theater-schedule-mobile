@@ -11,7 +11,6 @@ class LanguageItem extends LocalizedComponent {
     }
 
     pressedLanguageHandler = () => {
-        //console.log("asd")
         this.props.navigation.navigate("streamConnectingScreen");
     }
 

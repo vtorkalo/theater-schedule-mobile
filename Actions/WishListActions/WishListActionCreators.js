@@ -11,7 +11,6 @@ import {
   STORE_PERFORMANCE_FAILURE,
   DELETE_FROM_WISHLIST,
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
-import BASE_URL from 'TheaterSchedule/baseURL';
 
 export const deleteFromWishlist = (performanceId) => ({
   type: DELETE_FROM_WISHLIST,
@@ -62,9 +61,15 @@ export const SaveOrDeletePerformance = (deviceId, performanceId) => {
       body: JSON.stringify(performanceId)
     })
       .then( async(response) => {
-        if (!response.ok) {
-          throw new Error("Some problems!!!");
-      }     
+
+        if (response.status == 401){
+          throw new Error('Unauthorized');
+        }
+
+        if (!response.ok) {          
+          throw new Error('Some problems!!!');
+      }
+
         const headersAccessToken = response.headers.get('newaccess_token');
 
         if(headersAccessToken != null)
@@ -94,9 +99,13 @@ export const loadWishList = (deviceId, languageCode) => {
       }
     })
       .then( async (response) => {
-        if (!response.ok) {
-          throw new Error("Some problems!!!");
-      }     
+         if (response.status == 401){
+          throw new Error('Unauthorized');
+        }
+
+        if (!response.ok) {          
+          throw new Error('Some problems!!!');
+      }
         const headersAccessToken = response.headers.get('newaccess_token');
 
         if(headersAccessToken != null)
