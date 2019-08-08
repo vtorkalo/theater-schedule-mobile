@@ -8,6 +8,7 @@ import {
   STORE_SETTINGS_BEGIN,
   STORE_SETTINGS_SUCCESS,
   STORE_SETTINGS_FAILURE,
+  LOAD_SETTINGS_TIMEOUT
 } from "../Actions/settingsActions";
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   settings: {},
   moment: moment,
   loading: false,
-  error: null
+  error: null,
+  timeout:false,
 };
 
 
@@ -44,6 +46,13 @@ export default function settingsReducer(state = initialState, action) {
         ...state,
         loading: false,
         settings: { ...action.payload.settings }
+      };
+    }
+    case LOAD_SETTINGS_TIMEOUT:{
+      console.log("timeout")
+      return{
+        ...state,
+        timeout:true,
       };
     }
 

@@ -48,6 +48,12 @@ export default function wishListReducer(state = initialState, action) {
       };
 
     case LOAD_WISHLIST_FAILURE:
+      
+      return { 
+        ...state, 
+        error: action.payload.error
+      };
+
     case STORE_PERFORMANCE_FAILURE:
       return {
         ...state,

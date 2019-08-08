@@ -9,6 +9,7 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon":"img/puppet1024.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -29,7 +30,7 @@
       "package": "com.lv410dotnet.lvivpuppet",
 
       "permissions": [
-        "RECORD_AUDIO"
+        
       ]
     }
   }

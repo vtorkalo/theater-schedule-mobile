@@ -29,7 +29,6 @@ const CustomDrawerContent = (props) => (
             <TouchableOpacity onPress={ () => { props.navigation.navigate('Messages'); props.navigation.closeDrawer() } }>
                 <FontAwesome name='envelope-open' style={styles.iconscontainer} />
             </TouchableOpacity>
-            <MaterialIcons name='notifications-active' style={styles.iconscontainer} />
         </Header>
         <Content style={{ backgroundColor: 'white' }}>
             <DrawerItems {...props} activeBackgroundColor='#c3b4e9' itemsContainerStyle={{ opacity: 0.85 }} />

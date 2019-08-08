@@ -27,7 +27,7 @@ export default function authorizationReducer(state = initialState, action) {
 
         case VALIDATE_LOGIN: {
             loginNotSet = state.Login.trim() === "" ? "Please enter Login" : "";
-            loginNotMatch = state.Login.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Invalid email address";
+            loginNotMatch = state.Login.trim().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? "" : "Invalid email address";
             if (loginNotSet){
                 return {...state, LoginError: loginNotSet};
             }

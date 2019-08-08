@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage, NetInfo } from 'react-native';
 import defaultReducer from "./Reducers/Reducer";
 import navigation from "./Reducers/NavigationReducer";
 import scheduleReducer from "./Reducers/ScheduleReducer";
@@ -15,7 +15,8 @@ import wishListReducer from "./Reducers/WishListReducer";
 import registration from "./Reducers/RegistrationReducer";
 import poll from "./Reducers/PollReducer";
 import thunk from "redux-thunk";
-import { loadSettings } from "./Actions/settingsActions";
+import { loadSettings, loadSettingsSuccess, loadSettingsBegin } from "./Actions/settingsActions";
+import { setAppReady, setLoggedIn } from './Actions/AppActions/AppActionCreators';
 import DeviceInfo from "react-native-device-info";
 import performanceReducer from "./Reducers/PerformanceReducer";
 import authorization from "./Reducers/AuthorizationReducer.js";
@@ -26,8 +27,9 @@ import performanceScheduleReducer from "./Reducers/performanceScheduleReducer";
 import streamReducer from "./Reducers/StreamReducer";
 import forgotPassword from './Reducers/ForgotPasswordReducer';
 import { Root } from "native-base";
-import {AppLoading} from 'expo';
+import { AppLoading } from 'expo';
 import editUser from './Reducers/EditUserReducer';
+import { setLanguage } from "redux-i18n";
 
 
 
@@ -54,7 +56,7 @@ const appReducer = combineReducers({
 const store = createStore(appReducer, applyMiddleware(middleware, thunk));
 
 let deviceId = Expo.Constants.deviceId
-    
+
 
 export default class App extends Component {
   state = {
@@ -73,10 +75,11 @@ export default class App extends Component {
     });
   }
 
+
   afterFontsLoaded() {
-    AsyncStorage.setItem("deviceID",deviceId);
+    AsyncStorage.setItem("deviceID", deviceId);
     store.dispatch(loadSettings(deviceId));
-    Notifications.addListener(notification => {});
+    Notifications.addListener(notification => { });
   }
 
   render() {
@@ -92,6 +95,7 @@ export default class App extends Component {
         />
       );
     }
+    
     return (
       <Provider store={store}>
         <I18n translations={translations} initialLang="uk" fallbackLang="en">

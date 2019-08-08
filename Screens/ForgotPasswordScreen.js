@@ -171,7 +171,7 @@ class ForgotPasswordScreen extends LocalizeComponent {
                     
                     <View style={{display: this.state.confirmed ? "none" : "flex"}}>
                       <CustomTextField
-                        label={this.t("EMAIL")}
+                        label={this.t("LOGIN")}
                         labelTextStyle={{}}
                         onChangeText={(txt) => {
                           this.props.enterEmail(txt);
@@ -198,7 +198,7 @@ class ForgotPasswordScreen extends LocalizeComponent {
                     <View style={{display: this.state.codeConfirmed ? "flex" : "none"}}>
                       <CustomTextField
                         secureTextEntry={true}
-                        label={this.t("PASSWORD")}
+                        label={this.t("Password")}
                         labelTextStyle={{}}
                         onChangeText={(txt) => {
                           this.props.enterPassword(txt);

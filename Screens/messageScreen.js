@@ -1,4 +1,5 @@
 import React from "react";
+import {Toast} from 'native-base';
 import {
   TextInput,
   StyleSheet,
@@ -37,7 +38,14 @@ class MessageScreen extends LocalizeComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.message.sendingError && this.props.message.sendingError) {
-      Alert.alert(this.t("sendingError"), this.t("errorMessage"));
+      Toast.show({
+        text: this.t("Please log in"),
+        buttonText: "Okay",
+        type: "warning",
+        duration: 3000
+      })
+      this.props.enterMessageSubject("");
+      this.props.enterMessageText("");
     } else if (
       prevProps.message.isSending &&
       !this.props.message.sendingError
@@ -46,8 +54,11 @@ class MessageScreen extends LocalizeComponent {
     }
   }
 
-  onSendMessage = () => {
-    console.log(this.state.UserID)
+  onSendMessage = async () => {
+    if(this.state.UserID == null)
+    {
+      await AsyncStorage.getItem('UserId').then((value) => this.setState({ 'UserID': value }))
+    }
     this.props.validateMessageSubject();
     this.props.validateMessageText();
     this.props.sendMessage({
@@ -55,7 +66,7 @@ class MessageScreen extends LocalizeComponent {
       messageText: this.props.message.text,
       AccountId: this.state.UserID
     });
-    console.log(this.state.UserID)
+    
   };
 
   render() {

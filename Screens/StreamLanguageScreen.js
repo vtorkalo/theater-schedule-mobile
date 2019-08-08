@@ -31,7 +31,6 @@ class StreamLanguageScreen extends LocalizeComponent {
 
 
     componentDidMount() {
-        console.log(BASE_URL + `api/performance/${this.props.performaceId}/languages`);
         this.props.fetchAllLanguages(BASE_URL + `api/performance/${this.props.performaceId}/languages`)
         
     }
