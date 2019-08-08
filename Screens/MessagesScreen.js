@@ -51,10 +51,10 @@ class MessagesScreen extends LocalizeComponent {
               'Authorization': 'Bearer ' + accessToken,
               "Accept": "application/json",
               "Content-Type": "application/json"
-            }}).then( async (response) =>{
-              if (!response.ok) {
-                throw new Error("Some problems!!!");
-            }     
+            }}).then( async (response) =>{                    
+              if (!response.ok) {          
+                throw new Error('Some problems!!!');
+            }    
             const headersAccessToken = response.headers.get('newaccess_token');
 
             if(headersAccessToken != null)
@@ -66,7 +66,7 @@ class MessagesScreen extends LocalizeComponent {
                 this.setState({privateMessages:msgs, isLoaded:true,currentPublic:false});
             }).catch(error => {
               Toast.show({
-                text: this.t("Please log in"),
+                text: this.t("There was a problem during the operation. Please try again or log in"),
                 buttonText: "Okay",
                 type: "warning",
                 duration: 3000

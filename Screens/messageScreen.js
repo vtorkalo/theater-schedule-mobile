@@ -49,7 +49,7 @@ class MessageScreen extends LocalizeComponent {
         duration: 5000 })
         }
 
-      if(`${this.props.sendError}` === 'Some problems!!!')
+      if(`${this.props.sendError}` === "Error: Some problems!!!")
       {
         Toast.show({
         text: this.t("There was a problem during the operation. Please try again or log in"),
