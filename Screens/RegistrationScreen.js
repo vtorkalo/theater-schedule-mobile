@@ -132,12 +132,7 @@ class RegistrationScreen extends LocalizeComponent {
           })
         }
       })
-<<<<<<< HEAD
-      }
-     else {
-=======
     } else {
->>>>>>> master
       Toast.show({
         text: this.t("Fill the form correctly"),
         buttonText: "Okay",

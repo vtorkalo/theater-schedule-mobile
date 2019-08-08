@@ -29,8 +29,6 @@ class PerformanceScreen extends LocalizedComponent {
   } 
   toggleWishlist = performanceId => {
     this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
-  toggleWishlist = (Accountid,performanceId) => {
-    this.props.SaveOrDeletePerformance(Accountid, performanceId);
 
       if(`${this.props.sendingError}` === "Error: Unauthorized")
       {

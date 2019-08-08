@@ -23,7 +23,7 @@ class WishList extends LocalizedComponent {
       {
         this.bodyText = `${this.t("emptyWishlistMessage")}`;
       }
-      this.props.sendingError == null;
+     
       return (
             <FlatList
                 style={styles.WishList}
