@@ -53,7 +53,6 @@ export default function wishListReducer(state = initialState, action) {
       };
 
     case LOAD_WISHLIST_FAILURE:
-      
       return { 
         ...state,
         isLoadNow: false,
