@@ -89,7 +89,6 @@ export const updateUserProfile = (params) => {
             body: dataJson
         })
             .then(async response => {
-                console.log(response);
                 let headersAccessToken = response.headers.get('newaccess_token');
                 if (headersAccessToken != null) {
                     await AsyncStorage.setItem('AccessToken', headersAccessToken);
