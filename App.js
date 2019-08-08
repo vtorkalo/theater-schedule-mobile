@@ -47,7 +47,6 @@ const appReducer = combineReducers({
   streamReducer,
   registration,
   forgotPassword,
-  resetPassword,
   poll,
   editUser,
 });

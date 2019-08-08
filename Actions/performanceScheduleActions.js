@@ -1,5 +1,4 @@
 import BASE_URL from 'TheaterSchedule/baseURL';
-
 export const SET_SCHEDULE_SUCCESS = 'SET_SCHEDULE_SUCCESS';
 export const SET_SCHEDULE_FAILURE = 'SET_FAILURE_SUCCESS';
 export const LOAD_SCHEDULE_BEGIN = 'SET_SCHEDULE_BEGIN';
