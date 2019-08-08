@@ -123,7 +123,7 @@ class RegistrationScreen extends LocalizeComponent {
             type: "danger",
             duration: 6000
           })
-        } else {
+        } else if(this.props.registration.sendingError != null){
           Toast.show({
             text: this.t("There was a problem during registration"),
             buttonText: "Okay",
@@ -131,7 +131,7 @@ class RegistrationScreen extends LocalizeComponent {
             duration: 6000
           })
         }
-      });
+      })
     } else {
       Toast.show({
         text: this.t("Fill the form correctly"),

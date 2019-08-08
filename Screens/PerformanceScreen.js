@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet,  AsyncStorage,
-  View, Dimensions, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Dimensions, Image, ScrollView, AsyncStorage } from 'react-native';
 import { Container, Content } from 'native-base';
 import DrawerMenuIcon from "../Navigation/DrawerMenuIcon";
 import ReturnMenuIcon from '../Navigation/ReturnMenuIcon';
@@ -28,9 +27,10 @@ class PerformanceScreen extends LocalizedComponent {
     );
 
   } 
-
   toggleWishlist = performanceId => {
     this.props.SaveOrDeletePerformance(this.props.deviceId, performanceId);
+  toggleWishlist = (Accountid,performanceId) => {
+    this.props.SaveOrDeletePerformance(Accountid, performanceId);
 
       if(`${this.props.sendingError}` === "Error: Unauthorized")
       {

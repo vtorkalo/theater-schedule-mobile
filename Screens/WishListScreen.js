@@ -23,7 +23,7 @@ class WishListScreen extends LocalizeComponent {
         if (this.props.deviceId && this.props.languageCode) {
             this.subs = [
                 this.props.navigation.addListener('willFocus', () => { 
-                  this.props.loadWishList(this.props.deviceId, this.props.languageCode)               
+                  this.props.loadWishList(AsyncStorage.getItem('UserId'), this.props.languageCode)               
                 }),
             ];           
         }
@@ -154,7 +154,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {       
-      loadWishList: (deviceId, languageCode) => dispatch(loadWishList(deviceId, languageCode))
+      loadWishList: (AccountId, languageCode) => dispatch(loadWishList(AccountId, languageCode))
     }
 }
 
