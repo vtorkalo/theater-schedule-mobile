@@ -3,14 +3,14 @@ import * as ActionTypes from './StreamActionTypes'
 export const fetchPerfomancesFailure = (bool) => {
     return {
         type: ActionTypes.FETCH_PERFORMANCE_FAILURE,
-        hasErrored: bool
+        hasErrored: bool,
     };
 };
 
 
-export const toogleConnection = (connection)=>{
-    return{
-        type:ActionTypes.TOGGLE_CONNECTION,
+export const toogleConnection = (connection) => {
+    return {
+        type: ActionTypes.TOGGLE_CONNECTION,
         connection
     }
 }
@@ -31,10 +31,10 @@ export const toggleLang = (choosenLang) => {
     }
 }
 
-export const toogleIsConnect = (bool) =>{
-    return{
+export const toogleIsConnect = (bool) => {
+    return {
         type: ActionTypes.TOGGLE_ISCONNECTED,
-        isConnected:bool
+        isConnected: bool
     }
 }
 
@@ -56,9 +56,9 @@ export const fetchPerfomancesSuccess = (performances) => {
 };
 
 
-export const fetchLanguagesSucces = (languages) =>{
-    return{
-        type:ActionTypes.FETCH_LANGUAGES_SUCCESS,
+export const fetchLanguagesSucces = (languages) => {
+    return {
+        type: ActionTypes.FETCH_LANGUAGES_SUCCESS,
         languages
     }
 }
@@ -67,6 +67,15 @@ export function getData(url) {
     return (dispatch) => {
         dispatch(fetchPerfomancesRequest(true));
 
+        var wasServerTimeout = false;
+
+        var timeout = setTimeout(() => {
+            wasServerTimeout = true;
+            dispatch(fetchPerfomancesFailure(true));
+            dispatch(fetchPerfomancesRequest(false));
+        }, 3000)
+
+
         return fetch(url)
             .then(
                 response => {
@@ -74,21 +83,24 @@ export function getData(url) {
                         throw Error(response.statusText);
                     }
 
-
                     dispatch(fetchPerfomancesRequest(false));
-
-                    return response.json();
+                    
+                    
+                    timeout && clearTimeout(timeout);
+                    if (!wasServerTimeout) {
+                        return response.json()
+                    }
 
                 }
             )
             .then((performances) => dispatch(fetchPerfomancesSuccess(performances)))
-            .catch(error => dispatch(fetchPerfomancesFailure(true)));
+            .catch(error => {timeout && clearTimeout(timeout) ,dispatch(fetchPerfomancesRequest(false)), dispatch(fetchPerfomancesFailure(true)) });
     }
 }
 
 
 
-export  function getLanguageData(url) {
+export function getLanguageData(url) {
     return (dispatch) => {
         dispatch(fetchPerfomancesRequest(true));
 

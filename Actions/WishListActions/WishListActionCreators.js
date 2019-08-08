@@ -12,6 +12,7 @@ import {
   DELETE_FROM_WISHLIST,
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
 
+
 export const deleteFromWishlist = (performanceId) => ({
   type: DELETE_FROM_WISHLIST,
   payload: {

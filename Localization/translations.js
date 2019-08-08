@@ -105,6 +105,7 @@ export const translations = {
         "eventType": "Тип події",
         "emptyEventMessage": "На жаль, на даний час подій немає",
         "emptyScheduleMessage": "На жаль, на даний період вистав немає",
+        "emptyStreamMessage":"Перевірте ваше підключення до мережі театру",
         "emptyWishlistMessage": "Наразі Ваш список порожній. Додати вистави можна зі сторінки з детальною інформацією.",
         "AboutTheater": "Про театр",
         "PollScreenTittle":"Опитування",
@@ -184,6 +185,7 @@ export const translations = {
         "Passwords do not match":"Паролі не співпадають",
     },
     'en': {
+        "emptyStreamMessage":"Check your connection to the Theater network",
         "public messages":"Public",
         "private messages":"Private",
         "Such user already exists":"Such user already exists",

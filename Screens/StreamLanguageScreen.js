@@ -31,8 +31,8 @@ class StreamLanguageScreen extends LocalizeComponent {
 
 
     componentDidMount() {
-        console.log(BASE_URL + `api/performance/${this.props.performaceId}/languages`);
         this.props.fetchAllLanguages(BASE_URL + `api/performance/${this.props.performaceId}/languages`)
+        
     }
 
     render() {
@@ -111,7 +111,8 @@ const mapStateToProps = (state) => {
     return {
         isLoading: state.streamReducer.isFetching,
         isListEmpty: state.streamReducer.performances.length == 0,
-        performaceId: state.streamReducer.choosenPerf
+        performaceId: state.streamReducer.choosenPerf,
+        isErorr: state.streamReducer
     }
 }
 
