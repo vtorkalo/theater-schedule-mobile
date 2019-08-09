@@ -12,6 +12,7 @@ import {
   DELETE_FROM_WISHLIST,
 } from 'TheaterSchedule/Actions/WishListActions/WishListActionTypes';
 
+
 export const deleteFromWishlist = (performanceId) => ({
   type: DELETE_FROM_WISHLIST,
   payload: {
@@ -62,9 +63,14 @@ export const SaveOrDeletePerformance = (Accountid, performanceId) => {
       body: JSON.stringify(performanceId)
     })
       .then( async(response) => {
-        if (!response.ok) {
-          throw new Error("Some problems!!!");
-      }     
+        if (response.status == 401){
+          throw new Error('Unauthorized');
+        }
+
+        if (!response.ok) {          
+          throw new Error('Some problems!!!');
+      }
+
         const headersAccessToken = response.headers.get('newaccess_token');
 
         if(headersAccessToken != null)
@@ -80,7 +86,7 @@ export const SaveOrDeletePerformance = (Accountid, performanceId) => {
   };
 };
  
-export const loadWishList = (Accountid, languageCode) => {     
+export const loadWishList = (deviceId, languageCode) => {     
     return async dispatch => {        
     dispatch(loadWishListBegin());      
     var accessToken = await AsyncStorage.getItem('AccessToken'); 
@@ -95,9 +101,13 @@ export const loadWishList = (Accountid, languageCode) => {
       }
     })
       .then( async (response) => {
-        if (!response.ok) {
-          throw new Error("Some problems!!!");
-      }     
+         if (response.status == 401){
+          throw new Error('Unauthorized');
+        }
+
+        if (!response.ok) {          
+          throw new Error('Some problems!!!');
+      }
         const headersAccessToken = response.headers.get('newaccess_token');
 
         if(headersAccessToken != null)
@@ -106,7 +116,7 @@ export const loadWishList = (Accountid, languageCode) => {
         }     
         return response.json();
       })
-      .then(responseJson => {        
+      .then(responseJson => {      
         dispatch(loadWishListSuccess(responseJson, deviceId, languageCode));
       })
       .catch(error => {    

@@ -20,7 +20,6 @@ export default function streamReducer(state = initialState, action) {
             }
         }
         case ActionTypes.TOGGLE_CONNECTION:{
-            console.log(action.connection)
             return{
                 ...state,
                 connection:action.connection

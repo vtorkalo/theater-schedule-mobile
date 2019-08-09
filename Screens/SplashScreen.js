@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, NetInfo } from 'react-native';
 import { connect } from 'react-redux';
 import { changeScreen, } from '../Actions/AppActions/AppActionCreators';
+import UniformButton from './Components/UniformButton';
+import { Toast } from 'native-base';
 
 class SplashScreen extends Component {
+
+    state = {connectionType: ""}
+
+    componentDidMount(){
+        NetInfo.getConnectionInfo().then((connectionIfno)=> {this.setState({connectionType:connectionIfno.type})})
+    }
+
     componentDidUpdate() {
         if (this.props.isAppReady) {
             if (this.props.isLoggedIn) {
@@ -15,15 +24,43 @@ class SplashScreen extends Component {
         }
     }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Image
-                    style={styles.image}
-                    source={require('../img/puppet.png')}
-                />
-            </View>
-        );
+    combineFunction() {
+        this.props.navigation.navigate("Stream")
+    }
+
+
+
+    render() {       
+        if (this.props.isTimeOut == false){
+            return (
+                <View style={styles.container}>
+                    <Image
+                        style={styles.image}
+                        source={require('../img/puppet.png')}
+                    />
+                </View>
+
+            );
+        }
+        else {
+            return (
+                <View style={styles.container}>
+                    <Image
+                        style={styles.image}
+                        source={require('../img/puppet.png')}
+                    />
+                    <UniformButton text="Go to dubbing" style={{
+                        alignSelf: "center",
+                        margin: 20,
+                        width: "65%",
+                        justifyContent: 'center',
+                        marginTop: 8
+                    }}
+                        onPress={() => this.combineFunction()}
+                    />
+                    
+                </View>)
+        }
     }
 }
 
@@ -44,6 +81,7 @@ const mapStateToProps = state => {
     return {
         isAppReady: state.defaultReducer.isAppReady,
         isLoggedIn: state.defaultReducer.isLoggedIn,
+        isTimeOut: state.settings.isTimeOut,
     }
 }
 

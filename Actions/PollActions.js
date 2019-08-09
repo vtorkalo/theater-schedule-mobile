@@ -69,7 +69,6 @@ export const downloadPoll = () => {
 export const sendPoll = (params) => {
     return (dispatch) => {
         dispatch(sendPollBegin());
-        console.log("sending");
         fetch(`${BASE_URL}CreateGoogleForm/SendDataToGoogleForm`,{
             method: 'POST',
             headers: { 

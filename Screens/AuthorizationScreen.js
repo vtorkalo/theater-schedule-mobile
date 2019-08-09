@@ -175,7 +175,7 @@ class AuthorizationScreen extends LocalizeComponent {
               </View>
 
               </KeyboardAvoidingView>
-              <View>
+              <View style={{display: this.props.authorization.isLoading ? "none" : "flex"}}>
                 <View style={styles.textRow}>
                   <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("registrationScreen")}>
@@ -184,7 +184,7 @@ class AuthorizationScreen extends LocalizeComponent {
                 </View>
               </View>
 
-              <View>
+              <View style={{display: this.props.authorization.isLoading ? "none" : "flex"}}>
                 <View style={styles.textRow}>
                   <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Schedule")}>
