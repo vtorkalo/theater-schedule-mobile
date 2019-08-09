@@ -53,15 +53,19 @@ export const sendMessage = message => {
     fetch(`${BASE_URL}Message`, {
       method: "POST",
       headers: {
-        'Authorization': 'Bearer ' + accessToken,
+        'Authorization': 'Bearer ' + `${accessToken}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(message)
     })
       .then( async (response) => {
-      if (!response.ok) {
-          throw new Error("Some problems!!!");
-        }     
+        if (response.status == 401){
+          throw new Error('Unauthorized');
+        }
+
+        if (!response.ok) {          
+          throw new Error('Some problems!!!');
+      } 
 
         const headersAccessToken = response.headers.get('newaccess_token');
 

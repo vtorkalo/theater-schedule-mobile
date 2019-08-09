@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.wishListReducer.loading,
+        isLoading: state.wishListReducer.isLoadNow,
         isLanguageLoading: state.settings.loading,        
         sendingError: state.wishListReducer.error,        
         chosenPerformances: state.wishListReducer.chosenPerformances,

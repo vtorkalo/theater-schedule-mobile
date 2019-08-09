@@ -12,7 +12,7 @@ const initialState = {
   chosenPerformances: [
   ],
   performanceId: null,
-  loading: false,
+  isLoadNow: false,
   error: null,
 }
 
@@ -27,37 +27,42 @@ export default function wishListReducer(state = initialState, action) {
     }
 
     case LOAD_WISHLIST_BEGIN:
+      return {
+        ...state,
+        isLoadNow: true,
+        error: null
+      };
     case STORE_PERFORMANCE_BEGIN:
       return {
         ...state,
-        loading: true,
+        isLoadNow: true,
         error: null
       };
 
     case LOAD_WISHLIST_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoadNow: false,
         chosenPerformances: action.payload.performances,
       };
     case STORE_PERFORMANCE_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoadNow: false,
         performanceId: { ...action.payload.performanceId }
       };
 
     case LOAD_WISHLIST_FAILURE:
-      
       return { 
-        ...state, 
+        ...state,
+        isLoadNow: false,
         error: action.payload.error
       };
 
     case STORE_PERFORMANCE_FAILURE:
       return {
         ...state,
-        loading: false,
+        isLoadNow: false,
         error: action.payload.error
       };
 

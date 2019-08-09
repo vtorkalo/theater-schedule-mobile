@@ -38,12 +38,28 @@ class MessageScreen extends LocalizeComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.message.sendingError && this.props.message.sendingError) {
-      Toast.show({
+      if(this.props.sendError !== null)
+      {       
+        if(`${this.props.sendError}` === "Error: Unauthorized")
+        {
+        Toast.show({
         text: this.t("Please log in"),
         buttonText: "Okay",
         type: "warning",
-        duration: 3000
-      })
+        duration: 5000 })
+        }
+
+      if(`${this.props.sendError}` === "Error: Some problems!!!")
+      {
+        Toast.show({
+        text: this.t("There was a problem during the operation. Please try again or log in"),
+        buttonText: "Okay",
+        type: "warning",
+        duration: 5000 })        
+      }
+    }
+      this.props.sendError == null;
+     
       this.props.enterMessageSubject("");
       this.props.enterMessageText("");
     } else if (
@@ -127,7 +143,8 @@ class MessageScreen extends LocalizeComponent {
 }
 
 const mapStateToProps = state => ({
-  message: state.message,
+  message: state.message,      
+  sendError: state.message.sendingError, 
   deviceId: state.settings.deviceId
 });
 
