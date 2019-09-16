@@ -11,12 +11,6 @@ class SplashScreen extends Component {
 
     componentDidMount(){
         NetInfo.getConnectionInfo().then((connectionIfno)=> {this.setState({connectionType:connectionIfno.type})})
-<<<<<<< HEAD
-
-        setTimeout(() => {
-        }, 3000)
-=======
->>>>>>> master
     }
 
     componentDidUpdate() {
@@ -37,11 +31,7 @@ class SplashScreen extends Component {
 
 
     render() {       
-<<<<<<< HEAD
-        if (this.props.isTimeOut == true){
-=======
         if (this.props.isTimeOut == false){
->>>>>>> master
             return (
                 <View style={styles.container}>
                     <Image
