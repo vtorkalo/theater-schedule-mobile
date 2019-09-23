@@ -7,7 +7,7 @@
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon":"img/puppet1024.png",
     "updates": {
@@ -28,10 +28,8 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "package": "com.lv410dotnet.lvivpuppet",
-
-      "permissions": [
-        
-      ]
+      "versionCode": 2,
+      "permissions":[]
     }
   }
 }
