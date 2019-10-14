@@ -57,6 +57,3 @@ buck-out/
 /.expo
 /.expo-shared
 
-# Base url to server
-baseURL.js
-/baseURL.js
