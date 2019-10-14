@@ -1,0 +1,1 @@
+export default baseURL = 'http://lvivpuppe-001-site1.ftempurl.com/api/';
