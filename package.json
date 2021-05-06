@@ -42,7 +42,7 @@
     "redux-i18n": "^1.5.14",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
